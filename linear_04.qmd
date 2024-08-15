@@ -1,0 +1,195 @@
+---
+code-annotations: hover
+citation-location: margin
+---
+
+# Multiple Linear Regression {#sec-multiple-linear-regression}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(broom)           #for obtaining summaries of regression models
+library(parameters)      #for calculating standardized coefficients
+
+##Import Data
+demdata <- import("data/demdata.rds") |> 
+  as_tibble()
+
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+```
+
+This chapter focuses on how to perform a multiple linear regression: regression with more than 1 independent variable. In addition, it will discuss how to obtain *standardized* coefficients.
+
+As always, we begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers, but must be loaded prior to use.
+
+```{r}
+#| eval: false
+
+#Packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(broom)           #for obtaining summaries of regression models
+library(parameters)      #for calculating standardized coefficients
+
+##Import data
+demdata <- import("demdata.rds") |> 
+  as_tibble() # <1>
+
+```
+
+1.  You do not always need `as_tibble()` as shown here. We do this here because it is easier to show larger datasets with them. See [Statistics I, 2.1](https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles){target="_blank"}.
+
+## Performing a Multiple Linear Regression {#sec-performing-a-multiple-linear-regression}
+
+In this example we will regress a measure of the level of electoral democracy in a country (`v2x_polyarchy`) on three predictor variables (2 continuous and 1 binary):
+
+-   `cpi`: CPI stands for "corruption perception index" and is a measure of the extent of corruption in the country's public sector; higher values on this variable indicate *less* corruption
+-   `v2caviol`: This is a measure concerning the extent of political violence by non-state actors with higher values associated with higher levels of political violence
+-   `TYPEDEMO1984`: A binary variable indicating whether the country was a democracy or an autocracy in 1984.
+
+Recall that we include binary/categorical variables in regression models by first converting them into a factor variable.
+
+```{r}
+#Convert binary variable into a factor
+demdata <- demdata |> 
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984)) #<1>
+```
+
+1.  `factorize()` can be used here because this variable has value labels. Otherwise, we would need to use `factor()` and supply the labels ourselves.
+
+We fit a multiple linear regression using the same command that we used to perform a bivariate regression: `lm()`. We add multiple predictor variables to the model via the use of a `+` sign as in this example:
+
+```{r}
+#Run and store the model 
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, 
+                     data=demdata)
+```
+
+`model_multiple <-`
+
+:   Here we tell R to create a new data object called `model_multiple` that will store the results from our regression. You would change this to a name of your choosing in your examples.
+
+`lm(v2x_polyarchy ~`
+
+:   Here we tell R that we want to perform a linear regression (`lm()` = the command for a linear model) and that the dependent variable is named `v2x_polyarchy`. This variable is placed to the left of the tilde (\~).
+
+`cpi + v2caviol + TYPEDEMO1984,`
+
+:   Here we tell R what independent variables we want to include in the model. We separate each variable with a `+` sign. Changing the order of the independent variables (e.g., `TYPEDEMO1984 + v2caviol + cpi`) would produce the same model results.
+
+`data = demdata)`
+
+:   Finally, we tell R the name of the object where our data is stored. This information comes after a ',' after the final independent variable.
+
+We can obtain a summary of our coefficients with the `summary()` command:
+
+```{r}
+summary(model_multiple)
+```
+
+::: callout-warning
+#### Interpretation
+
+How we interpret the coefficients is quite similar to how we did with bivariate models, but we now have to incorporate the fact that there are multiple variables in the model into our understanding.
+
+The "(Intercept)" value tells us what value we should expect to observe, on average, when *all* of the included independent variables = 0. If we could observe countries with a value of 0 on the `cpi` variable AND a value of 0 on `v2caviol` AND which were coded as an autocracy in 1984, then we'd expect to observe an average electoral democracy score of `r round(coef(model_multiple)[1],2)`.
+
+The coefficients for the independent variables can continue to be interpreted as telling us about the slope of a line (continuous variables) or the difference between categories (factor variables). However, they now tell us about the effect of the independent variable while "holding the effect of the other (predictor) variables constant". For instance:
+
+-   **v2caviol**: Electoral democracy scores are expected to decrease by `r round(coef(model_multiple)[3],2)` scale points with each one unit increase on the political violence scale, holding the effects of prior regime status and corruption constant.
+-   **TYPEDEMO1984**: If we were to compare countries with the same level of political violence and corruption, then we'd expect the average 2020 electoral democracy score to be `r round(coef(model_multiple)[4],2)` scale points higher in countries coded as "Democracies" in 1984 than those coded as "Autocracies".
+:::
+
+## Standardized Coefficients {#sec-standardized-coefficients}
+
+Researchers sometimes report *standardized* coefficients rather than the default unstandardized coefficients. We can use the `standardize_parameters()` function from the `parameters` package to obtain these results.
+
+```{r}
+multiple_std <- standardize_parameters(model_multiple, 
+                       method = "refit")
+```
+
+Here is how to read the syntax above:
+
+`multiple_std <-`
+
+:   This assigns the results of our command to a new data object called `multiple_std`.
+
+`standardize_parameters(`
+
+:   This is the name of the command.
+
+`model_multiple,`
+
+:   This is the name of the linear regression model object that we have previously saved and which we want to standardize.
+
+`method = 'refit')`
+
+:   This specifies what type of standardization we want. The `refit` option is the default option. It will, in the background, standardize the DV and IVs in the model and then refit the regression model using the standardized versions of the variables.
+
+`standardize_parameters()` produces a dataframe with the following columns:
+
+```{r}
+glimpse(multiple_std)
+```
+
+::: callout-note
+#### Output Explanation
+
+-   `Parameter`: This provides the name of the terms/variables in the model
+-   `Std_Coefficient`: The value of the standardized coefficient associated with each variable
+-   `CI`: The level of the confidence interval for the standardized coefficient
+-   `CI_low` and `CI_high`: The lower and upper bounds of the confidence interval. These values will be combined into one cell when we call the results below.
+:::
+
+Let us see the results and how they compare to our original results. We will use `tidy()` to simplify the output of the original model.
+
+```{r}
+#Original Results
+tidy(model_multiple)
+
+#Standardized
+multiple_std
+```
+
+The standardized coefficients for the continuous variables in this example indicate how many **standard deviations** the DV is expected to change when the continuous predictor changes by **1 standard deviation.**[^linear_04-1]
+
+[^linear_04-1]: This is true for the "refit" version of standardization used here. We could ask this command to only standardize the predictor variables while leaving the DV on its original scale by including the option "include_response = F" in our command. The standardized continuous predictor would be interpreted as telling us how much the mean of Y (on its original scale) is expected to change given a 1 standard deviation change in X. This would be sensible in cases where the scale of our dependent variable is quite easy to understand and where standardizing the DV complicates interpretations. For instance, if we were predicting the percentage of votes cast for a political party, it is probably easier to interpret "a 1 standard deviation change in X is associated with a gain of 2% more votes for the party" than "a 1 standard deviation change in X is associated with a gain of 0.3 standard deviations in votes".
+
+`standardize_parameters()` produces a standardized difference score for factor predictor variables that is equivalent to dividing the difference in the expected mean value of the DV between the two groups being compared by the standard deviation of the dependent variable.[^linear_04-2]
+
+[^linear_04-2]: This standardized difference is not directly comparable to the standardized coefficients for the continuous variables in an important sense. The standardized difference for a factor variable tells us what happens when X changes by its full range, i.e., when X goes from 0 to 1. The standardized coefficients for the continuous variables tell us what happens when X changes by 1 standard deviation...but that is only part of the range of the variable. We can obtain more directly comparative standardized coefficients by including the option `two_sd = TRUE` in our command. This scales the continuous variables by *two* standard deviations rather than one and thus gives a better approximation of what a full change in the continuous X leads to.
+
+::: callout-warning
+#### Interpretation
+
+Democracy scores are expected to decrease by `r round(multiple_std$Std_Coefficient[3],2)` standard deviations given a one standard deviation increase on the political violence scale (holding the effect of corruption and prior regime status constant).
+
+Countries that were democratic in 1984 are expected to be `r round(multiple_std$Std_Coefficient[4],2)` standard deviations more democratic in the year 2020, on average, than countries that were autocratic in 1984 (holding constant the effect of corruption and political violence).
+:::
+
+::: callout-important
+#### Warning!
+
+You may have noticed that we did not use `summary()` or `tidy()` to look at the standardized coefficients. Those commands are not needed when we are looking at the stored output of `standardize_parameters()` because that output is already a dataframe.
+
+Using `summary()` would produce summary statistics for each column in the output as seen here:
+
+```{r}
+summary(multiple_std)
+```
+
+Using `tidy()` on it would produce an error because `tidy()` is meant for use with objects created from statistical models:
+
+```{r}
+#| error: true
+tidy(multiple_std)
+```
+:::

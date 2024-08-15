@@ -1,0 +1,260 @@
+---
+code-annotations: hover
+---
+
+# Logistic Regression & Odds Ratios {#sec-logistic-regression-odds-ratios}
+
+Logistic regression models are used to model binary outcome variables. We will use survey data from the Netherlands which was collected as part of Round 9 of the [European Social Survey](https://www.europeansocialsurvey.org){target="_blank"} for our examples. The dataset is available in SPSS format (`.sav`) from the ESS website.
+
+We begin, as always, by loading the libraries that we will use in our analyses as well as our data. Missing values are already indicated as 'NA' in this dataset. Per @sec-recall-peeking-inside-data-objects, we can use the `view_df()` from from the `sjPlot` library to inspect the variables included in the dataset.
+
+```{r}
+#| eval: false
+
+#Packages
+library(sjPlot)          #checking variable names, values, and labels
+library(broom)           #for obtaining summaries of regression models
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+
+#Data
+ESS9NL <- import("ESS9e03, Netherlands.sav")
+
+#view_df example on subset of dataset
+ESS9NL |> 
+  select(polintr, ppltrst) |> 
+  sjPlot::view_df()
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+#Packages
+library(sjPlot)            #checking variable names, values, and labels
+library(broom)             #Model summaries, including coefficients
+library(rio)               #Importing data
+library(tidyverse)         #Data management & plotting
+
+#Data
+ESS9NL <- import("data/ESS9e03, Netherlands.sav")
+
+#view_df example on subset of dataset
+ESS9NL |> 
+  select(polintr, ppltrst) |> 
+  sjPlot::view_df()
+```
+
+The `view_df()` output indicates that there are numeric codes associated with missing value categories (e.g., respondents who said "Don't Know" would be given a score of 8 on `polintr`). However, those values are already converted to missing (NA) in our dataset as the tabulation below shows. If they were not, then we would need to take some additional data management steps and convert those values to missing values; see [Section 4.2](https://poweleiden.github.io/statistics1/data_04_missing_data.html#recoding-missing-data){target="_blank"} of the Statistics I manual for a refresher on how to do this.
+
+```{r}
+table(ESS9NL$polintr)
+```
+
+::: callout-important
+#### Warning!
+
+Always double check assignment instructions and other sources of information about a dataset (e.g., its codebook or the dataset itself via something like `view_df()` or `attributes()`) to make sure you understand the data management steps you need to accomplish before an analysis.
+:::
+
+## Performing a Logistic Regression
+
+### Data Preparation
+
+Our example will investigate the relationship between self-reported gender (`gndr`) and voter turnout (i.e., did the person report voting in an election or not; `vote`). Our goal here is to predict whether a person reported voting in the most recent election.
+
+First, let us take a look at the variables so we can figure out if we need to take any preliminary data management steps:
+
+```{r}
+#Variable attributes
+ESS9NL |> 
+  select(gndr, vote) |> 
+  view_df()
+
+#Tabulation
+table(ESS9NL$gndr)
+table(ESS9NL$vote)
+```
+
+Our predictor variable only has two categories, so we will need to factorize it before using it in the model. Our DV has three categories with observations in them (Yes, No, Not Eligible). We need to make this into a binary factor variable prior to analysis. We can do this by converting the "Not Eligible" category to NA. Here is one way that we can accomplish these ends:
+
+```{r}
+#Factorize variables
+ESS9NL <- ESS9NL |>
+  mutate(gndr = factorize(gndr), #<1> 
+         vote = factorize(vote)) #<2>
+
+#Drop the not eligible category
+ESS9NL <- ESS9NL |>
+  mutate(vote = na_if(vote,"Not eligible to vote"))
+
+```
+
+1.  This will use the lowest numbered category as the "reference" or "baseline" category. In these examples, male respondents (`gndr` = 1) and those that say they voted in the last election (`vote` = 1).
+2.  We are not creating a new variable when recoding things here (e.g., we overwrite the original `gndr` and `vote` variables). This is not usually a good idea - a mistake here would mean that we need to reload our data and walk our data cleaning steps in order to fix our mistake. It is generally a much better idea to create **new** variables when recoding/factorizing. We are not doing so out of pure hubris and tempting fate that we are not making a mistake here due to our surely flawless understanding of the data.
+
+Let's check our work in regards to the vote variable:
+
+```{r}
+levels(ESS9NL$vote)
+table(ESS9NL$vote)
+
+```
+
+The `vote` variable is now a factor variable where the the first (or base) level of the factor is "Yes" because `factorize()` will use the first numerical category as the reference group. This is a problem for us because we want to predict whether a person is in the "Yes, voted" category and the regression command we will use below predicts whether a person is in the higher level of a factor. In other words, if we leave this variable alone our model would predict whether a person *did not* vote. We thus need to relevel the variable to flip the order of the categories (see @sec-relevelling).[^logit_01-1]
+
+[^logit_01-1]: We could alternatively use `factor()` and specify the order of the levels from the start. For instance, we could have done this: `mutate(vote_binary = factor(vote, levels = c(2, 1), labels = c("Did not vote", "Voted"))` . This would also avoid an issue we discuss in the next chapter and in the Common Errors appendix.
+
+```{r}
+#Relevel the variable
+ESS9NL <- ESS9NL |> 
+  mutate(vote = relevel(vote, "No"))
+
+#Let's check our work
+levels(ESS9NL$vote)
+
+```
+
+`mutate(vote = relevel(vote, "No"))`
+
+:   We use the `relevel()` command on the vote variable. We do not create a new variable here but overwrite the original one. You could also chose to make a new variable, which is usually a better idea when you are recoding/factorizing a variable. The category provided in quotation marks will become the reference category. It is important to note this variable was factorized first so we use the label "No" and not the numeric value for "No" originally stored in the dataset, which was 2.
+
+Let's check our work for the `gndr` variable:
+
+```{r}
+table(ESS9NL$gndr)
+levels(ESS9NL$gndr)
+```
+
+"Male" has been used as the reference category. The two categories have a roughly equal number of observations, so the automatic behavior of `factorize()` is not an issue here. There is a third label here "No Answer" with 0 observations on it. This is fine for now - R will exclude this category from the analysis below.
+
+We will change the reference group to "Female" as a further example of the `relevel()` syntax:
+
+```{r}
+ESS9NL <- ESS9NL |> 
+  mutate(gndr = relevel(gndr, "Female"))
+
+#check your work!
+levels(ESS9NL$gndr)
+```
+
+::: callout-important
+#### Warning!
+
+The DV in a logistic regression should be a (factorized) binary variable. Make sure you are creating the factor variable such that the higher level of the variable is the category you are trying to predict. Otherwise, your interpretations might end up being wrong by accident.
+:::
+
+### Performing a Logistic Regression
+
+Performing logistic regression in R is very similar to linear regression. However, instead of the `lm()` function, we rely on the `glm()` function, which stands for generalized linear model.
+
+```{r}
+#Run the model
+Vote_model <- glm(vote ~ gndr, 
+                  data = ESS9NL, family = "binomial")
+
+```
+
+`Vote_model <-`
+
+:   We assign the results of our estimation to a new object.
+
+`glm(vote ~ gndr,`
+
+:   We perform `glm` with `vote` as our dependent variable, predicted (`~`) by our only independent variable here: `gndr`. If we want to add more variables, we connect them with a '+' sign.
+
+`data = ESS9NL,`
+
+:   We specify the dataset to be used.
+
+`family = "binomial")`
+
+:   We specify the family for the generalized linear model. For logistic regression this is "binomial". This part of the code remains unchanged. See the Common Errors appendix ( @sec-glm-factor) for an error that could arise if you did not specify the model's family.
+
+Let's take a look at the output using the built in `summary()` command:
+
+```{r}
+summary(Vote_model)
+```
+
+::: callout-note
+#### Output Explanation
+
+The structure of this output is highly similar to what we saw with the output of an `lm()` model.
+
+-   Call: The model being fit
+-   Deviance Residuals: This provides some summary data about the model's residuals.
+-   Coefficients: This provides the coefficients from the model (Estimate) as well as the coefficient's standard error (Std. Error), a test-statistic (z-value; the Z-Statistic as given by $\frac{\textrm{Coefficient}}{\textrm{Std. Error}}$), and the p-value for the test statistic (Pr(\>\|z\|)). Symbols pertaining to statistical significance may be provided to the right of the p-value with a line indicating how to interpret these symbols provided at the bottom of the Coefficients output ("Signif. Codes:").
+-   (Dispersion parameter...): This can be ignored.
+-   Area that begins with Null deviance: This area relates to the fit of the model, which will be discussed in a subsequent chapter.
+-   Number of Fisher Scoring Iterations: This can be ignored.
+:::
+
+We can add multiple predictors to the model in a way similar to the linear regression syntax, by adding them with a `+` symbol. Here add age (`agea`), trust in politicians (`trstplt`), and left-right ideology (`lrscale`). We did not need to take any data management steps with these variables because they are continuous variables and missing data is already coded as NA.
+
+```{r}
+#Run the model
+Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+                     data = ESS9NL, family = "binomial")
+
+#Check the output
+summary(Vote_model_mp)
+
+```
+
+::: callout-warning
+#### Interpretation
+
+Logistic regression coefficients are on the log of the odds scale. The coefficient for `gndrMale` in the `vote_model_mp` model tells us the difference in the log of the odds of voting between male and female respondents, while the `agea` coefficient tell us how the log of the odds of voting change with each one unit increase in respondent age.
+
+You can use the direction (positive, negative) and statistical significance of a logistic regression coefficient to talk about the general relationship between the predictor variable and the DV. However, it is not really possible to directly and clearly communicate what a logistic coefficient tells us about the magnitude of the relationship between an IV and the DV because of this log of the odds scaling. You should instead focus on odds ratios (see below), average marginal effects (@sec-marginal-effects), or predicted probabilities (@sec-logit-predicted-probabilities) to give more specific meaning to your discussion.
+
+In this example:
+
+-   Voter turnout is more likely among men than women, but the difference is not statistically significant (p = 0.28) so we cannot rule out the possibility of no difference in voter turnout between the two groups.
+-   Voter turnout becomes more likely with age (i.e., older respondents are more likely to vote than younger ones) and this association is statistically significant (p \< 0.001).
+-   Voter turnout becomes more likely as trust in politicians increases and this relationship is statistically significant (p \< 0.001).
+-   Voter turnout grows more likely as we move from left to right on the ideology scale, but the effect is not statistically significant (p = 0.74) so we cannot rule out the possibility that a one unit change in ideology actually does not lead to any change in the chances of turning out to vote.
+:::
+
+## Odds Ratios
+
+Odds ratios are one way that we can translate logistic regression coefficients into something easier to interpret and communicate.
+
+We can use the `tidy()` command from the `broom` package to toggle between output expressed in the log of the odds scale (our logistic coefficients from above) and odds ratios.
+
+```{r}
+#tidy with logistic regression and confidence intervals
+tidy(Vote_model_mp, conf.int = TRUE)
+
+#tidy with odds ratios and confidence intervals
+tidy(Vote_model_mp, conf.int = TRUE, exponentiate = TRUE)
+
+```
+
+Here is how to read the syntax for the latter command:
+
+`tidy(Vote_model_mp`
+
+:   We apply the tidy function on the model specified in brackets.
+
+`conf.int = TRUE`
+
+:   We ask for the confidence intervals for the logistic regression coefficients or odds ratios. We can write 'FALSE' or leave out this statement if confidence intervals are not needed.
+
+`exponentiate = TRUE)`
+
+:   We ask for the exponentiated logistic regression coefficients, which are the odds ratios. We can shorten this to `exp = TRUE` and obtain the same results. We can write 'FALSE' or leave out this statement if we want the logistic regression coefficients.
+
+::: callout-warning
+#### Interpretation
+
+There are three important things to keep in mind when interpreting odds ratios.
+
+First, odds ratios tell us about the relative *odds* of seeing Y = 1 (e.g., seeing a person report turning out to vote). This is different than the coefficients from a logistic model which tell us about the *log* of those odds.
+
+Second, we interpret odds ratios in relation to the number 1 rather than 0. Positive effects for X are seen when the odds ratio is *greater* than 1 (that is: an odds ratio \> 1 tells you that it becomes more likely to see Y = 1 when the independent variable increases by one unit). Negative effects for X are seen when the odds ratio is *smaller* than 1 (i.e., Y = 1 becomes less likely to be observed when X increases by one unit). A confidence interval for an odds ratio that includes 1 in its range (as occurs for `gndrMale` and `lrscale` above) indicates a statistically *insignificant* relationship, while an odds ratio that does not include 1 in its range (as occurs for `agea` and `trstplt`) indicates a statistically *significant* relationship.
+
+Third, we interpret odds ratios using multiplication language. For instance, our model indicates that the odds of voting are `r round(tidy(Vote_model_mp, exponentiate = T)[2,2],2)` *times greater* among male respondents than female respondents when holding the effects of age, ideology, and trust constant (although this difference is not statistically significant). Or: the odds of turning out to vote increase by 1.02 times for each one year increase in age (holding constant the other predictor variables).
+:::

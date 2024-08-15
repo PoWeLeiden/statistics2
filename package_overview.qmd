@@ -1,0 +1,55 @@
+# Overview of R Packages {#sec-packages}
+
+We will use a variety of R libraries/packages and functions during Statistics II, including some that you learned about in Statistics I. The chapters of this book provide instruction concerning how to use these packages for statistical analyses. The table below, meanwhile, provides a summary of these packages/functions including their main uses and in which week they are introduced in Statistics II. You can sort the table by each column or use the search box to find something specific. Note that the table is not exhaustive of all functions we may use in the class (for instance, it does not list the function for obtaining a mean \[`mean()`\]), but it does cover the major/new ones that you will be introduced to in Statistics II. "Built In" means that you do not need to load a package to use the function in question.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(DT)
+library(rio)
+
+#data
+packages <- import("data/package_table.xlsx")
+
+#data-table
+datatable(packages, rownames = F)
+
+```
+
+## Installing Them All in One Go
+
+We will use a variety of new packages/libraries in class. A document listing these packages, when they will be first introduced, and their purpose is provided elsewhere on Brightspace.
+
+You can use the code below to install all of the relevant R packages for this course in one go: Copy the following syntax using the "Copy to Clipboard" icon in the upper right corner of the code block; paste it into an R script file on your computer; and then execute the syntax.
+
+```{r}
+#| eval: false
+
+package_list <- c("tidyverse", "rio", "summarytools", "DescTools", "skimr",
+                  "correlation", "parameters", "performance", "effectsize",
+                  "see", "marginaleffects", " bromo", "ggResidpanel", "rms",
+                  "car", "modelsummary", "gt", "gtsummary", "kableExtra",
+                  "knitr", "rmarkdown","huxtable", "flextable", "lmtest" ,
+                  "openintro", "statsr", "tidymodels", "tinytex",
+                  "visdat", "patchwork", "ggpubr", "cowplot", "expss",
+                  "effsize", "foreign", "haven",
+                  "ggstance", "ggrepel", "ggsignif", "naniar", "openxlsx",
+                  "sjmisc", "crosstable", "sjlabelled", "psych", "dice",
+                  "pwr", "visualize", "infer" , "sandwich", "sjPlot",
+                  "scales")
+
+install.packages(package_list)
+
+```
+
+It should be possible to install the `marginaleffects` package via the syntax above. However, if you run into an error, then try this syntax:
+
+```{r}
+#| eval: false
+
+install.packages("marginaleffects", type="binary")
+
+
+```

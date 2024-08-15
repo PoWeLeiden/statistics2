@@ -1,0 +1,117 @@
+---
+code-annotations: hover
+citation-location: margin
+---
+
+# Statistical Significance {#sec-statistical-significance}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(rio)        #For data importing
+library(tidyverse)  #For data manipulation, etc.
+library(broom)      #For investigating regression objects
+
+demdata <- import("data/demdata.rds") |> 
+  as_tibble() 
+
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+```
+
+Regression coefficients tell us something about the expected mean level of our dependent variable: what we expect it to be when the independent variable(s) equal 0 (the Intercept term) and how we expect it to change when the independent variable changes by 1 (independent variable coefficient). However, we should also discuss the uncertainty surrounding these estimates: what other coefficient values are plausible given our data? That is the topic for this chapter.
+
+Here are the packages and data that we will use alongside some preliminary data cleaning.
+
+```{r}
+#| eval: false
+
+#Packages
+library(broom)        #Additional tools for model summaries
+library(rio)          #loading data
+library(tidyverse)    #data manipulation and plotting
+
+#Import Data using rio::import()
+demdata <- import("demdata.rds") |> 
+  as_tibble()  # <1>
+
+#Some data cleaning (see last chapter)
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+```
+
+1.  You do not always need `as_tibble()` as shown here. We do this here because it is easier to show larger datasets with them. See [Statistics I, 2.1](https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles){target="_blank"}.
+
+## t- and p-values via `summary()`
+
+Most of the relevant information for discussing statistical significance and uncertainty is produced by the `summary()` command.
+
+```{r}
+#Store the model to an object of your naming
+model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984, data=demdata)
+
+#Use summary() to inspect the object
+summary(model_binary)
+```
+
+::: callout-note
+#### Output Explanation
+
+Information concerning uncertainty in our estimates, and statistical significance, is provided in the Coefficients area via these columns:
+
+-   Std. Error: The standard error of the coefficient
+-   t value: The t-statistic or t-value for the coefficient ($t = \frac{\textrm{Coefficient}}{\textrm{Std.Error}}$)
+-   Pr(\>\|t\|): The p-value for the t-statistic - the probability of observing a t-value of that size or larger *assuming* that the null hypothesis of no effect is true and all model assumptions are correct
+-   Asterisks and Signif. codes: You may see symbols next to the value under Pr(\>\|t\|). These tell you whether the coefficient is statistically significant and at what level. The "Signif. codes" row provides you with the information needed to interpret these symbols. A single asterisk (\*), for instance, means that the p-value is smaller than 0.05 but larger than 0.01 while two asterisks (\*\*) tell you that the p-value is smaller than 0.01 but larger than 0.001.
+:::
+
+We typically assess the statistical significance of a coefficient by looking at whether there are any symbols next to the value in the Pr(\>\|t\|) column. See Section @sec-reporting-linear-regression for information on how to include this information in your reports.
+
+## Confidence Intervals via `tidy()`
+
+One thing not shown in the output produced by `summary()` is the 95% confidence interval for the coefficient estimates. We can obtain these values alongside the coefficients from our model by using the `tidy()` function from the `broom` package. This package needs to be loaded prior to use (this is done at the start of this chapter).
+
+```{r}
+#| echo: true
+
+tidy(model_binary, conf.int = TRUE)
+```
+
+`tidy(`
+
+:   The name of the command.
+
+`model_binary,`
+
+:   The name of the model we want to work with.
+
+`conf.int = TRUE)`
+
+:   This controls whether the command reports the confidence interval or not. The default behavior of the command is to **not** show the confidence interval. We must explicitly tell the command that we want this via this option. We can also write `conf.int = T` and achieve the same end ("T" acting as shorthand for "TRUE").
+
+::: callout-note
+#### Output Explanation
+
+The `tidy()` function will produce a dataframe with the following columns:
+
+-   `term`: The names of the "terms" in the model (e.g., the Intercept and independent variables).
+-   `estimate`: This provides the coefficients for each term in the model
+-   `std.error`: This provides the standard error for the coefficients
+-   `statistic`: This provides the t-value
+-   `p.value`: This provides the p-value
+-   `conf.low` & `conf.high`: These provides the lower and upper bounds of the confidence interval respectively
+:::
+
+We can change the level of the confidence interval displayed by `tidy()`. For instance, we can obtain the 99% confidence interval by adding `conf.level = 0.99` to our command.
+
+```{r}
+tidy(model_binary, conf.int = T, conf.level = 0.99)
+
+```
+
+Both `summary()` and `tidy()` show us the coefficients from our model. One advantage of `tidy()` is that its output is a "[tidy](https://tidyr.tidyverse.org/articles/tidy-data.html){target="_blank"}" dataframe which can be manipulated in the same ways that we manipulate dataframes more generally (e.g., renaming columns, recoding variables, and so on). We will use this aspect of `tidy()` in a subsequent chapter to produce graphical displays of our regression results.

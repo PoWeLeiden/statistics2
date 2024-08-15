@@ -1,0 +1,658 @@
+---
+code-annotations: hover
+citation-location: margin
+---
+
+# Reporting and Presenting Results {#sec-reporting-and-presenting-results}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+#Packages
+library(marginaleffects)   #Predicted values
+library(modelsummary)      #Regression & correlation tables
+library(broom)             #Model summaries, including coefficients
+library(rio)               #Importing data
+library(tidyverse)         #Data management & plotting
+
+#Data
+demdata <- import("data/demdata.rds")
+
+```
+
+This chapter provides general guidelines on how to present and correctly report the output of correlation and linear regression models. Some areas include a "Reports" sub-section which focus on how to word discussions in written reports. We also include an "Instructions" sub-section in many places which provides further detail on the aesthetic considerations behind producing tables and reports for assignments and for formal research papers.
+
+Here are the packages and data that we will use in these discussions:
+
+```{r}
+#| eval: false 
+
+#Packages
+library(marginaleffects)   #Predicted values
+library(modelsummary)      #Regression & correlation tables
+library(broom)             #Model summaries, including coefficients
+library(rio)               #Importing data
+library(tidyverse)         #Data management & plotting
+
+#Data
+demdata <- import("demdata.rds")
+
+```
+
+## Scatterplots {#sec-report-scatterplots}
+
+We can provide a visual representation of the bivariate relationship between two continuous variables via a scatterplot. Here is an example:
+
+```{r}
+#| warning: false
+#| message: false
+
+ggplot(demdata, aes(x = gini_2019, y = v2x_polyarchy)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  labs(x = "Economic Inequality", 
+       y = "Electoral Democracy", 
+       title = "Economic Inequality and Electoral Democracy")
+```
+
+### Reports
+
+Here are some general guidelines for describing scatterplots:
+
+-   Discuss the observed relationship between the two variables (is there a positive relationship? a negative one?) and the apparent strength of this relationship. Use a correlation coefficient to flesh out these discussions as describing a relationship based on only a plot can be tricky and potentially misleading.
+-   If there are any apparent outliers or extreme values, then make a note of them.
+
+### Instructions
+
+-   Provide informative labels to your x-axis, y-axis, and a title
+-   One typically adds a fitted linear regression line to the figure to aid in interpretation. This is controlled via `method = "lm"`. This can be changed to `method = "loess"` to instead fit a locally estimated scatterplot smoothing line; this is useful for checking for non-linear patterns in the data. See @sec-quadratic-relationships
+-   Be mindful of the size of the text on your axes: text that is too small (or too large) may be hard to read. The quickest way to change the font size of the figure is by altering the theme of the figure, e.g., adding `+ theme_grey(14)` or `+ theme_bw(18)` to the syntax; the number in parentheses alters the font size for all labels. You can find a list of the built-in ggplot themes [here](https://ggplot2.tidyverse.org/reference/ggtheme.html){target="_blank"} while additional examples are available via the [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/){target="_blank"} package. One can also obtain more fine-grained control over text size (e.g., change just the title font or just the x-axis font) and other elements of figures, via `theme()`, but that goes beyond the scope of this book.
+-   The plot above provides the bivariate linear regression line between the two variables. One could also annotate the figure with the specific parameters of this regression line (the values for the Intercept and the slope coefficient) by using `geom_text()`. For instance, one might add a `+` at the end of `labs()` and then add the following on the next line: `geom_text(x = 40, y=0.1, label="Dem Score = 1.06 + (-0.012 * Inequality)")`. This would add the text found in the `label=` portion of the syntax at the coordinates specified by `x=` and `y=`. This process may involve some trial and error regarding the x and y-coordinates in order to create the best looking plot. There also exist some specialized R packages that include functions that will facilitate this process (such as [this function](https://rpkgs.datanovia.com/ggpubr/reference/stat_regline_equation.html){target="_blank"} from the `ggpubr` package) but their use is beyond the scope of this document.
+
+## Correlations
+
+The correlation that we will use for this example focuses on the relationship between a measure of a country's level of economic inequality in the year 2019 (higher = more unequal; `gini_2019`) and the country's level of electoral democracy (higher = more democratic; `v2x_polyarchy`).
+
+```{r}
+cor1 <- cor.test(x = demdata$gini_2019, 
+                 y = demdata$v2x_polyarchy, 
+                 method = "pearson")
+
+cor1
+```
+
+See @sec-correlation-coefficients for guidelines on how to interpret correlation coefficients.
+
+### Reports
+
+Reports should include:
+
+-   A discussion of the direction of the relationship on offer (i.e., is it positive or negative) that draws on the coding of the variables in the correlation alongside the specific correlation observed in the analysis.
+-   A conclusion about the null hypothesis, i.e., statistical significance.
+    -   Reports are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels[^linear_08-1]
+    -   Report at the highest level that is justified by the p-value. For instance:
+        -   If p = 0.04, then p \< 0.05 (significant at 95% level)
+        -   If p = 0.004, then p \< 0.01 (significant at 99% level)
+        -   If p = 0.0000005, then p \< 0.001 (significant at 99.9% level)
+    -   It is not common to go above p \< 0.001 (e.g., we would typically not say that p \< 0.000001, just p \< 0.001). We do not write p \< 0.000.
+-   A reference to the substantive size of the relationship (see @sec-correlation-coefficients)
+
+[^linear_08-1]: Using a 90% significance test may be acceptable if the model has a small N.
+
+::: callout-tip
+#### Report
+
+Higher levels of economic inequality are associated with lower levels of electoral democracy ($r$ = `r round(cor1$estimate, 2)`). This association is moderate in size and statistically significant (p $<$ 0.01).
+:::
+
+### Presentation: Correlation Tables
+
+When we are only discussing two variables then we can simply describe their correlation in the text of our report as shown above. However, when we are writing papers that feature analyses with multiple continuous variables, then it is good practice to include a correlation table showing their inter-relationship either in the main body of the text or in an appendix. We can use the `datasummary_correlation()` command from the `modelsummary` package to do so. Here is an example using four variables:
+
+```{r}
+demdata |> 
+  select(v2x_polyarchy, gini_2019, cpi, gdp_ppp) |> 
+  rename("Elec. Democracy" = v2x_polyarchy, 
+         "Econ Inequality" = gini_2019, 
+         "Corruption" = cpi, 
+         "GDP" = gdp_ppp) |> 
+  datasummary_correlation(method = "pearson",
+                          title = "Relationship between Main Continuous Variables")
+```
+
+::: callout-note
+#### Output Explanation
+
+Each cell provides the correlation coefficient for a pair of variables. The correlation between Corruption and Economic inequality, for instance, is -0.53, while the correlation between GDP and Corruption is 0.79.
+
+Note: The title is presented at the bottom of the table in this document, but would print at the top when saving to a Word document (see below), which is the more conventional placement.
+:::
+
+Here is how to read the syntax above:
+
+`demdata |> select(…)`
+
+:   In these first two lines of code, we specify which data object has the variables we are interested in (`demdata`) and then ask R to only select the variables we want to correlate with one another. If we did not have the second line then `datasummary_correlation()` would try and produce correlations between *all* of the variables in our dataset.
+
+`rename(…)`
+
+:   We rename the variables we have selected in these lines. The information in parentheses to the left of the equals sign is the name we want the variable to take on after renaming. The information on the right of the equals sign is the variable's original name. If we did not take this step, then the underlying variable names (`gini_2019`, etc.) would be used in the table thereby making it harder to understand.
+
+`datasummary_correlation(method = "pearson", title = "...")`
+
+:   This line of syntax performs the correlations and provides a nice title for the table. Much as earlier we can control what *type* of correlation is calculated (Pearson correlation: `method = "pearson"`; Spearman: `method = "spearman"`).
+
+We can save this table to a new file that we can open in Microsoft Word so that we can copy and paste it into reports written outside of R Markdown by adding a final line to our syntax (note: the table will not be displayed in R when you specify this option):
+
+```{r}
+demdata |> 
+  select(v2x_polyarchy, gini_2019, cpi, gdp_ppp) |> 
+  rename("Elec. Democracy" = v2x_polyarchy, 
+         "Econ Inequality" = gini_2019, 
+         "Corruption" = cpi, 
+         "GDP" = gdp_ppp) |> 
+  datasummary_correlation(method = "pearson",
+                          title = "Relationship between Main Continuous Variables", 
+                          output = "correlation table example.docx")
+
+```
+
+`output = "correlation table example.docx"`
+
+:   This line controls the saving process. It tells the command that we want to save a new file; that we want it to be called "correlation_table" (we could, of course, name it something else); and that we want it to be a ".docx" file, the default file type for Microsoft Word. We could then open this file in Word and make further changes/edits, or copy and paste it into a report, as needed.[^linear_08-2]
+
+[^linear_08-2]: One thing we might want to add to the table for a final research report are asterisks or "stars" that communicate the statistical significance of the correlations shown in the table. There is unfortunately no native way to do this in the R syntax for this command (although the website for the package does describe one method for [doing so](https://modelsummary.com/vignettes/datasummary.html#datasummary_correlation){target="_blank"}).
+
+::: callout-important
+#### Warning!
+
+This command be act a bit temperamental in cases where you save a table to file, open it outside of R in Word (for instance), and then re-run the syntax in R to create the table again while the file is still open in Word. We recommend closing the file in Word before trying to update table output produced via R to avoid complications.
+:::
+
+#### Instructions
+
+-   We typically provide the dependent variable first in this type of table. We can do this by having this variable be the first one named in the `select()` line of the syntax above.
+-   Rename your variables to something easy to understand for your readers (i.e., do not use the variable names in your dataset in the table)
+-   Provide an informative title to your table to communicate its contents.
+-   It is common to add asterisks to these types of tables to communicate statistical significance (e.g.,: \*\*\* = p \< 0.01, \*\* = p \< 0.01, \* = p \< 0.05). Unfortunately there is (as of yet) no easy way to directly do this via the `datasummary_correlation()` command. One can add these symbols manually by first saving the table to a .docx (Word) file and adding them as needed.
+-   Correlation (and regression) tables created using the `modelsummary` suite of commands can be further styled in a variety of ways; see [this webpage](https://modelsummary.com/vignettes/appearance.html){target="_blank"} for some of the possibilities, although these are beyond the scope of this book and not required for your assignments in Statistics II.
+
+## Reporting Linear Regression {#sec-reporting-linear-regression}
+
+Linear regression (otherwise referred to as least squares or ordinary least squares \[OLS\] regression) models provide a way of modelling changes in the mean of a dependent variable as a linear function of one or more independent variables. We use example data from the `demdata` dataset and predict electoral democracy scores in the year 2020 based on economic inequality, the country's regime status in the year 1984 (democracy or autocracy), and a categorical variable indicating the region of the world in which the country is situated (1 = Europe, 2 = Africa, 3 = Asia, 4 = Americas).
+
+Here is the example output in R; you would not include this output in your academic papers but would instead create a more formal table (see below) or coefficient plot.
+
+```{r}
+#| echo: false
+#create region variable
+demdata <- demdata |>
+  mutate(region = case_when(
+      e_regiongeo %in% c(1:4) ~ 1, 
+      e_regiongeo %in% c(5:9) ~ 2, 
+      e_regiongeo %in% c(10:15) ~ 3, 
+      e_regiongeo %in% c(16:19) ~ 4))
+
+```
+
+```{r}
+#Factorize categorical variables
+demdata <- demdata |> 
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         region = factor(region, 
+                    levels=c(2,3,1,4), #Ref group is listed first
+                    labels=c("Africa", "Asia", "Europe", "Americas")))
+
+#Run and store the model
+example_model <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + region, 
+                    data=demdata)
+
+#Results
+summary(example_model)
+```
+
+See earlier chapters for interpretation guidelines (e.g,. @sec-performing-a-multiple-linear-regression).
+
+### Reports
+
+The correct report includes:
+
+-   A discussion of the direction of the relationship on offer (i.e., is the relationship between variables positive or negative?) and an interpretation of what this means drawing upon the coding of the variables in the equation.
+    -   Discussions of coefficients from multiple linear regression should indicate that these relationships occur holding the effect of the other variables in the model constant, e.g., "ceteris paribus".
+-   A conclusion about the null hypothesis with reference to the p-value and/or confidence interval
+    -   Coefficients with p-values greater than 0.05 are generally described as not statistically significant or not statistically significant at conventional levels. In such cases, one can indicate that the relationship is not statistically significant and note the p-value.
+    -   Reports of statistical significance are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels.[^linear_08-3] Report at the highest level that is justified by the p-value. For instance:
+        -   If p = 0.04, then p \< 0.05 (significant at 95% level)
+        -   If p = 0.004, then p \< 0.01 (significant at 99% level)
+        -   If p = 0.0000005, then p \< 0.001 (significant at 99.9% level)
+        -   It is not common to go above p \< 0.001 (e.g., we would typically not say that p \< 0.000001, just p \< 0.001). We do not write p \< 0.000.
+    -   The confidence interval can also be used to assess statistical significance and communicate the uncertainty surrounding regression estimates. If you include the CI in your discussion, then you can place it in parentheses after the coefficient: "The coefficient for economic inequality is -0.01 (95% CI: -0.02, -0.002)".
+    -   It is not as common to directly reference the t-statistic in discussions of the statistical significance of regression coefficients, but it is not problematic to do so either. If doing so, then you should generally list it alongside the p-value: "(t = 1.98, p \< 0.05)".
+
+[^linear_08-3]: Using a 90% significance test may be acceptable if the model has a small N.
+
+Here are examples for `gini_2019` (a continuous variable) and `TYPEDEMO1984` (a binary variable)
+
+::: {.callout-tip title="Report"}
+**gini_2019**: We expect the level of electoral democracy to decrease as economic inequality increases holding constant the effects of prior regime status and world region. Based on our model, we expect the level of electoral democracy to decrease by -0.01 scale points on average with each one unit increase in inequality. This association is statistically significant (p \< 0.05).
+
+**TYPEDEMO1984**: The results of the regression model show that countries recorded as democratic in 1984 are, on average, 0.07 scale points more democratic in 2020 than countries with equivalent levels of inequality and world region but recorded as an autocracy in 1984. This difference is not statistically significant at conventional levels (p = 0.28).
+:::
+
+Additional notes for writing up results for formal papers:
+
+-   The interpretation above focuses on just the coefficient and its interpretation. A stronger discussion in an academic paper would include a discussion about predicted values to help communicate the potential substantive importance of the relationship on offer. For instance, one could note the predicted value of electoral democracy when economic inequality is "high" vs. when it is "low" based on the model (where "high" and "low" are based on attributes of the variable under investigation). A plot of predicted values may further enrich these discussions. See @sec-presenting-linear-regression-predicted-values-plots for further discussion.
+-   If the goal of one's model is to assess the relationship between a particular independent variable and the dependent variable while adjusting for potential confounding influences, then a discussion of the coefficients for "control" variables is generally not needed.
+-   Discussions of regression results in academic papers seldom focus on the Intercept term. The most notable exceptions would be bivariate models where the predictor variable is scaled such that the the value of 0 refers to a particular category of relevance. For instance, if the predictor variable were a binary variable for whether some observations were randomly assigned to an experimental treatment condition (x = 1) or to a control group (x = 0), then the Intercept would tell us the mean of Y for those in the control group, which would be very useful to know!
+-   Be mindful of the use of "effect" language, e.g., the "effect of variable X". This brings to mind *causal* effects (X causes Y), but causal inference requires some strong assumptions to be met. It is typically safest to discuss results as associations.
+
+## Presenting Linear Regression: Regression Tables {#sec-presenting-linear-regression-regression-tables}
+
+The most common way of reporting regression results in a paper is a regression table. One useful package for creating these tables is called `modelsummary`. Within this package is the aptly named function `modelsummary()`, which will create regression tables for us.
+
+### Regression Tables with a Single Model
+
+As a first example, we will create a regression table using the results from a model wherein electoral democracy in 2020 is regressed on just the level of corruption in the country "cpi". Here is the default output of the command without specifying any other options:
+
+```{r}
+#Run and store the model
+model1 <- lm(v2x_polyarchy ~ cpi, data = demdata)
+
+#The basic command
+modelsummary(model1)
+```
+
+`modelsummary(`
+
+:   This is the name of the command
+
+`model1`
+
+:   This is the name of the model that will be presented in the table.
+
+This table can be improved. First, we should communicate something about the statistical significance of the coefficients, e.g., via asterisks or other symbols. Second, we should give more informative labels for our independent variables. Third, the default output shows a variety of model fit statistics that we are not interested in and which we will want to remove from the table. Finally, we should add information to the table such as a title describing its contents and a note at the bottom indicating what the values in the table represent.
+
+Here is the basic syntax that we will use to produce regression tables:
+
+```{r}
+
+modelsummary(model1, 
+             stars = TRUE, # <1>             
+             coef_rename = c(    # <2>             
+               "(Intercept)" = "Intercept", 
+               "cpi" = "Corruption Perception Index"), 
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), # <3>
+             title = "Predicting Electoral Democracy with Level of Corruption", # <4>
+             notes = "OLS coefficients with standard errors in parentheses") # <5> 
+
+```
+
+1.  This adds "stars" to signal statistical significance
+2.  We rename our variables for better communication via `coef_rename()`
+3.  We select which model fit statistics via `gof_map()`
+4.  We can give a title to the table via `title =`
+5.  And, finally, provide some notes at the bottom of the table via `notes =`
+
+`stars = TRUE,`
+
+:   This adds symbols to communicate information about the statistical significance of a coefficient (e.g., the little stars or asterisks next to some of the coefficients). Information is automatically added to the bottom of the table about what each symbol means/represents. This portion of the command can remain the same when you create your own OLS/linear regression table.
+
+`coef_rename = c(...)`
+
+:   The `modelsummary()` command will use the name of the variable by default when creating a table. One way we change these labels is via the `coef_rename()` option. We begin by noting the name of the term we want renamed (e.g., `cpi`) and then, after the equals sign, what we want it to be labelled as in the final table ("Corruption Perception Index"). This latter information needs to be in quotation marks. We use double quotation marks here ("word"), but you can also use a single quotation mark ('word') - either works as long as you are consistent in your use.
+
+`gof_map = c(...)`
+
+:   The `modelsummary()` command will show a number of "goodness of fit" statistics by default. For our purposes we wish to only show three of them: the number of observations in the model, the R^2^, and the Adjusted R^2^. There are a couple of ways of removing unwanted fit statistics from the table. In `gof_map()` we provide the names of the statistics we *want to include* and then the function will filter out everything that doesn't match these labels.[^linear_08-4] Here, we have the command include the number of observations ("nobs"), the R^2^ statistic ("r.squared"), and the adjusted R^2^ ("adj.r.squared"). This information can remain the same when you create your own OLS/linear regression table.
+
+`title = ...`
+
+:   This specifies a title for the table. The title is presented on the bottom in the output of this document, but would print at the top of the table when exporting to Word (see below.)
+
+`notes = (...)`
+
+:   This specifies the contents of the notes at the bottom of the table. It is conventional to indicate what is being presented (e.g., "OLS coefficients") and what the information underneath these values represents (e.g., "with standard errors...").
+
+[^linear_08-4]: The alternative is `gof_omit()` where we provide the names of the statistic we want to, well, omit.
+
+### Regression Tables with Multiple Models
+
+We can also use `modelsummary()` to produce regression tables that contain multiple models. For instance, we could show the results from the model with just "cpi" and then one additional predictor variables. In order to do this, we must first combine the different models into an R object called a "list" and then use the list in our `modelsummary()` command. Most of the options in the `modelsummary()` command can stay the same but the `coef_rename()` portion for renaming new variables and the `title` portion should be updated.
+
+```{r}
+#Our second model
+model2 <- lm(v2x_polyarchy ~ cpi + v2caviol + region, data = demdata)
+
+#Creating a list
+model_list <- list(model1, model2)
+
+#Using the list in modelsummary()
+modelsummary(model_list, 
+             stars = TRUE, 
+             coef_rename = c(
+               "(Intercept)" = "Intercept", 
+               "cpi" = "Corruption Perception Index", 
+               "v2caviol" = "Political Violence",  
+               "regionAsia" = "Asia",
+               "regionEurope" = "Europe", 
+               "regionAmericas" = "Americas"), 
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), 
+             title = "Predicting Electoral Democracy with Corruption, Political Violence, and Region", 
+             notes = "OLS coefficients with standard errors in parentheses. Reference group for region = Africa")
+
+```
+
+The default behavior here is to name the first model "Model 1" and the second one "Model 2". This is typically fine. We we can also specify names for each column when we set combine the models into a list object if we so desired. This is most useful if the models differed in some fundamental way (e.g., the models predict different dependent variables and you need a way to signal that to consumers of your table).
+
+```{r}
+#A list with names
+model_list_named <- list(
+  "Just Corruption" = model1, 
+  "Full Model" = model2)
+
+#Create the table
+modelsummary(model_list_named, 
+             stars = TRUE, 
+             coef_rename = c(
+               "(Intercept)" = "Intercept", 
+               "cpi" = "Corruption Perception Index", 
+               "v2caviol" = "Political Violence",  
+               "regionAsia" = "Asia",
+               "regionEurope" = "Europe", 
+               "regionAmericas" = "Americas"), 
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), 
+             title = "Predicting Electoral Democracy with Corruption, Political Violence, and Region", 
+             notes = "OLS coefficients with standard errors in parentheses. Reference group for region = Africa")
+
+```
+
+### Saving to File
+
+While it is becoming more common to use R Markdown to directly write academic papers, many people who use R will want to export results from R for use in a different word processor (e.g., Microsoft Word, Google Docs, etc.) where we can make further edits before adding the table to our reports/papers. We can do this by adding another line of syntax to our `modelsummary()` command wherein we tell the command to create an output file:
+
+```{r}
+modelsummary(model_list_named, 
+             stars = TRUE, 
+             coef_rename = c(
+               "(Intercept)" = "Intercept", 
+               "cpi" = "Corruption Perception Index", 
+               "v2caviol" = "Political Violence",  
+               "regionAsia" = "Asia",
+               "regionEurope" = "Europe", 
+               "regionAmericas" = "Americas"),
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), 
+             title = "Predicting Electoral Democracy with Corruption, Political Violence, and Region", 
+             notes = "OLS coefficients with standard errors in parentheses. Reference group for region = Africa", 
+             output = "example_regression_table.docx") 
+
+
+```
+
+`output = "example_regression_table.docx"`
+
+:   This line controls the saving process. It tells the command that we want to save a new file; that we want it to be called "example_regression_table"; and that we want it to be a ".docx" file, the default file type for Microsoft Word. The file will be saved to our working directory unless we specify a different output location (e.g., "output/example_regression_table.docx"). We could then open this file in Word and copy and paste it into our report as needed. See the Warning above about saving and editing correlation tables as it also applies here.
+
+### Instructions
+
+-   Provide an informative title, variable labels, and a note indicating what is being reported in the table.
+-   The coefficients for categorical variables provide estimates of the difference in means between each included category and the omitted reference group (African countries in this example). You can indicate the identity of the reference category in one of three ways. First, you could provide this information in the notes section as shown in the examples above. Second, you can note the reference category in the variable label (e.g,. "Asia (reference group: Africa"). You would do this while renaming the variable (e.g., `coef_rename('regionAsia' = 'Asia (ref group: Africa)'`). Third, you can add a row to your table with this information. How to do this is described on the `modelsummary` [webpage](https://modelsummary.com/articles/modelsummary.html#add_rows){target="_blank"}.
+-   It is standard to provide the unstandardized coefficient with standard errors in parentheses underneath the coefficient. This is the default behavior of the `modelsummary` command. One can also provide the standard error in a column next to the coefficient (see [this section](https://modelsummary.com/articles/modelsummary.html#shape-pivot-groups-panels-and-stacks){target="_blank"} of the `modelsummary` website for how), although this can be problematic if the table includes many models. The command will also generally round the coefficient and standard errors to 3 digits by default, which is generally what we want.
+-   The `modelsummary` function will, by default, provide a numeric label for each model included in the table (e.g,. (1), (2), etc.). It can make sense to provide a specific title of your own in some circumstances. For instance, if one were creating a table with the results from multiple models that have the same IVs but different DVs, then one could use the name of the DV as the name for each column. See above.
+-   The `modelsummary` webpage provides additional insight into how to further customize the appearance of these types of tables by, for instance, changing which table-making package `modelsummary()` uses when creating the table (see [here](https://modelsummary.com/articles/appearance.html){target="_blank"} for more).
+
+## Presenting Linear Regression: Coefficient Plots {#sec-presenting-linear-regression-coefficient-plots}
+
+Regression tables are the most common way of reporting the results of a regression in paper or report. A second way that the results of a regression model may be presented in formal papers and presentations is via a coefficient plot. A coefficient plot provides a graphical overview of the coefficients (with confidence intervals) for the independent variables in a model. The Intercept term is generally omitted from these types of plots.
+
+As an example, let us plot the results from a model predicting electoral democracy with corruption, political violence, and regime status in 1984. We first run our model. We then use `tidy()` to create a data object that has the coefficients from our model and their associated 95% confidence interval.
+
+```{r}
+#Model
+plot_model <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data = demdata)
+
+#Store the model results as a tidied data object
+#NEED to ask for the confidence interval
+plot_model_tidied <- tidy(plot_model, conf.int = TRUE)
+
+#here is what it looks like
+plot_model_tidied
+```
+
+The `tidy()` command creates a data object that we can then use as input to a subsequent `ggplot()` figure. However, we should do some house cleaning first. In particular, we should recode the `term` variable so that we give informative labels to our variables and hence make the resulting figure easier to understand.[^linear_08-5]
+
+[^linear_08-5]: We might take other steps here as well before creating the figure. For instance, we could convert the `term` variable into a factor variable before making the plot in order to control the order in which variables are arranged on the figure.
+
+```{r}
+#recoding term to get nicer names to plot:
+plot_model_tidied <- plot_model_tidied |> 
+  mutate(term = recode(term, 
+                       "cpi" = "Corruption Perception Index", 
+                       "v2caviol" = "Political Violence",  
+                       "TYPEDEMO1984Democracies" = "Democracy in 1984?"))
+
+plot_model_tidied
+```
+
+We then produce our plot:
+
+```{r}
+plot_model_tidied |> 
+  filter(term != "(Intercept)") |>  # <1> 
+  ggplot(aes(x = estimate, y = term)) +  
+  geom_pointrange(aes(xmin = conf.low, 
+                      xmax = conf.high)) + 
+  labs(title = "OLS Coefficients Predicting Level of Democracy (2020)", 
+       x = "OLS Estimate", 
+       y = "Predictor Variable") + 
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") + # <2>
+  geom_text(aes(label = round(estimate, 2)), vjust = -0.5) # <3> 
+```
+
+1.  Removes the intercept from our dataframe
+2.  Adds a vertical reference line at x = 0
+3.  Adds the (rounded) value of the coefficient estimate to the plot
+
+`plot_model_tidied |> filter(term != "(Intercept)") |>`
+
+:   The first two lines tell R where our data is stored (`plot_model_tidied`) and then to filter out (remove) the row pertaining to the model's Intercept term. The Intercept is typically not provided in a coefficient plot.
+
+`ggplot(aes(x = estimate, y = term)) +`
+
+:   This tells R that we wish to use the `ggplot()` function to create a figure and what data should be used for the x- and y-axes. `term` is a variable in our tidied dataframe that lists the name of the IVs in our model while `estimate` is the name of the column that contains the coefficient estimates. We could also flip this type of plot such that the estimate is on the y-axis and independent variables are on the x-axis (e.g., `aes(x = term, y = estimate)`). However, this may lead to a situation where the names of the variables overlap with one another in the figure thereby leading to a difficult to read plot. If we did do this, then we would want to change `xmin` and `xmax` in the next line of syntax to `ymin` and `ymax` and change `geom_vline(xintercept = 0…)` to `geom_hline(xintercept = 0…)` .
+
+`geom_pointrange(aes(xmin = conf.low, xmax = conf.high))`
+
+:   This portion see us ask for a specific type of plot. `geom_pointrange` produces a plot with a marker ("point") surrounded by a line ("range") as seen in the image above. The `xmin` and `xmax` entries tell R what the minimum and maximum values of this range should be.[^linear_08-6] The "range" here are the endpoints of the 95% confidence interval around the coefficient. `conf.low` and `conf.high` are the names of the variables in the tidied dataset that contain information on the lower and upper bounds of the confidence interval for our coefficients.
+
+`labs(...)`
+
+:   Here we provide informative labels for our plot.
+
+`geom_vline(xintercept = 0, linetype = "dashed", color = "red")`
+
+:   This asks R to draw a vertical reference line (hence: "geom\_**v**line") at the point on the x-axis where x = 0. The inclusion of this line helps communicate whether a coefficient is statistically significant or not at the level of the confidence intervals.
+
+`geom_text(aes(label = round(estimate, 2)), vjust = -0.5)`
+
+:   This line enables us to plot the value of the regression coefficient next to the marker and can generally be kept the same in your examples. `geom_text()` indicates that we want to add text to our figure. We then specify what this text should be with `label =`. Here, we wish to show the regression slope, which is contained in a variable in our data named `estimate`. Moreover, we wish to show a rounded version of this estimate (e.g., -0.01 rather than -0.00872); "2" indicates how many decimals we want the estimate to be rounded by. The final portion is `vjust = -0.5`, which controls the placement of the label. "vjust" stands for *vertical* justification; we are telling R to nudge the label vertically along the y-axis so that it does not overlap with the marker. Negative values will nudge the label upwards, while positive values would nudge them downwards. In practice you may have to experiment a little with the specific numeric value to make sure there is enough, but not too much, space between it and the marker.
+
+[^linear_08-6]: If we put the coefficient estimates on the y-axis instead, then we would use "ymin" and "ymax" instead.
+
+::: {#tip-plot-ordering .callout-important}
+#### Warning!
+
+The default behavior of `ggplot` is to order the coefficients by the alphabetical order of the variable that contains the variable names (named `term` when one is plotting the results of a data frame created using the `tidy()` function as above). This is often less than ideal as the different categories of a categorical variable may be separated from one another. In addition, we may want to call attention to a particular variable in the model which may be harder to do if it is placed in middle of the plot.
+
+Here is an example of this problem:
+
+```{r}
+#Model with categorical variable
+cat_model <- lm(v2x_polyarchy ~ cpi + v2caviol + region, data = demdata)
+
+#Tidy and a simplified plot
+tidy(cat_model, conf.int = TRUE) |> 
+  filter(term != "(Intercept)") |> 
+  mutate(term = recode(term, 
+                       "cpi" = "Corruption", 
+                       "v2caviol" = "Pol. Violence", 
+                       "regionAsia" = "Asia", 
+                       "regionEurope" = "Europe", 
+                       "regionAmericas" = "Americas")) |> 
+    ggplot(aes(x = estimate, y=term)) + 
+    geom_pointrange(aes(xmin = conf.low, xmax = conf.high))
+```
+
+The coefficients for the categorical variable have been separated from one another. We can avoid this issue by converting the `term` variable into a factor variable and specifying the order of its levels. This also enables us to skip the recoding portion of the syntax in the earlier examples since we are providing variable names in the `levels = c()` portion of the syntax.
+
+```{r}
+tidy(cat_model, conf.int = TRUE) |> 
+  filter(term != "(Intercept)") |>  # <1>
+  mutate(term = factor(term,
+                       levels = c("regionEurope", "regionAsia", 
+                                  "regionAmericas", "v2caviol",
+                                  "cpi"),  # <2>
+                       labels = c("Europe", "Asia", 
+                                  "Americas", "Pol. Violence",
+                                  "Corruption"))) |> 
+    ggplot(aes(x = estimate, y=term)) + 
+    geom_pointrange(aes(xmin = conf.low, xmax = conf.high))
+```
+
+1.  Converting the `term` variable to a factor should be done after filtering out the Intercept, whether all in one go as in this example or in two separate steps.
+2.  `ggplot()` will essentially plot upwards through the factor variable, so whatever category is listed first will be placed at the bottom of the plot. This can involve some trial and error to get right.
+:::
+
+### Instructions
+
+-   It is common to place the coefficient estimate on the x-axis and the variable names on the y-axis. One can reverse this (estimates on the y-axis, variable names on the x-axis) in some circumstances without a problem. However, this can lead to situations where the variable names overlap and become difficult to read. The formatting above avoids this type of issue (although very long labels can still be problematic). Other possible remedies to this type of problem are discussed in [helpful blog post](https://www.andrewheiss.com/blog/2022/06/23/long-labels-ggplot/){target="_blank"}.
+-   Plotting the (rounded) coefficient value above or next to the marker helps readers place the coefficient on the axis and hence understand the results better.
+-   95% confidence intervals are the ones that are conventionally plotted.
+-   When you are placing a figure such as this in the text of a paper/report, then you should include a "Notes" section underneath the figure briefly explaining what is being presented. For instance: "Notes: Markers provide the OLS coefficient for each variable with 95% confidence intervals. See Table A1 for full results.".
+-   Providing a reference line at 0 is good practice as this helps readers understand whether a coefficient is statistically significant (at least, at p \< 0.05).
+-   The default behavior of `ggplot` is to order the coefficients by the alphabetical order of the variable that contains the variable names (named `term` when one is plotting the results of a data frame created using the `tidy()` function as above). This is often less than ideal as the different categories of a categorical variable may be separated from one another. In addition, we may want to call attention to a particular variable in the model which may be harder to do if it is placed in middle of the plot. We can avoid this issue by converting the `term` variable into a factor variable and specifying the order of its levels. See the example above in the Warning box above.
+-   @gelman2006 offers the now famous dictum that "the difference between 'significant' and 'not significant' is not itself statistically significant". What this means in the context of a coefficient plot is to be careful in comparing coefficients against one another based on whether their confidence intervals overlap or not. The confidence intervals help you judge whether one can reject the null hypothesis that the coefficient for the variable in question = 0. If the confidence intervals between two coefficients do not overlap with one another, then the difference between those coefficients may also be statistically significant. However, two coefficients can be significantly different from one another even with overlapping confidence intervals.
+
+## Presenting Linear Regression: Predicted Values Plots {#sec-presenting-linear-regression-predicted-values-plots}
+
+Regression tables and coefficient plots communicate the coefficients for variables in a model: the expected average value of the DV when all predictors = 0 (Intercept term) or the expected change in the mean of Y given a one unit change in X (independent variable coefficients). We may use predicted values, and plots of those predicted values, to supplement discussions of these latter coefficients with an eye toward discussing the potential *substantive* importance of the relationship on offer.
+
+The process for creating these types of images will be similar to the process for creating coefficient plots, but we will use the `predictions()` command as an intermediate step rather than `tidy()`. See @sec-predicted-residual-values for background on the use of the `predictions()` command.
+
+What follows are examples for how to graphically portray predictions for a continuous predictor and for binary/categorical predictors.
+
+### Continuous Predictor
+
+This example will focus on the regression model named `plot_model` from above, which predicts democracy scores with corruption, political violence, and prior regime status. Let's say our interest is in the corruption variable (`cpi`) and we want to show how our expectations about a country's democracy level changes as we move from the lower to upper ends of the corruption variable's scale. For instance, we might use the `predictions()` command to calculate predicted values from 20 to 80 on `cpi` in 10pt increments:
+
+```{r}
+#calculate the predictions
+cpi_preds <- predictions(plot_model, 
+                         newdata = datagrid(cpi = c(20, 30, 40, 50, 60, 70, 80)))
+
+#let's take a look
+cpi_preds
+```
+
+We can pass the data in this data object to a `ggplot()` command to produce a nice looking figure conveying these results.
+
+```{r}
+ggplot(cpi_preds, aes(x = cpi, y = estimate)) + # <1> 
+       geom_line () + # <2> 
+       geom_ribbon(aes(ymin = conf.low, ymax = conf.high), # <3> 
+                   alpha = 0.2) +  
+       labs(title = "Predicted Level of Electoral Democracy by Corruption Perception Index", # <4> 
+            x = "CPI (Higher = Less Corrupt)",    
+            y = "Predicted Value") +   
+       scale_y_continuous(limits=c(0,1)) # <5>
+```
+
+1.  Indicates what data to use and plot
+2.  Tells R to draw a line connecting each estimate
+3.  Tells R to display the confidence intervals as a ribbon around the line and how dark the ribbon should be
+4.  Always a good idea to give a title and nice labels for the axes
+5.  Makes sure the y-axis ranges from 0-1 (the theoretical range of our DV). Not always needed.
+
+`ggplot(`
+
+:   The name of the command for plotting data.
+
+`cpi_preds, aes(x = cpi, y = estimate)) +`
+
+:   This tells the command where are data is located (in the object called `cpi_preds`) and what variables in that dataset we want to graph on the x- and y-axes respectively. We place the independent variable on the x-axis and the predicted values on the y-axis in this example.
+
+`geom_line() +`
+
+:   This indicates that we want to plot a line connecting these predicted values. The line will also fill in the spaces between each point. This is a common type of plot when the IV is continuous like this.
+
+`geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +`
+
+:   This indicates how we want the confidence intervals around these predictions to be conveyed. `geom_ribbon()` asks for the confidence intervals to be drawn as a smooth "ribbon" around the predictions. The information in `aes()` tells R what variables in our dataset include information on the lower (ymin) and upper (ymax) boundaries of the confidence interval. Finally, `alpha = 0.2` controls how darkly shaded the ribbon will be. The higher the value here the darker the ribbon and the more difficult it will be to see the line connecting these points.
+
+`labs(...)`
+
+:   Here, we provide informative labels for our plot.
+
+`scale_y_continuous(limits = c(0,1))`
+
+:   This sets the length of the y-axis so that it runs from the theoretical minimum (0) to maximum (1) of our dependent variable. We always want to avoid misleading the consumers of our graphics. The scaling of our axes is one culprit in bad or misleading graphics. Figures might exaggerate small differences, for instance, by restricting the scale of the y-axis to a very small range. Alternatively, one could make important changes disappear by extending the scale of the y-axis as well. See [this webpage](https://handsondataviz.org/how-to-lie-with-charts.html){target="_blank" rel="noreferrer noopener"} for some examples of both sins. We are trying to avoid these issues here by using the full range of the variable. Ultimately, these decisions are context dependent and should be done reflectively and in consultation with others.[^linear_08-7]
+
+[^linear_08-7]: The sociologist Kieran Healy provides a good discussion of how and why to "look at data" via graphics in his book "Data Visualization", which can be freely accessed via [this link](https://socviz.co/){target="_blank" rel="noreferrer noopener"}. See, in particular, Section 6 in Chapter 1, "Problems of honesty and good judgment".
+
+### Binary/Categorical Predictor Variable
+
+The process for displaying predictions for binary and categorical variable variables is quite similar to the above. We first use `predictions()` to calculate predicted values for each level of the variable and then feed that output into `ggplot()`.
+
+Here is an example focused on the prior regime status variable (`TYPEDEMO1984`) included in the `plot_example` model. We first use `predictions()` to obtain predicted values:
+
+```{r}
+#Obtain predicted values
+demo_preds <- predictions(plot_model, 
+                          by = "TYPEDEMO1984", 
+                          newdata = "mean")  # <1> 
+
+#Let's take a look: 
+demo_preds
+```
+
+1.  Holds the other covariates in the model constant at their mean or mode when making predictions
+
+We would then pass this object, and the data inside it, to a `ggplot()` command. Here we use `geom_pointrange()` instead of `geom_line()` as we are trying to convey the difference between two categories rather than levels of a scale:
+
+```{r}
+ggplot(demo_preds, aes(x = TYPEDEMO1984, y = estimate)) + 
+  geom_pointrange(aes(ymin = conf.low, ymax = conf.high)) + 
+  labs(title = "Predicted Level of Democracy by 1984 Regime Type",
+       y = "Predicted Value", 
+       x = "Regime Type in 1984") + 
+  scale_y_continuous(limits = c(0,1))
+
+```
+
+One further bit of information we might want to add on figures like this is the actual value of the prediction. This can make it easier to read the graph in many (but not necessarily all) instances. For instance, we would not typically add the value of the predicted values to a prediction plot of a continuous predictor variable because there may be a larger number of predicted values making it difficult to read/interpret the plot.
+
+Here is how we would add the values of the predicted values to the plot:
+
+```{r}
+ggplot(demo_preds, aes(x = TYPEDEMO1984, y = estimate)) + 
+  geom_pointrange(aes(ymin = conf.low, ymax = conf.high)) + 
+  labs(title = "Predicted Level of Democracy by 1984 Regime Type",
+       y = "Predicted Value", 
+       x = "Regime Type in 1984") + 
+  scale_y_continuous(limits = c(0,1)) + 
+  geom_text(aes(label = round(estimate, 2)), hjust = -0.25)
+```
+
+`geom_text(aes(label = round(estimate, 2)), hjust = -0.25)`
+
+:   This added line controls the display of the predicted value and can generally be kept the same in your examples. The only difference from the example above is that we now use "hjust" rather than "vjust" given the orientation of this figure (i.e., the estimates are provided on the y-axis rather than the x-axis and so we want to move to nudge the labels horizontally rather than vertically).
+
+### Instructions
+
+-   Which values should one input into the `predictions()` command and hence plot?
+    -   If the variable is binary/categorical, then you should focus on all of the (relevant) categories to the discussion at hand.
+    -   If the variable is continuous, then one can input the minimum and maximum of the variable with reasonable increments between them to produce a plot showing changes across the range of X. However, there is an **important** note on this front: If your data has missing values on one or more variables in the model, then the min and max of a variable in the model may not correspond to what you would find if you simply used the `summary()` function to summarize the variable's distribution in the full dataset. This can be problematic if leads you to make predictions for values of a variable that are not observed in the model as these types of extrapolations may be uncertain and faulty. You can avoid this problem by creating a dataset that only includes observations in the model and then finding the min/max (and other intermediate values). This can be done, for instance, by using the `predictions()` command as shown in @sec-predictions-for-a-continuous-predictor-variable .
+-   The continuous variable example above plots the predicted values as a line with a ribbon showing the 95% confidence interval around the predictions. This is a conventional choice when one is plotting predictions for a continuous independent variable. If the independent variable is binary/categorical, then one would typically use something like `geom_pointrange()` or `geom_errorbar()`.
+-   The scale of the y-axis is something to consider when creating a plot such as this. The examples above uses `scale_y_continuous()` to make sure that the y-axis stretches from the min to the max value of the DV. This can help avoid situations where `ggplot()` shows only a truncated stretch of the y-axis thereby potentially giving a false impression of the magnitude of the change in Y across the range of X. This type of rescaling is not always needed, and can sometimes create its own problems, but it is something to reflect on before communicating statistical results. The sociologist Kieran Healy provides a further [discussion](https://socviz.co/lookatdata.html#problems-of-honesty-and-good-judgment){target="_blank"} of these competing considerations in his book on data visualization.

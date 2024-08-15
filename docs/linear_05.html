@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical analysis and presentation using R - 5&nbsp; Predicted &amp; Residual Values</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./linear_06.html" rel="next">
+<link href="./linear_04.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_05.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical analysis and presentation using R</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_05.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Common Errors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./package_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Overview of R Packages</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Formulas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#predicted-values-and-residuals-for-individual-observations" id="toc-predicted-values-and-residuals-for-individual-observations" class="nav-link active" data-scroll-target="#predicted-values-and-residuals-for-individual-observations"><span class="header-section-number">5.1</span> Predicted Values and Residuals for Individual Observations</a></li>
+  <li><a href="#predicted-values-at-specific-values-of-the-iv-bivariate-model" id="toc-predicted-values-at-specific-values-of-the-iv-bivariate-model" class="nav-link" data-scroll-target="#predicted-values-at-specific-values-of-the-iv-bivariate-model"><span class="header-section-number">5.2</span> Predicted Values at Specific Values of the IV (Bivariate Model)</a></li>
+  <li><a href="#predicted-values-multiple-linear-models" id="toc-predicted-values-multiple-linear-models" class="nav-link" data-scroll-target="#predicted-values-multiple-linear-models"><span class="header-section-number">5.3</span> Predicted Values (Multiple Linear Models)</a>
+  <ul class="collapse">
+  <li><a href="#sec-predictions-for-a-continuous-predictor-variable" id="toc-sec-predictions-for-a-continuous-predictor-variable" class="nav-link" data-scroll-target="#sec-predictions-for-a-continuous-predictor-variable"><span class="header-section-number">5.3.1</span> Predictions for a Continuous Predictor Variable</a></li>
+  <li><a href="#predictions-for-a-factor-predictor-variable" id="toc-predictions-for-a-factor-predictor-variable" class="nav-link" data-scroll-target="#predictions-for-a-factor-predictor-variable"><span class="header-section-number">5.3.2</span> Predictions for a Factor Predictor Variable</a></li>
+  <li><a href="#predictions-for-specific-combinations-of-the-predictor-variables" id="toc-predictions-for-specific-combinations-of-the-predictor-variables" class="nav-link" data-scroll-target="#predictions-for-specific-combinations-of-the-predictor-variables"><span class="header-section-number">5.3.3</span> Predictions for specific combinations of the predictor variables</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_05.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-predicted-residual-values" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Regression models make predictions about the value of the DV we expect to see given the value of the independent variable(s) in the model. We can use R to investigate predicted values in closer detail to better understand the results of our model.</p>
+<p>As always, we begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers, but must be loaded prior to use. We will also run and store the linear regressions that will be used in the subsequent examples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)              <span class="co">#loading data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)        <span class="co">#data manipulation and plotting</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects) <span class="co">#calculating predicted values</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data and some data management</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"demdata.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984 =</span> <span class="fu">factorize</span>(TYPEDEMO1984), </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Typeregime2006 =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Models for examples</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>model_continuous <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data =</span> demdata)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>model_binary <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>model_categorical <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> Typeregime2006, <span class="at">data=</span>demdata)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="predicted-values-and-residuals-for-individual-observations" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="predicted-values-and-residuals-for-individual-observations"><span class="header-section-number">5.1</span> Predicted Values and Residuals for Individual Observations</h2>
+<p>Linear regression models make predictions about the value of the DV we should expect to observe for each observation used in fitting the model. These unit-level predictions will likely differ from the actual observed value of the DV by some amount; we call the difference between observed and predicted value “residuals” or “prediction errors”.</p>
+<p>We can use the <code>predictions()</code> command from the <code>marginaleffects</code> package to see what our model predicts, and how wrong those predictions are, for each observation used in fitting the model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_binary_predictions <span class="ot">&lt;-</span> <span class="fu">predictions</span>(model_binary, <span class="at">newdata =</span> demdata) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="co">#as_tibble() used for ease of display; see Warning below</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here is how to read this syntax:</p>
+<dl>
+<dt><code>model_binary_predictions</code></dt>
+<dd>
+<p>We are assigning the output of our command to a new object called <code>model_binary_predictions</code>. You would name this whatever you wish in your examples.</p>
+</dd>
+<dt><code>predictions(model_binary,</code></dt>
+<dd>
+<p>The name of the command is <code>predictions</code>. We place within the parentheses the name of the data object where we have stored our model results. You should change this name to whatever you have named the model you want to make predictions from.</p>
+</dd>
+<dt><code>newdata = demdata)</code></dt>
+<dd>
+<p>Here we tell the command where the data originally comes from. This has a specific purpose: it tells the command that the output it creates should include both the predicted values for each observation in the original dataset <strong>and</strong> all of the other variables in the original dataset for these observations. This can be useful for investigating the characteristics of observations that have particularly sizable residual values. Omitting <code>newdata = demdata</code>, on the other hand, would produce an object that contains predicted values for each observation used in fitting the model as well as their observed values on the variables using in the model but not other variables from the original dataset. You would change <code>demdata</code> to the name of the data object used when fitting your regression model.</p>
+</dd>
+</dl>
+<p>Here is what the output looks like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_binary_predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 179 × 49
+   rowid estimate std.error statistic    p.value s.value conf.low conf.high
+   &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1     1    0.690    0.0287      24.1  3.16e-128    424.    0.634     0.746
+ 2     2    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
+ 3     3    0.690    0.0287      24.1  3.16e-128    424.    0.634     0.746
+ 4     4    0.690    0.0287      24.1  3.16e-128    424.    0.634     0.746
+ 5     5    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
+ 6     6    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
+ 7     7    0.690    0.0287      24.1  3.16e-128    424.    0.634     0.746
+ 8     8    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
+ 9     9   NA       NA           NA   NA             NA    NA        NA    
+10    10    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
+# ℹ 169 more rows
+# ℹ 41 more variables: country_name &lt;chr&gt;, year &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;,
+#   v2x_libdem &lt;dbl&gt;, v2x_egaldem &lt;dbl&gt;, v2cacamps &lt;dbl&gt;, v2caviol &lt;dbl&gt;,
+#   e_peaveduc &lt;dbl&gt;, cpi &lt;dbl&gt;, e_regiongeo &lt;dbl&gt;, e_regionpol_6C &lt;dbl&gt;,
+#   v2elcomvot &lt;dbl&gt;, compulsory_voting &lt;dbl&gt;, bicameral &lt;dbl&gt;, dem_diff &lt;dbl&gt;,
+#   dem_increase &lt;dbl&gt;, dem_decrease &lt;dbl&gt;, TypeSoc2005 &lt;dbl&gt;,
+#   TypeEcon2006 &lt;dbl&gt;, HDI2005 &lt;dbl&gt;, GDP2006 &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, …</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Output Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>estimate: This is the predicted value of the DV for the observation based on the regression model</li>
+<li>std.error, statistic, p.value, conf.low, conf.high: These report the standard error, test statistic, p-value, and the lower and upper bounds of the 95% confidence interval for the estimate. They tell us about the uncertainty around the prediction. The s.value column provides another way of thinking about uncertainty, but one we won’t cover; it is non-examinable.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li>The ensuing columns in the data frame are the variables from the original dataset and are noted at the bottom of the output (“41 more variables: country_name &lt;chr&gt;, …”).</li>
+</ul>
+</div>
+</div>
+<p>We can use this saved data object to calculate the residual value for each observation: the difference between the actual value on the DV and what our model predicts we should observe for the observation by creating a new variable where we subtract “estimate” from our DV.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_binary_predictions <span class="ot">&lt;-</span> model_binary_predictions <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">residual_value =</span> v2x_polyarchy <span class="sc">-</span> estimate) <span class="co">#residual = actual - predicted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We could then use this newly created variable to investigate the results of our model and consider, for instance, which observations have particularly large residual values. This can be useful when checking the assumptions of our model, which we will learn how to do in <a href="linear_07.html" class="quarto-xref"><span>Chapter 7</span></a> .<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model_binary_predictions <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, v2x_polyarchy, estimate, residual_value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 179 × 4
+   country_name v2x_polyarchy estimate residual_value
+   &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
+ 1 Mexico               0.647    0.690        -0.0432
+ 2 Suriname             0.761    0.418         0.343 
+ 3 Sweden               0.908    0.690         0.218 
+ 4 Switzerland          0.894    0.690         0.204 
+ 5 Ghana                0.72     0.418         0.302 
+ 6 South Africa         0.703    0.418         0.285 
+ 7 Japan                0.832    0.690         0.142 
+ 8 Myanmar              0.436    0.418         0.0184
+ 9 Russia               0.262   NA            NA     
+10 Albania              0.485    0.418         0.0674
+# ℹ 169 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="predicted-values-at-specific-values-of-the-iv-bivariate-model" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="predicted-values-at-specific-values-of-the-iv-bivariate-model"><span class="header-section-number">5.2</span> Predicted Values at Specific Values of the IV (Bivariate Model)</h2>
+<p>We just saw how to obtain model predictions for each individual observation used in creating the model. We may also want to know what we should expect to see, on average, for observations with some specific value of an independent variable. For instance, what is the democracy score we should expect to observe among countries that were autocracies in 1984? Or, what is the democracy score we should expect to observe (based on our model) for countries with a very low level of inequality (say, 25 on our scale)? We can also use the <code>predictions()</code> function to realize this end.</p>
+<p>As a first example, we will use <code>predictions()</code> to calculate the average predicted value among countries that were either an autocracy in 1984 or a democracy in 1984 based on our bivariate model (<code>model_binary</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_binary, </span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"TYPEDEMO1984"</span>) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="1">See the Warning box below for why we include the <code>as_tibble()</code> line of syntax here</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 10
+  rowid TYPEDEMO1984 estimate std.error statistic   p.value s.value conf.low
+  &lt;int&gt; &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1     1 Democracies     0.690    0.0287      24.1 3.16e-128    424.    0.634
+2     2 Autocracies     0.418    0.0233      17.9 1.16e- 71    236.    0.372
+# ℹ 2 more variables: conf.high &lt;dbl&gt;, rowid_dedup &lt;int&gt;</code></pre>
+</div>
+</div>
+<dl>
+<dt><code>predictions(model_binary,</code></dt>
+<dd>
+<p>We first specify the name of the command and then the model from which we want to make predictions.</p>
+</dd>
+<dt><code>by = "TYPEDEMO1984")</code></dt>
+<dd>
+<p>This tells the command that we want to make predictions “by level of” the variable listed in the parentheses. In this case, we get a prediction for each of category of this variable. We can note two things here. First, we use <code>by=</code> option with factor variables and a different method for continuous variables (see below). Second, we do not specify <code>newdata=</code> here because we want output with average predictions for both categories rather than output that contains data on all individual observations.</p>
+</dd>
+</dl>
+<p>We can also do this in situations where the predictor variable is continuous in nature. For instance, we might predict the <code>v2x_polyarchy</code> score with a measure of economic inequality (<code>gini_2019</code>) and then wonder: what is the democracy score we expect to observe for a country with a rather low level of inequality (25) versus one with a rather high level of inequality (45)?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_continuous, </span>
+<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="1">See the Warning box below for why we include the <code>as_tibble()</code> line of syntax here</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 10
+  rowid estimate std.error statistic  p.value s.value conf.low conf.high
+  &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1     1    0.764    0.0451      16.9 3.19e-64   211.     0.675     0.852
+2     2    0.527    0.0493      10.7 1.10e-26    86.2    0.430     0.623
+# ℹ 2 more variables: gini_2019 &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<dl>
+<dt><code>newdata = datagrid(gini_2019 = c(25,45))</code></dt>
+<dd>
+<p>This is how we obtain predictions for <em>specific</em> values of a continuous variable for which we want a prediction. <code>newdata = datagrid(</code> can remain the same in your examples. You would then change <code>gini_2019</code> to the name of the continuous variable of interest to you. The contents of <code>c()</code> (here: <code>c(25,45)</code>) dictate what values of the specified variable <code>predictions()</code> will make a prediction for; in this case, for the values of 25 and 45. <code>gini_2019</code> is a numeric variable, so we can provide the numeric values of interest to us without parentheses. We can also use <code>newdata = datagrid()</code> with factor variables, although this is slightly more effort than simply using <code>by =</code> and would require us to provide the name of each category in parentheses.</p>
+</dd>
+</dl>
+<p>We can naturally expand this so that we look at predictions for other values of this variable by including additional options in <code>c()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_continuous, </span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="1">See the Warning box below for why we include the <code>as_tibble()</code> line of syntax here</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  rowid estimate std.error statistic   p.value s.value conf.low conf.high
+  &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1     1    0.764    0.0451      16.9 3.19e- 64   211.     0.675     0.852
+2     2    0.705    0.0316      22.3 2.20e-110   364.     0.643     0.766
+3     3    0.645    0.0267      24.2 6.30e-129   426.     0.593     0.698
+4     4    0.586    0.0345      17.0 1.04e- 64   213.     0.518     0.654
+5     5    0.527    0.0493      10.7 1.10e- 26    86.2    0.430     0.623
+# ℹ 2 more variables: gini_2019 &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We ended our <code>predictions()</code> commands above with another line that specified <code>as_tibble()</code>. This last step is not necessary for the command to work. Here is an example from above but without that final line:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_binary, <span class="at">by =</span> <span class="st">"TYPEDEMO1984"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ TYPEDEMO1984 Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+  Democracies    0.690     0.0287 24.1   &lt;0.001 423.5 0.634  0.746
+  Autocracies    0.418     0.0233 17.9   &lt;0.001 235.6 0.372  0.463
+
+Columns: rowid, TYPEDEMO1984, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, rowid_dedup 
+Type:  response </code></pre>
+</div>
+</div>
+<p>The key difference here is in how the output is displayed in R: the default output of <code>predictions()</code> in the Console shows different names for the columns (e.g., Estimate rather than estimate, 2.5% rather than conf.low) to make things look a bit neater (you can see the actual names of the columns in the dataframe that <code>predictions()</code> produces in the final row of the output). We used the <code>as_tibble()</code> option above so that you could see the underlying data and variable names. We will use the output of this command in later chapters to produce plots of our data. The main warning here is to make sure you use the correct variable names (e.g., estimate rather than Estimate).</p>
+</div>
+</div>
+</section>
+<section id="predicted-values-multiple-linear-models" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="predicted-values-multiple-linear-models"><span class="header-section-number">5.3</span> Predicted Values (Multiple Linear Models)</h2>
+<p>We can naturally use these commands to obtain the residuals and predicted values from a model with multiple predictors. The process for finding the residuals of a multiple linear regression model is the same as above so we do not show it again. The process for calculating average predicted values is also highly similar, but with one important difference when the predictor is a factor variable.</p>
+<section id="sec-predictions-for-a-continuous-predictor-variable" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="sec-predictions-for-a-continuous-predictor-variable"><span class="header-section-number">5.3.1</span> Predictions for a Continuous Predictor Variable</h3>
+<p>Here are the results from our multiple linear regression model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term                    estimate std.error statistic      p.value
+  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)              0.187     0.0426      4.40  0.0000219   
+2 cpi                      0.00636   0.00106     6.01  0.0000000155
+3 v2caviol                -0.00872   0.0123     -0.712 0.478       
+4 TYPEDEMO1984Democracies  0.153     0.0349      4.37  0.0000239   </code></pre>
+</div>
+</div>
+<p><code>cpi</code> is a measure of perceived corruption in a country. It can theoretically range from 0-100 (with higher values indicating <em>less</em> perceived corruption), although it only ranges between 12 and 88 among countries in our model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_multiple) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cpi) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="3">3</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">Used to filter out any observations in our dataset that are not in the model due to missingness on one or more of the variables in the model</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="2">Selects just the the cpi variable</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="3">Find its summary statistics</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      cpi       
+ Min.   :12.00  
+ 1st Qu.:28.00  
+ Median :39.50  
+ Mean   :43.37  
+ 3rd Qu.:56.75  
+ Max.   :88.00  </code></pre>
+</div>
+</div>
+<p>We might ask ourselves this question: what is the level of democracy we should <em>expect</em> to observe based on our model for countries with different levels of <code>cpi</code> but representative values on the other predictor variables? The coefficient for <code>cpi</code> indicates that the predicted value of democracy should increase with each <em>one unit</em> increase in <code>cpi</code>…but do democracy scores change by a little, or a lot, when we move across the range of the corruption variable? Here is how we would use <code>predictions()</code> to obtain the expected democracy score when <code>cpi</code> takes on values between 20 and 80 in 10pt. increments in order to answer that question:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>preds1 <span class="ot">&lt;-</span> <span class="fu">predictions</span>(model_multiple, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">cpi =</span> <span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">80</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl>
+<dt><code>preds1 &lt;-</code></dt>
+<dd>
+<p>We save our results as a new data object so that we can use it again later. We name it <code>preds1</code> here, while you would give it a name of your choosing.</p>
+</dd>
+<dt><code>predictions(model_multiple,</code></dt>
+<dd>
+<p>We then specify the name of our command and the name of the model we want to make predictions from.</p>
+</dd>
+<dt><code>newdata = datagrid(cpi = c(20,30,40,50,60,70,80))</code></dt>
+<dd>
+<p>We then specify what IV, and what specific values of this IV, we want to make predictions for. We use the <code>newdata = datagrid()</code> option because “cpi” is a continuous variable. We do not need to put the values in quotation marks because it is a numerical variable.</p>
+</dd>
+</dl>
+<p>Here are the predictions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>preds1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 12
+  rowid estimate std.error statistic   p.value s.value conf.low conf.high
+  &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1     1    0.318    0.0278      11.4 2.41e- 30    98.4    0.264     0.373
+2     2    0.382    0.0217      17.6 3.30e- 69   227.     0.339     0.424
+3     3    0.445    0.0199      22.4 2.59e-111   367.     0.406     0.484
+4     4    0.509    0.0233      21.9 6.10e-106   350.     0.463     0.555
+5     5    0.573    0.0302      18.9 4.92e- 80   263.     0.513     0.632
+6     6    0.636    0.0389      16.4 2.78e- 60   198.     0.560     0.713
+7     7    0.700    0.0483      14.5 1.17e- 47   156.     0.605     0.795
+# ℹ 4 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, cpi &lt;dbl&gt;,
+#   v2x_polyarchy &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Output Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>estimate</code>: The predicted value</li>
+<li><code>std.error</code> through <code>conf.high</code>: Uncertainty estimates relating to the prediction (e.g., its standard error, the p-value, and confidence intervals).</li>
+<li>“4 more variables”: This row tells us what other columns are in our “tidied” dataframe (with the number 4 here likely to be different in examples where the model has a different number of predictor variables than in this example). The names refer to the variables in our model and would be different in your own examples. The columns for the IVs (here: <code>v2caviol</code>, <code>TYPEDEMO1984</code>, and <code>cpi</code>) will list the values of these variables used in producing the prediction.</li>
+</ul>
+</div>
+</div>
+<p>In the example above, <code>predictions()</code> has automatically held our two control variables (<code>v2caviol</code> and <code>TYPEDEMO1984</code>) “constant” at the same value when calculating each predicted value. <code>predictions()</code> will hold continuous controls constant at their mean value, and factor variables at their mode, when <code>newdata = datagrid()</code> is used in this way. We can see this by looking at the columns for our independent variables in the output created by <code>predictions()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>preds1 <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, cpi, v2caviol, TYPEDEMO1984)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 4
+  estimate   cpi v2caviol TYPEDEMO1984
+     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;       
+1    0.318    20   -0.394 Autocracies 
+2    0.382    30   -0.394 Autocracies 
+3    0.445    40   -0.394 Autocracies 
+4    0.509    50   -0.394 Autocracies 
+5    0.573    60   -0.394 Autocracies 
+6    0.636    70   -0.394 Autocracies 
+7    0.700    80   -0.394 Autocracies </code></pre>
+</div>
+</div>
+</section>
+<section id="predictions-for-a-factor-predictor-variable" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="predictions-for-a-factor-predictor-variable"><span class="header-section-number">5.3.2</span> Predictions for a Factor Predictor Variable</h3>
+<p>We can use the same procedure as above to obtain predicted value for each category of a binary or categorical factor variable. Recall that we do this by using <code>by=</code> rather than <code>newdata = datagrid()</code>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> However, we do need to take one additional step here that we don’t have to perform in the previous example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>preds2 <span class="ot">&lt;-</span> <span class="fu">predictions</span>(model_multiple, <span class="at">by=</span> <span class="st">"TYPEDEMO1984"</span>, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">newdata =</span> <span class="st">"mean"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl>
+<dt><code>by = "TYPEDEMO1984"</code></dt>
+<dd>
+<p>This tells the command that we want predicted values for each category of our factor variable.</p>
+</dd>
+<dt><code>newdata = "mean")</code></dt>
+<dd>
+<p>This tells the command that we want to hold the other variables in the model constant at their mean (if a continuous variable) or mode (if a factor variable). This is done automatically in the earlier example, but must be specified here due to the use of the <code>by =</code> option.</p>
+</dd>
+</dl>
+<p>Here are the predictions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>preds2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 12
+  rowid TYPEDEMO1984 estimate std.error statistic   p.value s.value conf.low
+  &lt;int&gt; &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1     1 Democracies     0.620    0.0260      23.8 2.47e-125    414.    0.569
+2     2 Autocracies     0.467    0.0205      22.8 4.94e-115    380.    0.427
+# ℹ 4 more variables: conf.high &lt;dbl&gt;, cpi &lt;dbl&gt;, v2caviol &lt;dbl&gt;,
+#   v2x_polyarchy &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>We can again see that <code>predictions()</code> is holding the other predictor variables “constant” when making these predictions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preds2 <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, TYPEDEMO1984, cpi, v2caviol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  estimate TYPEDEMO1984   cpi v2caviol
+     &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1    0.620 Democracies   43.4   -0.394
+2    0.467 Autocracies   43.4   -0.394</code></pre>
+</div>
+</div>
+</section>
+<section id="predictions-for-specific-combinations-of-the-predictor-variables" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="predictions-for-specific-combinations-of-the-predictor-variables"><span class="header-section-number">5.3.3</span> Predictions for specific combinations of the predictor variables</h3>
+<p>The first set of predictions we made above were predictions for each observation used in fitting the model based on the specific values of the independent variables associated with the observation. The second set of predictions we made focused on the average value of the DV our model tells us we should expect to see if one of the IVs equals a specific value and the other IVs are held constant at their mean or mode. We can also use <code>predictions()</code> to calculate predicted values for specific hypothetical cases. In this example, for instance, we use <code>predictions()</code> to estimate the democracy score in a country that was a democracy in 1984, has a corruption score equal to the maximum value that we observe in our data (88), and has the minimum level of political violence observed in the data (-3.429). We do this by including all predictors in the <code>newdata = datagrid()</code> portion of the syntax. If we left one of the variables out, then it would be held constant at its mean or mode depending on what type of variable it is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_multiple, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">cpi =</span> <span class="fu">c</span>(<span class="dv">88</span>), </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">v2caviol =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.429</span>), </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">TYPEDEMO1984 =</span> <span class="fu">c</span>(<span class="st">"Democracies"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  rowid estimate std.error statistic   p.value s.value conf.low conf.high   cpi
+  &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1     1    0.930    0.0392      23.7 1.89e-124    411.    0.853      1.01    88
+# ℹ 3 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, v2x_polyarchy &lt;dbl&gt;</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>We will introduce the <code>augment()</code> function from the <code>broom</code> package in a subsequent chapter as an alternative way of observing the residuals from a model. We use the <code>predictions()</code> command here because it is easier to create a dataframe that contains the model’s predictions, residuals, and all of the data from the original dataset with this command than it is with <code>augment().</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The s-value is an attempt to translate the p-value into a measure that some feel is easier to interpret. Specifically, it <a href="https://marginaleffects.com/man/predictions.html" target="_blank">tells us</a> “How many consecutive”heads” tosses would provide the same amount of evidence (or “surprise”) against the null hypothesis that the coin is fair?” As an example, a p-value of 0.05 would have a corresponding s-value of 4.3 or so. We might then say that a p-value of 0.05 is about as surprising as flipping a fair coin four times and seeing the coin land on heads all four times. Would you be comfortable making a statement that the coin is weighted rather than fair based on that string of coin flips? In the context of the output of produced by <code>predictions()</code> (and by the <code>slopes()</code> command that we will see in later chapters), higher S-values would indicate that we should be increasingly surprised to see our results if the value of the thing we’re estimating is actually 0. This statistic is not all that useful for our predicted values but could be more useful for understanding how surprising a coefficient or “marginal effect” estimate happens to be. If you like, you can read a deep dive on what p-values are, some of the complications researcher’s run into when interpreting them, and a discussion of what s-values are and how they may help matters in this <a href="https://lesslikely.com/statistics/s-values/" target="_blank">blog post</a>. The s-value is not examinable however.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Russia has an NA value for <code>estimate</code> and <code>residual_value</code> because it has a missing value on the TYPEDEMO1984 variable and hence was not included in the regression model.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>We could technically use <code>newdata = datagrid()</code> but we’d then need to type out the factor levels (e.g., <code>newdata = datagrid(TYPEDEMO1984 = c("Autocracies', "Democracies"))</code> . The <code>by =</code> option is thus a bit easier to use.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./linear_04.html" class="pagination-link" aria-label="Multiple Linear Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./linear_06.html" class="pagination-link" aria-label="Model Fit">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

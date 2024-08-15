@@ -1,0 +1,194 @@
+---
+code-annotations: hover
+---
+
+# Logistic Regression Assumptions {#sec-logistic-regression-assumptions}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+#specific packages for assumptions testing
+library(car)             #used for several assumption checks
+library(ggResidpanel)    #used for assumptions checks through plots
+library(expss)           #used for frequency tables
+
+#general packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(broom)           #model summaries; outliers & influential cases
+
+#Data
+ESS9NL <- import("data/ESS9e03, Netherlands.sav")
+```
+
+All models are built on simplifying assumptions. In this chapter, we'll learn how to examine the assumptions underlying a logistic regression model:
+
+-   No excessive multicollinearity
+-   Linearity of the logit
+-   Limited impact of outliers and influential cases
+
+Here are the packages that we will use and our data:
+
+```{r}
+#| eval: false
+
+#specific packages for assumptions testing
+library(car)             #used for several assumption checks
+library(ggResidpanel)    #used for assumptions checks through plots
+library(expss)           #used for frequency tables
+
+#general packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(broom)           #for asssumptions
+
+#Data
+ESS9NL <- import("data/ESS9e03, Netherlands.sav")
+
+```
+
+Of course, we need a model to examine. We will examine `vote_model4` from last chapter, which predicts voter turnout based on age, gender, ideology, and trust in politicians. Here are the data preparation steps we took last time along with the model.
+
+```{r}
+#Data Preparation
+ESS9NL <- ESS9NL |>
+  #Factorize our IVs
+  mutate(gndr = factorize(gndr), 
+         vote = factorize(vote))  |> 
+  #Remove Not Eligible to Vote Category from vote
+  mutate(vote = na_if(vote,"Not eligible to vote")) |> 
+  #Relevel our variables like we did last time
+  mutate(vote = relevel(vote, "No"), 
+         gndr = relevel(gndr, "Female"))
+
+#Subset of our data
+ESS9NL_glm <- ESS9NL |>
+  filter(complete.cases(vote,  gndr,  agea,  trstplt,  lrscale)) # <1> 
+
+#Our model
+Vote_model4 <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+                data = ESS9NL_glm, family = "binomial")
+
+#Check the output
+summary(Vote_model4)
+```
+
+1.  We subset the data in our last chapter so that we could compare multiple models against one another. Creating a dataset without missing observations on the variables in our model also makes it slightly easier to examine some of the assumptions below.
+
+## No excessive multicollinearity
+
+We can check for excessive multicollinearity using the `vif()` command from the `car` package, much as we did with linear regression models ( @sec-linear-no-excessive-multicollinearity). The same interpretative rules of thumb are used here as well.
+
+```{r}
+vif(Vote_model4)
+```
+
+The statistics above indicate that we do not have a problem with excessive multicollinearity.
+
+## Linearity of the logit
+
+Logistic regression models make the assumption that changes in the log of the odds (the logit) that Y = 1 are linear. We can examine this assumption using the `augment()` command from the `broom` package. This command will create a data object with the variables in our model as well as some important assumption-related statistics. Here is a preview:
+
+```{r}
+augment(Vote_model4)
+```
+
+::: callout-note
+#### Output Explanation
+
+-   `vote` through `lrscale`: This is our raw data - the actual observed values for each respondent on our survey for the variables in our model. The names of these columns, and how many there are, would naturally be different in your examples.
+-   `.fitted`: These are the "fitted' or predicted values for each observation based on the model on a logit scale (i.e., these are not predicted *probabilities* but predicted log of the odds).
+-   `.resid`: Residual values from our model. More specifically, these are known as "deviance residuals".
+-   `.hat`: The diagonal of the hat matrix, which can be ignored.
+-   `.sigma`: The estimated residual standard deviation when an observation is dropped, which can also be ignored.
+-   `.cooksd`: Cook's D values (see below).
+-   `.std.resid`: Standardized residuals (see below).
+:::
+
+Later on we will want to investigate potential outliers and influential cases. We will thus work with the output of this command:
+
+```{r}
+model4_augmented <- augment(Vote_model4, data = ESS9NL_glm)
+```
+
+`augment(Vote_model4, data=ESS9NL_glm)`
+
+:   We have added `data = ESS9NL_glm` to this version of the command. This creates an object with all of the columns above as well as *all* of the other variables in the dataset used to fit the model (`ESS9NL_glm`). This is useful for investigating potential outliers and influential cases in more detail. However, it requires that the dataset in question does not contain observations not in the model (i.e., observations with missing values on one or more of the variables in the model). This is why we subset our `ESS9NL` dataset in an earlier code chunk.
+
+We assess the linearity of the logit assumption by plotting the data created by `augment()`. Specifically, we create a scatterplot with a loess line where the y-axis is the `.fitted` column (the predicted logit for each observation) and the x-axis is a continuous independent variable. We do this for each continuous variable in the model. **Note**: We do not need to do this for factor predictor variables.
+
+```{r}
+# Age
+ggplot(model4_augmented, aes(x = agea, y = .fitted)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+
+# Trust in Politicians
+ggplot(model4_augmented, aes(x = trstplt, y = .fitted)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+
+# LR Scale
+ggplot(model4_augmented, aes(x = lrscale, y = .fitted)) + 
+  geom_point() + 
+  geom_smooth(method = "loess")
+```
+
+We are looking to see if the loess line shows a substantial deviation from linearity. There is no evidence of this in the figures above. We can thus say that this assumption is not violated.
+
+## Limited impact of outliers and influential cases
+
+We used the `augment()` function above to create a data object that contains standardized residuals and Cook's distance statistics for our observations as well as other variables from our original dataset that were not included in our model. We can use this data to investigate this assumption. We will first look at outliers and then at influential cases.
+
+### Outliers
+
+We begin by looking at the summary statistics for the standardized residuals:
+
+```{r}
+summary(model4_augmented$.std.resid)
+```
+
+This output can help us understand whether there are any observations that cross the thresholds we use to assess this assumption (\|1.96\|, \|2.58\|, \|3.29\|), although it does not tell us *how many* might do so. Here, we do not observe any observations crossing either of the two highest thresholds (\|2.58\|, \|3.29\|). However, we do see at least one observation with an absolute value greater than 1.96 (the minimum value of the standardized residual is -2.398).
+
+We can assess how many observations cross this threshold by creating a dummy variable (0 = `.std.resid` \< \|1.96\|, 1 = `.std.resid` \> \|1.96\|) and inspecting a frequency table.[^logit_05-1] Here is an example of how to do so - see @sec-linear-investigating-outliers for syntax relating to the threshold values of 2.58 and 3.29.
+
+[^logit_05-1]: Calculating the mean of this 0/1 variable would accomplish the same end.
+
+```{r}
+#Create the dummy variable: 
+model4_augmented <- model4_augmented |>
+  mutate(SRE1.96 = case_when(
+    .std.resid > 1.96 | .std.resid < -1.96  ~ 1,
+    .std.resid > -1.96 & .std.resid < 1.96 ~ 0
+  ))
+
+#What percentage crosses the threshold? 
+fre(model4_augmented$SRE1.96)
+```
+
+5.7% of observations have a standardized residual greater than \|1.96\|. We could examine whether these observations are substantially impacting the parameters of our model by re-running the model and subsetting the data to only include observations with a value of 0 on the dummy variable we just created (`SRE1.96`). For instance:\
+
+```{r}
+Vote_model41.96 <- glm(vote ~ gndr + agea + trstplt + lrscale,
+                       data = subset(model4_augmented, SRE1.96 == 0), 
+                       family = "binomial")
+```
+
+### Influential cases
+
+We examine the Cook's D values in our augmented dataset in order to investigate whether there are any concerning influential cases.
+
+First, we can look at the summary of the Cook's D values; see Section @sec-linear-investigating-influential-cases for the rules of thumb we use when assessing these values. Second, we can visually inspect these values using the `resid_panel()` command from the `ggResidpanel`.
+
+```{r}
+#Summary of the Cook's D values
+summary(model4_augmented$.cooksd)
+
+#Plot
+resid_panel(Vote_model4, plots = c("cookd"))
+```
+
+The Cook's D values are very small with a maximum value of around 0.017. There is little evidence that we have a problem here. If we did find higher values, then we could further examine them by, for instance, re-running our model with them filtered out. We could also examine the influential cases themselves to see if there is an explanation for why they are so influential.

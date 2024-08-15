@@ -1,0 +1,74 @@
+---
+code-annotations: hover
+---
+
+# Preface {.unnumbered}
+
+This book presents the R materials related to the course *Statistics II*.
+
+We have divided the book into the following parts:
+
+1.  **Linear Statistical Models**: This part focuses on examining variation in continuous dependent variables using a linear statistical model with a particular focus on linear regression.
+2.  **Logistic Regression**: This part focuses on predicting binary dependent variables using a logistic regression model.
+3.  **Interactions within Linear and Logistic Models**: This part focuses on incorporating interaction terms into linear and logistic regression models to examine whether the effect of one independent variable depends on the properties of another independent variable.
+
+These three sections introduce the syntax used to perform the core methods of analysis in the class. We will break down the contents of this syntax and explain its logic when the different commands that we will use. In addition, we will often times annotate the syntax via comments (either presented in grayed out text or in bubbles that you can examine by hovering over them with your computer mouse) to further call your attention to aspects of the syntax. Here is an example:
+
+```{r}
+#| eval: false
+
+# Packages
+library(tidyverse)   #Used for data management and plotting
+
+# A linear regression model
+model1 <- lm(mpg ~ drat, data = mtcars) # <1>
+
+```
+
+1.  We may put annotations in these little bubbles particularly if they are a little longer in nature or if we are repeating a point you have seen before.
+
+These sections also provide general guidelines on how to present and correctly report the output from these statistical analyses. You will find the output from the statistical software as well as additional information:
+
+::: callout-note
+#### Output explanation
+
+This box contains information on the output.
+:::
+
+::: callout-warning
+#### Interpretation
+
+This box contains general guidelines for the interpretation of the results, e.g. different 'rule-of-thumb' for the interpretation of effect sizes.
+:::
+
+::: callout-tip
+#### Report
+
+✓ This box shows the general format of how you should report the result of your analysis
+:::
+
+::: callout-important
+#### Warning!
+
+This box will call your attention to things that could go wrong or otherwise pose a problem
+:::
+
+The final part of the book provide three Appendices with some supplementary information. Appendix A provides an overview of some Common Errors that you may encounter when performing these analyses and when attempting to knit your R assignment files into an html for submission. Appendix B provides an overview of the R libraries (and associated functions) that we will use in this course, the week they are introduced, and a script that will enable you to install them on your personal computer all in one go. Appendix C provides relevant formulas related to the types of analysis that we'll examine in Statistics II.
+
+## Statistics I Book
+
+The contents of this book build on what you learned in Statistics I particularly when it comes to data management processes (e.g,. how to import data, filter it, summarize it, etc.). If you need a refresher on these processes, then please consult the Statistics I [book](https://poweleiden.github.io/statistics1/){target="_blank"}. We will occasionally link to sections of particular relevance from that book in the discussions to come.
+
+## Overview per week
+
+For each week in the course, you need to read relevant chapters .... In 2024-2025, this is:
+
+| Week | Section             | Chapters                                                                                                                                          |
+|------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1    | Linear Models       | @sec-linear-covcor ; @sec-reporting-and-presenting-results (8.1 & 8.2)                                                                            |
+| 2    | Linear Models       | @sec-binary-predictors ; @sec-statistical-significance ; @sec-predicted-residual-values (5.1 & 5.2) ; @sec-reporting-and-presenting-results (8.3) |
+| 3    | Linear Models       | @sec-multiple-linear-regression ; @sec-predicted-residual-values (5.3) ; @sec-model-fit ; @sec-reporting-and-presenting-results (8.3 - 8.6)       |
+| 4    | Linear Models       | @sec-ols-assumptions                                                                                                                              |
+| 5    | Logistic Regression | @sec-logistic-regression-odds-ratios ; @sec-marginal-effects ; @sec-logit-predicted-probabilities ; @sec-reporting-logit                          |
+| 6    | Logistic Regression | @sec-logit-comparing ; @sec-logistic-regression-assumptions                                                                                       |
+| 7    | Interactions        | @sec-including-an-interaction-term-in-a-regression-model ; @sec-inter-marginal ; @sec-predicted-values-from-interaction-models                    |

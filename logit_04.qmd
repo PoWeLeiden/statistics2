@@ -1,0 +1,194 @@
+# Model Fit and Comparisons {#sec-logit-comparing}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+#Packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(performance)     #Model fit statistics/tests
+
+#Data
+ESS9NL <- import("data/ESS9e03, Netherlands.sav")
+```
+
+The past few chapters have discussed how to fit a logistic regression model and how to extract meaning about the results of that model via odds ratios, marginal effects, and predicted probabilities. In this chapter we'll discuss how to assess the "fit" of a logistic regression model.
+
+Here are the packages that we will use and our data:
+
+```{r}
+#| eval: false
+
+#Packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(performance)     #Model fit statistics/tests
+
+#Data
+ESS9NL <- import("ESS9e03, Netherlands.sav")
+
+```
+
+## Fit Statistics in `summary()`
+
+Let's take another look at the model that we have been working with thus far, one wherein we predict whether a person reports voting based on their gender, age, ideology, and trust in politicians.
+
+```{r}
+#Data Preparation
+ESS9NL <- ESS9NL |>
+  #Factorize our IVs
+  mutate(gndr = factorize(gndr), 
+         vote = factorize(vote))  |> 
+  #Remove Not Eligible to Vote Category from vote
+  mutate(vote = na_if(vote, "Not eligible to vote")) |>  
+  #Relevel our variables like we did last time
+  mutate(vote = relevel(vote, "No"), 
+         gndr = relevel(gndr, "Female"))
+
+#Our model
+Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+                data = ESS9NL, family = "binomial")
+
+#Check the output
+summary(Vote_model_mp)
+```
+
+::: callout-note
+#### Output Explanation
+
+Much as with a linear model (`lm`), the `summary()` command will report some fit-related statistics at the bottom of its output after fitting a logistic model. Specifically, it will report the "Null" and "Residual Deviance" statistics. The Residual Deviance statistic indicates the difference ("deviance") of the fitted model from a "perfect" model, i.e., one that perfectly fits the data. The Null Deviance statistic does the same but for a "Null" model, i.e., one that only includes an Intercept.
+
+*Smaller* Residual Deviance values would thus indicate "better" fitting models. However, we do not typically directly interpret the deviance statistic to make claims about model fit because it is on a difficult to interpret scale that has no theoretical maximum value. Instead, we will rely on other statistics and tests that make use of the deviance value as we show in sections below.
+:::
+
+## Comparing Models: Likelihood Ratio
+
+We can use a likelihood ratio test to compare logistic regression models against one another. A likelihood ratio test will examine the ratio between the deviance statistics of two models and whether it indicates a statistically significant relationship (i.e., a difference in model fit) or not.
+
+If we want to compare multiple logistic regression models with one another, then we must first ensure that observations are the same in all models much as we did when comparing linear regression models (see @sec-linear-comparing-models). We can do this by first creating a new data object with complete cases on all of the variables in our most elaborate model. For instance:
+
+```{r}
+ESS9NL_glm <- ESS9NL |>
+  filter(complete.cases(vote, gndr, agea, trstplt, lrscale))
+```
+
+We next estimate our models. In this example, we will fit a series of models using our filtered dataset with each model containing one more variable than the one before. We will also fit a "null" model that does not contain any predictor variables. This is done by specifying the number 1 (a constant) on the right side of the tilde. We do this so that we have a baseline against which we can compare our first model.
+
+```{r}
+#Null model
+Vote_model0 <- glm(vote ~ 1,
+                   data = ESS9NL_glm, family = "binomial")
+# + gndr
+Vote_model1 <- glm(vote ~ gndr , 
+                data = ESS9NL_glm, family = "binomial")
+# + agea
+Vote_model2 <- glm(vote ~ gndr + agea , 
+                data = ESS9NL_glm, family = "binomial")
+
+# + trst
+Vote_model3 <- glm(vote ~ gndr + agea + trstplt, 
+                data = ESS9NL_glm, family = "binomial")
+
+# + lrscale
+Vote_model4 <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+                data = ESS9NL_glm, family = "binomial")
+
+```
+
+We can now compare the fit of these models against one another using the `test_likelihoodratio()` command from the `performance` package. The test takes the ratio between the deviance statistics of two models and uses a Chi^2^ ($\chi^2$) test to examine statistical significance. The null hypothesis of this test is that of zero difference in model fit between the models.
+
+```{r}
+test_likelihoodratio(Vote_model0,
+                     Vote_model1,
+                     Vote_model2,
+                     Vote_model3,
+                     Vote_model4)
+```
+
+`test_likelihoodratio(`
+
+:   Performs the likelihood ratio test for the models specified in brackets. At least 2 models need to be specified and the order matters for the comparison made (see below).
+
+::: callout-note
+#### Output Explanation
+
+Here is how to read this output:
+
+-   `Name`: This provides the name of the model object
+-   `Model`: This provides the type of model; it can be ignored
+-   `df`: This indicates how many terms are in the model. `Vote_model0` has a `df` of 1 because only a single term is included in the model (the Intercept). `Vote_model4` has a `df` of 5 because it has 5 terms (intercept + coefficients for each independent variable).
+-   `df_diff`: This indicates the change in the number of terms between the model in the row and the preceding row. This equals 1 in our example because we have only added one term to each model.
+-   `Chi2` & `p`: This is the Chi^2^ test statistic and its associated p-value. This tests whether the fit of the model in that row is significantly different from the fit of the model in the preceding row. If statistically significant, then we would conclude that the more fully specified model (the one with more predictors) "fits better".
+:::
+
+In this example:
+
+-   Model 1 *does not* fit significantly better than the Null model (`vote_model0`)
+-   Model 2 fits significantly better than Model 1
+-   Model 3 fits significantly better than Model 2
+-   Model 4 *does not* fit significantly better than Model 3.
+
+We might thus conclude that Model 3 (`vote_model3`) is the most parsimonious model (i.e., explains the most with the least number of predictors).
+
+Much as with `anova()`, we could use this command to compare specific subsets of models:
+
+```{r}
+#Does Model 4 fit better than Model 1?: Yes!
+test_likelihoodratio(Vote_model1, Vote_model4)
+
+#Does Model 3 fit better than the Null model?: Yes!
+test_likelihoodratio(Vote_model0, Vote_model3)
+```
+
+::: callout-important
+#### Warning!
+
+The order in which we specify the models in our `test_likelihoodratio()` command matters much as it did when comparing model fit using an `anova()` with linear regressions ( @sec-linear-comparing-models). We will get an error if we include multiple nested models in the command in an incorrect order (where "correct order" means less complex model to more complex model):
+
+```{r}
+#| error: true
+
+test_likelihoodratio(Vote_model0,
+                     Vote_model4,
+                     Vote_model2,
+                     Vote_model1,
+                     Vote_model3)
+
+```
+
+If we only include two models in command but specify them in reverse order (i.e,. more complicated model and then less complicated model), then we'll get the same Chi^2^ and p-value, but the `df_diff` entry will simply take on the opposite sign (-3 rather than +3 in this example). That is not technically a problem, but you should specify models in the correct order to avoid potential errors in interpretation.
+
+```{r}
+test_likelihoodratio(Vote_model4, Vote_model1)
+```
+:::
+
+## Pseudo R^2^
+
+The fit of a linear regression model is often interpreted in relation to its R^2^ value. The parameters of a logistic regression model are calculated in a different manner than those of a linear regression model. Consequently, there is no native R^2^ statistic for logistic regression. A variety of *so-called* or *pseudo* R^2^ statistics have been developed to provide an intuitive idea of how much explanatory power a logistic model has, however. The calculation of these values are based on the deviance statistic. Of these, we use the Nagelkerke R^2^. Its values lie between 0 and 1 with higher values indicating more explanatory power.
+
+We can use the `r2_nagelkerke()` command from the `performance` library to obtain the Nagelkerke R^2^ statistic:
+
+```{r}
+# Nagelkerke R2: Model 3
+r2_nagelkerke(Vote_model3)
+
+# Nagelkerke R2: Model 4
+r2_nagelkerke(Vote_model4)
+
+```
+
+`r2_nagelkerke(`
+
+:   Estimates the Nagelkerke R² for the model specified in brackets. Only one model can be specified.
+
+The Nagelkerke R^2^ is higher for Model 4 than Model 3. However, we just saw that the likelihood ratio test comparing these models was statistically insignificant meaning that we cannot reject the possibility that the two models have equivalent fit. This is an example of why we need to use formal tests to compare models rather than relying on R^2^ statistics.
+
+::: callout-important
+#### Warning!
+
+There are a variety of pseudo R^2^ statistics for interpreting logistic regression. However, **none** of them can be directly interpreted as telling us 'the proportion of variance explained by a model.
+:::

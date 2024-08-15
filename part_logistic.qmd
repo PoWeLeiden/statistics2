@@ -1,0 +1,7 @@
+# Logistic Regression
+
+This section of the materials focuses on logistic models, which we use to predict binary dependent variables. You will learn how to...
+
+-   Perform such a model
+-   Calculate marginal effects, predicted probabilities, and odds ratios to interpret the model
+-   Examine the assumptions of these models

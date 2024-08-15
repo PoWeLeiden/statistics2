@@ -1,0 +1,7 @@
+# Linear Statistical Models
+
+This section of the materials focuses on linear statistical models. You will learn how to...
+
+-   Investigate the correlation between two continuous variables
+-   Perform and interpret a linear regression model where a continuous dependent variable is predicted by continuous and/or categorical independent variables
+-   Examine the assumptions of these models

@@ -1,0 +1,173 @@
+# Model Fit {#sec-model-fit}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+#Packages
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+library(broom)           #for obtaining summaries of regression models
+library(parameters)      #for calculating standardized coefficients
+library(marginaleffects) #aid in calculated predicted values
+
+#Import Data
+demdata <- import("data/demdata.rds") |> 
+  as_tibble()
+
+#Some data cleaning
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+
+```
+
+Our focus thus far has been on the coefficients in our model. We will next discuss how to obtain statistics used in evaluating the "fit" of a model. And, in addition, we will discuss how to compare the fit of two (or more) models against one another.
+
+```{r}
+#| eval: false
+
+#Packages
+library(broom)           #model summaries
+library(rio)             #loading data
+library(tidyverse)       #data manipulation and plotting
+
+##Import data and some initial data management
+demdata <- import("demdata.rds") |> 
+  as_tibble()
+
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+
+
+```
+
+## R^2^, Adjusted R^2^, and the Model F-Test
+
+Our initial example focuses on a linear regression model in which we predict a country's electoral democracy score in 2020 (`v2x_polyarchy`) based on the country's level of perceived corruption (`cpi)`, political violence (`v2caviol`), and the country's regime status in 1984 (`TYPEDEMO1984`).
+
+```{r}
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data=demdata)
+```
+
+We can obtain the most commonly used "model fit" statistics for linear regression models via the `summary()` command:
+
+```{r}
+summary(model_multiple)
+```
+
+::: callout-note
+#### Output Explanation
+
+The relevant information is shown at the bottom of the output:
+
+-   Multiple R-squared: The R^2^ statistic, which is commonly interpreted as the % of variance in the DV that our model can "explain"
+-   Adjusted R-squared: The adjusted R^2^ statistic, which adjusts the R^2^ statistic by accounting for the number of independent variables in the model.
+-   F-statistic...: The first number provides the F-statistic for the model (`r round(glance(model_multiple)$statistic, 2)`) in the example above. The number after "p-value:" is the p-value for this statistic. The null hypothesis of this test is that *none* of the independent variables (here, `cpi, v2caviol, TYPEDEMO1984`) are statistically significant. A statistically significant F-statistic thus indicates that *at least one* of the IVs is statistically significant although it does not tell us *which* coefficient is statistically significant.
+:::
+
+Much as the `tidy()` command simplifies the output from `summary()`, the `broom` package provides a command that can show us the model fit statistics in a nice table: `glance()`:
+
+```{r}
+glance(model_multiple)
+```
+
+The relevant statistics are provided in the `r.squared` (R^2^), `adj.r.squared` (Adjusted R^2^), `statistic` (F-statistic), and `p.value` (p-value for the F-statistic) columns. `nobs` provides the number of observations in the model:
+
+```{r}
+glance(model_multiple) |> 
+  select(nobs)
+```
+
+## Comparing Models {#sec-linear-comparing-models}
+
+The F-statistic we just saw compares the fit of our model against the fit of a "null" model wherein predictions are made using *only* the mean of the dependent variable. It provides us with a way of testing whether *at least one* of our independent variables is statistically significant.
+
+We might also want to compare the fit of two (or more) nested models against one another to talk about which one "fits" the best. "Nested" models refer to models that have the same observations and the variables included in one model are a subset of the variables used in another. In this example, we will compare models with: just `cpi`, `cpi` and `v2caviol`, and then one with all predictor variables to see how to do this.
+
+We need to take a preliminary step to accomplish this task. We want to make sure that we are comparing models that have the same observations in them so that we can be sure that differences in model fit statistics between the models are not being driven by having models conducted using different observations. This initial syntax removes all observations with a missing value on at least one of the four variables in our fully specified regression model.
+
+```{r}
+demdata_complete <- demdata |> 
+  filter(complete.cases(v2x_polyarchy, cpi, v2caviol, TYPEDEMO1984))
+```
+
+Next we will perform each of our regressions. We begin with the "null" model for demonstration purposes and then fit models with predictor variables:
+
+```{r}
+#Null model
+model1 <- lm(v2x_polyarchy ~ 1, data = demdata_complete)
+
+#Model with just cpi
+model2 <- lm(v2x_polyarchy ~ cpi, data = demdata_complete)
+
+#Model with cpi & v2caviol
+model3 <- lm(v2x_polyarchy ~ cpi + v2caviol, data = demdata_complete)
+
+#Model with all predictors
+model4 <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data = demdata_complete)
+```
+
+We can compare the R2/Adj. R-Squared of the models to get an initial sense of which one "fits" better. Here is an overview of those statistics:
+
+|  Model  |                  R2                   |                  Adj. R2                  |
+|:----------------:|:------------------------:|:--------------------------:|
+| Model 1 |     `r glance(model1)$r.squared`      |     `r glance(model1)$adj.r.squared`      |
+| Model 2 | `r round(glance(model2)$r.squared,3)` | `r round(glance(model2)$adj.r.squared,3)` |
+| Model 3 | `r round(glance(model3)$r.squared,3)` | `r round(glance(model3)$adj.r.squared,3)` |
+| Model 4 | `r round(glance(model4)$r.squared,3)` | `r round(glance(model4)$adj.r.squared,3)` |
+
+It looks like Model 4 fits the best. However, we should formally test whether the difference in these statistics are statistically significant before jumping to this conclusion. We can do this through the `anova()` command. This command does not require you to load a new library.
+
+```{r}
+anova(model1, model2, model3, model4)
+```
+
+`anova()` is the name of the command. We place the names of the models we want to compare with one another within the parentheses.
+
+::: callout-note
+#### Output Explanation
+
+The top half of the output provides a review of the models being compared to one another. The remainder of the output can be read as so:
+
+-   Res.Df: The residual degrees of freedom of the model
+-   RSS: This stands for "residual sum of squares". RSS measures the variation in the model's residuals. RSS = $\sum(y_{i} - \hat{y}_{i})^2$, where $\sum$ stands for "sum up", $y_{i}$ is the observed value of the DV for an observation in the model, and $\hat{y}_{i}$ is the predicted value for that observation based on the model.[^linear_06-1] RSS tells us how much of the variation in the DV a model *can't* "explain" or predict. If we are comparing a model in a given row with the one in the preceding row, then the one with the smaller value fits the data better although the difference between models may not be statistically significant (i.e., we might not be able to rule out the null hypothesis that the two models fit the data equivalently well).
+-   DF: The number of independent variable coefficients that have been added in the model relative to the preceding model in the sequence. This equals 1 here because each model adds one term.[^linear_06-2]
+-   Sum of Sq: The *model* or "regression" sum of squares is given by this formula: $\sum(\hat{y}_{i} - \bar{y})^2$, where $\hat{y}_{i}$ is the predicted value for a given observation and $\bar{y}$ is the mean of the dependent variable among all observations in the model.[^linear_06-3] In essence, the model sum of squares measures the variability of the dependent variable that is connected to the independent variables in the model. The specific value under Sum Sq in the `anova()` output focuses on the change in the Sum of Sq that we get by adding the extra variable(s) to the model (e.g., the increase in the Sum of Sq. we get when moving from a model with just `cpi` to one with `cpi` and `v2caviol` = 0.0151). The Sum of Sq value in a given row is equal to the difference between the RSS value in the preceding row and the RSS value in the focal row (e.g., Sum of Sq in Row 2 = 9.1323 - 5.1436 = 3.9887). If we are comparing a model in a given row with the one in the preceding row, then the one with the larger value is likely to fit better although the difference may not be statistically significant.
+-   F & Pr(\>F): The F-statistic and its associated p-value for the test. The null hypothesis this is testing is whether a model in a given row fits better than the model *in the preceding row*. In essence, it is testing whether *any* of the variables added in the second model in the comparison are statistically significant or not. If statistically significant, then we conclude that the more complex model "fits better".
+:::
+
+[^linear_06-1]: The equation is non-examinable.
+
+[^linear_06-2]: The DF column is not indicating how many extra *independent variables* were added but how many terms/coefficients are added. This distinction is mainly relevant when we are adding factor variables (and, especially, factor variables with more than two categories) to the model. Recall that a categorical variable with more than two levels will be represented by k - 1 coefficients in a model. If we added a factorized categorical variable with four levels (North, East, South, West) to a model, then we'd be adding three independent variable coefficients/terms to our model. In that case, DF would equal 3 rather than 1.
+
+[^linear_06-3]: This equation is non-examinable.
+
+We make formal judgments about whether a model "fits" better than another one by focusing on the F-statistic and whether it is statistically significant. We read the results for a given row in relation to the preceding one (e.g., the results in row four compare Model 4 against Model 3). In this case, Model 2 fits better than Model 1 (p \< 0.001); Model 3 *does not* fit better than Model 2 (p = 0.50); and Model 4 fits better than Model 3 (p \< 0.001). This implies that Model 4 fits better than all of the other models, which we could more directly test by only including Model 4 and one of the other models in the command.
+
+```{r}
+#Model 4 vs. Model 2
+anova(model2, model4)
+
+#Model 4 vs. Model 1
+anova(model1, model4)
+```
+
+::: callout-important
+#### Warning!
+
+`anova()` compares models sequentially. The order of the models in the `anova()` command matters as a result. As an example:
+
+```{r}
+anova(model4, model1, model2, model3)
+```
+
+Each row in our output still compares the fit of the more complex model in the comparison against the simpler model.
+
+The second row of results compares our null model (`model1`) against our most complex model (`model4`). We get a negative value for "DF" and "Sum of Sq" here because Model 1 has fewer terms and fits worse than Model 4. The difference is statistically significant although we would interpret that as telling us that Model 1 fits worse than Model 4 (or, conversely, that Model 4 fits better than Model 1). The third row, meanwhile, compares `model2` (just `cpi` as a predictor) against `model1` (the null model). Notice how the results in this row match those above. Finally, the results in the final row compare `model3` against `model2`, again with the same results as above.
+
+We could perhaps work our way from these results to a claim about which model "fits the best", but it would be much more complicated than in the example above. If you are comparing nested models against one another, then you should list the models in terms of increasing complexity as above.
+:::

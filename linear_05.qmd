@@ -1,0 +1,290 @@
+---
+code-annotations: hover
+---
+
+# Predicted & Residual Values {#sec-predicted-residual-values}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(rio)             #loading data
+library(broom)           #model summaries
+library(tidyverse)       #data manipulation and plotting
+library(marginaleffects) #calculating predicted values
+
+##Import Data
+demdata <- import("data/demdata.rds") |> 
+  as_tibble()
+
+demdata <- demdata |>  
+  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+
+# Models for examples
+model_continuous <- lm(v2x_polyarchy ~ gini_2019, data = demdata)
+
+model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984, data = demdata)
+
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data  = demdata)
+```
+
+Regression models make predictions about the value of the DV we expect to see given the value of the independent variable(s) in the model. We can use R to investigate predicted values in closer detail to better understand the results of our model.
+
+As always, we begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers, but must be loaded prior to use. We will also run and store the linear regressions that will be used in the subsequent examples.
+
+```{r}
+#| eval: false
+
+library(rio)              #loading data
+library(tidyverse)        #data manipulation and plotting
+library(marginaleffects) #calculating predicted values
+
+# Load data and some data management
+demdata <- import("demdata.rds") |> 
+  as_tibble()
+
+demdata <- demdata |> 
+    mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
+         Typeregime2006 = factorize(Typeregime2006))
+
+# Models for examples
+model_continuous <- lm(v2x_polyarchy ~ gini_2019, data = demdata)
+
+model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984, data=demdata)
+
+model_categorical <- lm(v2x_polyarchy ~ Typeregime2006, data=demdata)
+
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data=demdata)
+```
+
+## Predicted Values and Residuals for Individual Observations
+
+Linear regression models make predictions about the value of the DV we should expect to observe for each observation used in fitting the model. These unit-level predictions will likely differ from the actual observed value of the DV by some amount; we call the difference between observed and predicted value "residuals" or "prediction errors".
+
+We can use the `predictions()` command from the `marginaleffects` package to see what our model predicts, and how wrong those predictions are, for each observation used in fitting the model.[^linear_05-1]
+
+[^linear_05-1]: We will introduce the `augment()` function from the `broom` package in a subsequent chapter as an alternative way of observing the residuals from a model. We use the `predictions()` command here because it is easier to create a dataframe that contains the model's predictions, residuals, and all of the data from the original dataset with this command than it is with `augment().`
+
+```{r}
+model_binary_predictions <- predictions(model_binary, newdata = demdata) |> 
+  as_tibble() #as_tibble() used for ease of display; see Warning below
+```
+
+Here is how to read this syntax:
+
+`model_binary_predictions`
+
+:   We are assigning the output of our command to a new object called `model_binary_predictions`. You would name this whatever you wish in your examples.
+
+`predictions(model_binary,`
+
+:   The name of the command is `predictions`. We place within the parentheses the name of the data object where we have stored our model results. You should change this name to whatever you have named the model you want to make predictions from.
+
+`newdata = demdata)`
+
+:   Here we tell the command where the data originally comes from. This has a specific purpose: it tells the command that the output it creates should include both the predicted values for each observation in the original dataset **and** all of the other variables in the original dataset for these observations. This can be useful for investigating the characteristics of observations that have particularly sizable residual values. Omitting `newdata = demdata`, on the other hand, would produce an object that contains predicted values for each observation used in fitting the model as well as their observed values on the variables using in the model but not other variables from the original dataset. You would change `demdata` to the name of the data object used when fitting your regression model.
+
+Here is what the output looks like:
+
+```{r}
+model_binary_predictions
+
+```
+
+::: callout-note
+#### Output Explanation
+
+-   estimate: This is the predicted value of the DV for the observation based on the regression model
+-   std.error, statistic, p.value, conf.low, conf.high: These report the standard error, test statistic, p-value, and the lower and upper bounds of the 95% confidence interval for the estimate. They tell us about the uncertainty around the prediction. The s.value column provides another way of thinking about uncertainty, but one we won't cover; it is non-examinable.[^linear_05-2]
+-   The ensuing columns in the data frame are the variables from the original dataset and are noted at the bottom of the output ("41 more variables: country_name \<chr\>, ...").
+:::
+
+[^linear_05-2]: The s-value is an attempt to translate the p-value into a measure that some feel is easier to interpret. Specifically, it [tells us](https://marginaleffects.com/man/predictions.html){target="_blank"} "How many consecutive"heads" tosses would provide the same amount of evidence (or "surprise") against the null hypothesis that the coin is fair?" As an example, a p-value of 0.05 would have a corresponding s-value of 4.3 or so. We might then say that a p-value of 0.05 is about as surprising as flipping a fair coin four times and seeing the coin land on heads all four times. Would you be comfortable making a statement that the coin is weighted rather than fair based on that string of coin flips? In the context of the output of produced by `predictions()` (and by the `slopes()` command that we will see in later chapters), higher S-values would indicate that we should be increasingly surprised to see our results if the value of the thing we're estimating is actually 0. This statistic is not all that useful for our predicted values but could be more useful for understanding how surprising a coefficient or "marginal effect" estimate happens to be. If you like, you can read a deep dive on what p-values are, some of the complications researcher's run into when interpreting them, and a discussion of what s-values are and how they may help matters in this [blog post](https://lesslikely.com/statistics/s-values/){target="_blank"}. The s-value is not examinable however.
+
+We can use this saved data object to calculate the residual value for each observation: the difference between the actual value on the DV and what our model predicts we should observe for the observation by creating a new variable where we subtract "estimate" from our DV.
+
+```{r}
+model_binary_predictions <- model_binary_predictions |> 
+  mutate(residual_value = v2x_polyarchy - estimate) #residual = actual - predicted
+```
+
+We could then use this newly created variable to investigate the results of our model and consider, for instance, which observations have particularly large residual values. This can be useful when checking the assumptions of our model, which we will learn how to do in @sec-ols-assumptions .[^linear_05-3]
+
+[^linear_05-3]: Russia has an NA value for `estimate` and `residual_value` because it has a missing value on the TYPEDEMO1984 variable and hence was not included in the regression model.
+
+```{r}
+model_binary_predictions |> 
+  select(country_name, v2x_polyarchy, estimate, residual_value) 
+```
+
+## Predicted Values at Specific Values of the IV (Bivariate Model)
+
+We just saw how to obtain model predictions for each individual observation used in creating the model. We may also want to know what we should expect to see, on average, for observations with some specific value of an independent variable. For instance, what is the democracy score we should expect to observe among countries that were autocracies in 1984? Or, what is the democracy score we should expect to observe (based on our model) for countries with a very low level of inequality (say, 25 on our scale)? We can also use the `predictions()` function to realize this end.
+
+As a first example, we will use `predictions()` to calculate the average predicted value among countries that were either an autocracy in 1984 or a democracy in 1984 based on our bivariate model (`model_binary`).
+
+```{r}
+predictions(model_binary, 
+            by = "TYPEDEMO1984") |> 
+  as_tibble()  #<1>
+```
+
+1.  See the Warning box below for why we include the `as_tibble()` line of syntax here
+
+`predictions(model_binary,`
+
+:   We first specify the name of the command and then the model from which we want to make predictions.
+
+`by = "TYPEDEMO1984")`
+
+:   This tells the command that we want to make predictions "by level of" the variable listed in the parentheses. In this case, we get a prediction for each of category of this variable. We can note two things here. First, we use `by=` option with factor variables and a different method for continuous variables (see below). Second, we do not specify `newdata=` here because we want output with average predictions for both categories rather than output that contains data on all individual observations.
+
+We can also do this in situations where the predictor variable is continuous in nature. For instance, we might predict the `v2x_polyarchy` score with a measure of economic inequality (`gini_2019`) and then wonder: what is the democracy score we expect to observe for a country with a rather low level of inequality (25) versus one with a rather high level of inequality (45)?
+
+```{r}
+predictions(model_continuous, 
+            newdata = datagrid(gini_2019 = c(25,45))) |> 
+  as_tibble() #<1>
+```
+
+1.  See the Warning box below for why we include the `as_tibble()` line of syntax here
+
+`newdata = datagrid(gini_2019 = c(25,45))`
+
+:   This is how we obtain predictions for *specific* values of a continuous variable for which we want a prediction. `newdata = datagrid(` can remain the same in your examples. You would then change `gini_2019` to the name of the continuous variable of interest to you. The contents of `c()` (here: `c(25,45)`) dictate what values of the specified variable `predictions()` will make a prediction for; in this case, for the values of 25 and 45. `gini_2019` is a numeric variable, so we can provide the numeric values of interest to us without parentheses. We can also use `newdata = datagrid()` with factor variables, although this is slightly more effort than simply using `by =` and would require us to provide the name of each category in parentheses.
+
+We can naturally expand this so that we look at predictions for other values of this variable by including additional options in `c()`:
+
+```{r}
+predictions(model_continuous, 
+            newdata = datagrid(gini_2019 = c(25,30,35,40,45))) |> 
+  as_tibble() #<1>
+```
+
+1.  See the Warning box below for why we include the `as_tibble()` line of syntax here
+
+::: callout-important
+#### Warning!
+
+We ended our `predictions()` commands above with another line that specified `as_tibble()`. This last step is not necessary for the command to work. Here is an example from above but without that final line:
+
+```{r}
+predictions(model_binary, by = "TYPEDEMO1984")
+```
+
+The key difference here is in how the output is displayed in R: the default output of `predictions()` in the Console shows different names for the columns (e.g., Estimate rather than estimate, 2.5% rather than conf.low) to make things look a bit neater (you can see the actual names of the columns in the dataframe that `predictions()` produces in the final row of the output). We used the `as_tibble()` option above so that you could see the underlying data and variable names. We will use the output of this command in later chapters to produce plots of our data. The main warning here is to make sure you use the correct variable names (e.g., estimate rather than Estimate).
+:::
+
+## Predicted Values (Multiple Linear Models)
+
+We can naturally use these commands to obtain the residuals and predicted values from a model with multiple predictors. The process for finding the residuals of a multiple linear regression model is the same as above so we do not show it again. The process for calculating average predicted values is also highly similar, but with one important difference when the predictor is a factor variable.
+
+### Predictions for a Continuous Predictor Variable {#sec-predictions-for-a-continuous-predictor-variable}
+
+Here are the results from our multiple linear regression model:
+
+```{r}
+tidy(model_multiple)
+```
+
+`cpi` is a measure of perceived corruption in a country. It can theoretically range from 0-100 (with higher values indicating *less* perceived corruption), although it only ranges between 12 and 88 among countries in our model.
+
+```{r}
+predictions(model_multiple) |>  #<1> 
+  select(cpi) |> # <2>
+  summary()      # <3>
+```
+
+1.  Used to filter out any observations in our dataset that are not in the model due to missingness on one or more of the variables in the model
+2.  Selects just the the cpi variable
+3.  Find its summary statistics
+
+We might ask ourselves this question: what is the level of democracy we should *expect* to observe based on our model for countries with different levels of `cpi` but representative values on the other predictor variables? The coefficient for `cpi` indicates that the predicted value of democracy should increase with each *one unit* increase in `cpi`...but do democracy scores change by a little, or a lot, when we move across the range of the corruption variable? Here is how we would use `predictions()` to obtain the expected democracy score when `cpi` takes on values between 20 and 80 in 10pt. increments in order to answer that question:
+
+```{r}
+preds1 <- predictions(model_multiple, 
+            newdata = datagrid(cpi = c(20,30,40,50,60,70,80))) |> 
+  as_tibble()
+```
+
+`preds1 <-`
+
+:   We save our results as a new data object so that we can use it again later. We name it `preds1` here, while you would give it a name of your choosing.
+
+`predictions(model_multiple,`
+
+:   We then specify the name of our command and the name of the model we want to make predictions from.
+
+`newdata = datagrid(cpi = c(20,30,40,50,60,70,80))`
+
+:   We then specify what IV, and what specific values of this IV, we want to make predictions for. We use the `newdata = datagrid()` option because "cpi" is a continuous variable. We do not need to put the values in quotation marks because it is a numerical variable.
+
+Here are the predictions.
+
+```{r}
+preds1
+```
+
+::: callout-note
+#### Output Explanation
+
+-   `estimate`: The predicted value
+-   `std.error` through `conf.high`: Uncertainty estimates relating to the prediction (e.g., its standard error, the p-value, and confidence intervals).
+-   "4 more variables": This row tells us what other columns are in our "tidied" dataframe (with the number 4 here likely to be different in examples where the model has a different number of predictor variables than in this example). The names refer to the variables in our model and would be different in your own examples. The columns for the IVs (here: `v2caviol`, `TYPEDEMO1984`, and `cpi`) will list the values of these variables used in producing the prediction.
+:::
+
+In the example above, `predictions()` has automatically held our two control variables (`v2caviol` and `TYPEDEMO1984`) "constant" at the same value when calculating each predicted value. `predictions()` will hold continuous controls constant at their mean value, and factor variables at their mode, when `newdata = datagrid()` is used in this way. We can see this by looking at the columns for our independent variables in the output created by `predictions()`:
+
+```{r}
+preds1 |> 
+  select(estimate, cpi, v2caviol, TYPEDEMO1984)
+
+```
+
+### Predictions for a Factor Predictor Variable
+
+We can use the same procedure as above to obtain predicted value for each category of a binary or categorical factor variable. Recall that we do this by using `by=` rather than `newdata = datagrid()`.[^linear_05-4] However, we do need to take one additional step here that we don't have to perform in the previous example.
+
+[^linear_05-4]: We could technically use `newdata = datagrid()` but we'd then need to type out the factor levels (e.g., `newdata = datagrid(TYPEDEMO1984 = c("Autocracies', "Democracies"))` . The `by =` option is thus a bit easier to use.
+
+```{r}
+preds2 <- predictions(model_multiple, by= "TYPEDEMO1984", 
+                      newdata = "mean") |> 
+  as_tibble()
+```
+
+`by = "TYPEDEMO1984"`
+
+:   This tells the command that we want predicted values for each category of our factor variable.
+
+`newdata = "mean")`
+
+:   This tells the command that we want to hold the other variables in the model constant at their mean (if a continuous variable) or mode (if a factor variable). This is done automatically in the earlier example, but must be specified here due to the use of the `by =` option.
+
+Here are the predictions:
+
+```{r}
+preds2
+```
+
+We can again see that `predictions()` is holding the other predictor variables "constant" when making these predictions:
+
+```{r}
+preds2 |> 
+  select(estimate, TYPEDEMO1984, cpi, v2caviol)
+```
+
+### Predictions for specific combinations of the predictor variables
+
+The first set of predictions we made above were predictions for each observation used in fitting the model based on the specific values of the independent variables associated with the observation. The second set of predictions we made focused on the average value of the DV our model tells us we should expect to see if one of the IVs equals a specific value and the other IVs are held constant at their mean or mode. We can also use `predictions()` to calculate predicted values for specific hypothetical cases. In this example, for instance, we use `predictions()` to estimate the democracy score in a country that was a democracy in 1984, has a corruption score equal to the maximum value that we observe in our data (88), and has the minimum level of political violence observed in the data (-3.429). We do this by including all predictors in the `newdata = datagrid()` portion of the syntax. If we left one of the variables out, then it would be held constant at its mean or mode depending on what type of variable it is.
+
+```{r}
+predictions(model_multiple, 
+            newdata = datagrid(cpi = c(88), 
+                               v2caviol = c(-3.429), 
+                               TYPEDEMO1984 = c("Democracies"))) |> 
+  as_tibble()
+```

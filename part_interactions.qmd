@@ -1,0 +1,6 @@
+# Interactions within Linear and Logistic Models
+
+This section of the materials focuses on the inclusion and interpretation of interactions within linear and logistic models. You will learn how to...
+
+-   Include interaction terms in your regression models
+-   Use marginal effect and predicted value/probability estimates to interpret them

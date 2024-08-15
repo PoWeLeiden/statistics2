@@ -1,0 +1,199 @@
+---
+code-annotations: hover
+---
+
+# Including an Interaction Term in a Regression Model {#sec-including-an-interaction-term-in-a-regression-model}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+#Packages
+library(sjPlot)            #Dataset overviews
+library(modelsummary)      #Regression & correlation tables
+library(rio)               #Importing data
+library(tidyverse)         #Data management & plotting
+
+#Data
+anes <- import("data/anes_interactions.rda")
+```
+
+Thus far we have been investigating statistical models wherein we predict a dependent variable with one or more independent variables. One goal of these models has been to identify the relationship between a predictor variable and the dependent variable that is 'independent' of the influence of the other predictors. For instance, what is the relationship between a person's party affiliation and their evaluation of specific politicians, such as a country's Prime Minister or President, when holding the effects of other characteristics of the individual "constant"?
+
+Researchers do not always want to hold another predictor in the model "constant" in this way. Instead, they may want to know if two independent variables have an *interactive* relationship when predicting the dependent variable. For instance, we might ask whether the relationship between partisanship and evaluations of a major political leader is exactly the same among people who think things are going well in the country and those that think things are going poorly. Examining this type of question requires us to add an *interaction term* to our model. This chapter shows you how to do just that with a focus on both linear and logistic regression models.
+
+Here are the packages that we will use in this chapter as well as our data:
+
+```{r}
+#| eval: false
+
+#Packages
+library(sjPlot)            #Dataset overviews
+library(modelsummary)      #Regression & correlation tables
+library(broom)             #Model summaries, including coefficients
+library(rio)               #Importing data
+library(tidyverse)         #Data management & plotting
+
+#Data
+anes <- import("data/anes_interactions.rda")
+```
+
+The dataset that we will use in this chapter, and the ones to come, contains survey data selected from the 2020 [American National Election Studies](https://electionstudies.org/data-center/2020-time-series-study/){target="_blank"} or ANES for short. The 2020 ANES was conducted right around the time of the 2020 Presidential elections featuring a contest between then President Donald Trump (Republican Party) and his challenger Joseph Biden (Democratic Party). This dataset has already been "cleaned": missing value codes have been converted to "NA" and binary/categorical variables have been converted into factor variables. Let's take a look at its contents:
+
+```{r}
+view_df(anes)
+```
+
+## Adding an Interaction Term to a Regression Model
+
+We can add multiple predictor variables to both a linear (`lm`) and logistic (`glm`) regression model using the '+' sign. We can include an interaction between two predictor variables by using the '\*' sign instead.
+
+For example, in this linear regression model we predict how respondents evaluated then candidate Joe Biden on a scale ranging from 0 ('very cold or unfavorable') to 100 ('very warm or favorable') using three predictor variables: (1) `pid` (the respondent's partisan identity, which is a continuous variable ranging from 1 \["Strong Democrat"\] to 7 \["Strong Republican"\]); (2) `right_track` (a binary factor variable where 0 indicates the respondent thinks the "country is on the wrong track" and 1 that the "country is heading in the right direction"); (3) and `rural_urban` (a categorical variable concerning where the respondent lives with "suburb" as the reference category).
+
+```{r}
+#Run the model and store results
+biden_model <- lm(biden ~ pid + right_track + rural_urban, data = anes)
+
+#Summary of results
+summary(biden_model)
+```
+
+Evaluations of Biden become more negative on average as the `pid` measure increases in value, that is, as we move from the Democratic end of the scale to the Republican end of the scale. Respondents who state that the country is heading in the "right direction", meanwhile, evaluate Biden worse on average than those who say that the country is "on the wrong track". This is because answers to the `right_track` question reflect one's impressions of the performance of then President Donald Trump: people saying 'right direction' had positive evaluations of Trump and, conversely, negatively ones of his opponent Biden.[^interaction_01-1]
+
+[^interaction_01-1]: Our dataset also has a measure of evaluations of Donald Trump (the variable named `trump`). The average evaluation of Trump among those saying the country was heading in the "right direction" was 83.2 on this 0-100pt scale, while it was 25.4 among those saying things were heading down the "wrong track".
+
+Perhaps we have some theory-driven reason to expect the relationship between partisanship and evaluations of Biden to vary based on whether people think things in the country are going well or not. Or, vice versa, we might have some reason to think that the effect of evaluations regarding how things were going in the country on evaluations of Biden depends on the person's partisanship. We can examine these types of questions by adding an interaction between the two variables (`pid` and `right_track`) by using an asterisk ('\*') rather than a plus sign ('+') to separate the two variables:
+
+```{r}
+#Run the model and store results
+biden_int <- lm(biden ~ pid * right_track + rural_urban, data = anes)
+
+#Summary of results
+summary(biden_int)
+```
+
+::: callout-note
+#### Output Explanation
+
+The structure of our output is the same as with our previous examples. However, we can see that there is now an extra term in the Coefficients box: "pid:right_trackRight Direction".
+
+When we separate two variables by an '\*', R will include both variables plus an interaction term multiplying the two variables with one another in the model. The name provided to the interaction term will be the names of the two variables separated by a colon as in the example above ("pid:right_trackRight Direction").
+:::
+
+Including an interaction term follows the same principles when using a logistic model. We demonstrate that here by predicting whether the person says the US is heading in the "right direction" (1) or not (0) (`right_track`). We use the following predictor variables: (1) `vote2016`, which records who the respondent reported voting for in the *2016* Presidential election (Hillary Clinton = 0, Donald Trump = 1; `vote2016`); age in years (`age`); and place of residence (`rural_urban`). We add an interaction between `vote2016` and `age` in this example:
+
+```{r}
+#Run the model and store results
+righttrack_int <- glm(right_track ~ vote2016 * age + rural_urban, 
+                      family = "binomial", data = anes)
+
+#Summary of results
+summary(righttrack_int)
+```
+
+::: callout-warning
+#### Interpretation
+
+When estimating an interaction term, we are basically asking ourselves whether the relationship between a certain predictor (X) and the dependent variable (Y) is different when a second predictor (Z) takes on different values. The coefficient for the interaction term provides us with information about whether this is the case.
+
+![](figures/Interaction.png){fig-align="center"}
+
+In our linear `biden_int` model, for instance, the interaction term is statistically significant: the relationship between `pid` and Biden evaluations may be different depending on whether the person says the country is on the wrong track or heading in the "right direction".[^interaction_01-2] The interaction term in the logistic `righttrack_int` model, meanwhile, is not statistically significant using conventional standards of significance, which implies that the relationship between, for instance, age and beliefs about the country is the same regardless of whether we consider Clinton or Trump voters.
+
+The coefficients for the variables being interacted with one another can be tricky to directly interpret. As a result, we will use R to calculate other statistical estimates to better understand the interaction effect:
+
+-   The marginal effect of one variable in the interaction at different values of the other variable in the interaction ( @sec-inter-marginal).
+-   The predicted values for specific value combination of the two variables in the interaction. ( @sec-predicted-values-from-interaction-models)
+:::
+
+[^interaction_01-2]: But note that interaction terms are "symmetrical". We can also talk about whether the difference in Biden evaluations based on saying "right direction" or "wrong track" is the same for Strong Democrats (pid = 1) as for Not Strong Democrats (pid = 2) and so on. When we interpret an interaction model we must first discern what variable is supposed to be the "X" variable and which is supposed to be the "Z" (or moderator) variable as this effects how we use the model"s results.
+
+## Regression Tables
+
+Our next two chapters will focus on communicating the results of regression models that feature interaction terms via plots. Here we will briefly note show how to present these results as a regression table using the `modelsummary()` function from the `modelsummary` library. The basic principles are the same as discussed in prior chapters (linear regression tables: @sec-presenting-linear-regression-regression-tables ; logistic regression tables: @sec-presentation-regression-tables-logit ).
+
+We will provide the results of our first two models in this example. We will show both the original model and the one that adds the interaction term side by side so that readers can see how our results change the interaction is added to the model.
+
+```{r}
+# List of models
+interaction_lm_models <- list( # <1>
+  biden_model, biden_int
+)
+
+#Create the table
+modelsummary(interaction_lm_models, #<2>
+             stars = T, # <3> 
+             coef_rename = c( # <4>
+               "(Intercept)" = "Intercept", 
+               "pid" = "Party Identification", 
+               "right_trackRight Direction" = "Country Heading in Right Direction?", 
+               "rural_urbanRural" = "Rural Resident", 
+               "rural_urbanSmall Town" = "Small Town Resident", 
+               "rural_urbanCity" = "City Resident", 
+               "pid:right_trackRight Direction" = "PID x Right Direction"), 
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), # <5>
+             title = "Predicting Biden Evaluations", # <6>
+             notes = "OLS coefficients with standard errors in parentheses; Reference category for place of residence = Suburbs.") # <7> 
+```
+
+1.  We first create a new "list" object containing the models we want to include in the table
+2.  The name of the list object we just created
+3.  This adds "stars" to signal statistical significance
+4.  We rename our variables for better communication via `coef_rename()`
+5.  We select which model fit statistics via `gof_map()`
+6.  We can give a title to the table via `title =`
+7.  And, finally, provide some notes at the bottom of the table via `notes =`
+
+The main thing we might want to change about a table like this is to change the placement of the interaction term coefficient. The default behavior is to place it at the bottom of the table. That is perfectly fine, but we might want to place it alongside the other variables within the interaction so that consumers of our table can consider these coefficients all at once. We can do this by changing `coef_rename` to `coef_map` in our syntax and moving the entry for the interaction term to where we want it to show up in the resulting table:
+
+```{r}
+modelsummary(interaction_lm_models, 
+             stars = T, 
+             coef_map = c( # <1> 
+               "(Intercept)" = "Intercept", 
+               "pid" = "Party Identification", 
+               "right_trackRight Direction" = "Country Heading in Right Direction?", 
+               "pid:right_trackRight Direction" = "PID x Right Direction", # <2> 
+               "rural_urbanRural" = "Rural Resident", 
+               "rural_urbanSmall Town" = "Small Town Resident", 
+               "rural_urbanCity" = "City Resident"), 
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), 
+             title = "Predicting Biden Evaluations", 
+             notes = "OLS coefficients with standard errors in parentheses; Reference category for place of residence = Suburbs.") 
+```
+
+1.  We changed `coef_rename` to `coef_map`
+2.  We moved the part where we rename the interaction up and placed it after the second term in our interaction. This changes the order in which the coefficients are displayed in our table due to the use of `coef_map`
+
+Here, we have moved the interaction term up in the table so that it comes right after the two other variables in the interaction (`pid` and `right_track`).
+
+::: callout-important
+#### Warning!
+
+We can use `coef_map` to alter the order of coefficients in our table as above. This is not usually needed but can be handy in some circumstances. But, do note that `coef_map` is *type sensitive* and will only show coefficients when you have correctly written out their underlying name. Here is an example, for instance, where we make two mistakes: we write "right_trackRight direction" rather than the correct "right_trackRight Direction" and we write "rural_urbancity" instead of "rural_urbanCity":
+
+```{r}
+modelsummary(interaction_lm_models, 
+             stars = T, 
+             coef_map = c(
+               "(Intercept)" = "Intercept", 
+               "pid" = "Party Identification", 
+               "right_trackRight direction" = "Country Heading in Right Direction?", #<1>
+               "pid:right_trackRight Direction" = "PID x Right Direction",  
+               "rural_urbanRural" = "Rural Resident", 
+               "rural_urbanSmall Town" = "Small Town Resident", 
+               "rural_urbancity" = "City Resident"), # <2>
+             gof_map = c("nobs", "r.squared", "adj.r.squared"), 
+             title = "Predicting Biden Evaluations", 
+             notes = "OLS coefficients with standard errors in parentheses") 
+```
+
+1.  We changed "Direction" to "direction"
+2.  We changed "City" to "city"
+
+Oh no! We no longer see coefficients for the two variables that we mis-spelled in our syntax.
+
+The warning here is that if you do use `coef_map` in this way in your future work, then double check your spellings and your output lest you mistakenly leave something quite critical out of your table. You can learn more about the `coef_map` option at the `modelsummary` website ([link](https://modelsummary.com/vignettes/modelsummary.html#coef_map){target="_blank"})
+:::
