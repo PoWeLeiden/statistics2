@@ -40,16 +40,16 @@ Let's take another look at the model that we have been working with thus far, on
 #Data Preparation
 ESS9NL <- ESS9NL |>
   #Factorize our IVs
-  mutate(gndr = factorize(gndr), 
-         vote = factorize(vote))  |> 
+  mutate(gndr_F = factorize(gndr), 
+         vote_F = factorize(vote))  |> 
   #Remove Not Eligible to Vote Category from vote
-  mutate(vote = na_if(vote, "Not eligible to vote")) |>  
+  mutate(vote_F = na_if(vote_F, "Not eligible to vote")) |>  
   #Relevel our variables like we did last time
-  mutate(vote = relevel(vote, "No"), 
-         gndr = relevel(gndr, "Female"))
+  mutate(vote_F = relevel(vote_F, "No"), 
+         gndr_F = relevel(gndr_F, "Female"))
 
 #Our model
-Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                 data = ESS9NL, family = "binomial")
 
 #Check the output
@@ -72,28 +72,28 @@ If we want to compare multiple logistic regression models with one another, then
 
 ```{r}
 ESS9NL_glm <- ESS9NL |>
-  filter(complete.cases(vote, gndr, agea, trstplt, lrscale))
+  filter(complete.cases(vote_F, gndr_F, agea, trstplt, lrscale))
 ```
 
 We next estimate our models. In this example, we will fit a series of models using our filtered dataset with each model containing one more variable than the one before. We will also fit a "null" model that does not contain any predictor variables. This is done by specifying the number 1 (a constant) on the right side of the tilde. We do this so that we have a baseline against which we can compare our first model.
 
 ```{r}
 #Null model
-Vote_model0 <- glm(vote ~ 1,
+Vote_model0 <- glm(vote_F ~ 1,
                    data = ESS9NL_glm, family = "binomial")
 # + gndr
-Vote_model1 <- glm(vote ~ gndr , 
+Vote_model1 <- glm(vote_F ~ gndr_F , 
                 data = ESS9NL_glm, family = "binomial")
 # + agea
-Vote_model2 <- glm(vote ~ gndr + agea , 
+Vote_model2 <- glm(vote_F ~ gndr_F + agea , 
                 data = ESS9NL_glm, family = "binomial")
 
 # + trst
-Vote_model3 <- glm(vote ~ gndr + agea + trstplt, 
+Vote_model3 <- glm(vote_F ~ gndr_F + agea + trstplt, 
                 data = ESS9NL_glm, family = "binomial")
 
 # + lrscale
-Vote_model4 <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model4 <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                 data = ESS9NL_glm, family = "binomial")
 
 ```

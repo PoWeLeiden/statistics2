@@ -40,7 +40,6 @@ library(tidyverse)         #Data management & plotting
 #Data
 ESS9NL <- import("data/ESS9e03, Netherlands.sav")
 
-#view_df example on subset of dataset
 ESS9NL |> 
   select(polintr, ppltrst) |> 
   sjPlot::view_df()
@@ -82,12 +81,12 @@ Our predictor variable only has two categories, so we will need to factorize it 
 ```{r}
 #Factorize variables
 ESS9NL <- ESS9NL |>
-  mutate(gndr = factorize(gndr), #<1> 
-         vote = factorize(vote)) #<2>
+  mutate(gndr_F = factorize(gndr), #<1> 
+         vote_F = factorize(vote)) #<2>
 
 #Drop the not eligible category
 ESS9NL <- ESS9NL |>
-  mutate(vote = na_if(vote,"Not eligible to vote"))
+  mutate(vote_F = na_if(vote_F,"Not eligible to vote"))
 
 ```
 
@@ -97,8 +96,8 @@ ESS9NL <- ESS9NL |>
 Let's check our work in regards to the vote variable:
 
 ```{r}
-levels(ESS9NL$vote)
-table(ESS9NL$vote)
+levels(ESS9NL$vote_F)
+table(ESS9NL$vote_F)
 
 ```
 
@@ -109,22 +108,22 @@ The `vote` variable is now a factor variable where the the first (or base) level
 ```{r}
 #Relevel the variable
 ESS9NL <- ESS9NL |> 
-  mutate(vote = relevel(vote, "No"))
+  mutate(vote_F = relevel(vote_F, "No"))
 
 #Let's check our work
-levels(ESS9NL$vote)
+levels(ESS9NL$vote_F)
 
 ```
 
-`mutate(vote = relevel(vote, "No"))`
+`mutate(vote_F = relevel(vote_F, "No"))`
 
 :   We use the `relevel()` command on the vote variable. We do not create a new variable here but overwrite the original one. You could also chose to make a new variable, which is usually a better idea when you are recoding/factorizing a variable. The category provided in quotation marks will become the reference category. It is important to note this variable was factorized first so we use the label "No" and not the numeric value for "No" originally stored in the dataset, which was 2.
 
 Let's check our work for the `gndr` variable:
 
 ```{r}
-table(ESS9NL$gndr)
-levels(ESS9NL$gndr)
+table(ESS9NL$gndr_F)
+levels(ESS9NL$gndr_F)
 ```
 
 "Male" has been used as the reference category. The two categories have a roughly equal number of observations, so the automatic behavior of `factorize()` is not an issue here. There is a third label here "No Answer" with 0 observations on it. This is fine for now - R will exclude this category from the analysis below.
@@ -133,10 +132,10 @@ We will change the reference group to "Female" as a further example of the `rele
 
 ```{r}
 ESS9NL <- ESS9NL |> 
-  mutate(gndr = relevel(gndr, "Female"))
+  mutate(gndr_F = relevel(gndr_F, "Female"))
 
 #check your work!
-levels(ESS9NL$gndr)
+levels(ESS9NL$gndr_F)
 ```
 
 ::: callout-important
@@ -151,7 +150,7 @@ Performing logistic regression in R is very similar to linear regression. Howeve
 
 ```{r}
 #Run the model
-Vote_model <- glm(vote ~ gndr, 
+Vote_model <- glm(vote_F ~ gndr_F, 
                   data = ESS9NL, family = "binomial")
 
 ```
@@ -160,7 +159,7 @@ Vote_model <- glm(vote ~ gndr,
 
 :   We assign the results of our estimation to a new object.
 
-`glm(vote ~ gndr,`
+`glm(vote_F ~ gndr_F,`
 
 :   We perform `glm` with `vote` as our dependent variable, predicted (`~`) by our only independent variable here: `gndr`. If we want to add more variables, we connect them with a '+' sign.
 
@@ -195,7 +194,7 @@ We can add multiple predictors to the model in a way similar to the linear regre
 
 ```{r}
 #Run the model
-Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                      data = ESS9NL, family = "binomial")
 
 #Check the output
@@ -206,7 +205,7 @@ summary(Vote_model_mp)
 ::: callout-warning
 #### Interpretation
 
-Logistic regression coefficients are on the log of the odds scale. The coefficient for `gndrMale` in the `vote_model_mp` model tells us the difference in the log of the odds of voting between male and female respondents, while the `agea` coefficient tell us how the log of the odds of voting change with each one unit increase in respondent age.
+Logistic regression coefficients are on the log of the odds scale. The coefficient for `gndr_FMale` in the `vote_model_mp` model tells us the difference in the log of the odds of voting between male and female respondents, while the `agea` coefficient tell us how the log of the odds of voting change with each one unit increase in respondent age.
 
 You can use the direction (positive, negative) and statistical significance of a logistic regression coefficient to talk about the general relationship between the predictor variable and the DV. However, it is not really possible to directly and clearly communicate what a logistic coefficient tells us about the magnitude of the relationship between an IV and the DV because of this log of the odds scaling. You should instead focus on odds ratios (see below), average marginal effects (@sec-marginal-effects), or predicted probabilities (@sec-logit-predicted-probabilities) to give more specific meaning to your discussion.
 

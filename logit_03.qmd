@@ -49,16 +49,16 @@ We will examine the same model that investigated in the last chapter - one where
 #Data Preparation
 ESS9NL <- ESS9NL |>
   #Factorize our IVs
-  mutate(gndr = factorize(gndr),  
-         vote = factorize(vote))  |> 
+  mutate(gndr_F = factorize(gndr),  
+         vote_F = factorize(vote))  |> 
   #Remove Not Eligible to Vote Category from vote
-  mutate(vote = na_if(vote, "Not eligible to vote")) |>  
+  mutate(vote_F = na_if(vote_F, "Not eligible to vote")) |>  
   #Relevel our variables like we did last time
-  mutate(vote = relevel(vote, "No"), 
-         gndr = relevel(gndr, "Female"))
+  mutate(vote_F = relevel(vote_F, "No"), 
+         gndr_F = relevel(gndr_F, "Female"))
 
 #Our model
-Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                      data = ESS9NL, family = "binomial")
 
 #Check the output
@@ -142,10 +142,10 @@ tibble(Pred_conts) # <1>
 
 The layout of this output is the same as we saw when making predictions from a linear regression model (see @sec-predicted-residual-values):
 
--   The `estimate` column provides the predicted probability.
+-   The `estimate` column provides the predicted probability. We can multiply this value by 100 to express the probability as a percent. For example, the predicted probability of voting is 69.89% for someone with a score of 0 on the `trstplt` scale.
 -   The `p.value` through `conf.high` columns provide uncertainty estimates.
--   We can then see columns for the other independent variables in the model (`gndr`, `agea`, `lrscale)` . These columns tell us the value that these variables have been held constant at when making predictions from the model. The `predictions()` command will automatically hold continuous variables constant at their mean, and factor variables at their mode, when `newdata = datagrid()` is used in the manner shown above.
--   The final two columns are `trstplt`, which shows the value of the trust in politicians measure used in making the prediction, and a column (not shown) for our DV (`vote`) that indicates which category is being predicted.
+-   We can then see columns for the other independent variables in the model (`gndr_F`, `agea`, `lrscale)` . These columns tell us the value that these variables have been held constant at when making predictions from the model. The `predictions()` command will automatically hold continuous variables constant at their mean, and factor variables at their mode, when `newdata = datagrid()` is used in the manner shown above.
+-   The final two columns are `trstplt`, which shows the value of the trust in politicians measure used in making the prediction, and a column (not shown) for our DV (`vote_F`) that indicates which category is being predicted.
 :::
 
 ### Factor Predictor Variable
@@ -155,14 +155,14 @@ The code for categorical variables is slightly different as we use the `by =` st
 ```{r}
 #Obtain predictions and store as new object
 Pred_cat <- predictions(Vote_model_mp,
-                        by = "gndr", 
+                        by = "gndr_F", 
                         newdata = "mean") 
 
 #Call the object in a nice tabular view
 tibble(Pred_cat)
 ```
 
-`by = "gndr"`
+`by = "gndr_F"`
 
 :   This tells the command that we want predicted values for each category of our factor variable.
 
@@ -174,12 +174,12 @@ tibble(Pred_cat)
 
 Finally, we can estimate what the predicted probability would be for an observation with specific values for each of the predictors in the model.
 
-Here, we estimate the probability for a man (`gndr`), aged 33 (`agea`), with a score of 2 for trust in politicians (`trstplt`), and a score of 8 for left-right position (`lrscale`). To do so we need to specify the values for all variables between brackets after `newdata = datagrid()`.
+Here, we estimate the probability for a man (`gndr_F`), aged 33 (`agea`), with a score of 2 for trust in politicians (`trstplt`), and a score of 8 for left-right position (`lrscale`). To do so we need to specify the values for all variables between brackets after `newdata = datagrid()`.
 
 ```{r}
 #Calculate and store
 Pred_specific <- predictions(Vote_model_mp,
-                             newdata = datagrid(gndr = c("Male"), # <1>
+                             newdata = datagrid(gndr_F = c("Male"), # <1>
                                                 agea = c(33),   
                                                 trstplt = c(2), 
                                                 lrscale = c(8)))

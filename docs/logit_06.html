@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 14&nbsp; Reporting &amp; Presenting Logistic Regressions</title>
+<title>14&nbsp; Reporting &amp; Presenting Logistic Regressions – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,13 +114,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_06.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -388,18 +388,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Preparation</span></span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Factorize our IVs</span></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr =</span> <span class="fu">factorize</span>(gndr), <span class="co">#</span></span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote =</span> <span class="fu">factorize</span>(vote))  <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">factorize</span>(gndr), <span class="co">#</span></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote_F =</span> <span class="fu">factorize</span>(vote))  <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Remove Not Eligible to Vote Category from vote</span></span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">na_if</span>(vote,<span class="st">"Not eligible to vote"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">na_if</span>(vote_F,<span class="st">"Not eligible to vote"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Relevel our variables like we did last time</span></span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">relevel</span>(vote, <span class="st">"No"</span>), </span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gndr =</span> <span class="fu">relevel</span>(gndr, <span class="st">"Female"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">relevel</span>(vote_F, <span class="st">"No"</span>), </span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gndr_F =</span> <span class="fu">relevel</span>(gndr_F, <span class="st">"Female"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Drop the extra level in gndr</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr =</span> <span class="fu">droplevels</span>(gndr))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">droplevels</span>(gndr_F))</span>
 <span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
-<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote <span class="sc">~</span> gndr <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
 <span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
 <span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
@@ -415,17 +415,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = vote ~ gndr + agea + trstplt + lrscale, family = "binomial", 
+glm(formula = vote_F ~ gndr_F + agea + trstplt + lrscale, family = "binomial", 
     data = ESS9NL)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3923   0.4100   0.5029   0.5905   1.0239  
 
 Coefficients:
              Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept) -0.284194   0.380455  -0.747    0.455    
-gndrMale     0.043281   0.154201   0.281    0.779    
+gndr_FMale   0.043281   0.154201   0.281    0.779    
 agea         0.018349   0.004503   4.075 4.61e-05 ***
 trstplt      0.195020   0.038706   5.039 4.69e-07 ***
 lrscale      0.029257   0.039306   0.744    0.457    
@@ -464,7 +460,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <li>The confidence interval can also be used to assess statistical significance and communicate the uncertainty surrounding regression estimates although this is more commonly done when reporting AME or odds ratio estimates than for logistic coefficients. If you include the CI in your discussion, then you can place it in parentheses after the coefficient: “The average marginal effect of age is 0.004 (95% CI: -0.006, 0.013)”.</li>
 </ul></li>
 </ul>
-<p>Here is an example for the <code>gndr</code> (binary factor) and <code>trstplt</code> (continuous) variables (AME and odds ratio estimates are calculated in previous chapters).</p>
+<p>Here is an example for the <code>gndr_F</code> (binary factor) and <code>trstplt</code> (continuous) variables (AME and odds ratio estimates are calculated in previous chapters).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -476,8 +472,8 @@ Report
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>trstplt</strong>: The chances that a person reports turning out to vote increase alongside their trust in politicians. The probability of turning out to vote is expected to increase by 2.3 percentage points, on average, for each one unit increase in trust. The relationship between trust in politicians and turnout is statistically significant (p &lt; 0.001).</p>
-<p><strong>gndr (AME example)</strong>: On average, the probability of turning out to vote is expected to be 4.3 percentage points higher among male than female respondents. However, this difference is not statistically significant (p = 0.78).</p>
-<p><strong>gndr (Odds Ratio Example)</strong>: The odds of turning out to vote among male respondents are 1.04 times greater than the odds among female respondents. However, this difference is not statistically significant (p = 0.78).</p>
+<p><strong>gndr_F (AME example)</strong>: On average, the probability of turning out to vote is expected to be 0.5 percentage points higher among male than female respondents. However, this difference is not statistically significant (p = 0.78).</p>
+<p><strong>gndr_F (Odds Ratio Example)</strong>: The odds of turning out to vote among male respondents are 1.04 times greater than the odds among female respondents. However, this difference is not statistically significant (p = 0.78).</p>
 </div>
 </div>
 <p>Additional notes for writing up results for formal papers:</p>
@@ -490,7 +486,7 @@ Report
 </section>
 <section id="sec-presentation-regression-tables-logit" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="sec-presentation-regression-tables-logit"><span class="header-section-number">14.2</span> Presentation: Regression Tables</h2>
-<p>We use the <code>modelsummary()</code> command from the <code>modelsummary</code> library to create regression tables. The basic process and syntax is the same as with linear regression models (see <a href="linear_08.html#sec-presenting-linear-regression-regression-tables" class="quarto-xref"><span>Section 8.4</span></a>). The primary difference comes in how we specify the goodness of fit statistics statistics that will be presented.</p>
+<p>We use the <code>modelsummary()</code> command from the <code>modelsummary</code> library to create regression tables. The basic process and syntax is the same as with linear regression models (see <a href="linear_08.html#sec-presenting-linear-regression-regression-tables" class="quarto-xref"><span>Section 8.5</span></a>). The primary difference comes in how we specify the goodness of fit statistics statistics that will be presented.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(Vote_model_mp,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
@@ -503,35 +499,92 @@ Report
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">"Turnout in the Netherlands (ESS9)"</span>,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">notes =</span> (<span class="st">"Logistic regression coefficients with standard errors in parentheses"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
- 
+<!-- preamble start -->
 
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tinytable_fqfoh0w7t2jkt7bbmmrs</title>
-    <style>
-.table td.tinytable_css_2zegca9itxns92odtfjm, .table th.tinytable_css_2zegca9itxns92odtfjm {    border-bottom: solid 0.1em #d3d8dc; }
-.table td.tinytable_css_vkloxf9o8om8hf2crjaq, .table th.tinytable_css_vkloxf9o8om8hf2crjaq {    text-align: left; }
-.table td.tinytable_css_zvp1uxttiqwiiig2vczr, .table th.tinytable_css_zvp1uxttiqwiiig2vczr {    text-align: center; }
-.table td.tinytable_css_0a027gmbk203wb4h4s65, .table th.tinytable_css_0a027gmbk203wb4h4s65 {    border-bottom: solid 0.05em black; }
-    </style>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      },
-      svg: {
-        fontCache: 'global'
-      }
-    };
-    </script>
-  
 
-  
+      function styleCell_bi6t8rjcklbjsz7339wd(i, j, css_id) {
+          var table = document.getElementById("tinytable_bi6t8rjcklbjsz7339wd");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_bi6t8rjcklbjsz7339wd');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_bi6t8rjcklbjsz7339wd(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_bi6t8rjcklbjsz7339wd");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 11, j: 1 },  ], css_id: 'tinytable_css_ugh32x5ln4lp8r8kid3q',}, 
+          { positions: [ { i: 12, j: 1 },  ], css_id: 'tinytable_css_o2o5p12iftlg9zltp6pf',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_l7h6t00sqmnf93b0lapo',}, 
+          { positions: [ { i: 10, j: 1 },  ], css_id: 'tinytable_css_hlmxsacwwdz05x97f2md',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 11, j: 0 },  ], css_id: 'tinytable_css_hl2707k1elk6eekbwlai',}, 
+          { positions: [ { i: 10, j: 0 },  ], css_id: 'tinytable_css_db33jctapcmglwngx7lh',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_cwxmbrxnj3ickwjbz0dh',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_14az6zew77tw5w9en1vn',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_bi6t8rjcklbjsz7339wd(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_ugh32x5ln4lp8r8kid3q, .table th.tinytable_css_ugh32x5ln4lp8r8kid3q { text-align: center; }
+      .table td.tinytable_css_o2o5p12iftlg9zltp6pf, .table th.tinytable_css_o2o5p12iftlg9zltp6pf { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_l7h6t00sqmnf93b0lapo, .table th.tinytable_css_l7h6t00sqmnf93b0lapo { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_hlmxsacwwdz05x97f2md, .table th.tinytable_css_hlmxsacwwdz05x97f2md { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_hl2707k1elk6eekbwlai, .table th.tinytable_css_hl2707k1elk6eekbwlai { text-align: left; }
+      .table td.tinytable_css_db33jctapcmglwngx7lh, .table th.tinytable_css_db33jctapcmglwngx7lh { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_cwxmbrxnj3ickwjbz0dh, .table th.tinytable_css_cwxmbrxnj3ickwjbz0dh { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_14az6zew77tw5w9en1vn, .table th.tinytable_css_14az6zew77tw5w9en1vn { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_fqfoh0w7t2jkt7bbmmrs" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_bi6t8rjcklbjsz7339wd" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Turnout in the Netherlands (ESS9)</caption>
               <tbody><tr>
@@ -551,7 +604,7 @@ Report
                   <td>(0.380) </td>
                 </tr>
                 <tr>
-                  <td>Male respondent       </td>
+                  <td>gndr_FMale            </td>
                   <td>0.043   </td>
                 </tr>
                 <tr>
@@ -593,84 +646,7 @@ Report
         </tbody>
       </table>
     </div>
-
-    <script>
-      function styleCell_tinytable_6p4id979q2m2q61rp19e(i, j, css_id) {
-        var table = document.getElementById("tinytable_fqfoh0w7t2jkt7bbmmrs");
-        table.rows[i].cells[j].classList.add(css_id);
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_fqfoh0w7t2jkt7bbmmrs');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_tinytable_6p4id979q2m2q61rp19e(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_fqfoh0w7t2jkt7bbmmrs");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(0, 0, 'tinytable_css_2zegca9itxns92odtfjm') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(0, 1, 'tinytable_css_2zegca9itxns92odtfjm') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(0, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(1, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(2, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(3, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(4, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(5, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(6, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(7, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(8, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(9, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(10, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(11, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(12, 0, 'tinytable_css_vkloxf9o8om8hf2crjaq') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(0, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(1, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(2, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(3, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(4, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(5, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(6, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(7, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(8, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(9, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(10, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(11, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(12, 1, 'tinytable_css_zvp1uxttiqwiiig2vczr') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(10, 0, 'tinytable_css_0a027gmbk203wb4h4s65') })
-window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q61rp19e(10, 1, 'tinytable_css_0a027gmbk203wb4h4s65') })
-    </script>
-
-  
-
-
+<!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 <p>The syntax is the same as with a linear regression except for this:</p>
@@ -709,35 +685,92 @@ window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q6
 </dl>
 </div>
 <div class="cell-output-display">
- 
+<!-- preamble start -->
 
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tinytable_ptuo4l83ybp624xqztev</title>
-    <style>
-.table td.tinytable_css_y921h79ur84d0uty0h2z, .table th.tinytable_css_y921h79ur84d0uty0h2z {    border-bottom: solid 0.1em #d3d8dc; }
-.table td.tinytable_css_1lcmlcwto35kwj2u7hu8, .table th.tinytable_css_1lcmlcwto35kwj2u7hu8 {    text-align: left; }
-.table td.tinytable_css_eko23wggyb6887ms1258, .table th.tinytable_css_eko23wggyb6887ms1258 {    text-align: center; }
-.table td.tinytable_css_ul6c8cf6v7qi53x8cmkw, .table th.tinytable_css_ul6c8cf6v7qi53x8cmkw {    border-bottom: solid 0.05em black; }
-    </style>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      },
-      svg: {
-        fontCache: 'global'
-      }
-    };
-    </script>
-  
 
-  
+      function styleCell_0qpf9j9gx8muu91yrgjo(i, j, css_id) {
+          var table = document.getElementById("tinytable_0qpf9j9gx8muu91yrgjo");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_0qpf9j9gx8muu91yrgjo');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_0qpf9j9gx8muu91yrgjo(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_0qpf9j9gx8muu91yrgjo");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 10, j: 0 },  ], css_id: 'tinytable_css_yirhc2snvoj81v4pqk4c',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_werbtztsbrdgtsdv4h7b',}, 
+          { positions: [ { i: 12, j: 1 },  ], css_id: 'tinytable_css_ut5pnonvpmjzergblze9',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_rqk0m3d8lhnqp23yhtnp',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 11, j: 1 },  ], css_id: 'tinytable_css_pipkxybvz5rdbvqtssm6',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 11, j: 0 },  ], css_id: 'tinytable_css_gnps6192waonxosha6ez',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_ggc46sndzyrv9d4zdsth',}, 
+          { positions: [ { i: 10, j: 1 },  ], css_id: 'tinytable_css_9tfqo2zuvrxycvskmar2',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_0qpf9j9gx8muu91yrgjo(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_yirhc2snvoj81v4pqk4c, .table th.tinytable_css_yirhc2snvoj81v4pqk4c { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_werbtztsbrdgtsdv4h7b, .table th.tinytable_css_werbtztsbrdgtsdv4h7b { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ut5pnonvpmjzergblze9, .table th.tinytable_css_ut5pnonvpmjzergblze9 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_rqk0m3d8lhnqp23yhtnp, .table th.tinytable_css_rqk0m3d8lhnqp23yhtnp { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_pipkxybvz5rdbvqtssm6, .table th.tinytable_css_pipkxybvz5rdbvqtssm6 { text-align: center; }
+      .table td.tinytable_css_gnps6192waonxosha6ez, .table th.tinytable_css_gnps6192waonxosha6ez { text-align: left; }
+      .table td.tinytable_css_ggc46sndzyrv9d4zdsth, .table th.tinytable_css_ggc46sndzyrv9d4zdsth { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_9tfqo2zuvrxycvskmar2, .table th.tinytable_css_9tfqo2zuvrxycvskmar2 { text-align: center; border-bottom: solid black 0.05em; }
+    </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_ptuo4l83ybp624xqztev" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_0qpf9j9gx8muu91yrgjo" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Turnout in the Netherlands (ESS9)</caption>
               <tbody><tr>
@@ -757,7 +790,7 @@ window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q6
                   <td>[0.357, 1.588]</td>
                 </tr>
                 <tr>
-                  <td>Male respondent       </td>
+                  <td>gndr_FMale            </td>
                   <td>1.044         </td>
                 </tr>
                 <tr>
@@ -799,84 +832,7 @@ window.addEventListener('load', function () { styleCell_tinytable_6p4id979q2m2q6
         </tbody>
       </table>
     </div>
-
-    <script>
-      function styleCell_tinytable_sam7opy9lzgxo7sdalqk(i, j, css_id) {
-        var table = document.getElementById("tinytable_ptuo4l83ybp624xqztev");
-        table.rows[i].cells[j].classList.add(css_id);
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_ptuo4l83ybp624xqztev');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_tinytable_sam7opy9lzgxo7sdalqk(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ptuo4l83ybp624xqztev");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(0, 0, 'tinytable_css_y921h79ur84d0uty0h2z') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(0, 1, 'tinytable_css_y921h79ur84d0uty0h2z') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(0, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(1, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(2, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(3, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(4, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(5, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(6, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(7, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(8, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(9, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(10, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(11, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(12, 0, 'tinytable_css_1lcmlcwto35kwj2u7hu8') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(0, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(1, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(2, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(3, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(4, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(5, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(6, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(7, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(8, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(9, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(10, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(11, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(12, 1, 'tinytable_css_eko23wggyb6887ms1258') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(10, 0, 'tinytable_css_ul6c8cf6v7qi53x8cmkw') })
-window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7sdalqk(10, 1, 'tinytable_css_ul6c8cf6v7qi53x8cmkw') })
-    </script>
-
-  
-
-
+<!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
 <dl>
@@ -894,7 +850,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 </section>
 <section id="presentation-coefficient-and-odds-ratio-plots" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="presentation-coefficient-and-odds-ratio-plots"><span class="header-section-number">14.3</span> Presentation: Coefficient and Odds Ratio Plots</h2>
-<p>We could present the result of our model via a coefficient plot (with a full regression table in an appendix), much as with a linear regression model. The basic process is described in <a href="linear_08.html#sec-presenting-linear-regression-coefficient-plots" class="quarto-xref"><span>Section 8.5</span></a> . Here is an example based on the model above:</p>
+<p>We could present the result of our model via a coefficient plot (with a full regression table in an appendix), much as with a linear regression model. The basic process is described in <a href="linear_08.html#sec-presenting-linear-regression-coefficient-plots" class="quarto-xref"><span>Section 8.6</span></a> . Here is an example based on the model above:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Vote_model_mp, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2">2</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
@@ -929,7 +885,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -965,7 +921,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1022,7 +978,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1048,19 +1004,19 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <section id="instructions-1" class="level3" data-number="14.4.1">
 <h3 data-number="14.4.1" class="anchored" data-anchor-id="instructions-1"><span class="header-section-number">14.4.1</span> Instructions</h3>
-<p>The same instructions apply as with coefficient plots for linear regression ( <a href="linear_08.html#sec-presenting-linear-regression-coefficient-plots" class="quarto-xref"><span>Section 8.5</span></a>) or with coefficient/odds ratio plots (see above).</p>
+<p>The same instructions apply as with coefficient plots for linear regression ( <a href="linear_08.html#sec-presenting-linear-regression-coefficient-plots" class="quarto-xref"><span>Section 8.6</span></a>) or with coefficient/odds ratio plots (see above).</p>
 </section>
 </section>
 <section id="sec-presentation-predicted-probability-plots" class="level2" data-number="14.5">
 <h2 data-number="14.5" class="anchored" data-anchor-id="sec-presentation-predicted-probability-plots"><span class="header-section-number">14.5</span> Presentation: Predicted Probability Plots</h2>
-<p>Finally, we could present our results via a plot of the predicted probabilities from our model. This is perhaps particularly useful with continuous predictor variables as it enables us to quickly show the degree of change in the probability of Y across the range of X. The process here is again similar to what we did with predicted values plots in linear regressions (see <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 8.6</span></a>), so we will concisely show the syntax here.</p>
+<p>Finally, we could present our results via a plot of the predicted probabilities from our model. This is perhaps particularly useful with continuous predictor variables as it enables us to quickly show the degree of change in the probability of Y across the range of X. The process here is again similar to what we did with predicted values plots in linear regressions (see <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 8.7</span></a>), so we will concisely show the syntax here.</p>
 <section id="continuous-predictor" class="level3" data-number="14.5.1">
 <h3 data-number="14.5.1" class="anchored" data-anchor-id="continuous-predictor"><span class="header-section-number">14.5.1</span> Continuous Predictor</h3>
 <p>Our model output shows that voter turnout increases with trust in politicians. The AMEs indicate that a one unit change in trust in politicians is associated with a higher rate of turnout of around 2.3 percentage points, on average. We might wonder, however, whether this would lead us to expect a change from being unlikely to vote at all to likely to vote? Or, perhaps, from somewhat likely to vote to extremely? The predicted probabilities can help us answer such a question.</p>
@@ -1081,15 +1037,15 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 11
-  rowid estimate  p.value s.value conf.low conf.high gndr   agea lrscale trstplt
-  &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     1    0.699 9.37e- 5    13.4    0.603     0.779 Male   50.7    5.15       0
-2     2    0.774 1.09e-15    49.7    0.717     0.822 Male   50.7    5.15       2
-3     3    0.835 1.61e-46   152.     0.802     0.863 Male   50.7    5.15       4
-4     4    0.882 1.29e-64   212.     0.856     0.904 Male   50.7    5.15       6
-5     5    0.917 6.30e-48   157.     0.889     0.938 Male   50.7    5.15       8
-6     6    0.942 3.65e-34   111.     0.912     0.962 Male   50.7    5.15      10
-# ℹ 1 more variable: vote &lt;fct&gt;</code></pre>
+  rowid estimate  p.value s.value conf.low conf.high gndr_F  agea lrscale
+  &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1     1    0.699 9.37e- 5    13.4    0.603     0.779 Male    50.7    5.15
+2     2    0.774 1.09e-15    49.7    0.717     0.822 Male    50.7    5.15
+3     3    0.835 1.61e-46   152.     0.802     0.863 Male    50.7    5.15
+4     4    0.882 1.29e-64   212.     0.856     0.904 Male    50.7    5.15
+5     5    0.917 6.30e-48   157.     0.889     0.938 Male    50.7    5.15
+6     6    0.942 3.65e-34   111.     0.912     0.962 Male    50.7    5.15
+# ℹ 2 more variables: trstplt &lt;dbl&gt;, vote_F &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>We pass this data to <code>ggplot()</code> much as we did with a predicted values plot based on a linear regression model:</p>
@@ -1123,7 +1079,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1140,7 +1096,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1151,22 +1107,22 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <p>We can use the following code in situations where the predictor variable is a factor variable:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Obtain the predictions</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Pred_cat <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Vote_model_mp, <span class="at">by =</span> <span class="st">"gndr"</span>, <span class="at">newdata =</span> <span class="st">"mean"</span>) </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Pred_cat <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Vote_model_mp, <span class="at">by =</span> <span class="st">"gndr_F"</span>, <span class="at">newdata =</span> <span class="st">"mean"</span>) </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Let's take a look!</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(Pred_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 11
-  rowid gndr  estimate  p.value s.value conf.low conf.high  agea trstplt lrscale
-  &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     1 Fema…    0.863 1.35e-60    199.    0.835     0.887  50.7    5.34    5.15
-2     2 Male     0.868 1.44e-64    212.    0.841     0.891  50.7    5.34    5.15
-# ℹ 1 more variable: vote &lt;fct&gt;</code></pre>
+<pre><code># A tibble: 2 × 13
+  rowid gndr_F estimate std.error statistic p.value s.value conf.low conf.high
+  &lt;int&gt; &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1     1 Female    0.863    0.0133      65.1       0     Inf    0.837     0.889
+2     2 Male      0.868    0.0127      68.2       0     Inf    0.843     0.893
+# ℹ 4 more variables: agea &lt;dbl&gt;, trstplt &lt;dbl&gt;, lrscale &lt;dbl&gt;, vote_F &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>We can then feed that data into our plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Pred_cat, <span class="fu">aes</span>(<span class="at">x =</span> gndr, <span class="at">y =</span> estimate)) <span class="sc">+</span>   </span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Pred_cat, <span class="fu">aes</span>(<span class="at">x =</span> gndr_F, <span class="at">y =</span> estimate)) <span class="sc">+</span>   </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span>  </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gender and Turnout in the Netherlands"</span>, </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gender"</span>,</span>
@@ -1175,7 +1131,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="logit_06_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="logit_06_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1190,7 +1146,7 @@ window.addEventListener('load', function () { styleCell_tinytable_sam7opy9lzgxo7
 <li>If the variable is continuous, then one can input the minimum and maximum of the variable with reasonable increments between them to produce a plot showing changes across the range of X. However, there is an <strong>important</strong> note on this front: If your data has missing values on one or more variables in the model, then the min and max of a variable in the model may not correspond to what you would find if you simply used the <code>summary()</code> function to summarize the variable’s distribution in the full dataset. This can be problematic if leads you to make predictions for values of a variable that are not observed in the model as these types of extrapolations may be uncertain and faulty. You can avoid this problem by creating a dataset that only includes observations in the model and then finding the min/max (and other intermediate values). This can be done, for instance, by using the <code>predictions()</code> command as shown <a href="linear_05.html#sec-predictions-for-a-continuous-predictor-variable" class="quarto-xref"><span>Section 5.3.1</span></a> .</li>
 </ul></li>
 <li>The continuous variable example above plots the predicted values as a line with a ribbon showing the 95% confidence interval around the predictions. This is a conventional choice when one is plotting predictions for a continuous independent variable. If the independent variable is binary/categorical, then one would typically use something like <code>geom_pointrange()</code> or <code>geom_errorbar()</code>.</li>
-<li>The scale of the y-axis is something to consider when creating a plot such as this. The examples above uses <code>scale_y_continuous()</code> to make sure that the y-axis stretches from the min to the max value of the DV. This can help avoid situations where <code>ggplot()</code> shows only a truncated stretch of the y-axis thereby potentially giving a false impression of the magnitude of the change in Y across the range of X. This type of rescaling is not always needed, and can sometimes create its own problems, but it is something to reflect on before communicating statistical results. The sociologist Kieran Healy provides a further <a href="https://socviz.co/lookatdata.html#problems-of-honesty-and-good-judgment" target="_blank">discussion</a> of these competing considerations in his book on data visualization.</li>
+<li>The scale of the y-axis is something to consider when creating plots of predicted values. We used <code>scale_y_continuous()</code> in the earlier example that focused on a continuous predictor to ensure that the resulting plot covered the full range of the dependent variable (the probability to vote). We did not use this syntax in the present example, which leaves the choice of how to scale the y-axis to <code>ggplot()</code>. This can have the benefit of removing unused space from the plot but the potential disadvantage of making the effect of the x-variable look larger than it actually is. We could alternatively use <code>scale_y_continuous()</code> here to make the plot use a larger scale on the y-axis, but this could have the consequence of making our visualization less clear due to the use of unused space. Clearly communicating results often involves thoughtful consideration of the potential tradeoffs behind different ways of displaying data. The sociologist Kieran Healy provides a further <a href="https://socviz.co/lookatdata.html#problems-of-honesty-and-good-judgment" target="_blank">discussion</a> of these competing considerations in his book on data visualization.</li>
 </ul>
 
 
@@ -1383,18 +1339,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1426,7 +1371,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1434,7 +1399,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1531,7 +1496,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -19,8 +19,8 @@ demdata <- import("data/demdata.rds") |>
   as_tibble() 
 
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         Typeregime2006 = factorize(Typeregime2006))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
 ```
 
 Regression coefficients tell us something about the expected mean level of our dependent variable: what we expect it to be when the independent variable(s) equal 0 (the Intercept term) and how we expect it to change when the independent variable changes by 1 (independent variable coefficient). However, we should also discuss the uncertainty surrounding these estimates: what other coefficient values are plausible given our data? That is the topic for this chapter.
@@ -41,8 +41,8 @@ demdata <- import("demdata.rds") |>
 
 #Some data cleaning (see last chapter)
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         Typeregime2006 = factorize(Typeregime2006))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
 ```
 
 1.  You do not always need `as_tibble()` as shown here. We do this here because it is easier to show larger datasets with them. See [Statistics I, 2.1](https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles){target="_blank"}.
@@ -53,7 +53,7 @@ Most of the relevant information for discussing statistical significance and unc
 
 ```{r}
 #Store the model to an object of your naming
-model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984, data=demdata)
+model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984_factor, data=demdata)
 
 #Use summary() to inspect the object
 summary(model_binary)

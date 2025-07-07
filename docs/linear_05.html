@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 5&nbsp; Predicted &amp; Residual Values</title>
+<title>5&nbsp; Predicted &amp; Residual Values – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,13 +114,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_05.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -370,17 +370,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984 =</span> <span class="fu">factorize</span>(TYPEDEMO1984), </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Typeregime2006 =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984_factor =</span> <span class="fu">factorize</span>(TYPEDEMO1984), </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">Typeregime2006_factor =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Models for examples</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>model_continuous <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data =</span> demdata)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>model_binary <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>model_binary <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> TYPEDEMO1984_factor, <span class="at">data=</span>demdata)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>model_categorical <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> Typeregime2006, <span class="at">data=</span>demdata)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>model_categorical <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> Typeregime2006_factor, <span class="at">data=</span>demdata)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984_factor, <span class="at">data=</span>demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="predicted-values-and-residuals-for-individual-observations" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="predicted-values-and-residuals-for-individual-observations"><span class="header-section-number">5.1</span> Predicted Values and Residuals for Individual Observations</h2>
@@ -409,7 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_binary_predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 179 × 49
+<pre><code># A tibble: 179 × 51
    rowid estimate std.error statistic    p.value s.value conf.low conf.high
    &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
  1     1    0.690    0.0287      24.1  3.16e-128    424.    0.634     0.746
@@ -423,12 +423,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  9     9   NA       NA           NA   NA             NA    NA        NA    
 10    10    0.418    0.0233      17.9  1.16e- 71    236.    0.372     0.463
 # ℹ 169 more rows
-# ℹ 41 more variables: country_name &lt;chr&gt;, year &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;,
+# ℹ 43 more variables: country_name &lt;chr&gt;, year &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;,
 #   v2x_libdem &lt;dbl&gt;, v2x_egaldem &lt;dbl&gt;, v2cacamps &lt;dbl&gt;, v2caviol &lt;dbl&gt;,
 #   e_peaveduc &lt;dbl&gt;, cpi &lt;dbl&gt;, e_regiongeo &lt;dbl&gt;, e_regionpol_6C &lt;dbl&gt;,
 #   v2elcomvot &lt;dbl&gt;, compulsory_voting &lt;dbl&gt;, bicameral &lt;dbl&gt;, dem_diff &lt;dbl&gt;,
 #   dem_increase &lt;dbl&gt;, dem_decrease &lt;dbl&gt;, TypeSoc2005 &lt;dbl&gt;,
-#   TypeEcon2006 &lt;dbl&gt;, HDI2005 &lt;dbl&gt;, GDP2006 &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, …</code></pre>
+#   TypeEcon2006 &lt;dbl&gt;, HDI2005 &lt;dbl&gt;, GDP2006 &lt;dbl&gt;, TYPEDEMO1984 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -444,7 +444,7 @@ Output Explanation
 <ul>
 <li>estimate: This is the predicted value of the DV for the observation based on the regression model</li>
 <li>std.error, statistic, p.value, conf.low, conf.high: These report the standard error, test statistic, p-value, and the lower and upper bounds of the 95% confidence interval for the estimate. They tell us about the uncertainty around the prediction. The s.value column provides another way of thinking about uncertainty, but one we won’t cover; it is non-examinable.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
-<li>The ensuing columns in the data frame are the variables from the original dataset and are noted at the bottom of the output (“41 more variables: country_name &lt;chr&gt;, …”).</li>
+<li>The ensuing columns in the data frame are the variables from the original dataset and are noted at the bottom of the output (“43 more variables: country_name &lt;chr&gt;, …”).</li>
 </ul>
 </div>
 </div>
@@ -481,7 +481,7 @@ Output Explanation
 <p>As a first example, we will use <code>predictions()</code> to calculate the average predicted value among countries that were either an autocracy in 1984 or a democracy in 1984 based on our bivariate model (<code>model_binary</code>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_binary, </span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"TYPEDEMO1984"</span>) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"TYPEDEMO1984_factor"</span>) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -493,11 +493,11 @@ Output Explanation
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 10
-  rowid TYPEDEMO1984 estimate std.error statistic   p.value s.value conf.low
-  &lt;int&gt; &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-1     1 Democracies     0.690    0.0287      24.1 3.16e-128    424.    0.634
-2     2 Autocracies     0.418    0.0233      17.9 1.16e- 71    236.    0.372
-# ℹ 2 more variables: conf.high &lt;dbl&gt;, rowid_dedup &lt;int&gt;</code></pre>
+  rowid TYPEDEMO1984_factor estimate std.error statistic   p.value s.value
+  &lt;int&gt; &lt;fct&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1     1 Autocracies            0.418    0.0233      17.9 1.16e- 71    236.
+2     2 Democracies            0.690    0.0287      24.1 3.16e-128    424.
+# ℹ 3 more variables: conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, rowid_dedup &lt;int&gt;</code></pre>
 </div>
 </div>
 <dl>
@@ -505,7 +505,7 @@ Output Explanation
 <dd>
 <p>We first specify the name of the command and then the model from which we want to make predictions.</p>
 </dd>
-<dt><code>by = "TYPEDEMO1984")</code></dt>
+<dt><code>by = "TYPEDEMO1984_factor")</code></dt>
 <dd>
 <p>This tells the command that we want to make predictions “by level of” the variable listed in the parentheses. In this case, we get a prediction for each of category of this variable. We can note two things here. First, we use <code>by=</code> option with factor variables and a different method for continuous variables (see below). Second, we do not specify <code>newdata=</code> here because we want output with average predictions for both categories rather than output that contains data on all individual observations.</p>
 </dd>
@@ -513,7 +513,7 @@ Output Explanation
 <p>We can also do this in situations where the predictor variable is continuous in nature. For instance, we might predict the <code>v2x_polyarchy</code> score with a measure of economic inequality (<code>gini_2019</code>) and then wonder: what is the democracy score we expect to observe for a country with a rather low level of inequality (25) versus one with a rather high level of inequality (45)?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_continuous, </span>
-<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -533,15 +533,15 @@ Output Explanation
 </div>
 </div>
 <dl>
-<dt><code>newdata = datagrid(gini_2019 = c(25,45))</code></dt>
+<dt><code>newdata = datagrid(gini_2019 = c(25, 45))</code></dt>
 <dd>
-<p>This is how we obtain predictions for <em>specific</em> values of a continuous variable for which we want a prediction. <code>newdata = datagrid(</code> can remain the same in your examples. You would then change <code>gini_2019</code> to the name of the continuous variable of interest to you. The contents of <code>c()</code> (here: <code>c(25,45)</code>) dictate what values of the specified variable <code>predictions()</code> will make a prediction for; in this case, for the values of 25 and 45. <code>gini_2019</code> is a numeric variable, so we can provide the numeric values of interest to us without parentheses. We can also use <code>newdata = datagrid()</code> with factor variables, although this is slightly more effort than simply using <code>by =</code> and would require us to provide the name of each category in parentheses.</p>
+<p>This is how we obtain predictions for <em>specific</em> values of a continuous variable for which we want a prediction. <code>newdata = datagrid(</code> can remain the same in your examples. You would then change <code>gini_2019</code> to the name of the continuous variable of interest to you. The contents of <code>c()</code> (here: <code>c(25, 45)</code>) dictate what values of the specified variable <code>predictions()</code> will make a prediction for; in this case, for the values of 25 and 45. <code>gini_2019</code> is a numeric variable, so we can provide the numeric values of interest to us without parentheses. We can also use <code>newdata = datagrid()</code> with factor variables, although this is slightly more effort than simply using <code>by =</code> and would require us to provide the name of each category in parentheses.</p>
 </dd>
 </dl>
 <p>We can naturally expand this so that we look at predictions for other values of this variable by including additional options in <code>c()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_continuous, </span>
-<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gini_2019 =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>))) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -575,15 +575,15 @@ Warning!
 <div class="callout-body-container callout-body">
 <p>We ended our <code>predictions()</code> commands above with another line that specified <code>as_tibble()</code>. This last step is not necessary for the command to work. Here is an example from above but without that final line:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_binary, <span class="at">by =</span> <span class="st">"TYPEDEMO1984"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_binary, <span class="at">by =</span> <span class="st">"TYPEDEMO1984_factor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- TYPEDEMO1984 Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
-  Democracies    0.690     0.0287 24.1   &lt;0.001 423.5 0.634  0.746
-  Autocracies    0.418     0.0233 17.9   &lt;0.001 235.6 0.372  0.463
+ TYPEDEMO1984_factor Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+         Autocracies    0.418     0.0233 17.9   &lt;0.001 235.6 0.372  0.463
+         Democracies    0.690     0.0287 24.1   &lt;0.001 423.5 0.634  0.746
 
-Columns: rowid, TYPEDEMO1984, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, rowid_dedup 
-Type:  response </code></pre>
+Type:  response 
+Columns: rowid, TYPEDEMO1984_factor, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, rowid_dedup </code></pre>
 </div>
 </div>
 <p>The key difference here is in how the output is displayed in R: the default output of <code>predictions()</code> in the Console shows different names for the columns (e.g., Estimate rather than estimate, 2.5% rather than conf.low) to make things look a bit neater (you can see the actual names of the columns in the dataframe that <code>predictions()</code> produces in the final row of the output). We used the <code>as_tibble()</code> option above so that you could see the underlying data and variable names. We will use the output of this command in later chapters to produce plots of our data. The main warning here is to make sure you use the correct variable names (e.g., estimate rather than Estimate).</p>
@@ -600,12 +600,12 @@ Type:  response </code></pre>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
-  term                    estimate std.error statistic      p.value
-  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)              0.187     0.0426      4.40  0.0000219   
-2 cpi                      0.00636   0.00106     6.01  0.0000000155
-3 v2caviol                -0.00872   0.0123     -0.712 0.478       
-4 TYPEDEMO1984Democracies  0.153     0.0349      4.37  0.0000239   </code></pre>
+  term                           estimate std.error statistic      p.value
+  &lt;chr&gt;                             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)                     0.187     0.0426      4.40  0.0000219   
+2 cpi                             0.00636   0.00106     6.01  0.0000000155
+3 v2caviol                       -0.00872   0.0123     -0.712 0.478       
+4 TYPEDEMO1984_factorDemocracies  0.153     0.0349      4.37  0.0000239   </code></pre>
 </div>
 </div>
 <p><code>cpi</code> is a measure of perceived corruption in a country. It can theoretically range from 0-100 (with higher values indicating <em>less</em> perceived corruption), although it only ranges between 12 and 88 among countries in our model.</p>
@@ -673,7 +673,7 @@ Type:  response </code></pre>
 5     5    0.573    0.0302      18.9 4.92e- 80   263.     0.513     0.632
 6     6    0.636    0.0389      16.4 2.78e- 60   198.     0.560     0.713
 7     7    0.700    0.0483      14.5 1.17e- 47   156.     0.605     0.795
-# ℹ 4 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, cpi &lt;dbl&gt;,
+# ℹ 4 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984_factor &lt;fct&gt;, cpi &lt;dbl&gt;,
 #   v2x_polyarchy &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -690,25 +690,25 @@ Output Explanation
 <ul>
 <li><code>estimate</code>: The predicted value</li>
 <li><code>std.error</code> through <code>conf.high</code>: Uncertainty estimates relating to the prediction (e.g., its standard error, the p-value, and confidence intervals).</li>
-<li>“4 more variables”: This row tells us what other columns are in our “tidied” dataframe (with the number 4 here likely to be different in examples where the model has a different number of predictor variables than in this example). The names refer to the variables in our model and would be different in your own examples. The columns for the IVs (here: <code>v2caviol</code>, <code>TYPEDEMO1984</code>, and <code>cpi</code>) will list the values of these variables used in producing the prediction.</li>
+<li>“4 more variables”: This row tells us what other columns are in our “tidied” dataframe (with the number 4 here likely to be different in examples where the model has a different number of predictor variables than in this example). The names refer to the variables in our model and would be different in your own examples. The columns for the IVs (here: <code>v2caviol</code>, <code>TYPEDEMO1984_factor</code>, and <code>cpi</code>) will list the values of these variables used in producing the prediction.</li>
 </ul>
 </div>
 </div>
-<p>In the example above, <code>predictions()</code> has automatically held our two control variables (<code>v2caviol</code> and <code>TYPEDEMO1984</code>) “constant” at the same value when calculating each predicted value. <code>predictions()</code> will hold continuous controls constant at their mean value, and factor variables at their mode, when <code>newdata = datagrid()</code> is used in this way. We can see this by looking at the columns for our independent variables in the output created by <code>predictions()</code>:</p>
+<p>In the example above, <code>predictions()</code> has automatically held our two control variables (<code>v2caviol</code> and <code>TYPEDEMO1984_factor</code>) “constant” at the same value when calculating each predicted value. <code>predictions()</code> will hold continuous controls constant at their mean value, and factor variables at their mode, when <code>newdata = datagrid()</code> is used in this way. We can see this by looking at the columns for our independent variables in the output created by <code>predictions()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>preds1 <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, cpi, v2caviol, TYPEDEMO1984)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, cpi, v2caviol, TYPEDEMO1984_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 4
-  estimate   cpi v2caviol TYPEDEMO1984
-     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;       
-1    0.318    20   -0.394 Autocracies 
-2    0.382    30   -0.394 Autocracies 
-3    0.445    40   -0.394 Autocracies 
-4    0.509    50   -0.394 Autocracies 
-5    0.573    60   -0.394 Autocracies 
-6    0.636    70   -0.394 Autocracies 
-7    0.700    80   -0.394 Autocracies </code></pre>
+  estimate   cpi v2caviol TYPEDEMO1984_factor
+     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;              
+1    0.318    20   -0.394 Autocracies        
+2    0.382    30   -0.394 Autocracies        
+3    0.445    40   -0.394 Autocracies        
+4    0.509    50   -0.394 Autocracies        
+5    0.573    60   -0.394 Autocracies        
+6    0.636    70   -0.394 Autocracies        
+7    0.700    80   -0.394 Autocracies        </code></pre>
 </div>
 </div>
 </section>
@@ -716,7 +716,7 @@ Output Explanation
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="predictions-for-a-factor-predictor-variable"><span class="header-section-number">5.3.2</span> Predictions for a Factor Predictor Variable</h3>
 <p>We can use the same procedure as above to obtain predicted value for each category of a binary or categorical factor variable. Recall that we do this by using <code>by=</code> rather than <code>newdata = datagrid()</code>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> However, we do need to take one additional step here that we don’t have to perform in the previous example.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>preds2 <span class="ot">&lt;-</span> <span class="fu">predictions</span>(model_multiple, <span class="at">by=</span> <span class="st">"TYPEDEMO1984"</span>, </span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>preds2 <span class="ot">&lt;-</span> <span class="fu">predictions</span>(model_multiple, <span class="at">by=</span> <span class="st">"TYPEDEMO1984_factor"</span>, </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">newdata =</span> <span class="st">"mean"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -735,24 +735,24 @@ Output Explanation
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>preds2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 12
-  rowid TYPEDEMO1984 estimate std.error statistic   p.value s.value conf.low
-  &lt;int&gt; &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-1     1 Democracies     0.620    0.0260      23.8 2.47e-125    414.    0.569
-2     2 Autocracies     0.467    0.0205      22.8 4.94e-115    380.    0.427
-# ℹ 4 more variables: conf.high &lt;dbl&gt;, cpi &lt;dbl&gt;, v2caviol &lt;dbl&gt;,
-#   v2x_polyarchy &lt;dbl&gt;</code></pre>
+  rowid TYPEDEMO1984_factor estimate std.error statistic   p.value s.value
+  &lt;int&gt; &lt;fct&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1     1 Autocracies            0.467    0.0205      22.8 4.94e-115    380.
+2     2 Democracies            0.620    0.0260      23.8 2.47e-125    414.
+# ℹ 5 more variables: conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, cpi &lt;dbl&gt;,
+#   v2caviol &lt;dbl&gt;, v2x_polyarchy &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>We can again see that <code>predictions()</code> is holding the other predictor variables “constant” when making these predictions:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preds2 <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, TYPEDEMO1984, cpi, v2caviol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate, TYPEDEMO1984_factor, cpi, v2caviol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  estimate TYPEDEMO1984   cpi v2caviol
-     &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt;    &lt;dbl&gt;
-1    0.620 Democracies   43.4   -0.394
-2    0.467 Autocracies   43.4   -0.394</code></pre>
+  estimate TYPEDEMO1984_factor   cpi v2caviol
+     &lt;dbl&gt; &lt;fct&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+1    0.467 Autocracies          43.4   -0.394
+2    0.620 Democracies          43.4   -0.394</code></pre>
 </div>
 </div>
 </section>
@@ -763,14 +763,15 @@ Output Explanation
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(model_multiple, </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">cpi =</span> <span class="fu">c</span>(<span class="dv">88</span>), </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">v2caviol =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.429</span>), </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">TYPEDEMO1984 =</span> <span class="fu">c</span>(<span class="st">"Democracies"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">TYPEDEMO1984_factor =</span> <span class="fu">c</span>(<span class="st">"Democracies"</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 12
   rowid estimate std.error statistic   p.value s.value conf.low conf.high   cpi
   &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
 1     1    0.930    0.0392      23.7 1.89e-124    411.    0.853      1.01    88
-# ℹ 3 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984 &lt;fct&gt;, v2x_polyarchy &lt;dbl&gt;</code></pre>
+# ℹ 3 more variables: v2caviol &lt;dbl&gt;, TYPEDEMO1984_factor &lt;fct&gt;,
+#   v2x_polyarchy &lt;dbl&gt;</code></pre>
 </div>
 </div>
 
@@ -967,18 +968,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1010,7 +1000,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1018,7 +1028,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1115,7 +1125,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

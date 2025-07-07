@@ -42,6 +42,164 @@ demdata <- import("demdata.rds")
 
 ```
 
+## Descriptive Statistics
+
+The first step in analyzing the relationship between variables is not a correlation or a regression, but instead an investigation of the individual variables to be used in the analysis: what are the minimum and maximum values for the variables, their averages and standard deviations (if continuous), and frequencies (if binary/categorical). These descriptive statistics are commonly provided in research papers via a table that is provided either in the main text of the paper prior to the main analyses or in an appendix. This table is important because it provides readers of the paper (and the paper's author!) important insight for understanding the results to come.
+
+### Continuous Variables
+
+We can create a table of descriptive statistics with the `datasummary` function that is part of the `modelsummary` package.
+
+```{r}
+datasummary(v2x_polyarchy + gini_2019 
+            ~ Mean + SD + Min + Max + N, data = demdata)
+
+```
+
+Here's how to read the syntax: 
+
+`datasummary(`
+: We use the `datasummary` function on the variables in brackets
+
+`v2x_polyarchy + gini_2019`
+: These are the variables we want to include in the table. We can add multiple variables using the + sign. You could create a table with all of the variables from the dataset using `All(dataset name)`, although this would likely be an overly long/complicated table if the dataset has many variables.  
+
+`~ Mean + SD + Min + Max + N,`
+: We can specify what descriptives statistics we want displayed in the table by giving their name after a tilde (`~`). These are the most commonly provided statistics. 
+
+`data = demdata)`
+: Finally, we indicate the dataset where the variables are stored/located.
+
+This table provides all of the information a reader might find necessary. For instance, we can see that the N (number of observations) for the two variables is not the same, which means that a bivariate analysis of the two variables will use far fewer cases than available in `v2x_polyarchy` due to there being a lot of missing observations on `gini_2019`. 
+
+### Binary and Categorical Variables
+
+We can also add binary and categorical variables to a table using `datasummary()`, but here you usually provide different statistics: the N and the percentage of observations per category. 
+
+```{r}
+# Create the factor variables
+demdata <- demdata |> 
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
+
+# Table with % and N
+datasummary(TYPEDEMO1984_factor + Typeregime2006_factor 
+            ~ N + Percent(), data = demdata)
+
+```
+
+`~ N + Percent()`
+: We indicate the statistics we want after the tilde (`~`). These are the commonly used statistics for factor variables. One important note: the percentages calculated here are based on the total number of observations in the dataset including observations with missing data on the variable. There are 179 total observations in this dataset; the reported % for Autocracy is thus $\frac{41}{179} * 100 = 22.91$. However, 14 observations do not have data on this variable; the % for Autocracy among cases with non-missing data is $\frac{41}{41 + 53 + 71} * 100 = 24.85$. We show a solution for this issue in the next example. 
+
+The different syntax above suggests that we should make separate tables for continuous and binary/categorical variables. However, this is not necessary. R transforms factor variables into dummy (0/1 scaled) variables behind the scenes when performing analyses. The mean of a 0/1 variable represents the proportion of observations in the category. If we want to combine continuous and binary/categorical variables in a table, then we can create dummy variables for the categories of the latter variables and include them in the table syntax. 
+
+While we can manually create dummy variables ourselves, this may be cumbersome with categorical variables that have many categories. Here we will use commands from the `fastDummies` package to simplify this process. 
+
+```{r}
+#| warning: false
+# Load the package; this would usually be done at the beginning of an R Script file
+library(fastDummies)
+
+# Creating dummy variables for all (non-missing) categories of these variables
+demdata <- dummy_cols(demdata, 
+                      select_columns = c("TYPEDEMO1984", 
+                                         "Typeregime2006")) 
+```
+
+Here is how to read the syntax above: 
+
+`dummy_cols(demdata`
+: The name of the command is `dummy_cols()`. The first thing we provide is the name of our dataset, here `demdata`. 
+
+`select_columns = c("TYPEDEMO1984", "Typeregime2006"))`
+: We then provide the name of the columns in our data that we want this command to create dummies from. Here we specify two variables: a binary and a categorical variable. This command will produce a dummy (0/1) scaled variable for each category of these variables.[^missingcat] The resulting dummy variables will have the following name structure: original variable name_category value. The non-factorized version of `TYPEDEMO1984` that we use in this example takes on two values: 1 = democracies and 2 = autocracies.[^cats] This command thus creates the following dummy variables: `TYPEDEMO1984_1` (1 = observation had a score of 1 on the original variable, 0 = observation had a value of 2 on the original variable) and `TYPEDEMO1984_2` (1 = observation had a score of 2 on the original variable, 0 = observation had a score of 1 on the original variable). We can see this more clearly by looking at the cross-tabulation of the two variables below. 
+
+[^missingcat]: It will also create a dummy for observations with a missing value on the original variable. For instance, this syntax also creates a variable named `TYPEDEMO1984_NA` where 1 = observations with a missing (NA) value on the original variable and 0 = observations with non-missing data on the original variable. You can ignore these `_NA` dummies when creating the table. 
+
+[^cats]: We used the original, non-factorized, versions of the variables in this example. The command can also be used with factorized variables with the labels for each category then being used in the names of the resulting dummy variables (e.g., `TYPEDEMO1984_factor_Autocracies` and `TYPEDEMO1984__factor_Democracies`). A small complication does arise here in situations where the category label is comprised of multiple words such as "Electoral Democracy". There are limits in R on what types of symbols can be included in variable names with spaces not being allowed. In these scenarios the resulting variable will be enclosed by backticks (\`). For instance: \`Typeregime2006_factor_Electoral Democracy\`. If you then wanted to use that variable in subsequent commands, you would need to make sure to include the backticks around the variable name. 
+
+```{r}
+# Crosstab of original variable and dummies via dummy_cols()
+table(demdata$TYPEDEMO1984, demdata$TYPEDEMO1984_1)
+table(demdata$TYPEDEMO1984, demdata$TYPEDEMO1984_2)
+```
+
+We can then include these dummy variables in the `datasummary` command along with continuous variables. 
+
+
+```{r}
+# Make a table with both continuous and factor variables
+datasummary(v2x_polyarchy + gini_2019 + 
+              TYPEDEMO1984_1 +
+              TYPEDEMO1984_2 + 
+              Typeregime2006_1 + 
+              Typeregime2006_2 + 
+              Typeregime2006_3
+            ~ Mean + SD + Min + Max + N, 
+            data = demdata)
+
+```
+
+
+The entries for the dummy variables indicate the proportion of cases with a score of 1 on the variable. The calculation of this value ignores observations with a missing value on the variable, so we get the correct N and percentages here. Here we have included dummy variables for both categories of the binary `TYPEDEMO_1984` variable, but in practice we would only include one of them (e.g., we might only include the dummy for the "democracy" dummy `TYPEDEMO1984_2`). 
+
+
+### Presenting Descriptive Tables
+
+The example tables above show the variables' names from the dataset in the table. However, this will likely confuse readers of your table since they don't have your data and do not have an intuitive understanding of what the labels represent. You should thus change the names of the variables before/when creating the table. One way we can do this is by creating a dataset with just the variables to be used in the table and using the `rename()` function. 
+
+
+```{r}
+#Create the dataset
+table_data <- demdata |> 
+  select(v2x_polyarchy, gini_2019, 
+         TYPEDEMO1984_1, TYPEDEMO1984_2,  
+         Typeregime2006_1, Typeregime2006_2, Typeregime2006_3) |> # <1> 
+  rename(
+    "Democracy Score (2020)" = v2x_polyarchy, 
+    "Economic Inequality (2019)" = gini_2019, 
+    "Autocratic Regime (1984)" = TYPEDEMO1984_1, 
+    "Democratic Regime (1984)" = TYPEDEMO1984_2,
+    "Liberal Democracy (2006)" = Typeregime2006_1 , 
+    "Electoral Democracy (2006)" = Typeregime2006_2, 
+    "Autocracy (2006)" = Typeregime2006_3)
+
+# Create the table with all variables
+datasummary(All(table_data) # <2>
+            ~ Mean + SD + Min + Max + N, data = table_data)
+
+```
+
+1. Selects just these variables for inclusion in the new dataset named `table_data`
+2. `All(data)` tells the command to create a table using all of the variables in the dataset. 
+
+The `modelsummary` website shows another way of renaming variables but within the confines of the command itself; see [here](
+https://modelsummary.com/vignettes/datasummary.html#renaming-with){target="_blank"}. 
+
+
+### Saving to a Word Document
+
+We can export this table to a Word document with the following syntax. 
+
+```{r}
+datasummary(All(table_data) # <2>
+            ~ Mean + SD + Min + Max + N, data = table_data,
+            output = "descr_table1.docx")
+
+```
+
+`output = 'descr_table1.docx'`
+: Here, we have the command save the table to a Word (.docx) file named "descr_table1". This file would be saved to your R project folder. you can also specify a subfolder, e.g., "output/descr_table1.docx". 
+
+::: callout-important
+#### Warning!
+
+This command be act a bit temperamental in cases where you save a table to file, open it outside of R in Word (for instance), and then re-run the syntax in R to create the table again while the file is still open in Word. We recommend closing the file in Word before trying to update table output produced via R to avoid complications.
+:::
+
+
+
+
 ## Scatterplots {#sec-report-scatterplots}
 
 We can provide a visual representation of the bivariate relationship between two continuous variables via a scatterplot. Here is an example:

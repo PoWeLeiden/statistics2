@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 6&nbsp; Model Fit</title>
+<title>6&nbsp; Model Fit – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -143,13 +143,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_06.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -184,7 +184,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -243,7 +243,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -290,7 +290,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -317,9 +317,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -393,14 +393,15 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span>  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984 =</span> <span class="fu">factorize</span>(TYPEDEMO1984), </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Typeregime2006 =</span> <span class="fu">factorize</span>(Typeregime2006))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984_factor =</span> <span class="fu">factorize</span>(TYPEDEMO1984), </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Typeregime2006_factor =</span> <span class="fu">factorize</span>(Typeregime2006))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="r2-adjusted-r2-and-the-model-f-test" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="r2-adjusted-r2-and-the-model-f-test"><span class="header-section-number">6.1</span> R<sup>2</sup>, Adjusted R<sup>2</sup>, and the Model F-Test</h2>
 <p>Our initial example focuses on a linear regression model in which we predict a country’s electoral democracy score in 2020 (<code>v2x_polyarchy</code>) based on the country’s level of perceived corruption (<code>cpi)</code>, political violence (<code>v2caviol</code>), and the country’s regime status in 1984 (<code>TYPEDEMO1984</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                       TYPEDEMO1984_factor, <span class="at">data=</span>demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can obtain the most commonly used “model fit” statistics for linear regression models via the <code>summary()</code> command:</p>
 <div class="cell">
@@ -408,18 +409,19 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data = demdata)
+lm(formula = v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor, 
+    data = demdata)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.56402 -0.09376  0.01442  0.12926  0.34206 
 
 Coefficients:
-                         Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              0.187394   0.042634   4.395 2.19e-05 ***
-cpi                      0.006365   0.001059   6.012 1.55e-08 ***
-v2caviol                -0.008724   0.012258  -0.712    0.478    
-TYPEDEMO1984Democracies  0.152698   0.034915   4.373 2.39e-05 ***
+                                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     0.187394   0.042634   4.395 2.19e-05 ***
+cpi                             0.006365   0.001059   6.012 1.55e-08 ***
+v2caviol                       -0.008724   0.012258  -0.712    0.478    
+TYPEDEMO1984_factorDemocracies  0.152698   0.034915   4.373 2.39e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -443,7 +445,7 @@ Output Explanation
 <ul>
 <li>Multiple R-squared: The R<sup>2</sup> statistic, which is commonly interpreted as the % of variance in the DV that our model can “explain”</li>
 <li>Adjusted R-squared: The adjusted R<sup>2</sup> statistic, which adjusts the R<sup>2</sup> statistic by accounting for the number of independent variables in the model.</li>
-<li>F-statistic…: The first number provides the F-statistic for the model (47.26) in the example above. The number after “p-value:” is the p-value for this statistic. The null hypothesis of this test is that <em>none</em> of the independent variables (here, <code>cpi, v2caviol, TYPEDEMO1984</code>) are statistically significant. A statistically significant F-statistic thus indicates that <em>at least one</em> of the IVs is statistically significant although it does not tell us <em>which</em> coefficient is statistically significant.</li>
+<li>F-statistic…: The first number provides the F-statistic for the model (47.26) in the example above. The number after “p-value:” is the p-value for this statistic. The null hypothesis of this test is that <em>none</em> of the independent variables (here, <code>cpi, v2caviol, TYPEDEMO1984_factor</code>) are statistically significant. A statistically significant F-statistic thus indicates that <em>at least one</em> of the IVs is statistically significant although it does not tell us <em>which</em> coefficient is statistically significant.</li>
 </ul>
 </div>
 </div>
@@ -477,7 +479,7 @@ Output Explanation
 <p>We need to take a preliminary step to accomplish this task. We want to make sure that we are comparing models that have the same observations in them so that we can be sure that differences in model fit statistics between the models are not being driven by having models conducted using different observations. This initial syntax removes all observations with a missing value on at least one of the four variables in our fully specified regression model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, cpi, v2caviol, TYPEDEMO1984))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, cpi, v2caviol, TYPEDEMO1984_factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next we will perform each of our regressions. We begin with the “null” model for demonstration purposes and then fit models with predictor variables:</p>
 <div class="cell">
@@ -491,15 +493,10 @@ Output Explanation
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol, <span class="at">data =</span> demdata_complete)</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Model with all predictors</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984, <span class="at">data =</span> demdata_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> cpi <span class="sc">+</span> v2caviol <span class="sc">+</span> TYPEDEMO1984_factor, <span class="at">data =</span> demdata_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can compare the R2/Adj. R-Squared of the models to get an initial sense of which one “fits” better. Here is an overview of those statistics:</p>
-<table class="table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 36%">
-<col style="width: 38%">
-</colgroup>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">Model</th>
@@ -539,7 +536,7 @@ Output Explanation
 Model 1: v2x_polyarchy ~ 1
 Model 2: v2x_polyarchy ~ cpi
 Model 3: v2x_polyarchy ~ cpi + v2caviol
-Model 4: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984
+Model 4: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor
   Res.Df    RSS Df Sum of Sq        F    Pr(&gt;F)    
 1    141 9.1323                                    
 2    140 5.1436  1    3.9887 122.2045 &lt; 2.2e-16 ***
@@ -563,9 +560,9 @@ Output Explanation
 <p>The top half of the output provides a review of the models being compared to one another. The remainder of the output can be read as so:</p>
 <ul>
 <li>Res.Df: The residual degrees of freedom of the model</li>
-<li>RSS: This stands for “residual sum of squares”. RSS measures the variation in the model’s residuals. RSS = <span class="math inline">\(\sum(y_{i} - \hat{y}_{i})^2\)</span>, where <span class="math inline">\(\sum\)</span> stands for “sum up”, <span class="math inline">\(y_{i}\)</span> is the observed value of the DV for an observation in the model, and <span class="math inline">\(\hat{y}_{i}\)</span> is the predicted value for that observation based on the model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> RSS tells us how much of the variation in the DV a model <em>can’t</em> “explain” or predict. If we are comparing a model in a given row with the one in the preceding row, then the one with the smaller value fits the data better although the difference between models may not be statistically significant (i.e., we might not be able to rule out the null hypothesis that the two models fit the data equivalently well).</li>
+<li>RSS: This stands for “residual sum of squares”. RSS measures the variation in the model’s residuals. RSS = <span class="math inline">\(\sum(y_{i} - \hat{y}_{i})^2\)</span>, where <span class="math inline">\(\sum\)</span> stands for “sum up”, <span class="math inline">\(y_{i}\)</span> is the observed value of the DV for an observation in the model, and <span class="math inline">\(\hat{y}_{i}\)</span> is the predicted value for that observation based on the model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> RSS tells us how much of the variation in the DV a model <em>can’t</em> “explain” or predict. If we are comparing a model in a given row with the one in the preceding row, then the one with the smaller RSS value fits the data better although the difference between models may not be statistically significant (i.e., we might not be able to rule out the null hypothesis that the two models fit the data equivalently well).</li>
 <li>DF: The number of independent variable coefficients that have been added in the model relative to the preceding model in the sequence. This equals 1 here because each model adds one term.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
-<li>Sum of Sq: The <em>model</em> or “regression” sum of squares is given by this formula: <span class="math inline">\(\sum(\hat{y}_{i} - \bar{y})^2\)</span>, where <span class="math inline">\(\hat{y}_{i}\)</span> is the predicted value for a given observation and <span class="math inline">\(\bar{y}\)</span> is the mean of the dependent variable among all observations in the model.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In essence, the model sum of squares measures the variability of the dependent variable that is connected to the independent variables in the model. The specific value under Sum Sq in the <code>anova()</code> output focuses on the change in the Sum of Sq that we get by adding the extra variable(s) to the model (e.g., the increase in the Sum of Sq. we get when moving from a model with just <code>cpi</code> to one with <code>cpi</code> and <code>v2caviol</code> = 0.0151). The Sum of Sq value in a given row is equal to the difference between the RSS value in the preceding row and the RSS value in the focal row (e.g., Sum of Sq in Row 2 = 9.1323 - 5.1436 = 3.9887). If we are comparing a model in a given row with the one in the preceding row, then the one with the larger value is likely to fit better although the difference may not be statistically significant.</li>
+<li>Sum of Sq: The <em>model</em> or “regression” sum of squares is given by this formula: <span class="math inline">\(\sum(\hat{y}_{i} - \bar{y})^2\)</span>, where <span class="math inline">\(\hat{y}_{i}\)</span> is the predicted value for a given observation and <span class="math inline">\(\bar{y}\)</span> is the mean of the dependent variable among all observations in the model.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In essence, the model sum of squares measures the variability of the dependent variable that is connected to the independent variables in the model. The specific value under Sum Sq in the <code>anova()</code> output focuses on the change in the Sum of Sq that we get by adding the extra variable(s) to the model (e.g., the increase in the Sum of Sq. we get when moving from a model with just <code>cpi</code> to one with <code>cpi</code> and <code>v2caviol</code> = 0.0151). The Sum of Sq value in a given row is equal to the difference between the RSS value in the preceding row and the RSS value in the focal row (e.g., Sum of Sq in Row 2 = 9.1323 - 5.1436 = 3.9887). If we are comparing a model in a given row with the one in the preceding row, then the one with the larger Sum of Sq. value is likely to fit better although the difference may not be statistically significant.</li>
 <li>F &amp; Pr(&gt;F): The F-statistic and its associated p-value for the test. The null hypothesis this is testing is whether a model in a given row fits better than the model <em>in the preceding row</em>. In essence, it is testing whether <em>any</em> of the variables added in the second model in the comparison are statistically significant or not. If statistically significant, then we conclude that the more complex model “fits better”.</li>
 </ul>
 </div>
@@ -578,7 +575,7 @@ Output Explanation
 <pre><code>Analysis of Variance Table
 
 Model 1: v2x_polyarchy ~ cpi
-Model 2: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984
+Model 2: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor
   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
 1    140 5.1436                                  
 2    138 4.5043  2   0.63935 9.7941 0.0001053 ***
@@ -591,7 +588,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>Analysis of Variance Table
 
 Model 1: v2x_polyarchy ~ 1
-Model 2: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984
+Model 2: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor
   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
 1    141 9.1323                                  
 2    138 4.5043  3     4.628 47.264 &lt; 2.2e-16 ***
@@ -615,7 +612,7 @@ Warning!
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
-Model 1: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984
+Model 1: v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor
 Model 2: v2x_polyarchy ~ 1
 Model 3: v2x_polyarchy ~ cpi
 Model 4: v2x_polyarchy ~ cpi + v2caviol
@@ -825,18 +822,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -868,7 +854,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -876,7 +882,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -973,7 +979,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

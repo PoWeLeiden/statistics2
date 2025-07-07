@@ -21,8 +21,8 @@ demdata <- import("data/demdata.rds") |>
   as_tibble()
 
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         Typeregime2006 = factorize(Typeregime2006))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
 ```
 
 This chapter focuses on how to perform a multiple linear regression: regression with more than 1 independent variable. In addition, it will discuss how to obtain *standardized* coefficients.
@@ -59,16 +59,16 @@ Recall that we include binary/categorical variables in regression models by firs
 ```{r}
 #Convert binary variable into a factor
 demdata <- demdata |> 
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984)) #<1>
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984)) #<1>
 ```
 
-1.  `factorize()` can be used here because this variable has value labels. Otherwise, we would need to use `factor()` and supply the labels ourselves.
+1.  `factorize()` can be used here because this variable has value labels. Otherwise, we would need to use `factor()` and supply the labels ourselves. See @sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models .
 
 We fit a multiple linear regression using the same command that we used to perform a bivariate regression: `lm()`. We add multiple predictor variables to the model via the use of a `+` sign as in this example:
 
 ```{r}
 #Run and store the model 
-model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, 
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor, 
                      data=demdata)
 ```
 
@@ -80,7 +80,7 @@ model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984,
 
 :   Here we tell R that we want to perform a linear regression (`lm()` = the command for a linear model) and that the dependent variable is named `v2x_polyarchy`. This variable is placed to the left of the tilde (\~).
 
-`cpi + v2caviol + TYPEDEMO1984,`
+`cpi + v2caviol + TYPEDEMO1984_factor,`
 
 :   Here we tell R what independent variables we want to include in the model. We separate each variable with a `+` sign. Changing the order of the independent variables (e.g., `TYPEDEMO1984 + v2caviol + cpi`) would produce the same model results.
 
@@ -104,7 +104,7 @@ The "(Intercept)" value tells us what value we should expect to observe, on aver
 The coefficients for the independent variables can continue to be interpreted as telling us about the slope of a line (continuous variables) or the difference between categories (factor variables). However, they now tell us about the effect of the independent variable while "holding the effect of the other (predictor) variables constant". For instance:
 
 -   **v2caviol**: Electoral democracy scores are expected to decrease by `r round(coef(model_multiple)[3],2)` scale points with each one unit increase on the political violence scale, holding the effects of prior regime status and corruption constant.
--   **TYPEDEMO1984**: If we were to compare countries with the same level of political violence and corruption, then we'd expect the average 2020 electoral democracy score to be `r round(coef(model_multiple)[4],2)` scale points higher in countries coded as "Democracies" in 1984 than those coded as "Autocracies".
+-   **TYPEDEMO1984_factor**: If we were to compare countries with the same level of political violence and corruption, then we'd expect the average 2020 electoral democracy score to be `r round(coef(model_multiple)[4],2)` scale points higher in countries coded as "Democracies" in 1984 than those coded as "Autocracies".
 :::
 
 ## Standardized Coefficients {#sec-standardized-coefficients}

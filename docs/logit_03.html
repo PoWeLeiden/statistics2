@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 11&nbsp; Predicted Probabilities</title>
+<title>11&nbsp; Predicted Probabilities – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,13 +114,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_03.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -380,16 +380,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Preparation</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Factorize our IVs</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr =</span> <span class="fu">factorize</span>(gndr),  </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote =</span> <span class="fu">factorize</span>(vote))  <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">factorize</span>(gndr),  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote_F =</span> <span class="fu">factorize</span>(vote))  <span class="sc">|&gt;</span> </span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Remove Not Eligible to Vote Category from vote</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">na_if</span>(vote, <span class="st">"Not eligible to vote"</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">na_if</span>(vote_F, <span class="st">"Not eligible to vote"</span>)) <span class="sc">|&gt;</span>  </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Relevel our variables like we did last time</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">relevel</span>(vote, <span class="st">"No"</span>), </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gndr =</span> <span class="fu">relevel</span>(gndr, <span class="st">"Female"</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">relevel</span>(vote_F, <span class="st">"No"</span>), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gndr_F =</span> <span class="fu">relevel</span>(gndr_F, <span class="st">"Female"</span>))</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote <span class="sc">~</span> gndr <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
@@ -397,17 +397,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = vote ~ gndr + agea + trstplt + lrscale, family = "binomial", 
+glm(formula = vote_F ~ gndr_F + agea + trstplt + lrscale, family = "binomial", 
     data = ESS9NL)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3923   0.4100   0.5029   0.5905   1.0239  
 
 Coefficients:
              Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept) -0.284194   0.380455  -0.747    0.455    
-gndrMale     0.043281   0.154201   0.281    0.779    
+gndr_FMale   0.043281   0.154201   0.281    0.779    
 agea         0.018349   0.004503   4.075 4.61e-05 ***
 trstplt      0.195020   0.038706   5.039 4.69e-07 ***
 lrscale      0.029257   0.039306   0.744    0.457    
@@ -436,7 +432,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#We can use tibble() to get a nice tabular overview</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(Vote_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,673 × 578
+<pre><code># A tibble: 1,673 × 580
    rowid estimate   p.value s.value conf.low conf.high name    essround edition
    &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  
  1     1    0.835  6.13e-35   114.     0.796     0.867 ESS9e03        9 3      
@@ -450,11 +446,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
  9     9    0.877  1.88e-47   155.     0.845     0.903 ESS9e03        9 3      
 10    10    0.944  2.64e-39   128.     0.917     0.963 ESS9e03        9 3      
 # ℹ 1,663 more rows
-# ℹ 569 more variables: proddate &lt;chr&gt;, idno &lt;dbl&gt;, cntry &lt;chr&gt;, nwspol &lt;dbl&gt;,
+# ℹ 571 more variables: proddate &lt;chr&gt;, idno &lt;dbl&gt;, cntry &lt;chr&gt;, nwspol &lt;dbl&gt;,
 #   netusoft &lt;dbl&gt;, netustm &lt;dbl&gt;, ppltrst &lt;dbl&gt;, pplfair &lt;dbl&gt;, pplhlp &lt;dbl&gt;,
 #   polintr &lt;dbl&gt;, psppsgva &lt;dbl&gt;, actrolga &lt;dbl&gt;, psppipla &lt;dbl&gt;,
 #   cptppola &lt;dbl&gt;, trstprl &lt;dbl&gt;, trstlgl &lt;dbl&gt;, trstplc &lt;dbl&gt;, trstplt &lt;dbl&gt;,
-#   trstprt &lt;dbl&gt;, trstep &lt;dbl&gt;, trstun &lt;dbl&gt;, vote &lt;fct&gt;, prtvtcat &lt;dbl&gt;,
+#   trstprt &lt;dbl&gt;, trstep &lt;dbl&gt;, trstun &lt;dbl&gt;, vote &lt;dbl&gt;, prtvtcat &lt;dbl&gt;,
 #   prtvtdbe &lt;dbl&gt;, prtvtdbg &lt;dbl&gt;, prtvtgch &lt;dbl&gt;, prtvtbcy &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
@@ -489,8 +485,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(trstplt) <span class="sc">|&gt;</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">view_df</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Data frame: select(ESS9NL, trstplt)</caption>
 <colgroup>
 <col style="width: 20%">
@@ -543,7 +538,6 @@ No answer</td>
 </tbody>
 </table>
 </div>
-</div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>trstplt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -580,15 +574,15 @@ No answer</td>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 11
-  rowid estimate  p.value s.value conf.low conf.high gndr   agea lrscale trstplt
-  &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     1    0.699 9.37e- 5    13.4    0.603     0.779 Male   50.7    5.15       0
-2     2    0.774 1.09e-15    49.7    0.717     0.822 Male   50.7    5.15       2
-3     3    0.835 1.61e-46   152.     0.802     0.863 Male   50.7    5.15       4
-4     4    0.882 1.29e-64   212.     0.856     0.904 Male   50.7    5.15       6
-5     5    0.917 6.30e-48   157.     0.889     0.938 Male   50.7    5.15       8
-6     6    0.942 3.65e-34   111.     0.912     0.962 Male   50.7    5.15      10
-# ℹ 1 more variable: vote &lt;fct&gt;</code></pre>
+  rowid estimate  p.value s.value conf.low conf.high gndr_F  agea lrscale
+  &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1     1    0.699 9.37e- 5    13.4    0.603     0.779 Male    50.7    5.15
+2     2    0.774 1.09e-15    49.7    0.717     0.822 Male    50.7    5.15
+3     3    0.835 1.61e-46   152.     0.802     0.863 Male    50.7    5.15
+4     4    0.882 1.29e-64   212.     0.856     0.904 Male    50.7    5.15
+5     5    0.917 6.30e-48   157.     0.889     0.938 Male    50.7    5.15
+6     6    0.942 3.65e-34   111.     0.912     0.962 Male    50.7    5.15
+# ℹ 2 more variables: trstplt &lt;dbl&gt;, vote_F &lt;fct&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -603,10 +597,10 @@ Output Explanation
 <div class="callout-body-container callout-body">
 <p>The layout of this output is the same as we saw when making predictions from a linear regression model (see <a href="linear_05.html" class="quarto-xref"><span>Chapter 5</span></a>):</p>
 <ul>
-<li>The <code>estimate</code> column provides the predicted probability.</li>
+<li>The <code>estimate</code> column provides the predicted probability. We can multiply this value by 100 to express the probability as a percent. For example, the predicted probability of voting is 69.89% for someone with a score of 0 on the <code>trstplt</code> scale.</li>
 <li>The <code>p.value</code> through <code>conf.high</code> columns provide uncertainty estimates.</li>
-<li>We can then see columns for the other independent variables in the model (<code>gndr</code>, <code>agea</code>, <code>lrscale)</code> . These columns tell us the value that these variables have been held constant at when making predictions from the model. The <code>predictions()</code> command will automatically hold continuous variables constant at their mean, and factor variables at their mode, when <code>newdata = datagrid()</code> is used in the manner shown above.</li>
-<li>The final two columns are <code>trstplt</code>, which shows the value of the trust in politicians measure used in making the prediction, and a column (not shown) for our DV (<code>vote</code>) that indicates which category is being predicted.</li>
+<li>We can then see columns for the other independent variables in the model (<code>gndr_F</code>, <code>agea</code>, <code>lrscale)</code> . These columns tell us the value that these variables have been held constant at when making predictions from the model. The <code>predictions()</code> command will automatically hold continuous variables constant at their mean, and factor variables at their mode, when <code>newdata = datagrid()</code> is used in the manner shown above.</li>
+<li>The final two columns are <code>trstplt</code>, which shows the value of the trust in politicians measure used in making the prediction, and a column (not shown) for our DV (<code>vote_F</code>) that indicates which category is being predicted.</li>
 </ul>
 </div>
 </div>
@@ -617,22 +611,22 @@ Output Explanation
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Obtain predictions and store as new object</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Pred_cat <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Vote_model_mp,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="st">"gndr"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="st">"gndr_F"</span>, </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata =</span> <span class="st">"mean"</span>) </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Call the object in a nice tabular view</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(Pred_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 11
-  rowid gndr  estimate  p.value s.value conf.low conf.high  agea trstplt lrscale
-  &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     1 Fema…    0.863 1.35e-60    199.    0.835     0.887  50.7    5.34    5.15
-2     2 Male     0.868 1.44e-64    212.    0.841     0.891  50.7    5.34    5.15
-# ℹ 1 more variable: vote &lt;fct&gt;</code></pre>
+<pre><code># A tibble: 2 × 13
+  rowid gndr_F estimate std.error statistic p.value s.value conf.low conf.high
+  &lt;int&gt; &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1     1 Female    0.863    0.0133      65.1       0     Inf    0.837     0.889
+2     2 Male      0.868    0.0127      68.2       0     Inf    0.843     0.893
+# ℹ 4 more variables: agea &lt;dbl&gt;, trstplt &lt;dbl&gt;, lrscale &lt;dbl&gt;, vote_F &lt;fct&gt;</code></pre>
 </div>
 </div>
 <dl>
-<dt><code>by = "gndr"</code></dt>
+<dt><code>by = "gndr_F"</code></dt>
 <dd>
 <p>This tells the command that we want predicted values for each category of our factor variable.</p>
 </dd>
@@ -646,11 +640,11 @@ Output Explanation
 <section id="predictions-for-specific-combinations-of-the-predictor-variables" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="predictions-for-specific-combinations-of-the-predictor-variables"><span class="header-section-number">11.3</span> Predictions for specific combinations of the predictor variables</h2>
 <p>Finally, we can estimate what the predicted probability would be for an observation with specific values for each of the predictors in the model.</p>
-<p>Here, we estimate the probability for a man (<code>gndr</code>), aged 33 (<code>agea</code>), with a score of 2 for trust in politicians (<code>trstplt</code>), and a score of 8 for left-right position (<code>lrscale</code>). To do so we need to specify the values for all variables between brackets after <code>newdata = datagrid()</code>.</p>
+<p>Here, we estimate the probability for a man (<code>gndr_F</code>), aged 33 (<code>agea</code>), with a score of 2 for trust in politicians (<code>trstplt</code>), and a score of 8 for left-right position (<code>lrscale</code>). To do so we need to specify the values for all variables between brackets after <code>newdata = datagrid()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate and store</span></span>
 <span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>Pred_specific <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Vote_model_mp,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gndr =</span> <span class="fu">c</span>(<span class="st">"Male"</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">gndr_F =</span> <span class="fu">c</span>(<span class="st">"Male"</span>),</span>
 <span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">agea =</span> <span class="fu">c</span>(<span class="dv">33</span>),   </span>
 <span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">trstplt =</span> <span class="fu">c</span>(<span class="dv">2</span>), </span>
 <span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">lrscale =</span> <span class="fu">c</span>(<span class="dv">8</span>)))</span>
@@ -666,11 +660,11 @@ Output Explanation
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- gndr agea trstplt lrscale Estimate Pr(&gt;|z|)    S 2.5 % 97.5 %
- Male   33       2       8    0.729   &lt;0.001 20.2 0.645  0.799
+ gndr_F agea trstplt lrscale Estimate Pr(&gt;|z|)    S 2.5 % 97.5 %
+   Male   33       2       8    0.729   &lt;0.001 20.2 0.645  0.799
 
-Columns: rowid, estimate, p.value, s.value, conf.low, conf.high, gndr, agea, trstplt, lrscale, vote 
-Type:  invlink(link) </code></pre>
+Type:  invlink(link) 
+Columns: rowid, estimate, p.value, s.value, conf.low, conf.high, gndr_F, agea, trstplt, lrscale, vote_F </code></pre>
 </div>
 </div>
 
@@ -857,18 +851,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -900,7 +883,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -908,7 +911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1005,7 +1008,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

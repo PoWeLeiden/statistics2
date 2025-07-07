@@ -19,8 +19,8 @@ demdata <- import("data/demdata.rds") |>
 
 #Some data cleaning
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         Typeregime2006 = factorize(Typeregime2006))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
 
 ```
 
@@ -39,8 +39,8 @@ demdata <- import("demdata.rds") |>
   as_tibble()
 
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         Typeregime2006 = factorize(Typeregime2006))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
+         Typeregime2006_factor = factorize(Typeregime2006))
 
 
 ```
@@ -50,7 +50,8 @@ demdata <- demdata |>
 Our initial example focuses on a linear regression model in which we predict a country's electoral democracy score in 2020 (`v2x_polyarchy`) based on the country's level of perceived corruption (`cpi)`, political violence (`v2caviol`), and the country's regime status in 1984 (`TYPEDEMO1984`).
 
 ```{r}
-model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data=demdata)
+model_multiple <- lm(v2x_polyarchy ~ cpi + v2caviol + 
+                       TYPEDEMO1984_factor, data=demdata)
 ```
 
 We can obtain the most commonly used "model fit" statistics for linear regression models via the `summary()` command:
@@ -66,7 +67,7 @@ The relevant information is shown at the bottom of the output:
 
 -   Multiple R-squared: The R^2^ statistic, which is commonly interpreted as the % of variance in the DV that our model can "explain"
 -   Adjusted R-squared: The adjusted R^2^ statistic, which adjusts the R^2^ statistic by accounting for the number of independent variables in the model.
--   F-statistic...: The first number provides the F-statistic for the model (`r round(glance(model_multiple)$statistic, 2)`) in the example above. The number after "p-value:" is the p-value for this statistic. The null hypothesis of this test is that *none* of the independent variables (here, `cpi, v2caviol, TYPEDEMO1984`) are statistically significant. A statistically significant F-statistic thus indicates that *at least one* of the IVs is statistically significant although it does not tell us *which* coefficient is statistically significant.
+-   F-statistic...: The first number provides the F-statistic for the model (`r round(glance(model_multiple)$statistic, 2)`) in the example above. The number after "p-value:" is the p-value for this statistic. The null hypothesis of this test is that *none* of the independent variables (here, `cpi, v2caviol, TYPEDEMO1984_factor`) are statistically significant. A statistically significant F-statistic thus indicates that *at least one* of the IVs is statistically significant although it does not tell us *which* coefficient is statistically significant.
 :::
 
 Much as the `tidy()` command simplifies the output from `summary()`, the `broom` package provides a command that can show us the model fit statistics in a nice table: `glance()`:
@@ -92,7 +93,7 @@ We need to take a preliminary step to accomplish this task. We want to make sure
 
 ```{r}
 demdata_complete <- demdata |> 
-  filter(complete.cases(v2x_polyarchy, cpi, v2caviol, TYPEDEMO1984))
+  filter(complete.cases(v2x_polyarchy, cpi, v2caviol, TYPEDEMO1984_factor))
 ```
 
 Next we will perform each of our regressions. We begin with the "null" model for demonstration purposes and then fit models with predictor variables:
@@ -108,14 +109,14 @@ model2 <- lm(v2x_polyarchy ~ cpi, data = demdata_complete)
 model3 <- lm(v2x_polyarchy ~ cpi + v2caviol, data = demdata_complete)
 
 #Model with all predictors
-model4 <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data = demdata_complete)
+model4 <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor, data = demdata_complete)
 ```
 
 We can compare the R2/Adj. R-Squared of the models to get an initial sense of which one "fits" better. Here is an overview of those statistics:
 
-|  Model  |                  R2                   |                  Adj. R2                  |
-|:----------------:|:------------------------:|:--------------------------:|
-| Model 1 |     `r glance(model1)$r.squared`      |     `r glance(model1)$adj.r.squared`      |
+| Model | R2 | Adj. R2 |
+|:--:|:--:|:--:|
+| Model 1 | `r glance(model1)$r.squared` | `r glance(model1)$adj.r.squared` |
 | Model 2 | `r round(glance(model2)$r.squared,3)` | `r round(glance(model2)$adj.r.squared,3)` |
 | Model 3 | `r round(glance(model3)$r.squared,3)` | `r round(glance(model3)$adj.r.squared,3)` |
 | Model 4 | `r round(glance(model4)$r.squared,3)` | `r round(glance(model4)$adj.r.squared,3)` |
@@ -134,9 +135,9 @@ anova(model1, model2, model3, model4)
 The top half of the output provides a review of the models being compared to one another. The remainder of the output can be read as so:
 
 -   Res.Df: The residual degrees of freedom of the model
--   RSS: This stands for "residual sum of squares". RSS measures the variation in the model's residuals. RSS = $\sum(y_{i} - \hat{y}_{i})^2$, where $\sum$ stands for "sum up", $y_{i}$ is the observed value of the DV for an observation in the model, and $\hat{y}_{i}$ is the predicted value for that observation based on the model.[^linear_06-1] RSS tells us how much of the variation in the DV a model *can't* "explain" or predict. If we are comparing a model in a given row with the one in the preceding row, then the one with the smaller value fits the data better although the difference between models may not be statistically significant (i.e., we might not be able to rule out the null hypothesis that the two models fit the data equivalently well).
+-   RSS: This stands for "residual sum of squares". RSS measures the variation in the model's residuals. RSS = $\sum(y_{i} - \hat{y}_{i})^2$, where $\sum$ stands for "sum up", $y_{i}$ is the observed value of the DV for an observation in the model, and $\hat{y}_{i}$ is the predicted value for that observation based on the model.[^linear_06-1] RSS tells us how much of the variation in the DV a model *can't* "explain" or predict. If we are comparing a model in a given row with the one in the preceding row, then the one with the smaller RSS value fits the data better although the difference between models may not be statistically significant (i.e., we might not be able to rule out the null hypothesis that the two models fit the data equivalently well).
 -   DF: The number of independent variable coefficients that have been added in the model relative to the preceding model in the sequence. This equals 1 here because each model adds one term.[^linear_06-2]
--   Sum of Sq: The *model* or "regression" sum of squares is given by this formula: $\sum(\hat{y}_{i} - \bar{y})^2$, where $\hat{y}_{i}$ is the predicted value for a given observation and $\bar{y}$ is the mean of the dependent variable among all observations in the model.[^linear_06-3] In essence, the model sum of squares measures the variability of the dependent variable that is connected to the independent variables in the model. The specific value under Sum Sq in the `anova()` output focuses on the change in the Sum of Sq that we get by adding the extra variable(s) to the model (e.g., the increase in the Sum of Sq. we get when moving from a model with just `cpi` to one with `cpi` and `v2caviol` = 0.0151). The Sum of Sq value in a given row is equal to the difference between the RSS value in the preceding row and the RSS value in the focal row (e.g., Sum of Sq in Row 2 = 9.1323 - 5.1436 = 3.9887). If we are comparing a model in a given row with the one in the preceding row, then the one with the larger value is likely to fit better although the difference may not be statistically significant.
+-   Sum of Sq: The *model* or "regression" sum of squares is given by this formula: $\sum(\hat{y}_{i} - \bar{y})^2$, where $\hat{y}_{i}$ is the predicted value for a given observation and $\bar{y}$ is the mean of the dependent variable among all observations in the model.[^linear_06-3] In essence, the model sum of squares measures the variability of the dependent variable that is connected to the independent variables in the model. The specific value under Sum Sq in the `anova()` output focuses on the change in the Sum of Sq that we get by adding the extra variable(s) to the model (e.g., the increase in the Sum of Sq. we get when moving from a model with just `cpi` to one with `cpi` and `v2caviol` = 0.0151). The Sum of Sq value in a given row is equal to the difference between the RSS value in the preceding row and the RSS value in the focal row (e.g., Sum of Sq in Row 2 = 9.1323 - 5.1436 = 3.9887). If we are comparing a model in a given row with the one in the preceding row, then the one with the larger Sum of Sq. value is likely to fit better although the difference may not be statistically significant.
 -   F & Pr(\>F): The F-statistic and its associated p-value for the test. The null hypothesis this is testing is whether a model in a given row fits better than the model *in the preceding row*. In essence, it is testing whether *any* of the variables added in the second model in the comparison are statistically significant or not. If statistically significant, then we conclude that the more complex model "fits better".
 :::
 

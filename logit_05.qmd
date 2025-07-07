@@ -56,20 +56,20 @@ Of course, we need a model to examine. We will examine `vote_model4` from last c
 #Data Preparation
 ESS9NL <- ESS9NL |>
   #Factorize our IVs
-  mutate(gndr = factorize(gndr), 
-         vote = factorize(vote))  |> 
+  mutate(gndr_F = factorize(gndr), 
+         vote_F = factorize(vote))  |> 
   #Remove Not Eligible to Vote Category from vote
-  mutate(vote = na_if(vote,"Not eligible to vote")) |> 
+  mutate(vote_F = na_if(vote_F,"Not eligible to vote")) |> 
   #Relevel our variables like we did last time
-  mutate(vote = relevel(vote, "No"), 
-         gndr = relevel(gndr, "Female"))
+  mutate(vote_F = relevel(vote_F, "No"), 
+         gndr_F = relevel(gndr_F, "Female"))
 
 #Subset of our data
 ESS9NL_glm <- ESS9NL |>
-  filter(complete.cases(vote,  gndr,  agea,  trstplt,  lrscale)) # <1> 
+  filter(complete.cases(vote_F,  gndr_F,  agea,  trstplt,  lrscale)) # <1> 
 
 #Our model
-Vote_model4 <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model4 <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                 data = ESS9NL_glm, family = "binomial")
 
 #Check the output
@@ -172,7 +172,7 @@ fre(model4_augmented$SRE1.96)
 5.7% of observations have a standardized residual greater than \|1.96\|. We could examine whether these observations are substantially impacting the parameters of our model by re-running the model and subsetting the data to only include observations with a value of 0 on the dummy variable we just created (`SRE1.96`). For instance:\
 
 ```{r}
-Vote_model41.96 <- glm(vote ~ gndr + agea + trstplt + lrscale,
+Vote_model41.96 <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale,
                        data = subset(model4_augmented, SRE1.96 == 0), 
                        family = "binomial")
 ```

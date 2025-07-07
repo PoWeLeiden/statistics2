@@ -45,16 +45,16 @@ We will examine the same model that we ended last chapter on - one where we pred
 #Data Preparation
 ESS9NL <- ESS9NL |>
   #Factorize our IVs
-  mutate(gndr = factorize(gndr), # <1> 
-         vote = factorize(vote))  |> 
+  mutate(gndr_F = factorize(gndr), # <1> 
+         vote_F = factorize(vote))  |> 
   #Remove Not Eligible to Vote Category from vote
-  mutate(vote = na_if(vote,"Not eligible to vote")) |> 
+  mutate(vote_F = na_if(vote_F, "Not eligible to vote")) |> 
   #Relevel our variables like we did last time
-  mutate(vote = relevel(vote, "No"), 
-         gndr = relevel(gndr, "Female"))
+  mutate(vote_F = relevel(vote_F, "No"), 
+         gndr_F = relevel(gndr_F, "Female"))
 
 #Our model
-Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                 data = ESS9NL, family = "binomial")
 
 #Check the output
@@ -66,23 +66,23 @@ summary(Vote_model_mp)
 We need to take one additional step before calculating the marginal effects in this particular example due to a quirk in the `factorize()` command. Let us take a look at our `gndr` variable again:
 
 ```{r}
-levels(ESS9NL$gndr)
-table(ESS9NL$gndr)
+levels(ESS9NL$gndr_F)
+table(ESS9NL$gndr_F)
 
 ```
 
-There are three labels/levels on the `gndr` variable: "Female", "Male", and "No Answer". However, 0 respondents fall under the "No Answer" category. In situations like these, the command we will use below to obtain our marginal effects estimate will return an error because it thinks there is a third category ("No Answer") in the model but finds zero observations in it.
+There are three labels/levels on the `gndr_F` variable: "Female", "Male", and "No Answer". However, 0 respondents fall under the "No Answer" category. In situations like these, the command we will use below to obtain our marginal effects estimate will return an error because it thinks there is a third category ("No Answer") in the model but finds zero observations in it.
 
-One way we can preempt this error is by using the `droplevels()` command to remove the empty category from our `gndr` variable as shown below. Another way is to use `factor()` to create the factorized version of `gndr`. @sec-slopes-error in the Common Errors Appendix for a more thorough discussion of this issue.
+One way we can preempt this error is by using the `droplevels()` command to remove the empty category from our `gndr_F` variable as shown below. Another way is to use `factor()` to create the factorized version of `gndr`. @sec-slopes-error in the Common Errors Appendix for a more thorough discussion of this issue.
 
 ```{r}
 #Drop levels: will drop any category with 0 observations associated with it
 ESS9NL <- ESS9NL |>
-  mutate(gndr = droplevels(gndr))
+  mutate(gndr_F = droplevels(gndr_F))
 
 #Let's take a look at our work
-levels(ESS9NL$gndr)
-table(ESS9NL$gndr)
+levels(ESS9NL$gndr_F)
+table(ESS9NL$gndr_F)
 ```
 
 ## Average Marginal Effects (AME)
@@ -165,7 +165,7 @@ The output is very similar to what we saw above (e.g., `term` provides the varia
 
 ```{r}
 MEM |> 
-  select(gndr, agea, trstplt, lrscale) |> 
+  select(gndr_F, agea, trstplt, lrscale) |> 
   as_tibble()
 ```
 

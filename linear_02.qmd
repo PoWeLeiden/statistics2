@@ -56,7 +56,7 @@ class(demdata$TYPEDEMO1984)
 table(demdata$TYPEDEMO1984)
 ```
 
-We will first convert this variable into a factor variable before including it in our regression model. We can do this either by using the built in `factor()` command (see [Statistics I, 1.6.3](https://poweleiden.github.io/statistics1/data_01_basics.html#creating-variables-in-r){target="_blank"}) or by using the `factorize()` function that comes from the `rio` package. The `factorize()` function can be used as a quick way of creating a factor variable when the variable in question has value labels associated with it in the dataset. `factor()` needs to be used in situations where the variable does not have value labels because `factorize()` won't produce the right type of outcome in that scenario; see @sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models for more on when to use which command and an example that uses `factor()` to create a factor variable.
+We will first convert this variable into a factor variable before including it in our regression model. We can do this either by using the built in `factor()` command (see [Statistics I, 1.6.3](https://poweleiden.github.io/statistics1/data_01_basics.html#creating-variables-in-r){target="_blank"}) or by using the `factorize()` function that comes from the `rio` package. The `factorize()` function can be used as a quick way of creating a factor variable when the variable has value labels associated with it in the dataset. `factor()` needs to be used in situations where the variable does not have value labels (and when it is a character variable) because `factorize()` won't produce the right type of outcome in that scenario; see @sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models for more on when to use which command and an example that uses `factor()` to create a factor variable.
 
 You can investigate whether a variable has value labels associated with it in two ways. First, you can use the `view_df()` function from the `sjPlot` library to obtain an overall view of the variables in the dataset as shown in @sec-recall-peeking-inside-data-objects. Second, you can use the built in `attributes()` command to investigate a specific variable as below. We are looking for whether there is any information at all and, specifically, any information in the "\$labels" area.
 
@@ -69,11 +69,11 @@ Our variable does indeed have value labels. Countries with a value of 1 were "Au
 ```{r}
 #Step 1: Convert to factor variable
 demdata <- demdata |> 
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984)) 
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984)) 
 
 #Double check your work! 
-levels(demdata$TYPEDEMO1984) # to check levels of factor variable
-table(demdata$TYPEDEMO1984)  # simple tabulation
+levels(demdata$TYPEDEMO1984_factor) # to check levels of factor variable
+table(demdata$TYPEDEMO1984_factor)  # simple tabulation
 
 ```
 
@@ -92,26 +92,26 @@ The same procedure is used for categorical variables with more than two categori
 ```{r}
 #convert variable to a factor variable
 demdata <- demdata |> 
-  mutate(Typeregime2006 = factorize(Typeregime2006))
+  mutate(Typeregime2006_factor = factorize(Typeregime2006))
 
 #Double check your work!
-levels(demdata$Typeregime2006)
-table(demdata$Typeregime2006)
+levels(demdata$Typeregime2006_factor)
+table(demdata$Typeregime2006_factor)
 ```
 
 ::: callout-warning
 #### Warning!
 
-We recommend creating new variables when recoding or factorizing an existing variable in a dataset (e.g., `mutate(regime_type84 = factorize(TYPEDEMO1984))`) even though we did not do this above. Creating a new variable when recoding/factorizing makes it easier to correct any mistakes we may inadvertently make when performing data management operations.
+We strongly recommend creating new variables when recoding or factorizing an existing variable in a dataset (e.g., `mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))`). Creating a new variable when recoding/factorizing makes it easier to findM and correctM any mistakes we may inadvertently make when performing data management operations.
 :::
 
 ### Relevelling {#sec-relevelling}
 
-`factorize()` uses the first numeric value as the "reference" group when making a factor variable. We can change what category of a factor variable is used as the reference group via the `relevel()` function. The example below does this for the `Typeregime2006` categorical variable by changing the reference group from "Liberal Democracy" to "Electoral Democracy".
+`factorize()` will use the first numeric value as the "reference" group when making a factor variable. `factor()` will do the same as well unless you tell it otherwise by explicitly specifying factor levels; see the example in @sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models . We can change what category of a factor variable is used as the reference group via the `relevel()` function. The example below does this for the `Typeregime2006` categorical variable by changing the reference group from "Liberal Democracy" to "Electoral Democracy".
 
 ```{r}
 demdata <- demdata |> 
-  mutate(Typeregime2006_relevel = relevel(Typeregime2006, "Electoral democracy"))
+  mutate(Typeregime2006_factor_relevel = relevel(Typeregime2006_factor, "Electoral democracy"))
 
 ```
 
@@ -119,7 +119,7 @@ demdata <- demdata |>
 
 :   The name of the function
 
-`Typeregime2006,`
+`Typeregime2006_factor,`
 
 :   This tells R that we want to work with the variable named `Typeregime2006`.
 
@@ -131,8 +131,8 @@ It is always a good idea to check your efforts at data cleaning before performin
 
 ```{r}
 #Checking our work
-levels(demdata$Typeregime2006)
-levels(demdata$Typeregime2006_relevel)
+levels(demdata$Typeregime2006_factor)
+levels(demdata$Typeregime2006_factor_relevel)
 ```
 
 ## Including in a Model and Interpreting Coefficients
@@ -141,18 +141,18 @@ We include binary/categorical variables in a regression model in the same way th
 
 ```{r}
 # Using the binary variable as a predictor: 
-model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984, data=demdata)
+model_binary <- lm(v2x_polyarchy ~ TYPEDEMO1984_factor, data=demdata)
 summary(model_binary)
 
 # Using the categorical variable as a predictor: 
-model_categorical <- lm(v2x_polyarchy ~ Typeregime2006, data=demdata)
+model_categorical <- lm(v2x_polyarchy ~ Typeregime2006_factor, data=demdata)
 summary(model_categorical)
 ```
 
 ::: callout-note
 #### Output Explanation
 
-The output from a model with a binary/categorical variable is the same as when the predictor is continuous with one exception: R will format the variable names differently in the Coefficients area depending on whether the variable is a factor variable or not. If the variable is not a factor variable, then R will simply show the variable name (e.g., "gini_2019"). If the variable is a factor, then the display is formatted as so: "variableCategory". For instance: "TypeDemo1984Democracies" or "Typeregime2006Autocracy."
+The output from a model with a binary/categorical variable is the same as when the predictor is continuous with one exception: R will format the variable names differently in the Coefficients area depending on whether the variable is a factor variable or not. If the variable is not a factor variable, then R will simply show the variable name (e.g., "gini_2019"). If the variable is a factor, then the display is formatted as so: "variableCategory". For instance: "TypeDemo1984_factorDemocracies" or "Typeregime2006_factorAutocracy."
 :::
 
 There are some subtle differences in how we interpret the coefficients of a model that (only) includes a factor variable as a predictor variable:
@@ -164,11 +164,11 @@ The `Estimate` column provides the coefficient values from our regression model.
 
 The "(Intercept)" row gives you the coefficient for the Intercept: What is the average value of the DV we expect to observe based on this model if all of the included IVs = 0. If the only predictor variable in the model is a factor variable, then the (Intercept) value = the mean of the dependent variable among observations in the initial level of the factor variable, what we often call the "reference group".
 
-Here, for instance, is the mean value of `v2x_polyarchy` among countries with a value of "Autocracies" on the `TYPEDEMO1984` variable; it is identical to the (Intercept) value above.
+Here, for instance, is the mean value of `v2x_polyarchy` among countries with a value of "Autocracies" on the `TYPEDEMO1984_factor` variable; it is identical to the (Intercept) value above.
 
 ```{r}
 demdata |> 
-  filter(TYPEDEMO1984 == "Autocracies") |> # <1> 
+  filter(TYPEDEMO1984_factor == "Autocracies") |> # <1> 
   summarize(mean_democracy = mean(v2x_polyarchy, na.rm=T)) |> 
   as.data.frame() # <2>
 
@@ -177,14 +177,14 @@ demdata |>
 1.  This removes all observations that do not have the value of "Autocracies" on our factor variable
 2.  This option is used to force R to show you all the digits of the mean value so you can compare it to the Intercept value reported in the summary output
 
-The coefficient for a continuous predictor variable is interpreted as the slope of a line (e.g., how much does Y change, on average, with each one unit change in X?). The coefficient(s) for a factor variable, on the other hand, are best discussed as telling us the difference in the mean value of the DV between the category named in the output and the reference group. The coefficient for "TYPEDEMO1984Democracies", for instance, is `r coef(model_binary)[2]`.[^linear_02-3] We would interpret this as telling us that the average value of the dependent variable among countries with a "Democracies" values on `TYPEDEMO1984` is `r coef(model_binary)[2]` scale points greater than the average value among countries with a value of "Autocracies' level (our reference group) on that variable.
+The coefficient for a continuous predictor variable is interpreted as the slope of a line (e.g., how much does Y change, on average, with each one unit change in X?). The coefficient(s) for a factor variable, on the other hand, are best discussed as telling us the difference in the mean value of the DV between the category named in the output and the reference group. The coefficient for "TYPEDEMO1984_factorDemocracies", for instance, is `r coef(model_binary)[2]`.[^linear_02-3] We would interpret this as telling us that the average value of the dependent variable among countries with a "Democracies" values on `TYPEDEMO1984_factor` is `r coef(model_binary)[2]` scale points greater than the average value among countries with a value of "Autocracies' level (our reference group) on that variable.
 
 We can again see this by looking at the underlying average values:
 
 ```{r}
 # The averages
 demdata |> 
-  group_by(TYPEDEMO1984) |> 
+  group_by(TYPEDEMO1984_factor) |> 
   summarize(mean_democracy = mean(v2x_polyarchy, na.rm = T)) |>
   as.data.frame() 
 
@@ -197,7 +197,7 @@ The same goes for models with categorical factor variables. The "(Intercept)" va
 
 ```{r}
 demdata |> 
-  group_by(Typeregime2006) |> 
+  group_by(Typeregime2006_factor) |> 
   summarize(mean_democracy = mean(v2x_polyarchy, na.rm=T)) |> 
   as.data.frame() 
 

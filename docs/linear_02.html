@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 2&nbsp; Bivariate Regression with Binary &amp; Categorical Predictors</title>
+<title>2&nbsp; Bivariate Regression with Binary &amp; Categorical Predictors – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,13 +114,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_02.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -393,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 86 57 </code></pre>
 </div>
 </div>
-<p>We will first convert this variable into a factor variable before including it in our regression model. We can do this either by using the built in <code>factor()</code> command (see <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#creating-variables-in-r" target="_blank">Statistics I, 1.6.3</a>) or by using the <code>factorize()</code> function that comes from the <code>rio</code> package. The <code>factorize()</code> function can be used as a quick way of creating a factor variable when the variable in question has value labels associated with it in the dataset. <code>factor()</code> needs to be used in situations where the variable does not have value labels because <code>factorize()</code> won’t produce the right type of outcome in that scenario; see <a href="common_errors.html#sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models" class="quarto-xref"><span>Section A.2</span></a> for more on when to use which command and an example that uses <code>factor()</code> to create a factor variable.</p>
+<p>We will first convert this variable into a factor variable before including it in our regression model. We can do this either by using the built in <code>factor()</code> command (see <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#creating-variables-in-r" target="_blank">Statistics I, 1.6.3</a>) or by using the <code>factorize()</code> function that comes from the <code>rio</code> package. The <code>factorize()</code> function can be used as a quick way of creating a factor variable when the variable has value labels associated with it in the dataset. <code>factor()</code> needs to be used in situations where the variable does not have value labels (and when it is a character variable) because <code>factorize()</code> won’t produce the right type of outcome in that scenario; see <a href="common_errors.html#sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models" class="quarto-xref"><span>Section A.2</span></a> for more on when to use which command and an example that uses <code>factor()</code> to create a factor variable.</p>
 <p>You can investigate whether a variable has value labels associated with it in two ways. First, you can use the <code>view_df()</code> function from the <code>sjPlot</code> library to obtain an overall view of the variables in the dataset as shown in <a href="linear_01.html#sec-recall-peeking-inside-data-objects" class="quarto-xref"><span>Section 1.1</span></a>. Second, you can use the built in <code>attributes()</code> command to investigate a specific variable as below. We are looking for whether there is any information at all and, specifically, any information in the “$labels” area.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(demdata<span class="sc">$</span>TYPEDEMO1984)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,14 +413,14 @@ Autocracies Democracies
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 1: Convert to factor variable</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984 =</span> <span class="fu">factorize</span>(TYPEDEMO1984)) </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984_factor =</span> <span class="fu">factorize</span>(TYPEDEMO1984)) </span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Double check your work! </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>TYPEDEMO1984) <span class="co"># to check levels of factor variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>TYPEDEMO1984_factor) <span class="co"># to check levels of factor variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Autocracies" "Democracies"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TYPEDEMO1984)  <span class="co"># simple tabulation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TYPEDEMO1984_factor)  <span class="co"># simple tabulation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Autocracies Democracies 
@@ -442,14 +442,14 @@ Autocracies Democracies
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert variable to a factor variable</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Typeregime2006 =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Typeregime2006_factor =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Double check your work!</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Liberal democracy"   "Electoral democracy" "Autocracy"          </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>Typeregime2006)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>Typeregime2006_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   Liberal democracy Electoral democracy           Autocracy 
@@ -466,22 +466,22 @@ Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We recommend creating new variables when recoding or factorizing an existing variable in a dataset (e.g., <code>mutate(regime_type84 = factorize(TYPEDEMO1984))</code>) even though we did not do this above. Creating a new variable when recoding/factorizing makes it easier to correct any mistakes we may inadvertently make when performing data management operations.</p>
+<p>We strongly recommend creating new variables when recoding or factorizing an existing variable in a dataset (e.g., <code>mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))</code>). Creating a new variable when recoding/factorizing makes it easier to findM and correctM any mistakes we may inadvertently make when performing data management operations.</p>
 </div>
 </div>
 <section id="sec-relevelling" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-relevelling"><span class="header-section-number">2.1.1</span> Relevelling</h3>
-<p><code>factorize()</code> uses the first numeric value as the “reference” group when making a factor variable. We can change what category of a factor variable is used as the reference group via the <code>relevel()</code> function. The example below does this for the <code>Typeregime2006</code> categorical variable by changing the reference group from “Liberal Democracy” to “Electoral Democracy”.</p>
+<p><code>factorize()</code> will use the first numeric value as the “reference” group when making a factor variable. <code>factor()</code> will do the same as well unless you tell it otherwise by explicitly specifying factor levels; see the example in <a href="common_errors.html#sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models" class="quarto-xref"><span>Section A.2</span></a> . We can change what category of a factor variable is used as the reference group via the <code>relevel()</code> function. The example below does this for the <code>Typeregime2006</code> categorical variable by changing the reference group from “Liberal Democracy” to “Electoral Democracy”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Typeregime2006_relevel =</span> <span class="fu">relevel</span>(Typeregime2006, <span class="st">"Electoral democracy"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Typeregime2006_factor_relevel =</span> <span class="fu">relevel</span>(Typeregime2006_factor, <span class="st">"Electoral democracy"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <dl>
 <dt><code>relevel(</code></dt>
 <dd>
 <p>The name of the function</p>
 </dd>
-<dt><code>Typeregime2006,</code></dt>
+<dt><code>Typeregime2006_factor,</code></dt>
 <dd>
 <p>This tells R that we want to work with the variable named <code>Typeregime2006</code>.</p>
 </dd>
@@ -493,11 +493,11 @@ Warning!
 <p>It is always a good idea to check your efforts at data cleaning before performing analysis so that you can catch mistakes early on:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Checking our work</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Liberal democracy"   "Electoral democracy" "Autocracy"          </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006_relevel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(demdata<span class="sc">$</span>Typeregime2006_factor_relevel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Electoral democracy" "Liberal democracy"   "Autocracy"          </code></pre>
 </div>
@@ -509,21 +509,21 @@ Warning!
 <p>We include binary/categorical variables in a regression model in the same way that we did for a continuous variable. For instance:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the binary variable as a predictor: </span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>model_binary <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> TYPEDEMO1984, <span class="at">data=</span>demdata)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>model_binary <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> TYPEDEMO1984_factor, <span class="at">data=</span>demdata)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_binary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = v2x_polyarchy ~ TYPEDEMO1984, data = demdata)
+lm(formula = v2x_polyarchy ~ TYPEDEMO1984_factor, data = demdata)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.51025 -0.15007 -0.00857  0.17309  0.48543 
 
 Coefficients:
-                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)              0.41757    0.02333   17.90  &lt; 2e-16 ***
-TYPEDEMO1984Democracies  0.27268    0.03695    7.38 1.25e-11 ***
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     0.41757    0.02333   17.90  &lt; 2e-16 ***
+TYPEDEMO1984_factorDemocracies  0.27268    0.03695    7.38 1.25e-11 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -533,22 +533,26 @@ Multiple R-squared:  0.2786,    Adjusted R-squared:  0.2735
 F-statistic: 54.47 on 1 and 141 DF,  p-value: 1.247e-11</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the categorical variable as a predictor: </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model_categorical <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> Typeregime2006, <span class="at">data=</span>demdata)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model_categorical <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> Typeregime2006_factor, <span class="at">data=</span>demdata)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_categorical)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = v2x_polyarchy ~ Typeregime2006, data = demdata)
+lm(formula = v2x_polyarchy ~ Typeregime2006_factor, data = demdata)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.40104 -0.09898  0.00196  0.10773  0.47773 
 
 Coefficients:
-                                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)                        0.75404    0.01734   43.48   &lt;2e-16 ***
-Typeregime2006Electoral democracy -0.32106    0.02653  -12.10   &lt;2e-16 ***
-Typeregime2006Autocracy           -0.50577    0.02866  -17.64   &lt;2e-16 ***
+                                         Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                               0.75404    0.01734   43.48   &lt;2e-16
+Typeregime2006_factorElectoral democracy -0.32106    0.02653  -12.10   &lt;2e-16
+Typeregime2006_factorAutocracy           -0.50577    0.02866  -17.64   &lt;2e-16
+                                            
+(Intercept)                              ***
+Typeregime2006_factorElectoral democracy ***
+Typeregime2006_factorAutocracy           ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -568,7 +572,7 @@ Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The output from a model with a binary/categorical variable is the same as when the predictor is continuous with one exception: R will format the variable names differently in the Coefficients area depending on whether the variable is a factor variable or not. If the variable is not a factor variable, then R will simply show the variable name (e.g., “gini_2019”). If the variable is a factor, then the display is formatted as so: “variableCategory”. For instance: “TypeDemo1984Democracies” or “Typeregime2006Autocracy.”</p>
+<p>The output from a model with a binary/categorical variable is the same as when the predictor is continuous with one exception: R will format the variable names differently in the Coefficients area depending on whether the variable is a factor variable or not. If the variable is not a factor variable, then R will simply show the variable name (e.g., “gini_2019”). If the variable is a factor, then the display is formatted as so: “variableCategory”. For instance: “TypeDemo1984_factorDemocracies” or “Typeregime2006_factorAutocracy.”</p>
 </div>
 </div>
 <p>There are some subtle differences in how we interpret the coefficients of a model that (only) includes a factor variable as a predictor variable:</p>
@@ -584,10 +588,10 @@ Interpretation
 <div class="callout-body-container callout-body">
 <p>The <code>Estimate</code> column provides the coefficient values from our regression model.</p>
 <p>The “(Intercept)” row gives you the coefficient for the Intercept: What is the average value of the DV we expect to observe based on this model if all of the included IVs = 0. If the only predictor variable in the model is a factor variable, then the (Intercept) value = the mean of the dependent variable among observations in the initial level of the factor variable, what we often call the “reference group”.</p>
-<p>Here, for instance, is the mean value of <code>v2x_polyarchy</code> among countries with a value of “Autocracies” on the <code>TYPEDEMO1984</code> variable; it is identical to the (Intercept) value above.</p>
+<p>Here, for instance, is the mean value of <code>v2x_polyarchy</code> among countries with a value of “Autocracies” on the <code>TYPEDEMO1984_factor</code> variable; it is identical to the (Intercept) value above.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-2" class="code-annotation-target"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TYPEDEMO1984 <span class="sc">==</span> <span class="st">"Autocracies"</span>) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-2" class="code-annotation-target"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TYPEDEMO1984_factor <span class="sc">==</span> <span class="st">"Autocracies"</span>) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-25-3"><a href="#annotated-cell-25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_democracy =</span> <span class="fu">mean</span>(v2x_polyarchy, <span class="at">na.rm=</span>T)) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="2">2</button><span id="annotated-cell-25-4" class="code-annotation-target"><a href="#annotated-cell-25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
@@ -607,19 +611,19 @@ Interpretation
 1      0.4175698</code></pre>
 </div>
 </div>
-<p>The coefficient for a continuous predictor variable is interpreted as the slope of a line (e.g., how much does Y change, on average, with each one unit change in X?). The coefficient(s) for a factor variable, on the other hand, are best discussed as telling us the difference in the mean value of the DV between the category named in the output and the reference group. The coefficient for “TYPEDEMO1984Democracies”, for instance, is 0.2726758.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> We would interpret this as telling us that the average value of the dependent variable among countries with a “Democracies” values on <code>TYPEDEMO1984</code> is 0.2726758 scale points greater than the average value among countries with a value of “Autocracies’ level (our reference group) on that variable.</p>
+<p>The coefficient for a continuous predictor variable is interpreted as the slope of a line (e.g., how much does Y change, on average, with each one unit change in X?). The coefficient(s) for a factor variable, on the other hand, are best discussed as telling us the difference in the mean value of the DV between the category named in the output and the reference group. The coefficient for “TYPEDEMO1984_factorDemocracies”, for instance, is 0.2726758.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> We would interpret this as telling us that the average value of the dependent variable among countries with a “Democracies” values on <code>TYPEDEMO1984_factor</code> is 0.2726758 scale points greater than the average value among countries with a value of “Autocracies’ level (our reference group) on that variable.</p>
 <p>We can again see this by looking at the underlying average values:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The averages</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TYPEDEMO1984) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TYPEDEMO1984_factor) <span class="sc">|&gt;</span> </span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_democracy =</span> <span class="fu">mean</span>(v2x_polyarchy, <span class="at">na.rm =</span> T)) <span class="sc">|&gt;</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  TYPEDEMO1984 mean_democracy
-1  Autocracies      0.4175698
-2  Democracies      0.6902456
-3         &lt;NA&gt;      0.4638056</code></pre>
+<pre><code>  TYPEDEMO1984_factor mean_democracy
+1         Autocracies      0.4175698
+2         Democracies      0.6902456
+3                &lt;NA&gt;      0.4638056</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Avg. in Democracies - Avg. in Autocracies</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.6902456</span> <span class="sc">-</span> <span class="fl">0.4175698</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -630,15 +634,15 @@ Interpretation
 <p>The same goes for models with categorical factor variables. The “(Intercept)” value in <code>model_categorical</code> above tells us the average value of the DV among observations in the reference group of the factor variable (there: “Liberal Democracy”) while the coefficients for the factor variable tell us the difference from this average score. The average 2020 democracy score among countries that are coded as an “Electoral Democracy” in 2006 is -0.32 scale points lower than the average 2020 democracy score among the “Liberal Democracy” reference group countries, for instance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="sc">|&gt;</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Typeregime2006) <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Typeregime2006_factor) <span class="sc">|&gt;</span> </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_democracy =</span> <span class="fu">mean</span>(v2x_polyarchy, <span class="at">na.rm=</span>T)) <span class="sc">|&gt;</span> </span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       Typeregime2006 mean_democracy
-1   Liberal democracy      0.7540423
-2 Electoral democracy      0.4329811
-3           Autocracy      0.2482683
-4                &lt;NA&gt;      0.3777143</code></pre>
+<pre><code>  Typeregime2006_factor mean_democracy
+1     Liberal democracy      0.7540423
+2   Electoral democracy      0.4329811
+3             Autocracy      0.2482683
+4                  &lt;NA&gt;      0.3777143</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Avg. in Elec Democracy - Avg. in Lib Democracy</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4329811</span> <span class="sc">-</span> <span class="fl">0.7540423</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -651,7 +655,7 @@ Interpretation
 <pre><code>[1] -0.505774</code></pre>
 </div>
 </div>
-<p>See <a href="linear_08.html#sec-reporting-linear-regression" class="quarto-xref"><span>Section 8.3</span></a> for how to report these values in our assignments and in formal papers.</p>
+<p>See <a href="linear_08.html#sec-reporting-linear-regression" class="quarto-xref"><span>Section 8.4</span></a> for how to report these values in our assignments and in formal papers.</p>
 </div>
 </div>
 
@@ -846,18 +850,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -889,7 +882,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -897,7 +910,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -994,7 +1007,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

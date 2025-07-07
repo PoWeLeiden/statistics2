@@ -47,18 +47,18 @@ Here is an example logistic regression model that we will use throughout the doc
 #Data Preparation
 ESS9NL <- ESS9NL |>
   #Factorize our IVs
-  mutate(gndr = factorize(gndr), #
-         vote = factorize(vote))  |> 
+  mutate(gndr_F = factorize(gndr), #
+         vote_F = factorize(vote))  |> 
   #Remove Not Eligible to Vote Category from vote
-  mutate(vote = na_if(vote,"Not eligible to vote")) |> 
+  mutate(vote_F = na_if(vote_F,"Not eligible to vote")) |> 
   #Relevel our variables like we did last time
-  mutate(vote = relevel(vote, "No"), 
-         gndr = relevel(gndr, "Female")) |> 
+  mutate(vote_F = relevel(vote_F, "No"), 
+         gndr_F = relevel(gndr_F, "Female")) |> 
   #Drop the extra level in gndr
-  mutate(gndr = droplevels(gndr)) # <1>
+  mutate(gndr_F = droplevels(gndr_F)) # <1>
 
 #Our model
-Vote_model_mp <- glm(vote ~ gndr + agea + trstplt + lrscale, 
+Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
                 data = ESS9NL, family = "binomial")
 
 #Check the output
@@ -85,16 +85,16 @@ A correct report for a logistic model includes:
 
 [^logit_06-1]: Using a 90% significance test may be acceptable if the model has a small N.
 
-Here is an example for the `gndr` (binary factor) and `trstplt` (continuous) variables (AME and odds ratio estimates are calculated in previous chapters).
+Here is an example for the `gndr_F` (binary factor) and `trstplt` (continuous) variables (AME and odds ratio estimates are calculated in previous chapters).
 
 ::: callout-tip
 #### Report
 
 **trstplt**: The chances that a person reports turning out to vote increase alongside their trust in politicians. The probability of turning out to vote is expected to increase by 2.3 percentage points, on average, for each one unit increase in trust. The relationship between trust in politicians and turnout is statistically significant (p \< 0.001).
 
-**gndr (AME example)**: On average, the probability of turning out to vote is expected to be 4.3 percentage points higher among male than female respondents. However, this difference is not statistically significant (p = 0.78).
+**gndr_F (AME example)**: On average, the probability of turning out to vote is expected to be 0.5 percentage points higher among male than female respondents. However, this difference is not statistically significant (p = 0.78).
 
-**gndr (Odds Ratio Example)**: The odds of turning out to vote among male respondents are 1.04 times greater than the odds among female respondents. However, this difference is not statistically significant (p = 0.78).
+**gndr_F (Odds Ratio Example)**: The odds of turning out to vote among male respondents are 1.04 times greater than the odds among female respondents. However, this difference is not statistically significant (p = 0.78).
 :::
 
 Additional notes for writing up results for formal papers:
@@ -321,7 +321,7 @@ We can use the following code in situations where the predictor variable is a fa
 
 ```{r}
 #Obtain the predictions
-Pred_cat <- predictions(Vote_model_mp, by = "gndr", newdata = "mean") 
+Pred_cat <- predictions(Vote_model_mp, by = "gndr_F", newdata = "mean") 
 
 #Let's take a look!
 tibble(Pred_cat)
@@ -330,7 +330,7 @@ tibble(Pred_cat)
 We can then feed that data into our plot:
 
 ```{r}
-ggplot(Pred_cat, aes(x = gndr, y = estimate)) +   
+ggplot(Pred_cat, aes(x = gndr_F, y = estimate)) +   
   geom_pointrange(aes(ymin = conf.low, ymax = conf.high)) +  
   labs(title = "Gender and Turnout in the Netherlands", 
        x = "Gender",
@@ -344,4 +344,4 @@ ggplot(Pred_cat, aes(x = gndr, y = estimate)) +
     -   If the variable is binary/categorical, then you should focus on all of the (relevant) categories to the discussion at hand.
     -   If the variable is continuous, then one can input the minimum and maximum of the variable with reasonable increments between them to produce a plot showing changes across the range of X. However, there is an **important** note on this front: If your data has missing values on one or more variables in the model, then the min and max of a variable in the model may not correspond to what you would find if you simply used the `summary()` function to summarize the variable's distribution in the full dataset. This can be problematic if leads you to make predictions for values of a variable that are not observed in the model as these types of extrapolations may be uncertain and faulty. You can avoid this problem by creating a dataset that only includes observations in the model and then finding the min/max (and other intermediate values). This can be done, for instance, by using the `predictions()` command as shown @sec-predictions-for-a-continuous-predictor-variable .
 -   The continuous variable example above plots the predicted values as a line with a ribbon showing the 95% confidence interval around the predictions. This is a conventional choice when one is plotting predictions for a continuous independent variable. If the independent variable is binary/categorical, then one would typically use something like `geom_pointrange()` or `geom_errorbar()`.
--   The scale of the y-axis is something to consider when creating a plot such as this. The examples above uses `scale_y_continuous()` to make sure that the y-axis stretches from the min to the max value of the DV. This can help avoid situations where `ggplot()` shows only a truncated stretch of the y-axis thereby potentially giving a false impression of the magnitude of the change in Y across the range of X. This type of rescaling is not always needed, and can sometimes create its own problems, but it is something to reflect on before communicating statistical results. The sociologist Kieran Healy provides a further [discussion](https://socviz.co/lookatdata.html#problems-of-honesty-and-good-judgment){target="_blank"} of these competing considerations in his book on data visualization.
+-   The scale of the y-axis is something to consider when creating plots of predicted values. We used `scale_y_continuous()` in the earlier example that focused on a continuous predictor to ensure that the resulting plot covered the full range of the dependent variable (the probability to vote). We did not use this syntax in the present example, which leaves the choice of how to scale the y-axis to `ggplot()`. This can have the benefit of removing unused space from the plot but the potential disadvantage of making the effect of the x-variable look larger than it actually is. We could alternatively use `scale_y_continuous()` here to make the plot use a larger scale on the y-axis, but this could have the consequence of making our visualization less clear due to the use of unused space. Clearly communicating results often involves thoughtful consideration of the potential tradeoffs behind different ways of displaying data. The sociologist Kieran Healy provides a further [discussion](https://socviz.co/lookatdata.html#problems-of-honesty-and-good-judgment){target="_blank"} of these competing considerations in his book on data visualization.

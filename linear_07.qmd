@@ -28,6 +28,7 @@ library(expss)           #used for frequency tables
 library(rio)             #loading data
 library(tidyverse)       #data manipulation and plotting
 library(broom)           #for obtaining residuals and influence measures
+library(marginaleffects) #predicted values
 ```
 
 ::: callout-important
@@ -131,10 +132,11 @@ demdata <- import("demdata.rds") |>
 
 #Factorize our binary variable
 demdata <- demdata |> 
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))
 
 #Run and store a model and then look at the output
-model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + GDP2006, data = demdata)
+model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + 
+                       GDP2006, data = demdata)
 
 summary(model_multiple)
 ```
@@ -147,15 +149,16 @@ demdata <- import("data/demdata.rds") |>
 
 #Factorize our binary variable
 demdata <- demdata |> 
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984))
+  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))
 
 #Run and store a model and then look at the output
-model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + GDP2006, data = demdata)
+model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + 
+                       GDP2006, data = demdata)
 
 tidy(model_multiple, conf.int = TRUE)
 ```
 
-The coefficients for `gini_2019` (p = 0.322) and `TYPEDEMO1984` (p = 0.246) are statistically insignificant. Is that because of too much multicollinearity? We can again rely on the `car` package to answer this question via its `vif()` function.
+The coefficients for `gini_2019` (p = 0.322) and `TYPEDEMO1984_factor` (p = 0.246) are statistically insignificant. Is that because of too much multicollinearity? We can again rely on the `car` package to answer this question via its `vif()` function.
 
 ```{r}
 vif(model_multiple)
@@ -174,9 +177,10 @@ The output of this command will look different if you have a categorical variabl
 
 ```{r}
 demdata <- demdata |> 
-  mutate(Typeregime2006 = factorize(Typeregime2006))
+  mutate(Typeregime2006_factor = factorize(Typeregime2006))
 
-vif_example <- lm(v2x_polyarchy ~ gini_2019 + GDP2006 + Typeregime2006, data = demdata) 
+vif_example <- lm(v2x_polyarchy ~ gini_2019 + GDP2006 + 
+                    Typeregime2006_factor, data = demdata) 
 
 vif(vif_example)
 ```
@@ -214,7 +218,7 @@ avPlots(model_multiple)
 
 Each plot is a partial regression plot or "added-variable plot". It shows the relationship between a given IV and the DV that is "residual" of the other predictors (i.e., the relationship between the IV in the sub-plot and the DV after accounting for the relationship between the other predictors in the model and these variables).
 
-We are only interested in partial regression plots for continuous predictors. We can thus ignore the plot for `TYPEDEMO1984`.
+We are only interested in partial regression plots for continuous predictors. We can thus ignore the plot for `TYPEDEMO1984_factor`.
 
 Turning to the `GDP2006` predictor, we find a steep regression line (the coefficient was significant), but the dots are not evenly distributed around the line. In contrast, it looks like the relationship could be better described as a degressive curve rather than as a linear relationship.
 
@@ -229,8 +233,8 @@ Here, we re-run the model and re-check our diagnostic plots. The plots look bett
 
 ```{r}
 #Re-running the model 
-multiple_ln <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006, 
-               data=demdata)
+multiple_ln <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + 
+                    LNGDP2006, data=demdata)
 
 #Residual Plot
 resid_panel(multiple_ln, plots = c("resid"))
@@ -238,6 +242,65 @@ resid_panel(multiple_ln, plots = c("resid"))
 #Partial Regression Plot
 avPlots(multiple_ln)
 ```
+
+::: callout-important
+#### Warning!
+
+The interpretation of a logged predictor variable changes how we interpret the coefficient for that variable:
+
+-   A 1% increase in X (on its original scale) leads to a change in Y of coefficient value \* log(1.01) units in Y
+-   A 10% increase in X (on its original scale) leasd to a change in Y of coefficient value \* log(1.10) units in Y
+
+We advise making a figure with predicted values to investigate the relationship between a logged predictor variable and a dependent variable to help clarify the nature of the relationship.
+
+We would first examine the distribution of our logged variable for the observations in our model (i.e., after removing observations with an NA value on one or more variables in the model):
+
+```{r}
+# First check the values of GDP2006 for the observations used in the model
+demdata_sub <- demdata |> 
+  filter(complete.cases(v2x_polyarchy, gini_2019, 
+                        TYPEDEMO1984_factor, LNGDP2006)) 
+
+# Check the variable's distribution
+summary(demdata_sub$LNGDP2006)
+```
+
+We would then make predictions across the range of the logged X variable. Here, you should make predictions for many values of X so that a nice curved line can be plotted. 
+
+```{r}
+# Then, make predictions based on the values you obtained
+bbp_preds <- predictions(multiple_ln, 
+                         newdata = datagrid(LNGDP2006 = seq(from = 5.5, 
+                                                            to = 11, 
+                                                            by = 0.5))) # <1>
+
+```
+1.  `seq()` stands for sequence. We are asking the command to calculate predictions for the sequence of values starting from 5.5, and ending at 11, in 0.5 increments.
+
+We then create a new variable in the dataset with the predicted values to serve as the X-variable in our plot. Specifically, we exponentiate the logged X variable using the `exp()` command. This *reverses* the logarithim thereby enabling us to plot the predicted values against X on its original scale.
+
+```{r}
+# Exponentiation of the logged predictor:
+bbp_preds <- bbp_preds |> 
+  mutate(GDP2006 = exp(LNGDP2006)) # <1>
+```
+1.  `exp()` basically reverses the log, i.e., `log(x)` = `exp(log(x))`
+
+We finally make our graph:
+
+```{r}
+# Make your figure
+ggplot(bbp_preds, aes(x = GDP2006, y = estimate)) + 
+  geom_line() + 
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), 
+              alpha = 0.1) + 
+  labs(title = "Predicted Electoral Democracy Score Based on GDP in 2006", 
+       x = "GDP in 2006", 
+       y = "Predicted Value")
+```
+
+Interpretations also change if you log-transform the dependent variable as well. We refer you to the following two sources for further guidance on how to interpret regression models with log-transformed variables: [Source 1](https://kenbenoit.net/assets/courses/ME104/logmodels2.pdf){target="_blank"} and [Source 2](https://library.virginia.edu/data/articles/interpreting-log-transformations-in-a-linear-model){target="_blank"}
+:::
 
 ### Quadratic relationships {#sec-quadratic-relationships}
 
@@ -281,7 +344,7 @@ The non-linear nature of the relationship may show up in the residual plot, thou
 resid_panel(Violence_linmodel, plots = c("resid"))
 ```
 
-We can check whether a quadratic relationship is a better fit for the data by adding a quadratic term to our regression model. We first create the quadratic term via `mutate()` and then add it to the equation alongside the non-squared version of the variable:
+We can check whether a quadratic relationship is a better fit for the data by adding a quadratic term to our regression model. We can do this in either of two ways. First, we can manually create this variable first and add it to our dataset via `mutate()` before including it in our resulting model. Second, we can directly add the transformation to the model via the `I()` command. This is a little simpler since we do not need to create the varaible first and, perhaps more importantly, works better with the commands from `marginaleffects` that we use to interpret models (e.g., `predictions()`).
 
 ```{r}
 #Create the squared term
@@ -292,12 +355,71 @@ demdata <- demdata |>
 Violence_sqmodel <- lm(pve ~ v2x_polyarchy + v2x_polyarchy_sq, 
                data=demdata)
 
-tidy(Violence_sqmodel, conf.int = TRUE)
+#Alternative method
+Violence_sqmodel_alternative <- lm(pve ~ v2x_polyarchy + 
+                                     I(v2x_polyarchy^2), data = demdata)
+
+# Model results
+tidy(Violence_sqmodel)
+tidy(Violence_sqmodel_alternative)
 ```
 
 The quadratic term is statistically significant (p \< 0.001). This indicates that the relationship between `v2x_polyarchy` and `pve` is better modeled as non-linear in nature.
 
 We can then inspect the residual plot again to re-check our assumptions (see example below).
+
+::: callout-important
+#### Warning!
+
+The inclusion of a quadratic predictor complicates the interpretation of the relationship between X and Y. The following rules apply:
+
+-   If the coefficient for X is positive and the one for X^2^ is negative, then the relationship between X and Y is **concave** (an inverted U shape)
+-   If the coefficient for X is negative and the one for X^2^ is positive, then the relationship between X and Y is **convex** (a U-shape)
+-   If both coefficients point in the same direction (both positive or both negative), then this implies an effect of X on Y that amplifies or becomes stronger as X increases in value
+
+Much as with exponential relationships, it is often better to clarify the relationship visually. We do this by first identifying the range of X that we want to make predictions with a focus on just those observations that were used in fitting the model (i.e., no NA values on any of the included variables).
+
+```{r}
+#First, we check the values of X for the observations used 
+#in fitting the model 
+demdata_sub2 <- demdata |>
+  filter(complete.cases(v2x_polyarchy , pve))
+
+summary(demdata_sub2$v2x_polyarchy)
+```
+
+We then obtain the predicted values via `predictions()` and plot them. It is a good idea to ask for many predicted values here so that a nice curved line can be drawn.
+
+```{r}
+
+# Then we make predictions based on these values
+pve_preds <- predictions(Violence_sqmodel_alternative, 
+                         newdata = datagrid(v2x_polyarchy= seq(from=0, 
+                                                               to=0.9, 
+                                                               by=0.05)))
+
+# Make your figure
+ggplot(pve_preds, aes(x=v2x_polyarchy, y=estimate)) + 
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), 
+              alpha = 0.1) + 
+  labs(title = "Electoral Democracy and Political Violence",
+       x = "Electoral Democracy",   
+       y = "Predicted Value") 
+```
+
+**Important**: We calculated predicted values from the model where we included the squared term via the `I()` syntax rather than from the model where we first created the squared term in our dataset using `mutate()`. We needed to do this because `predictions()` will not produce accurate predictions in the latter scenario. If we use `predictions()` with that latter model, then `predictions()` would calculate predictions for each value of X while holding X^2^ constant at its mean value; you can see an example of this behavior below. This is problematic: if X = 0.50, then X^2^ *must* equal 0.25 rather than the mean of X^2^ for the correct prediction to be calculated. The use of `I()` avoids this problem and generates the correct predicted values.
+
+```{r}
+# Predictions using the squared term we created: y = x + x^2
+predictions(Violence_sqmodel, 
+                         newdata = datagrid(v2x_polyarchy= seq(from=0, 
+                                                               to=0.1, 
+                                                               by=0.05))) |> 
+  tibble() |> 
+  select(rowid, estimate, conf.low, conf.high, v2x_polyarchy_sq, v2x_polyarchy)
+```
+:::
 
 ## Homoskedasticity
 
@@ -369,7 +491,7 @@ We use the standardized residuals (`.std.resid`) data to look for the presence o
 
 ### Investigating outliers {#sec-linear-investigating-outliers}
 
-We first investigate the summary statistics of the standardized residuals (saved in the `demdata_multln` dataset) . Specifically, we look at the minimum and maximum values to see any observations cross the different outlier thresholds that we are interested in (\|1.96\|, \|2.54\|, and especially \|3.29\|).
+We first investigate the summary statistics of the standardized residuals (saved in the `demdata_multln` dataset) . Specifically, we look at the minimum and maximum values to see any observations cross the different outlier thresholds that we are interested in (\|1.96\|, \|2.58\|, and especially \|3.29\|).
 
 ```{r}
 summary(demdata_multln$.std.resid)
@@ -428,7 +550,7 @@ We have more than 5% of cases with a standardized residual higher than 1.96 in a
 To investigate whether these outliers influence our results we conduct our linear regression again after filtering out cases with a standardized residual higher than 1.96 in absolute value. We can replace the SRE1.96 variable with the SRE2.58 and SRE3.29 variables to investigate the impact of alternative ways of excluding outliers.
 
 ```{r}
-multiple_ln1.96 <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006,
+multiple_ln1.96 <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + LNGDP2006,
                       data = subset(demdata_multln, SRE1.96 == 0))
 ```
 
@@ -469,7 +591,7 @@ The plot shows there really is only one case that deviates strongly all the rest
 We can check the results of a linear model without this case included. We run a new model filtering out the high Cook's D value with the code below.
 
 ```{r}
-multiple_lncook <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006,
+multiple_lncook <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + LNGDP2006,
                       data = subset(demdata_multln, .cooksd < 0.65))
 ```
 
@@ -480,7 +602,7 @@ multiple_lncook <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006,
 We could exclude both outliers and influential cases at the same time by using the '&' sign in our subsetting statement:
 
 ```{r}
-multiple_ln_excl <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006,
+multiple_ln_excl <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + LNGDP2006,
                        data = subset(demdata_multln,
                                      SRE1.96 == 0 & .cooksd < 0.65))
 ```
@@ -494,10 +616,10 @@ When missing values are present augment cannot fit the standardized residuals an
 ```{r}
 # create subset of data without NA values
 demdata_complete <- demdata |>
-  filter(complete.cases(v2x_polyarchy, gini_2019, TYPEDEMO1984, LNGDP2006))
+  filter(complete.cases(v2x_polyarchy, gini_2019, TYPEDEMO1984_factor, LNGDP2006))
 
 # run model with new complete cases dataset
-multiple_ln <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + LNGDP2006, 
+multiple_ln <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + LNGDP2006, 
                data=demdata_complete)
 
 # use augment and add to dataset

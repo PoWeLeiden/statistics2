@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical analysis and presentation using R - 16&nbsp; Marginal Effects in Interaction Models</title>
+<title>16&nbsp; Marginal Effects in Interaction Models – Statistical analysis and presentation using R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -114,13 +114,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_02.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Statistical Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -430,15 +430,12 @@ Interpretation
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- Term    Contrast     right_track Estimate Std. Error     z Pr(&gt;|z|)     S
-  pid mean(dY/dX) Wrong Track       -10.82      0.147 -73.7   &lt;0.001   Inf
-  pid mean(dY/dX) Right Direction    -7.11      0.344 -20.7   &lt;0.001 312.7
-  2.5 % 97.5 %
- -11.11 -10.54
-  -7.78  -6.44
+ Term     right_track Estimate Std. Error     z Pr(&gt;|z|)     S  2.5 % 97.5 %
+  pid Wrong Track       -10.82      0.147 -73.7   &lt;0.001   Inf -11.11 -10.54
+  pid Right Direction    -7.11      0.344 -20.7   &lt;0.001 312.7  -7.78  -6.44
 
-Columns: term, contrast, right_track, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, predicted_lo, predicted_hi, predicted 
-Type:  response </code></pre>
+Type:  response 
+Columns: term, right_track, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high </code></pre>
 </div>
 </div>
 <dl>
@@ -485,25 +482,19 @@ Type:  response </code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-        Term                      Contrast pid Estimate Std. Error      z
- right_track Right Direction - Wrong Track   1   -29.47      1.811 -16.28
- right_track Right Direction - Wrong Track   2   -25.76      1.473 -17.48
- right_track Right Direction - Wrong Track   3   -22.05      1.158 -19.04
- right_track Right Direction - Wrong Track   4   -18.33      0.888 -20.64
- right_track Right Direction - Wrong Track   5   -14.62      0.718 -20.37
- right_track Right Direction - Wrong Track   6   -10.90      0.721 -15.13
- right_track Right Direction - Wrong Track   7    -7.19      0.895  -8.03
- Pr(&gt;|z|)     S  2.5 % 97.5 %
-   &lt;0.001 195.4 -33.02 -25.92
-   &lt;0.001 224.9 -28.65 -22.87
-   &lt;0.001 266.0 -24.32 -19.78
-   &lt;0.001 311.9 -20.07 -16.59
-   &lt;0.001 303.9 -16.02 -13.21
-   &lt;0.001 169.4 -12.31  -9.49
-   &lt;0.001  49.9  -8.94  -5.43
+ pid Estimate Std. Error      z Pr(&gt;|z|)     S  2.5 % 97.5 %
+   1   -29.47      1.811 -16.28   &lt;0.001 195.4 -33.02 -25.92
+   2   -25.76      1.473 -17.48   &lt;0.001 224.9 -28.65 -22.87
+   3   -22.05      1.158 -19.04   &lt;0.001 266.0 -24.32 -19.78
+   4   -18.33      0.888 -20.64   &lt;0.001 311.9 -20.07 -16.59
+   5   -14.62      0.718 -20.37   &lt;0.001 303.9 -16.02 -13.21
+   6   -10.90      0.721 -15.13   &lt;0.001 169.4 -12.31  -9.49
+   7    -7.19      0.895  -8.03   &lt;0.001  49.9  -8.94  -5.43
 
-Columns: rowid, term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, pid, predicted_lo, predicted_hi, predicted, right_track, rural_urban, biden 
-Type:  response </code></pre>
+Term: right_track
+Type:  response 
+Comparison: Right Direction - Wrong Track
+Columns: rowid, term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, pid, predicted_lo, predicted_hi, predicted, right_track, rural_urban, biden </code></pre>
 </div>
 </div>
 <dl>
@@ -567,7 +558,7 @@ Type:  response </code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="interaction_02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="interaction_02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -597,7 +588,7 @@ Type:  response </code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="interaction_02_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="interaction_02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -647,33 +638,36 @@ Type:  response </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- Term socialists Estimate Std. Error     z Pr(&gt;|z|)     S   2.5 %   97.5 %
-  age          0  -0.0752     0.0345 -2.18   0.0295   5.1 -0.1429 -0.00751
-  age         10   0.0228     0.0292  0.78   0.4355   1.2 -0.0344  0.07997
-  age         20   0.1207     0.0247  4.90   &lt;0.001  20.0  0.0724  0.16906
-  age         30   0.2187     0.0215 10.17   &lt;0.001  78.3  0.1766  0.26084
-  age         40   0.3167     0.0204 15.56   &lt;0.001 178.9  0.2768  0.35656
-  age         50   0.4146     0.0215 19.24   &lt;0.001 271.7  0.3724  0.45687
-  age         60   0.5126     0.0247 20.72   &lt;0.001 314.4  0.4641  0.56110
-  age         70   0.6106     0.0293 20.84   &lt;0.001 318.0  0.5532  0.66799
-  age         80   0.7085     0.0346 20.45   &lt;0.001 306.5  0.6407  0.77644
-  age         90   0.8065     0.0405 19.93   &lt;0.001 291.2  0.7272  0.88582
-  age        100   0.9045     0.0467 19.38   &lt;0.001 275.5  0.8130  0.99596
+ socialists Estimate Std. Error      z Pr(&gt;|z|)     S   2.5 %   97.5 %
+          0  -0.0752     0.0345 -2.177   0.0295   5.1 -0.1429 -0.00751
+         10   0.0228     0.0292  0.781   0.4350   1.2 -0.0344  0.07990
+         20   0.1207     0.0247  4.895   &lt;0.001  20.0  0.0724  0.16907
+         30   0.2187     0.0215 10.156   &lt;0.001  78.1  0.1765  0.26090
+         40   0.3167     0.0204 15.528   &lt;0.001 178.2  0.2767  0.35664
+         50   0.4146     0.0216 19.239   &lt;0.001 271.6  0.3724  0.45688
+         60   0.5126     0.0247 20.724   &lt;0.001 314.5  0.4641  0.56108
+         70   0.6106     0.0293 20.841   &lt;0.001 318.0  0.5532  0.66799
+         80   0.7085     0.0346 20.457   &lt;0.001 306.6  0.6407  0.77643
+         90   0.8065     0.0405 19.919   &lt;0.001 290.9  0.7272  0.88587
+        100   0.9045     0.0467 19.373   &lt;0.001 275.3  0.8130  0.99599
 
-Columns: rowid, term, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, socialists, predicted_lo, predicted_hi, predicted, age, rural_urban, biden 
+Term: age
 Type:  response 
+Columns: rowid, term, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, socialists, predicted_lo, predicted_hi, predicted, age, rural_urban, biden 
 
-       Term age Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
- socialists  20    0.393     0.0253 15.5   &lt;0.001 178.7 0.343  0.442
- socialists  30    0.491     0.0194 25.2   &lt;0.001 464.6 0.453  0.529
- socialists  40    0.589     0.0147 40.1   &lt;0.001   Inf 0.560  0.618
- socialists  50    0.687     0.0123 55.9   &lt;0.001   Inf 0.663  0.711
- socialists  60    0.785     0.0136 57.8   &lt;0.001   Inf 0.758  0.811
- socialists  70    0.883     0.0178 49.7   &lt;0.001   Inf 0.848  0.917
- socialists  80    0.981     0.0233 42.0   &lt;0.001   Inf 0.935  1.026
 
-Columns: rowid, term, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, age, predicted_lo, predicted_hi, predicted, socialists, rural_urban, biden 
-Type:  response </code></pre>
+ age Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+  20    0.393     0.0253 15.6   &lt;0.001 178.7 0.343  0.442
+  30    0.491     0.0195 25.2   &lt;0.001 463.6 0.453  0.529
+  40    0.589     0.0147 40.1   &lt;0.001   Inf 0.560  0.618
+  50    0.687     0.0123 55.9   &lt;0.001   Inf 0.663  0.711
+  60    0.785     0.0136 57.8   &lt;0.001   Inf 0.758  0.811
+  70    0.883     0.0178 49.7   &lt;0.001   Inf 0.848  0.917
+  80    0.981     0.0233 42.0   &lt;0.001   Inf 0.935  1.026
+
+Term: socialists
+Type:  response 
+Columns: rowid, term, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, age, predicted_lo, predicted_hi, predicted, socialists, rural_urban, biden </code></pre>
 </div>
 </div>
 <p>Here, we can see that the effect of age is estimated as negative and statistically significant when the <code>socialists</code> variable = 0 (-0.0752 [95% CI: -0.143, -0.008]). Note how this estimate is identical to the coefficient for <code>age</code> in the model summary. As the <code>socialists</code> variable increases, however, the effect of <code>age</code> flips signs and becomes increasingly positive in value. This is consistent with the positively signed coefficient on the interaction term. Meanwhile, the effect of the <code>socialists</code> variable is positive among young people (e.g., among those aged 20 it is 0.39 [0.34, 0.44]) with this effect growing even more positive as age increases.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
@@ -709,15 +703,13 @@ Type:  response </code></pre>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-     Term                              Contrast     right_track Estimate
- vote2016 mean(Trump Vote) - mean(Clinton Vote) Wrong Track        -51.6
- vote2016 mean(Trump Vote) - mean(Clinton Vote) Right Direction    -37.8
- Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
-       0.77 -67.0   &lt;0.001   Inf -53.1  -50.1
-       2.15 -17.6   &lt;0.001 227.0 -42.1  -33.6
+     Term     right_track Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
+ vote2016 Wrong Track        -51.6       0.77 -67.0   &lt;0.001   Inf -53.1  -50.1
+ vote2016 Right Direction    -37.8       2.15 -17.6   &lt;0.001 227.0 -42.1  -33.6
 
-Columns: term, contrast, right_track, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, predicted_lo, predicted_hi, predicted 
-Type:  response </code></pre>
+Type:  response 
+Comparison: Trump Vote - Clinton Vote
+Columns: term, contrast, right_track, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vote2016 as moderator</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int3, </span>
@@ -725,15 +717,13 @@ Type:  response </code></pre>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-        Term                                  Contrast     vote2016 Estimate
- right_track mean(Right Direction) - mean(Wrong Track) Clinton Vote    -25.2
- right_track mean(Right Direction) - mean(Wrong Track) Trump Vote      -11.5
- Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
-      2.107 -12.0   &lt;0.001 107.5 -29.4 -21.12
-      0.866 -13.2   &lt;0.001 130.7 -13.2  -9.78
+        Term     vote2016 Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
+ right_track Clinton Vote    -25.2      2.107 -12.0   &lt;0.001 107.5 -29.4 -21.12
+ right_track Trump Vote      -11.5      0.866 -13.2   &lt;0.001 130.7 -13.2  -9.78
 
-Columns: term, contrast, vote2016, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, predicted_lo, predicted_hi, predicted 
-Type:  response </code></pre>
+Type:  response 
+Comparison: Right Direction - Wrong Track
+Columns: term, contrast, vote2016, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high </code></pre>
 </div>
 </div>
 <p>The top results show that 2016 Trump voters evaluated Biden worse than 2016 Clinton voters regardless of their beliefs about the (actually sorry) state of the country in 2020. However, the difference is much larger among those that thought things in the country were heading in the wrong direction (difference = -51.6) than those that thought otherwise (-37.80). You might notice, again, that the interaction term coefficient equals the difference between these two estimates (e.g., -37.8 - (-51.6) = 13.8). The statistically significant interaction term indicates we can reject the null hypothesis that the difference between the two marginal effects estimates = 0.</p>
@@ -767,25 +757,19 @@ Type:  response </code></pre>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-     Term                  Contrast age Estimate Std. Error    z Pr(&gt;|z|)     S
- vote2016 Trump Vote - Clinton Vote  20    0.443     0.0300 14.8   &lt;0.001 161.9
- vote2016 Trump Vote - Clinton Vote  30    0.455     0.0244 18.7   &lt;0.001 255.6
- vote2016 Trump Vote - Clinton Vote  40    0.467     0.0199 23.4   &lt;0.001 400.7
- vote2016 Trump Vote - Clinton Vote  50    0.479     0.0173 27.7   &lt;0.001 558.2
- vote2016 Trump Vote - Clinton Vote  60    0.490     0.0172 28.6   &lt;0.001 593.7
- vote2016 Trump Vote - Clinton Vote  70    0.501     0.0195 25.7   &lt;0.001 481.7
- vote2016 Trump Vote - Clinton Vote  80    0.512     0.0235 21.8   &lt;0.001 347.1
- 2.5 % 97.5 %
- 0.384  0.502
- 0.407  0.503
- 0.428  0.506
- 0.445  0.513
- 0.456  0.524
- 0.463  0.539
- 0.466  0.558
+ age Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+  20    0.443     0.0300 14.8   &lt;0.001 161.9 0.384  0.502
+  30    0.455     0.0244 18.7   &lt;0.001 255.6 0.407  0.503
+  40    0.467     0.0199 23.4   &lt;0.001 400.7 0.428  0.506
+  50    0.479     0.0173 27.7   &lt;0.001 558.2 0.445  0.513
+  60    0.490     0.0172 28.6   &lt;0.001 593.7 0.456  0.524
+  70    0.501     0.0195 25.7   &lt;0.001 481.7 0.463  0.539
+  80    0.512     0.0235 21.8   &lt;0.001 347.1 0.466  0.558
 
-Columns: rowid, term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, age, predicted_lo, predicted_hi, predicted, vote2016, rural_urban, right_track 
-Type:  response </code></pre>
+Term: vote2016
+Type:  response 
+Comparison: Trump Vote - Clinton Vote
+Columns: rowid, term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, age, predicted_lo, predicted_hi, predicted, vote2016, rural_urban, right_track </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vote2016 as moderator</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(righttrack_int, </span>
@@ -793,15 +777,12 @@ Type:  response </code></pre>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- Term    Contrast     vote2016  Estimate Std. Error     z Pr(&gt;|z|)   S
-  age mean(dY/dX) Clinton Vote -0.000312   0.000209 -1.49    0.136 2.9
-  age mean(dY/dX) Trump Vote    0.000854   0.000650  1.31    0.189 2.4
-     2.5 %   97.5 %
- -0.000723 9.84e-05
- -0.000421 2.13e-03
+ Term     vote2016  Estimate Std. Error     z Pr(&gt;|z|)   S     2.5 %   97.5 %
+  age Clinton Vote -0.000312   0.000209 -1.49    0.136 2.9 -0.000723 9.84e-05
+  age Trump Vote    0.000854   0.000650  1.31    0.189 2.4 -0.000421 2.13e-03
 
-Columns: term, contrast, vote2016, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, predicted_lo, predicted_hi, predicted 
-Type:  response </code></pre>
+Type:  response 
+Columns: term, vote2016, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high </code></pre>
 </div>
 </div>
 <p>We expect that people who voted for Trump in 2016 to be more likely to say that the country is heading in the right direction than those that voted for Clinton in 2016 even among the very young with this difference expected to grow with age. For instance, we expect the probability of saying the country is heading in the right direction to be about 45.5 percentage points higher among 30 year old respondents who voted for Trump in 2016 than among 30 year old respondents who voted for Clinton in 2016. The corresponding difference among those 80 years (or older) is 51.2 percentage points.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
@@ -998,18 +979,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1041,7 +1011,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1049,7 +1039,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1146,7 +1136,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
