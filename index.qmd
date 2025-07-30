@@ -53,7 +53,7 @@ This box contains general guidelines for the interpretation of the results, e.g.
 This box will call your attention to things that could go wrong or otherwise pose a problem
 :::
 
-The final part of the book provide three Appendices with some supplementary information. Appendix A provides an overview of some Common Errors that you may encounter when performing these analyses and when attempting to knit your R assignment files into an html for submission. Appendix B provides an overview of the R libraries (and associated functions) that we will use in this course, the week they are introduced, and a script that will enable you to install them on your personal computer all in one go. Appendix C provides relevant formulas related to the types of analysis that we'll examine in Statistics II.
+The final part of the book provides Appendices with some supplementary information. Appendix A provides an overview of some Common Errors that you may encounter when performing these analyses and when attempting to knit your R assignment files into an html for submission. Appendix B provides an overview of the R libraries (and associated functions) that we will use in this course, the week they are introduced, and a script that will enable you to install them on your personal computer all in one go. Appendix C provides relevant formulas related to the types of analysis that we'll examine in Statistics II. The final two appendices, meanwhile, are meant for students working on their second year Data Skills or third year BAP projects.
 
 ## Statistics I Book
 
@@ -63,12 +63,12 @@ The contents of this book build on what you learned in Statistics I particularly
 
 For each week in the course, you need to read relevant chapters .... In 2024-2025, this is:
 
-| Week | Section             | Chapters                                                                                                                                          |
-|------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1    | Linear Models       | @sec-linear-covcor ; @sec-reporting-and-presenting-results (8.1 & 8.2)                                                                            |
-| 2    | Linear Models       | @sec-binary-predictors ; @sec-statistical-significance ; @sec-predicted-residual-values (5.1 & 5.2) ; @sec-reporting-and-presenting-results (8.3) |
-| 3    | Linear Models       | @sec-multiple-linear-regression ; @sec-predicted-residual-values (5.3) ; @sec-model-fit ; @sec-reporting-and-presenting-results (8.3 - 8.6)       |
-| 4    | Linear Models       | @sec-ols-assumptions                                                                                                                              |
-| 5    | Logistic Regression | @sec-logistic-regression-odds-ratios ; @sec-marginal-effects ; @sec-logit-predicted-probabilities ; @sec-reporting-logit                          |
-| 6    | Logistic Regression | @sec-logit-comparing ; @sec-logistic-regression-assumptions                                                                                       |
-| 7    | Interactions        | @sec-including-an-interaction-term-in-a-regression-model ; @sec-inter-marginal ; @sec-predicted-values-from-interaction-models                    |
+| Week | Section | Chapters |
+|-----------|-----------|---------------------------------------------------|
+| 1 | Linear Models | @sec-linear-covcor ; @sec-reporting-and-presenting-results (8.1 & 8.2) |
+| 2 | Linear Models | @sec-binary-predictors ; @sec-statistical-significance ; @sec-predicted-residual-values (5.1 & 5.2) ; @sec-reporting-and-presenting-results (8.3) |
+| 3 | Linear Models | @sec-multiple-linear-regression ; @sec-predicted-residual-values (5.3) ; @sec-model-fit ; @sec-reporting-and-presenting-results (8.3 - 8.6) |
+| 4 | Linear Models | @sec-ols-assumptions |
+| 5 | Logistic Regression | @sec-logistic-regression-odds-ratios ; @sec-marginal-effects ; @sec-logit-predicted-probabilities ; @sec-reporting-logit |
+| 6 | Logistic Regression | @sec-logit-comparing ; @sec-logistic-regression-assumptions |
+| 7 | Interactions | @sec-including-an-interaction-term-in-a-regression-model ; @sec-inter-marginal ; @sec-predicted-values-from-interaction-models |

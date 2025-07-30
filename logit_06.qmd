@@ -113,7 +113,7 @@ modelsummary(Vote_model_mp,
              stars = TRUE,
              coef_rename = c("(Intercept)" = "Constant",
                              "agea" = "Age",
-                             "gndrMale" = "Male respondent",
+                             "gndr_FMale" = "Male respondent",
                              "trstplt"= "Trust in politicians",
                              "lrscale" = "Left-right positioning"),
              gof_map = c("nobs", "logLik"),
@@ -138,7 +138,7 @@ modelsummary(Vote_model_mp,
              stars = TRUE,
              coef_rename = c("(Intercept)" = "Constant",
                              "agea" = "Age",
-                             "gndrMale" = "Male respondent",
+                             "gndr_FMale" = "Male respondent",
                              "trstplt"= "Trust in politicians",
                              "lrscale" = "Left-right positioning"),
              gof_map = c("nobs", "logLik"),
@@ -167,7 +167,7 @@ We could present the result of our model via a coefficient plot (with a full reg
 tidy(Vote_model_mp, conf.int = TRUE) |> # <1>
   filter(term != "(Intercept)") |> #<2> 
   mutate(term = recode(term, # <3>
-                       "gndrMale" = "Male Respondent", 
+                       "gndr_FMale" = "Male Respondent", 
                        "agea" = "Respondent Age", 
                        "trstplt" = "Trust in Politicians", 
                        "lrscale" = "Left-right Positioning")) |> 
@@ -191,7 +191,7 @@ If we wanted to plot the odds ratios, then the process is identical except that 
 tidy(Vote_model_mp, conf.int = TRUE, exponentiate = TRUE) |>  # <1> 
   filter(term != "(Intercept)") |> 
   mutate(term = recode(term, 
-                       "gndrMale" = "Male Respondent", 
+                       "gndr_FMale" = "Male Respondent", 
                        "agea" = "Respondent Age", 
                        "trstplt" = "Trust in Politicians", 
                        "lrscale" = "Left-right Positioning")) |> 
@@ -223,7 +223,7 @@ We can likewise plot the average marginal effects of our logistic regression mod
 ```{r}
 avg_slopes(Vote_model_mp) |> # <1>
   mutate(term = recode(term, #<2>
-                       "gndr" = "Male Respondent", #<3> 
+                       "gndr_F" = "Male Respondent", #<3> 
                        "agea" = "Respondent Age", 
                        "trstplt" = "Trust in Politicians", 
                        "lrscale" = "Left-right Positioning")) |> 
@@ -239,7 +239,7 @@ avg_slopes(Vote_model_mp) |> # <1>
 
 1.  We are completing this process all at once by using the `|>` operator. However, it is often simpler to break this up into steps: (1) store the results of `avg_slopes()` as a new object; (2) recode the `term` variable in that object; and (3) produce the plot.
 2.  Instead of using `recode()` on this variable, we could instead convert it into a factor variable using `factor()`. This would enable us to still provide informative labels for each term as well as controlling the order in which the observations are plotted. See the discussion in Chapter 8, Section 8.5.
-3.  `avg_slopes()` does not combine the variable name and label for factor variables when creating `term` (e.g., it shows `gndr` rather than `gndrMale`).
+3.  `avg_slopes()` does not combine the variable name and label for factor variables when creating `term` (e.g., it shows `gndr` rather than `gndr_FMale`).
 4.  The AMEs for the age and ideology variables are quite small so the rounded estimate in the plot is simply given as a 0. One way to around that is to increase the decimals to round to (e.g., `round(estimate, 3)`.
 
 The plot above is on the probability scale, which ranges from 0 to 1. If we wanted to display the AME as a percentage point change, then we would need to multiply the AME (`estimate`) and its confidence interval values (`conf.low`, `conf.high`) by 100 before plotting:
@@ -247,7 +247,7 @@ The plot above is on the probability scale, which ranges from 0 to 1. If we want
 ```{r}
 avg_slopes(Vote_model_mp) |> 
   mutate(term = recode(term, 
-                       "gndr" = "Male Respondent",  
+                       "gndr_F" = "Male Respondent",  
                        "agea" = "Respondent Age", 
                        "trstplt" = "Trust in Politicians", 
                        "lrscale" = "Left-right Positioning"), 

@@ -38,7 +38,7 @@ package_list <- c("tidyverse", "rio", "summarytools", "DescTools", "skimr",
                   "ggstance", "ggrepel", "ggsignif", "naniar", "openxlsx",
                   "sjmisc", "crosstable", "sjlabelled", "psych", "dice",
                   "pwr", "visualize", "infer" , "sandwich", "sjPlot",
-                  "scales")
+                  "scales", "fastDummies")
 
 install.packages(package_list)
 
@@ -49,7 +49,7 @@ It should be possible to install the `marginaleffects` package via the syntax ab
 ```{r}
 #| eval: false
 
-install.packages("marginaleffects", type="binary")
+install.packages("marginaleffects", type = "binary")
 
 
 ```

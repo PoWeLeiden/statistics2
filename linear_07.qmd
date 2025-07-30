@@ -284,7 +284,7 @@ We then create a new variable in the dataset with the predicted values to serve 
 bbp_preds <- bbp_preds |> 
   mutate(GDP2006 = exp(LNGDP2006)) # <1>
 ```
-1.  `exp()` basically reverses the log, i.e., `log(x)` = `exp(log(x))`
+1.  `exp()` basically reverses the log, i.e., `(x)` = `exp(log(x))`
 
 We finally make our graph:
 

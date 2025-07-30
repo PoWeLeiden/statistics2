@@ -56,25 +56,29 @@ datasummary(v2x_polyarchy + gini_2019
 
 ```
 
-Here's how to read the syntax: 
+Here's how to read the syntax:
 
 `datasummary(`
-: We use the `datasummary` function on the variables in brackets
+
+:   We use the `datasummary` function on the variables in brackets
 
 `v2x_polyarchy + gini_2019`
-: These are the variables we want to include in the table. We can add multiple variables using the + sign. You could create a table with all of the variables from the dataset using `All(dataset name)`, although this would likely be an overly long/complicated table if the dataset has many variables.  
+
+:   These are the variables we want to include in the table. We can add multiple variables using the + sign. You could create a table with all of the variables from the dataset using `All(dataset name)`, although this would likely be an overly long/complicated table if the dataset has many variables.
 
 `~ Mean + SD + Min + Max + N,`
-: We can specify what descriptives statistics we want displayed in the table by giving their name after a tilde (`~`). These are the most commonly provided statistics. 
+
+:   We can specify what descriptives statistics we want displayed in the table by giving their name after a tilde (`~`). These are the most commonly provided statistics.
 
 `data = demdata)`
-: Finally, we indicate the dataset where the variables are stored/located.
 
-This table provides all of the information a reader might find necessary. For instance, we can see that the N (number of observations) for the two variables is not the same, which means that a bivariate analysis of the two variables will use far fewer cases than available in `v2x_polyarchy` due to there being a lot of missing observations on `gini_2019`. 
+:   Finally, we indicate the dataset where the variables are stored/located.
+
+This table provides all of the information a reader might find necessary. For instance, we can see that the N (number of observations) for the two variables is not the same, which means that a bivariate analysis of the two variables will use far fewer cases than available in `v2x_polyarchy` due to there being a lot of missing observations on `gini_2019`.
 
 ### Binary and Categorical Variables
 
-We can also add binary and categorical variables to a table using `datasummary()`, but here you usually provide different statistics: the N and the percentage of observations per category. 
+We can also add binary and categorical variables to a table using `datasummary()`, but here you usually provide different statistics: the N and the percentage of observations per category.
 
 ```{r}
 # Create the factor variables
@@ -89,34 +93,37 @@ datasummary(TYPEDEMO1984_factor + Typeregime2006_factor
 ```
 
 `~ N + Percent()`
-: We indicate the statistics we want after the tilde (`~`). These are the commonly used statistics for factor variables. One important note: the percentages calculated here are based on the total number of observations in the dataset including observations with missing data on the variable. There are 179 total observations in this dataset; the reported % for Autocracy is thus $\frac{41}{179} * 100 = 22.91$. However, 14 observations do not have data on this variable; the % for Autocracy among cases with non-missing data is $\frac{41}{41 + 53 + 71} * 100 = 24.85$. We show a solution for this issue in the next example. 
 
-The different syntax above suggests that we should make separate tables for continuous and binary/categorical variables. However, this is not necessary. R transforms factor variables into dummy (0/1 scaled) variables behind the scenes when performing analyses. The mean of a 0/1 variable represents the proportion of observations in the category. If we want to combine continuous and binary/categorical variables in a table, then we can create dummy variables for the categories of the latter variables and include them in the table syntax. 
+:   We indicate the statistics we want after the tilde (`~`). These are the commonly used statistics for factor variables. One important note: the percentages calculated here are based on the total number of observations in the dataset including observations with missing data on the variable. There are 179 total observations in this dataset; the reported % for Autocracy is thus $\frac{41}{179} * 100 = 22.91$. However, 14 observations do not have data on this variable; the % for Autocracy among cases with non-missing data is $\frac{41}{41 + 53 + 71} * 100 = 24.85$. We show a solution for this issue in the next example.
 
-While we can manually create dummy variables ourselves, this may be cumbersome with categorical variables that have many categories. Here we will use commands from the `fastDummies` package to simplify this process. 
+The different syntax above suggests that we should make separate tables for continuous and binary/categorical variables. However, this is not necessary. R transforms factor variables into dummy (0/1 scaled) variables behind the scenes when performing analyses. The mean of a 0/1 variable represents the proportion of observations in the category. If we want to combine continuous and binary/categorical variables in a table, then we can create dummy variables for the categories of the latter variables and include them in the table syntax.
+
+While we can manually create dummy variables ourselves, this may be cumbersome with categorical variables that have many categories. Here we will use commands from the `fastDummies` package to simplify this process.
 
 ```{r}
 #| warning: false
 # Load the package; this would usually be done at the beginning of an R Script file
 library(fastDummies)
 
-# Creating dummy variables for all (non-missing) categories of these variables
+# Creating dummy variables for all categories of these variables
 demdata <- dummy_cols(demdata, 
                       select_columns = c("TYPEDEMO1984", 
                                          "Typeregime2006")) 
 ```
 
-Here is how to read the syntax above: 
+Here is how to read the syntax above:
 
 `dummy_cols(demdata`
-: The name of the command is `dummy_cols()`. The first thing we provide is the name of our dataset, here `demdata`. 
+
+:   The name of the command is `dummy_cols()`. The first thing we provide is the name of our dataset, here `demdata`.
 
 `select_columns = c("TYPEDEMO1984", "Typeregime2006"))`
-: We then provide the name of the columns in our data that we want this command to create dummies from. Here we specify two variables: a binary and a categorical variable. This command will produce a dummy (0/1) scaled variable for each category of these variables.[^missingcat] The resulting dummy variables will have the following name structure: original variable name_category value. The non-factorized version of `TYPEDEMO1984` that we use in this example takes on two values: 1 = democracies and 2 = autocracies.[^cats] This command thus creates the following dummy variables: `TYPEDEMO1984_1` (1 = observation had a score of 1 on the original variable, 0 = observation had a value of 2 on the original variable) and `TYPEDEMO1984_2` (1 = observation had a score of 2 on the original variable, 0 = observation had a score of 1 on the original variable). We can see this more clearly by looking at the cross-tabulation of the two variables below. 
 
-[^missingcat]: It will also create a dummy for observations with a missing value on the original variable. For instance, this syntax also creates a variable named `TYPEDEMO1984_NA` where 1 = observations with a missing (NA) value on the original variable and 0 = observations with non-missing data on the original variable. You can ignore these `_NA` dummies when creating the table. 
+:   We then provide the name of the columns in our data that we want this command to create dummies from. Here we specify two variables: a binary and a categorical variable. This command will produce a dummy (0/1) scaled variable for each category of these variables.[^linear_08-1] The resulting dummy variables will have the following name structure: original variable name_category value. The non-factorized version of `TYPEDEMO1984` that we use in this example takes on two values: 1 = democracies and 2 = autocracies.[^linear_08-2] This command thus creates the following dummy variables: `TYPEDEMO1984_1` (1 = observation had a score of 1 on the original variable, 0 = observation had a value of 2 on the original variable) and `TYPEDEMO1984_2` (1 = observation had a score of 2 on the original variable, 0 = observation had a score of 1 on the original variable). We can see this more clearly by looking at the cross-tabulation of the two variables below.
 
-[^cats]: We used the original, non-factorized, versions of the variables in this example. The command can also be used with factorized variables with the labels for each category then being used in the names of the resulting dummy variables (e.g., `TYPEDEMO1984_factor_Autocracies` and `TYPEDEMO1984__factor_Democracies`). A small complication does arise here in situations where the category label is comprised of multiple words such as "Electoral Democracy". There are limits in R on what types of symbols can be included in variable names with spaces not being allowed. In these scenarios the resulting variable will be enclosed by backticks (\`). For instance: \`Typeregime2006_factor_Electoral Democracy\`. If you then wanted to use that variable in subsequent commands, you would need to make sure to include the backticks around the variable name. 
+[^linear_08-1]: It will also create a dummy for observations with a missing value on the original variable. For instance, this syntax also creates a variable named `TYPEDEMO1984_NA` where 1 = observations with a missing (NA) value on the original variable and 0 = observations with non-missing data on the original variable. You can ignore these `_NA` dummies when creating the table.
+
+[^linear_08-2]: We used the original, non-factorized, versions of the variables in this example. The command can also be used with factorized variables with the labels for each category then being used in the names of the resulting dummy variables (e.g., `TYPEDEMO1984_factor_Autocracies` and `TYPEDEMO1984__factor_Democracies`). A small complication does arise here in situations where the category label is comprised of multiple words such as "Electoral Democracy". There are limits in R on what types of symbols can be included in variable names with spaces not being allowed. In these scenarios the resulting variable will be enclosed by backticks (\`). For instance: \`Typeregime2006_factor_Electoral Democracy\`. If you then wanted to use that variable in subsequent commands, you would need to make sure to include the backticks around the variable name.
 
 ```{r}
 # Crosstab of original variable and dummies via dummy_cols()
@@ -124,8 +131,7 @@ table(demdata$TYPEDEMO1984, demdata$TYPEDEMO1984_1)
 table(demdata$TYPEDEMO1984, demdata$TYPEDEMO1984_2)
 ```
 
-We can then include these dummy variables in the `datasummary` command along with continuous variables. 
-
+We can then include these dummy variables in the `datasummary` command along with continuous variables.
 
 ```{r}
 # Make a table with both continuous and factor variables
@@ -140,14 +146,11 @@ datasummary(v2x_polyarchy + gini_2019 +
 
 ```
 
-
-The entries for the dummy variables indicate the proportion of cases with a score of 1 on the variable. The calculation of this value ignores observations with a missing value on the variable, so we get the correct N and percentages here. Here we have included dummy variables for both categories of the binary `TYPEDEMO_1984` variable, but in practice we would only include one of them (e.g., we might only include the dummy for the "democracy" dummy `TYPEDEMO1984_2`). 
-
+The entries for the dummy variables indicate the proportion of cases with a score of 1 on the variable. The calculation of this value ignores observations with a missing value on the variable, so we get the correct N and percentages here. Here we have included dummy variables for both categories of the binary `TYPEDEMO_1984` variable, but in practice we would only include one of them (e.g., we might only include the dummy for the "democracy" dummy `TYPEDEMO1984_2`).
 
 ### Presenting Descriptive Tables
 
-The example tables above show the variables' names from the dataset in the table. However, this will likely confuse readers of your table since they don't have your data and do not have an intuitive understanding of what the labels represent. You should thus change the names of the variables before/when creating the table. One way we can do this is by creating a dataset with just the variables to be used in the table and using the `rename()` function. 
-
+The example tables above show the variables' names from the dataset in the table. However, this will likely confuse readers of your table since they don't have your data and do not have an intuitive understanding of what the labels represent. You should thus change the names of the variables before/when creating the table. One way we can do this is by creating a dataset with just the variables to be used in the table and using the `rename()` function.
 
 ```{r}
 #Create the dataset
@@ -170,16 +173,14 @@ datasummary(All(table_data) # <2>
 
 ```
 
-1. Selects just these variables for inclusion in the new dataset named `table_data`
-2. `All(data)` tells the command to create a table using all of the variables in the dataset. 
+1.  Selects just these variables for inclusion in the new dataset named `table_data`
+2.  `All(data)` tells the command to create a table using all of the variables in the dataset.
 
-The `modelsummary` website shows another way of renaming variables but within the confines of the command itself; see [here](
-https://modelsummary.com/vignettes/datasummary.html#renaming-with){target="_blank"}. 
-
+The `modelsummary` website shows another way of renaming variables but within the confines of the command itself; see [here](https://modelsummary.com/vignettes/datasummary.html#renaming-with){target="_blank"}.
 
 ### Saving to a Word Document
 
-We can export this table to a Word document with the following syntax. 
+We can export this table to a Word document with the following syntax.
 
 ```{r}
 datasummary(All(table_data) # <2>
@@ -189,16 +190,14 @@ datasummary(All(table_data) # <2>
 ```
 
 `output = 'descr_table1.docx'`
-: Here, we have the command save the table to a Word (.docx) file named "descr_table1". This file would be saved to your R project folder. you can also specify a subfolder, e.g., "output/descr_table1.docx". 
+
+:   Here, we have the command save the table to a Word (.docx) file named "descr_table1". This file would be saved to your R project folder. you can also specify a subfolder, e.g., "output/descr_table1.docx".
 
 ::: callout-important
 #### Warning!
 
 This command be act a bit temperamental in cases where you save a table to file, open it outside of R in Word (for instance), and then re-run the syntax in R to create the table again while the file is still open in Word. We recommend closing the file in Word before trying to update table output produced via R to avoid complications.
 :::
-
-
-
 
 ## Scatterplots {#sec-report-scatterplots}
 
@@ -250,7 +249,7 @@ Reports should include:
 
 -   A discussion of the direction of the relationship on offer (i.e., is it positive or negative) that draws on the coding of the variables in the correlation alongside the specific correlation observed in the analysis.
 -   A conclusion about the null hypothesis, i.e., statistical significance.
-    -   Reports are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels[^linear_08-1]
+    -   Reports are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels[^linear_08-3]
     -   Report at the highest level that is justified by the p-value. For instance:
         -   If p = 0.04, then p \< 0.05 (significant at 95% level)
         -   If p = 0.004, then p \< 0.01 (significant at 99% level)
@@ -258,7 +257,7 @@ Reports should include:
     -   It is not common to go above p \< 0.001 (e.g., we would typically not say that p \< 0.000001, just p \< 0.001). We do not write p \< 0.000.
 -   A reference to the substantive size of the relationship (see @sec-correlation-coefficients)
 
-[^linear_08-1]: Using a 90% significance test may be acceptable if the model has a small N.
+[^linear_08-3]: Using a 90% significance test may be acceptable if the model has a small N.
 
 ::: callout-tip
 #### Report
@@ -320,9 +319,9 @@ demdata |>
 
 `output = "correlation table example.docx"`
 
-:   This line controls the saving process. It tells the command that we want to save a new file; that we want it to be called "correlation_table" (we could, of course, name it something else); and that we want it to be a ".docx" file, the default file type for Microsoft Word. We could then open this file in Word and make further changes/edits, or copy and paste it into a report, as needed.[^linear_08-2]
+:   This line controls the saving process. It tells the command that we want to save a new file; that we want it to be called "correlation_table" (we could, of course, name it something else); and that we want it to be a ".docx" file, the default file type for Microsoft Word. We could then open this file in Word and make further changes/edits, or copy and paste it into a report, as needed.[^linear_08-4]
 
-[^linear_08-2]: One thing we might want to add to the table for a final research report are asterisks or "stars" that communicate the statistical significance of the correlations shown in the table. There is unfortunately no native way to do this in the R syntax for this command (although the website for the package does describe one method for [doing so](https://modelsummary.com/vignettes/datasummary.html#datasummary_correlation){target="_blank"}).
+[^linear_08-4]: One thing we might want to add to the table for a final research report are asterisks or "stars" that communicate the statistical significance of the correlations shown in the table. There is unfortunately no native way to do this in the R syntax for this command (although the website for the package does describe one method for [doing so](https://modelsummary.com/vignettes/datasummary.html#datasummary_correlation){target="_blank"}).
 
 ::: callout-important
 #### Warning!
@@ -382,7 +381,7 @@ The correct report includes:
     -   Discussions of coefficients from multiple linear regression should indicate that these relationships occur holding the effect of the other variables in the model constant, e.g., "ceteris paribus".
 -   A conclusion about the null hypothesis with reference to the p-value and/or confidence interval
     -   Coefficients with p-values greater than 0.05 are generally described as not statistically significant or not statistically significant at conventional levels. In such cases, one can indicate that the relationship is not statistically significant and note the p-value.
-    -   Reports of statistical significance are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels.[^linear_08-3] Report at the highest level that is justified by the p-value. For instance:
+    -   Reports of statistical significance are typically made at 95% (p \< 0.05), 99% (p \< 0.01), and 99.9% (p \< 0.001) levels.[^linear_08-5] Report at the highest level that is justified by the p-value. For instance:
         -   If p = 0.04, then p \< 0.05 (significant at 95% level)
         -   If p = 0.004, then p \< 0.01 (significant at 99% level)
         -   If p = 0.0000005, then p \< 0.001 (significant at 99.9% level)
@@ -390,7 +389,7 @@ The correct report includes:
     -   The confidence interval can also be used to assess statistical significance and communicate the uncertainty surrounding regression estimates. If you include the CI in your discussion, then you can place it in parentheses after the coefficient: "The coefficient for economic inequality is -0.01 (95% CI: -0.02, -0.002)".
     -   It is not as common to directly reference the t-statistic in discussions of the statistical significance of regression coefficients, but it is not problematic to do so either. If doing so, then you should generally list it alongside the p-value: "(t = 1.98, p \< 0.05)".
 
-[^linear_08-3]: Using a 90% significance test may be acceptable if the model has a small N.
+[^linear_08-5]: Using a 90% significance test may be acceptable if the model has a small N.
 
 Here are examples for `gini_2019` (a continuous variable) and `TYPEDEMO1984` (a binary variable)
 
@@ -464,7 +463,7 @@ modelsummary(model1,
 
 `gof_map = c(...)`
 
-:   The `modelsummary()` command will show a number of "goodness of fit" statistics by default. For our purposes we wish to only show three of them: the number of observations in the model, the R^2^, and the Adjusted R^2^. There are a couple of ways of removing unwanted fit statistics from the table. In `gof_map()` we provide the names of the statistics we *want to include* and then the function will filter out everything that doesn't match these labels.[^linear_08-4] Here, we have the command include the number of observations ("nobs"), the R^2^ statistic ("r.squared"), and the adjusted R^2^ ("adj.r.squared"). This information can remain the same when you create your own OLS/linear regression table.
+:   The `modelsummary()` command will show a number of "goodness of fit" statistics by default. For our purposes we wish to only show three of them: the number of observations in the model, the R^2^, and the Adjusted R^2^. There are a couple of ways of removing unwanted fit statistics from the table. In `gof_map()` we provide the names of the statistics we *want to include* and then the function will filter out everything that doesn't match these labels.[^linear_08-6] Here, we have the command include the number of observations ("nobs"), the R^2^ statistic ("r.squared"), and the adjusted R^2^ ("adj.r.squared"). This information can remain the same when you create your own OLS/linear regression table.
 
 `title = ...`
 
@@ -474,7 +473,7 @@ modelsummary(model1,
 
 :   This specifies the contents of the notes at the bottom of the table. It is conventional to indicate what is being presented (e.g., "OLS coefficients") and what the information underneath these values represents (e.g., "with standard errors...").
 
-[^linear_08-4]: The alternative is `gof_omit()` where we provide the names of the statistic we want to, well, omit.
+[^linear_08-6]: The alternative is `gof_omit()` where we provide the names of the statistic we want to, well, omit.
 
 ### Regression Tables with Multiple Models
 
@@ -579,9 +578,9 @@ plot_model_tidied <- tidy(plot_model, conf.int = TRUE)
 plot_model_tidied
 ```
 
-The `tidy()` command creates a data object that we can then use as input to a subsequent `ggplot()` figure. However, we should do some house cleaning first. In particular, we should recode the `term` variable so that we give informative labels to our variables and hence make the resulting figure easier to understand.[^linear_08-5]
+The `tidy()` command creates a data object that we can then use as input to a subsequent `ggplot()` figure. However, we should do some house cleaning first. In particular, we should recode the `term` variable so that we give informative labels to our variables and hence make the resulting figure easier to understand.[^linear_08-7]
 
-[^linear_08-5]: We might take other steps here as well before creating the figure. For instance, we could convert the `term` variable into a factor variable before making the plot in order to control the order in which variables are arranged on the figure.
+[^linear_08-7]: We might take other steps here as well before creating the figure. For instance, we could convert the `term` variable into a factor variable before making the plot in order to control the order in which variables are arranged on the figure.
 
 ```{r}
 #recoding term to get nicer names to plot:
@@ -623,7 +622,7 @@ plot_model_tidied |>
 
 `geom_pointrange(aes(xmin = conf.low, xmax = conf.high))`
 
-:   This portion see us ask for a specific type of plot. `geom_pointrange` produces a plot with a marker ("point") surrounded by a line ("range") as seen in the image above. The `xmin` and `xmax` entries tell R what the minimum and maximum values of this range should be.[^linear_08-6] The "range" here are the endpoints of the 95% confidence interval around the coefficient. `conf.low` and `conf.high` are the names of the variables in the tidied dataset that contain information on the lower and upper bounds of the confidence interval for our coefficients.
+:   This portion see us ask for a specific type of plot. `geom_pointrange` produces a plot with a marker ("point") surrounded by a line ("range") as seen in the image above. The `xmin` and `xmax` entries tell R what the minimum and maximum values of this range should be.[^linear_08-8] The "range" here are the endpoints of the 95% confidence interval around the coefficient. `conf.low` and `conf.high` are the names of the variables in the tidied dataset that contain information on the lower and upper bounds of the confidence interval for our coefficients.
 
 `labs(...)`
 
@@ -637,7 +636,7 @@ plot_model_tidied |>
 
 :   This line enables us to plot the value of the regression coefficient next to the marker and can generally be kept the same in your examples. `geom_text()` indicates that we want to add text to our figure. We then specify what this text should be with `label =`. Here, we wish to show the regression slope, which is contained in a variable in our data named `estimate`. Moreover, we wish to show a rounded version of this estimate (e.g., -0.01 rather than -0.00872); "2" indicates how many decimals we want the estimate to be rounded by. The final portion is `vjust = -0.5`, which controls the placement of the label. "vjust" stands for *vertical* justification; we are telling R to nudge the label vertically along the y-axis so that it does not overlap with the marker. Negative values will nudge the label upwards, while positive values would nudge them downwards. In practice you may have to experiment a little with the specific numeric value to make sure there is enough, but not too much, space between it and the marker.
 
-[^linear_08-6]: If we put the coefficient estimates on the y-axis instead, then we would use "ymin" and "ymax" instead.
+[^linear_08-8]: If we put the coefficient estimates on the y-axis instead, then we would use "ymin" and "ymax" instead.
 
 ::: {#tip-plot-ordering .callout-important}
 #### Warning!
@@ -755,9 +754,9 @@ ggplot(cpi_preds, aes(x = cpi, y = estimate)) + # <1>
 
 `scale_y_continuous(limits = c(0,1))`
 
-:   This sets the length of the y-axis so that it runs from the theoretical minimum (0) to maximum (1) of our dependent variable. We always want to avoid misleading the consumers of our graphics. The scaling of our axes is one culprit in bad or misleading graphics. Figures might exaggerate small differences, for instance, by restricting the scale of the y-axis to a very small range. Alternatively, one could make important changes disappear by extending the scale of the y-axis as well. See [this webpage](https://handsondataviz.org/how-to-lie-with-charts.html){target="_blank" rel="noreferrer noopener"} for some examples of both sins. We are trying to avoid these issues here by using the full range of the variable. Ultimately, these decisions are context dependent and should be done reflectively and in consultation with others.[^linear_08-7]
+:   This sets the length of the y-axis so that it runs from the theoretical minimum (0) to maximum (1) of our dependent variable. We always want to avoid misleading the consumers of our graphics. The scaling of our axes is one culprit in bad or misleading graphics. Figures might exaggerate small differences, for instance, by restricting the scale of the y-axis to a very small range. Alternatively, one could make important changes disappear by extending the scale of the y-axis as well. See [this webpage](https://handsondataviz.org/how-to-lie-with-charts.html){target="_blank" rel="noreferrer noopener"} for some examples of both sins. We are trying to avoid these issues here by using the full range of the variable. Ultimately, these decisions are context dependent and should be done reflectively and in consultation with others.[^linear_08-9]
 
-[^linear_08-7]: The sociologist Kieran Healy provides a good discussion of how and why to "look at data" via graphics in his book "Data Visualization", which can be freely accessed via [this link](https://socviz.co/){target="_blank" rel="noreferrer noopener"}. See, in particular, Section 6 in Chapter 1, "Problems of honesty and good judgment".
+[^linear_08-9]: The sociologist Kieran Healy provides a good discussion of how and why to "look at data" via graphics in his book "Data Visualization", which can be freely accessed via [this link](https://socviz.co/){target="_blank" rel="noreferrer noopener"}. See, in particular, Section 6 in Chapter 1, "Problems of honesty and good judgment".
 
 ### Binary/Categorical Predictor Variable
 

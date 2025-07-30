@@ -110,7 +110,7 @@ The coefficients for the variables being interacted with one another can be tric
 
 [^interaction_01-2]: But note that interaction terms are "symmetrical". We can also talk about whether the difference in Biden evaluations based on saying "right direction" or "wrong track" is the same for Strong Democrats (pid = 1) as for Not Strong Democrats (pid = 2) and so on. When we interpret an interaction model we must first discern what variable is supposed to be the "X" variable and which is supposed to be the "Z" (or moderator) variable as this effects how we use the model"s results.
 
-## Regression Tables
+## Regression Tables {#sec-regression-tables}
 
 Our next two chapters will focus on communicating the results of regression models that feature interaction terms via plots. Here we will briefly note show how to present these results as a regression table using the `modelsummary()` function from the `modelsummary` library. The basic principles are the same as discussed in prior chapters (linear regression tables: @sec-presenting-linear-regression-regression-tables ; logistic regression tables: @sec-presentation-regression-tables-logit ).
 

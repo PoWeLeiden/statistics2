@@ -6,7 +6,7 @@ book:
   title: "Statistical analysis and presentation using R"
   subtitle: "An overview of R functions used in Statistics II"
   author: ["Leila Demarest", "Joshua Robison"]
-  date: "2024-08-15"
+  date: today
   chapters:
     - index.qmd
     - part: part_linear.qmd
@@ -36,6 +36,8 @@ book:
     - common_errors.qmd
     - package_overview.qmd
     - Formulas.qmd
+    - errors.qmd
+    - scales.qmd
     
 bibliography: references.bib
 
