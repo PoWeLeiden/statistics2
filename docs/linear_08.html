@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,17 +87,20 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./part_logistic.html" rel="next">
 <link href="./linear_07.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-fdf964b8551a4c1da979a829183e41b0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -157,7 +161,169 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -430,6 +596,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_08.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-reporting-and-presenting-results" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></h1>
@@ -476,8 +643,8 @@ window.Quarto = {
 
     <script>
 
-      function styleCell_gz0fktzdmpeml98jsing(i, j, css_id) {
-          var table = document.getElementById("tinytable_gz0fktzdmpeml98jsing");
+      function styleCell_t6av84qcmrf77hndjlct(i, j, css_id) {
+          var table = document.getElementById("tinytable_t6av84qcmrf77hndjlct");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -487,7 +654,7 @@ window.Quarto = {
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_gz0fktzdmpeml98jsing');
+        var table = document.getElementById('tinytable_t6av84qcmrf77hndjlct');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -495,8 +662,8 @@ window.Quarto = {
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_gz0fktzdmpeml98jsing(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_gz0fktzdmpeml98jsing");
+      function spanCell_t6av84qcmrf77hndjlct(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_t6av84qcmrf77hndjlct");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -526,18 +693,18 @@ window.Quarto = {
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_zi591l8muy7thdgry2fk',}, 
-          { positions: [ { i: 2, j: 0 },  ], css_id: 'tinytable_css_liby5xxbtd8btsg4fc5a',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 1, j: 4 }, { i: 1, j: 3 }, { i: 1, j: 2 }, { i: 1, j: 5 },  ], css_id: 'tinytable_css_jjp97at4b2l3bmui4xut',}, 
-          { positions: [ { i: 1, j: 0 },  ], css_id: 'tinytable_css_hl5pwlwinm8gbdxbaknp',}, 
-          { positions: [ { i: 2, j: 1 }, { i: 2, j: 4 }, { i: 2, j: 3 }, { i: 2, j: 2 }, { i: 2, j: 5 },  ], css_id: 'tinytable_css_fprsylwvrvkidozpp68m',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 4 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_eau658clewzx38c5756r',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 4 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_ymd1tx2y5kza09fk9g97',}, 
+          { positions: [ { i: 2, j: 0 },  ], css_id: 'tinytable_css_y5mkpastg2e6nlhc2bgi',}, 
+          { positions: [ { i: 1, j: 0 },  ], css_id: 'tinytable_css_v6cyonzrss0nwzy7ldaw',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 2, j: 4 }, { i: 2, j: 3 }, { i: 2, j: 2 }, { i: 2, j: 5 },  ], css_id: 'tinytable_css_f18qx26xi7ttsn9abnl4',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_bietic02ymyxkq3w7dx3',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 1, j: 4 }, { i: 1, j: 3 }, { i: 1, j: 2 }, { i: 1, j: 5 },  ], css_id: 'tinytable_css_7rcgzhxh65solyee169r',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_gz0fktzdmpeml98jsing(cell.i, cell.j, group.css_id);
+                  styleCell_t6av84qcmrf77hndjlct(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -545,15 +712,15 @@ window.Quarto = {
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_zi591l8muy7thdgry2fk, .table th.tinytable_css_zi591l8muy7thdgry2fk { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_liby5xxbtd8btsg4fc5a, .table th.tinytable_css_liby5xxbtd8btsg4fc5a { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_jjp97at4b2l3bmui4xut, .table th.tinytable_css_jjp97at4b2l3bmui4xut { text-align: right; }
-      .table td.tinytable_css_hl5pwlwinm8gbdxbaknp, .table th.tinytable_css_hl5pwlwinm8gbdxbaknp { text-align: left; }
-      .table td.tinytable_css_fprsylwvrvkidozpp68m, .table th.tinytable_css_fprsylwvrvkidozpp68m { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_eau658clewzx38c5756r, .table th.tinytable_css_eau658clewzx38c5756r { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ymd1tx2y5kza09fk9g97, .table th.tinytable_css_ymd1tx2y5kza09fk9g97 { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_y5mkpastg2e6nlhc2bgi, .table th.tinytable_css_y5mkpastg2e6nlhc2bgi { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_v6cyonzrss0nwzy7ldaw, .table th.tinytable_css_v6cyonzrss0nwzy7ldaw { text-align: left; }
+      .table td.tinytable_css_f18qx26xi7ttsn9abnl4, .table th.tinytable_css_f18qx26xi7ttsn9abnl4 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_bietic02ymyxkq3w7dx3, .table th.tinytable_css_bietic02ymyxkq3w7dx3 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_7rcgzhxh65solyee169r, .table th.tinytable_css_7rcgzhxh65solyee169r { text-align: right; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_gz0fktzdmpeml98jsing" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_t6av84qcmrf77hndjlct" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -627,8 +794,8 @@ window.Quarto = {
 
     <script>
 
-      function styleCell_1pnrka1fe851mi3yia71(i, j, css_id) {
-          var table = document.getElementById("tinytable_1pnrka1fe851mi3yia71");
+      function styleCell_a7iy62qe6nxzvtjn9q6e(i, j, css_id) {
+          var table = document.getElementById("tinytable_a7iy62qe6nxzvtjn9q6e");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -638,7 +805,7 @@ window.Quarto = {
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_1pnrka1fe851mi3yia71');
+        var table = document.getElementById('tinytable_a7iy62qe6nxzvtjn9q6e');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -646,8 +813,8 @@ window.Quarto = {
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_1pnrka1fe851mi3yia71(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_1pnrka1fe851mi3yia71");
+      function spanCell_a7iy62qe6nxzvtjn9q6e(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_a7iy62qe6nxzvtjn9q6e");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -677,18 +844,18 @@ window.Quarto = {
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 1, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 3, j: 1 }, { i: 2, j: 0 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 },  ], css_id: 'tinytable_css_mghux12gej28970ts4nb',}, 
-          { positions: [ { i: 5, j: 2 }, { i: 5, j: 3 },  ], css_id: 'tinytable_css_l6imv73usekr4gzq5e3v',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_kvx3j0pfhjtky5eo6os7',}, 
-          { positions: [ { i: 5, j: 0 }, { i: 5, j: 1 },  ], css_id: 'tinytable_css_jb7u9lli8xdnt2r3cm2s',}, 
-          { positions: [ { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_holzkm9f6s4fo56tzgs3',}, 
-          { positions: [ { i: 1, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 3, j: 3 }, { i: 2, j: 2 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 4, j: 3 },  ], css_id: 'tinytable_css_c4oi5jzbk12fj8385ypi',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_ysf1qf6w1jczqghgm9rc',}, 
+          { positions: [ { i: 5, j: 0 }, { i: 5, j: 1 },  ], css_id: 'tinytable_css_fbda6cxrk92wzdil4c6w',}, 
+          { positions: [ { i: 5, j: 2 }, { i: 5, j: 3 },  ], css_id: 'tinytable_css_3w8t22g7p27f4zw88f49',}, 
+          { positions: [ { i: 1, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 3, j: 3 }, { i: 2, j: 2 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 4, j: 3 },  ], css_id: 'tinytable_css_3ignbk8y0ajsfwknl970',}, 
+          { positions: [ { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_32jsoeekbyrb8vlyvrir',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 3, j: 1 }, { i: 2, j: 0 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 },  ], css_id: 'tinytable_css_2ra3tfokw3iuuokhcnho',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_1pnrka1fe851mi3yia71(cell.i, cell.j, group.css_id);
+                  styleCell_a7iy62qe6nxzvtjn9q6e(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -696,15 +863,15 @@ window.Quarto = {
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_mghux12gej28970ts4nb, .table th.tinytable_css_mghux12gej28970ts4nb { text-align: left; }
-      .table td.tinytable_css_l6imv73usekr4gzq5e3v, .table th.tinytable_css_l6imv73usekr4gzq5e3v { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_kvx3j0pfhjtky5eo6os7, .table th.tinytable_css_kvx3j0pfhjtky5eo6os7 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_jb7u9lli8xdnt2r3cm2s, .table th.tinytable_css_jb7u9lli8xdnt2r3cm2s { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_holzkm9f6s4fo56tzgs3, .table th.tinytable_css_holzkm9f6s4fo56tzgs3 { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_c4oi5jzbk12fj8385ypi, .table th.tinytable_css_c4oi5jzbk12fj8385ypi { text-align: right; }
+      .table td.tinytable_css_ysf1qf6w1jczqghgm9rc, .table th.tinytable_css_ysf1qf6w1jczqghgm9rc { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_fbda6cxrk92wzdil4c6w, .table th.tinytable_css_fbda6cxrk92wzdil4c6w { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_3w8t22g7p27f4zw88f49, .table th.tinytable_css_3w8t22g7p27f4zw88f49 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_3ignbk8y0ajsfwknl970, .table th.tinytable_css_3ignbk8y0ajsfwknl970 { text-align: right; }
+      .table td.tinytable_css_32jsoeekbyrb8vlyvrir, .table th.tinytable_css_32jsoeekbyrb8vlyvrir { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_2ra3tfokw3iuuokhcnho, .table th.tinytable_css_2ra3tfokw3iuuokhcnho { text-align: left; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_1pnrka1fe851mi3yia71" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_a7iy62qe6nxzvtjn9q6e" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -813,8 +980,8 @@ window.Quarto = {
 
     <script>
 
-      function styleCell_89y3v15adj2ayg2sa31a(i, j, css_id) {
-          var table = document.getElementById("tinytable_89y3v15adj2ayg2sa31a");
+      function styleCell_jcrspnicdqqgqr96tyhh(i, j, css_id) {
+          var table = document.getElementById("tinytable_jcrspnicdqqgqr96tyhh");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -824,7 +991,7 @@ window.Quarto = {
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_89y3v15adj2ayg2sa31a');
+        var table = document.getElementById('tinytable_jcrspnicdqqgqr96tyhh');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -832,8 +999,8 @@ window.Quarto = {
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_89y3v15adj2ayg2sa31a(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_89y3v15adj2ayg2sa31a");
+      function spanCell_jcrspnicdqqgqr96tyhh(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_jcrspnicdqqgqr96tyhh");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -863,18 +1030,18 @@ window.Quarto = {
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_yaxjio6pzk7aag998g07',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_imiyhkb0s0pyordq2m0n',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 5 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_fdh3n2ima9h6pfg5quot',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 4, j: 4 }, { i: 3, j: 1 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 6, j: 1 }, { i: 1, j: 5 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 4, j: 5 }, { i: 3, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 3, j: 3 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 3, j: 5 }, { i: 5, j: 5 }, { i: 2, j: 5 }, { i: 6, j: 5 },  ], css_id: 'tinytable_css_dp9cm039s70pah4wn90h',}, 
-          { positions: [ { i: 7, j: 2 }, { i: 7, j: 4 }, { i: 7, j: 3 }, { i: 7, j: 1 }, { i: 7, j: 5 },  ], css_id: 'tinytable_css_b2pz2jbjo4i6k0ndxqkq',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_79wa7zigqrsr3xxf2bhz',}, 
+          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_w0qjvpozpqowv6jmkmkq',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_vnd7ukjn0bjl7j21dva4',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_ns7fm5zdgymjjkofupps',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 4, j: 4 }, { i: 3, j: 1 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 6, j: 1 }, { i: 1, j: 5 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 4, j: 5 }, { i: 3, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 3, j: 3 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 3, j: 5 }, { i: 5, j: 5 }, { i: 2, j: 5 }, { i: 6, j: 5 },  ], css_id: 'tinytable_css_7qo1nn0g5hxb6ksbt4s4',}, 
+          { positions: [ { i: 7, j: 2 }, { i: 7, j: 4 }, { i: 7, j: 3 }, { i: 7, j: 1 }, { i: 7, j: 5 },  ], css_id: 'tinytable_css_7p4jnsm6owg2nrk34z74',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 5 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_0vsk9zjmd132playfr2v',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_89y3v15adj2ayg2sa31a(cell.i, cell.j, group.css_id);
+                  styleCell_jcrspnicdqqgqr96tyhh(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -882,15 +1049,15 @@ window.Quarto = {
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_yaxjio6pzk7aag998g07, .table th.tinytable_css_yaxjio6pzk7aag998g07 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_imiyhkb0s0pyordq2m0n, .table th.tinytable_css_imiyhkb0s0pyordq2m0n { text-align: left; }
-      .table td.tinytable_css_fdh3n2ima9h6pfg5quot, .table th.tinytable_css_fdh3n2ima9h6pfg5quot { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_dp9cm039s70pah4wn90h, .table th.tinytable_css_dp9cm039s70pah4wn90h { text-align: right; }
-      .table td.tinytable_css_b2pz2jbjo4i6k0ndxqkq, .table th.tinytable_css_b2pz2jbjo4i6k0ndxqkq { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_79wa7zigqrsr3xxf2bhz, .table th.tinytable_css_79wa7zigqrsr3xxf2bhz { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_w0qjvpozpqowv6jmkmkq, .table th.tinytable_css_w0qjvpozpqowv6jmkmkq { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_vnd7ukjn0bjl7j21dva4, .table th.tinytable_css_vnd7ukjn0bjl7j21dva4 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ns7fm5zdgymjjkofupps, .table th.tinytable_css_ns7fm5zdgymjjkofupps { text-align: left; }
+      .table td.tinytable_css_7qo1nn0g5hxb6ksbt4s4, .table th.tinytable_css_7qo1nn0g5hxb6ksbt4s4 { text-align: right; }
+      .table td.tinytable_css_7p4jnsm6owg2nrk34z74, .table th.tinytable_css_7p4jnsm6owg2nrk34z74 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_0vsk9zjmd132playfr2v, .table th.tinytable_css_0vsk9zjmd132playfr2v { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_89y3v15adj2ayg2sa31a" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_jcrspnicdqqgqr96tyhh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -1006,8 +1173,8 @@ window.Quarto = {
 
     <script>
 
-      function styleCell_21ekwn45t6d504fm7s54(i, j, css_id) {
-          var table = document.getElementById("tinytable_21ekwn45t6d504fm7s54");
+      function styleCell_qp3jexirmn6yg8wqt1so(i, j, css_id) {
+          var table = document.getElementById("tinytable_qp3jexirmn6yg8wqt1so");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1017,7 +1184,7 @@ window.Quarto = {
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_21ekwn45t6d504fm7s54');
+        var table = document.getElementById('tinytable_qp3jexirmn6yg8wqt1so');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1025,8 +1192,8 @@ window.Quarto = {
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_21ekwn45t6d504fm7s54(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_21ekwn45t6d504fm7s54");
+      function spanCell_qp3jexirmn6yg8wqt1so(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_qp3jexirmn6yg8wqt1so");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1056,18 +1223,18 @@ window.Quarto = {
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 7, j: 2 }, { i: 7, j: 4 }, { i: 7, j: 3 }, { i: 7, j: 1 }, { i: 7, j: 5 },  ], css_id: 'tinytable_css_yf7jv3eeu8sk8bfjbm4y',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 4, j: 4 }, { i: 3, j: 1 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 6, j: 1 }, { i: 1, j: 5 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 4, j: 5 }, { i: 3, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 3, j: 3 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 3, j: 5 }, { i: 5, j: 5 }, { i: 2, j: 5 }, { i: 6, j: 5 },  ], css_id: 'tinytable_css_xubj9slvkxa8pozqn82p',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_xdvtlk5px967z1lbs8o7',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_rfbmtfv4fkb3nen6psbh',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 5 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_23ujvk6wnlbqd3dblmbr',}, 
-          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_0ogbdo0js9118d7x5u0w',}, 
+          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_uvdg8c5fgt3wk9j6nwgk',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 4, j: 4 }, { i: 3, j: 1 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 6, j: 1 }, { i: 1, j: 5 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 4, j: 5 }, { i: 3, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 3, j: 3 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 3, j: 5 }, { i: 5, j: 5 }, { i: 2, j: 5 }, { i: 6, j: 5 },  ], css_id: 'tinytable_css_qu7xvt5a1josqvr7k4q4',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_ovo58rjpyztrohkr5agv',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_jnv07yczr2iw5hhnztk1',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 5 }, { i: 0, j: 3 }, { i: 0, j: 2 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_5emmr4i9t2av4ja2pt9r',}, 
+          { positions: [ { i: 7, j: 2 }, { i: 7, j: 4 }, { i: 7, j: 3 }, { i: 7, j: 1 }, { i: 7, j: 5 },  ], css_id: 'tinytable_css_1t5c9ll8363i6vk1573g',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_21ekwn45t6d504fm7s54(cell.i, cell.j, group.css_id);
+                  styleCell_qp3jexirmn6yg8wqt1so(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1075,15 +1242,15 @@ window.Quarto = {
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_yf7jv3eeu8sk8bfjbm4y, .table th.tinytable_css_yf7jv3eeu8sk8bfjbm4y { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_xubj9slvkxa8pozqn82p, .table th.tinytable_css_xubj9slvkxa8pozqn82p { text-align: right; }
-      .table td.tinytable_css_xdvtlk5px967z1lbs8o7, .table th.tinytable_css_xdvtlk5px967z1lbs8o7 { text-align: left; }
-      .table td.tinytable_css_rfbmtfv4fkb3nen6psbh, .table th.tinytable_css_rfbmtfv4fkb3nen6psbh { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_23ujvk6wnlbqd3dblmbr, .table th.tinytable_css_23ujvk6wnlbqd3dblmbr { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_0ogbdo0js9118d7x5u0w, .table th.tinytable_css_0ogbdo0js9118d7x5u0w { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_uvdg8c5fgt3wk9j6nwgk, .table th.tinytable_css_uvdg8c5fgt3wk9j6nwgk { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_qu7xvt5a1josqvr7k4q4, .table th.tinytable_css_qu7xvt5a1josqvr7k4q4 { text-align: right; }
+      .table td.tinytable_css_ovo58rjpyztrohkr5agv, .table th.tinytable_css_ovo58rjpyztrohkr5agv { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_jnv07yczr2iw5hhnztk1, .table th.tinytable_css_jnv07yczr2iw5hhnztk1 { text-align: left; }
+      .table td.tinytable_css_5emmr4i9t2av4ja2pt9r, .table th.tinytable_css_5emmr4i9t2av4ja2pt9r { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_1t5c9ll8363i6vk1573g, .table th.tinytable_css_1t5c9ll8363i6vk1573g { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_21ekwn45t6d504fm7s54" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_qp3jexirmn6yg8wqt1so" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -1299,8 +1466,8 @@ Report
 
     <script>
 
-      function styleCell_qr64iffejktctgc4u1s0(i, j, css_id) {
-          var table = document.getElementById("tinytable_qr64iffejktctgc4u1s0");
+      function styleCell_y0kxwc5gba4z4nifu2dh(i, j, css_id) {
+          var table = document.getElementById("tinytable_y0kxwc5gba4z4nifu2dh");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1310,7 +1477,7 @@ Report
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_qr64iffejktctgc4u1s0');
+        var table = document.getElementById('tinytable_y0kxwc5gba4z4nifu2dh');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1318,8 +1485,8 @@ Report
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_qr64iffejktctgc4u1s0(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_qr64iffejktctgc4u1s0");
+      function spanCell_y0kxwc5gba4z4nifu2dh(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_y0kxwc5gba4z4nifu2dh");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1349,18 +1516,18 @@ Report
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 },  ], css_id: 'tinytable_css_ubiwiyekokjalomtl15u',}, 
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_nsuoprih91vseha9alq5',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_nlcfs10mzdzdws9k5hyc',}, 
-          { positions: [ { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 4 },  ], css_id: 'tinytable_css_fifdihrzl56vye85jfu6',}, 
-          { positions: [ { i: 3, j: 2 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 1, j: 3 },  ], css_id: 'tinytable_css_9cf8sbq8cfvt6frd3g06',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_1o799542yfbsbrglncef',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 },  ], css_id: 'tinytable_css_x62idg48jghid2foq7mw',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_wxp8kw6uol6i4caekzv0',}, 
+          { positions: [ { i: 3, j: 2 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 1, j: 3 },  ], css_id: 'tinytable_css_sqav7hqesm47sno6hyab',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_f8xqanjn1jdu66c2cy03',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 },  ], css_id: 'tinytable_css_a0jfev0j8jliw6nky9t0',}, 
+          { positions: [ { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 4 },  ], css_id: 'tinytable_css_9tg8g8cfp48ons3z33i5',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_qr64iffejktctgc4u1s0(cell.i, cell.j, group.css_id);
+                  styleCell_y0kxwc5gba4z4nifu2dh(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1368,15 +1535,15 @@ Report
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_ubiwiyekokjalomtl15u, .table th.tinytable_css_ubiwiyekokjalomtl15u { text-align: left; }
-      .table td.tinytable_css_nsuoprih91vseha9alq5, .table th.tinytable_css_nsuoprih91vseha9alq5 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_nlcfs10mzdzdws9k5hyc, .table th.tinytable_css_nlcfs10mzdzdws9k5hyc { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_fifdihrzl56vye85jfu6, .table th.tinytable_css_fifdihrzl56vye85jfu6 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_9cf8sbq8cfvt6frd3g06, .table th.tinytable_css_9cf8sbq8cfvt6frd3g06 { text-align: right; }
-      .table td.tinytable_css_1o799542yfbsbrglncef, .table th.tinytable_css_1o799542yfbsbrglncef { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_x62idg48jghid2foq7mw, .table th.tinytable_css_x62idg48jghid2foq7mw { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_wxp8kw6uol6i4caekzv0, .table th.tinytable_css_wxp8kw6uol6i4caekzv0 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_sqav7hqesm47sno6hyab, .table th.tinytable_css_sqav7hqesm47sno6hyab { text-align: right; }
+      .table td.tinytable_css_f8xqanjn1jdu66c2cy03, .table th.tinytable_css_f8xqanjn1jdu66c2cy03 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_a0jfev0j8jliw6nky9t0, .table th.tinytable_css_a0jfev0j8jliw6nky9t0 { text-align: left; }
+      .table td.tinytable_css_9tg8g8cfp48ons3z33i5, .table th.tinytable_css_9tg8g8cfp48ons3z33i5 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_qr64iffejktctgc4u1s0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_y0kxwc5gba4z4nifu2dh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Relationship between Main Continuous Variables</caption>
               <tbody><tr>
@@ -1604,8 +1771,8 @@ Report
 
     <script>
 
-      function styleCell_hu26i4beseskwuea1qm6(i, j, css_id) {
-          var table = document.getElementById("tinytable_hu26i4beseskwuea1qm6");
+      function styleCell_zdluzyh0luufifsmalgw(i, j, css_id) {
+          var table = document.getElementById("tinytable_zdluzyh0luufifsmalgw");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1615,7 +1782,7 @@ Report
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_hu26i4beseskwuea1qm6');
+        var table = document.getElementById('tinytable_zdluzyh0luufifsmalgw');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1623,8 +1790,8 @@ Report
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_hu26i4beseskwuea1qm6(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_hu26i4beseskwuea1qm6");
+      function spanCell_zdluzyh0luufifsmalgw(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_zdluzyh0luufifsmalgw");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1654,20 +1821,20 @@ Report
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_yurlmb4hdh9fl54iasyi',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 8, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 },  ], css_id: 'tinytable_css_v2xqekvpfeuf0wizwq5x',}, 
-          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_txrxzhmp2y5ge2z8kqip',}, 
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_sxcsimxi02phe3afbr31',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_s6fu0e1fkvt9ynf79c3k',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 },  ], css_id: 'tinytable_css_q5wgbqrn3ibprdh5vgzi',}, 
-          { positions: [ { i: 12, j: 1 },  ], css_id: 'tinytable_css_fs9ikffdjv516pcggyir',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_3oc2bfsiuya3w2kobcva',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_yswiw6cvahww9dgjeldx',}, 
+          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_vok5r32yrmaebvknanai',}, 
+          { positions: [ { i: 12, j: 1 },  ], css_id: 'tinytable_css_ocf7hg72jndh0bom9nye',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 8, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 },  ], css_id: 'tinytable_css_mrjdarfzqyvtdd6gpuao',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 },  ], css_id: 'tinytable_css_g77v2k4lcjd94qdangn6',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_7bg6bkwpoq4pwle3lma3',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_6jyy4pq3s58pm2ruwe8u',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_10mxess4wpvcusjb16m5',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_hu26i4beseskwuea1qm6(cell.i, cell.j, group.css_id);
+                  styleCell_zdluzyh0luufifsmalgw(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1675,17 +1842,17 @@ Report
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_yurlmb4hdh9fl54iasyi, .table th.tinytable_css_yurlmb4hdh9fl54iasyi { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_v2xqekvpfeuf0wizwq5x, .table th.tinytable_css_v2xqekvpfeuf0wizwq5x { text-align: left; }
-      .table td.tinytable_css_txrxzhmp2y5ge2z8kqip, .table th.tinytable_css_txrxzhmp2y5ge2z8kqip { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_sxcsimxi02phe3afbr31, .table th.tinytable_css_sxcsimxi02phe3afbr31 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_s6fu0e1fkvt9ynf79c3k, .table th.tinytable_css_s6fu0e1fkvt9ynf79c3k { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_q5wgbqrn3ibprdh5vgzi, .table th.tinytable_css_q5wgbqrn3ibprdh5vgzi { text-align: center; }
-      .table td.tinytable_css_fs9ikffdjv516pcggyir, .table th.tinytable_css_fs9ikffdjv516pcggyir { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_3oc2bfsiuya3w2kobcva, .table th.tinytable_css_3oc2bfsiuya3w2kobcva { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_yswiw6cvahww9dgjeldx, .table th.tinytable_css_yswiw6cvahww9dgjeldx { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_vok5r32yrmaebvknanai, .table th.tinytable_css_vok5r32yrmaebvknanai { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_ocf7hg72jndh0bom9nye, .table th.tinytable_css_ocf7hg72jndh0bom9nye { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_mrjdarfzqyvtdd6gpuao, .table th.tinytable_css_mrjdarfzqyvtdd6gpuao { text-align: left; }
+      .table td.tinytable_css_g77v2k4lcjd94qdangn6, .table th.tinytable_css_g77v2k4lcjd94qdangn6 { text-align: center; }
+      .table td.tinytable_css_7bg6bkwpoq4pwle3lma3, .table th.tinytable_css_7bg6bkwpoq4pwle3lma3 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_6jyy4pq3s58pm2ruwe8u, .table th.tinytable_css_6jyy4pq3s58pm2ruwe8u { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_10mxess4wpvcusjb16m5, .table th.tinytable_css_10mxess4wpvcusjb16m5 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_hu26i4beseskwuea1qm6" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_zdluzyh0luufifsmalgw" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -1799,8 +1966,8 @@ Report
 
     <script>
 
-      function styleCell_dwackouslvkdgn7tm9gw(i, j, css_id) {
-          var table = document.getElementById("tinytable_dwackouslvkdgn7tm9gw");
+      function styleCell_2zz3mpk8npcj4v16rr8t(i, j, css_id) {
+          var table = document.getElementById("tinytable_2zz3mpk8npcj4v16rr8t");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1810,7 +1977,7 @@ Report
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_dwackouslvkdgn7tm9gw');
+        var table = document.getElementById('tinytable_2zz3mpk8npcj4v16rr8t');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1818,8 +1985,8 @@ Report
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_dwackouslvkdgn7tm9gw(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_dwackouslvkdgn7tm9gw");
+      function spanCell_2zz3mpk8npcj4v16rr8t(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_2zz3mpk8npcj4v16rr8t");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1849,20 +2016,20 @@ Report
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_zsllqdv3q3c1905ob2su',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_y9qswabi7ruty4zdjyij',}, 
-          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_vw0rmeihw4qredhxiqi3',}, 
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_uu16fzjw9p09gvebl9w4',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 },  ], css_id: 'tinytable_css_unt5y4caj7da8o8dcobq',}, 
-          { positions: [ { i: 7, j: 1 },  ], css_id: 'tinytable_css_pwwk0e9wegzo2fkuiv2k',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_id4wm7jqnj8l9cockdt8',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_6f1uie7ubrmpjjxwvemy',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 },  ], css_id: 'tinytable_css_v2q1uycdraq31k64wgtj',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_gxkhf816d21sp7i2cz9s',}, 
+          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_gllpzs8lbuxg2sr3dkfy',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 },  ], css_id: 'tinytable_css_gfy5rsqco6n22feec7sc',}, 
+          { positions: [ { i: 7, j: 0 },  ], css_id: 'tinytable_css_g3lnx5pvhubph9d8qztq',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_eeqe0ev9oajgian8q9s5',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_7rf8jct5nlocf52falmz',}, 
+          { positions: [ { i: 7, j: 1 },  ], css_id: 'tinytable_css_0kgquploynmj0vi2v9pd',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_dwackouslvkdgn7tm9gw(cell.i, cell.j, group.css_id);
+                  styleCell_2zz3mpk8npcj4v16rr8t(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1870,17 +2037,17 @@ Report
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_zsllqdv3q3c1905ob2su, .table th.tinytable_css_zsllqdv3q3c1905ob2su { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_y9qswabi7ruty4zdjyij, .table th.tinytable_css_y9qswabi7ruty4zdjyij { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_vw0rmeihw4qredhxiqi3, .table th.tinytable_css_vw0rmeihw4qredhxiqi3 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_uu16fzjw9p09gvebl9w4, .table th.tinytable_css_uu16fzjw9p09gvebl9w4 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_unt5y4caj7da8o8dcobq, .table th.tinytable_css_unt5y4caj7da8o8dcobq { text-align: center; }
-      .table td.tinytable_css_pwwk0e9wegzo2fkuiv2k, .table th.tinytable_css_pwwk0e9wegzo2fkuiv2k { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_id4wm7jqnj8l9cockdt8, .table th.tinytable_css_id4wm7jqnj8l9cockdt8 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_6f1uie7ubrmpjjxwvemy, .table th.tinytable_css_6f1uie7ubrmpjjxwvemy { text-align: left; }
+      .table td.tinytable_css_v2q1uycdraq31k64wgtj, .table th.tinytable_css_v2q1uycdraq31k64wgtj { text-align: center; }
+      .table td.tinytable_css_gxkhf816d21sp7i2cz9s, .table th.tinytable_css_gxkhf816d21sp7i2cz9s { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_gllpzs8lbuxg2sr3dkfy, .table th.tinytable_css_gllpzs8lbuxg2sr3dkfy { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_gfy5rsqco6n22feec7sc, .table th.tinytable_css_gfy5rsqco6n22feec7sc { text-align: left; }
+      .table td.tinytable_css_g3lnx5pvhubph9d8qztq, .table th.tinytable_css_g3lnx5pvhubph9d8qztq { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_eeqe0ev9oajgian8q9s5, .table th.tinytable_css_eeqe0ev9oajgian8q9s5 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_7rf8jct5nlocf52falmz, .table th.tinytable_css_7rf8jct5nlocf52falmz { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_0kgquploynmj0vi2v9pd, .table th.tinytable_css_0kgquploynmj0vi2v9pd { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_dwackouslvkdgn7tm9gw" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_2zz3mpk8npcj4v16rr8t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Predicting Electoral Democracy with Level of Corruption</caption>
               <tbody><tr>
@@ -1976,8 +2143,8 @@ Report
 
     <script>
 
-      function styleCell_9yzw9mdxfip6lensibo4(i, j, css_id) {
-          var table = document.getElementById("tinytable_9yzw9mdxfip6lensibo4");
+      function styleCell_k38t4kgghmi3mmrxrvg4(i, j, css_id) {
+          var table = document.getElementById("tinytable_k38t4kgghmi3mmrxrvg4");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1987,7 +2154,7 @@ Report
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_9yzw9mdxfip6lensibo4');
+        var table = document.getElementById('tinytable_k38t4kgghmi3mmrxrvg4');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1995,8 +2162,8 @@ Report
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_9yzw9mdxfip6lensibo4(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_9yzw9mdxfip6lensibo4");
+      function spanCell_k38t4kgghmi3mmrxrvg4(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_k38t4kgghmi3mmrxrvg4");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2026,20 +2193,20 @@ Report
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_mneheyw1evjwgcfywsxg',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 },  ], css_id: 'tinytable_css_lqy8ldxv7r0yvaa1ihmy',}, 
-          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_lec3gjthg3p4mbjgx456',}, 
-          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_bt7o4isl30yv7xs99ycf',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 9, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 13, j: 2 }, { i: 10, j: 2 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_5gc7wxp3c9so2ngp7gjr',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_3eo6u383sfnsmyn4mvts',}, 
-          { positions: [ { i: 12, j: 2 }, { i: 12, j: 1 },  ], css_id: 'tinytable_css_251k0nseeecl0elhakk4',}, 
-          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_12c7ydqlwdzcpxdd28bz',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_zlwbl3u4cojddx14eodz',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_yltnj8a47p589qmecduq',}, 
+          { positions: [ { i: 12, j: 2 }, { i: 12, j: 1 },  ], css_id: 'tinytable_css_wsx0xqy6bv94n8qtivu9',}, 
+          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_wmq357lgxs4kn4ehecys',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 },  ], css_id: 'tinytable_css_vx2qumw0ex9dk857vs3w',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_raqem5z8fo15iremzgwe',}, 
+          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_kmahyqea0hkc249yznh2',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 9, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 13, j: 2 }, { i: 10, j: 2 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_iwrz02ir7ce229ds2brw',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_9yzw9mdxfip6lensibo4(cell.i, cell.j, group.css_id);
+                  styleCell_k38t4kgghmi3mmrxrvg4(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2047,17 +2214,17 @@ Report
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_mneheyw1evjwgcfywsxg, .table th.tinytable_css_mneheyw1evjwgcfywsxg { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_lqy8ldxv7r0yvaa1ihmy, .table th.tinytable_css_lqy8ldxv7r0yvaa1ihmy { text-align: left; }
-      .table td.tinytable_css_lec3gjthg3p4mbjgx456, .table th.tinytable_css_lec3gjthg3p4mbjgx456 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_bt7o4isl30yv7xs99ycf, .table th.tinytable_css_bt7o4isl30yv7xs99ycf { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_5gc7wxp3c9so2ngp7gjr, .table th.tinytable_css_5gc7wxp3c9so2ngp7gjr { text-align: center; }
-      .table td.tinytable_css_3eo6u383sfnsmyn4mvts, .table th.tinytable_css_3eo6u383sfnsmyn4mvts { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_251k0nseeecl0elhakk4, .table th.tinytable_css_251k0nseeecl0elhakk4 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_12c7ydqlwdzcpxdd28bz, .table th.tinytable_css_12c7ydqlwdzcpxdd28bz { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_zlwbl3u4cojddx14eodz, .table th.tinytable_css_zlwbl3u4cojddx14eodz { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_yltnj8a47p589qmecduq, .table th.tinytable_css_yltnj8a47p589qmecduq { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_wsx0xqy6bv94n8qtivu9, .table th.tinytable_css_wsx0xqy6bv94n8qtivu9 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_wmq357lgxs4kn4ehecys, .table th.tinytable_css_wmq357lgxs4kn4ehecys { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_vx2qumw0ex9dk857vs3w, .table th.tinytable_css_vx2qumw0ex9dk857vs3w { text-align: left; }
+      .table td.tinytable_css_raqem5z8fo15iremzgwe, .table th.tinytable_css_raqem5z8fo15iremzgwe { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_kmahyqea0hkc249yznh2, .table th.tinytable_css_kmahyqea0hkc249yznh2 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_iwrz02ir7ce229ds2brw, .table th.tinytable_css_iwrz02ir7ce229ds2brw { text-align: center; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_9yzw9mdxfip6lensibo4" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_k38t4kgghmi3mmrxrvg4" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Predicting Electoral Democracy with Corruption, Political Violence, and Region</caption>
               <tbody><tr>
@@ -2175,8 +2342,8 @@ Report
 
     <script>
 
-      function styleCell_i7h21ytlq7oak6nz4o1e(i, j, css_id) {
-          var table = document.getElementById("tinytable_i7h21ytlq7oak6nz4o1e");
+      function styleCell_4aab5gzyebjtw99xk50b(i, j, css_id) {
+          var table = document.getElementById("tinytable_4aab5gzyebjtw99xk50b");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2186,7 +2353,7 @@ Report
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_i7h21ytlq7oak6nz4o1e');
+        var table = document.getElementById('tinytable_4aab5gzyebjtw99xk50b');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2194,8 +2361,8 @@ Report
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_i7h21ytlq7oak6nz4o1e(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_i7h21ytlq7oak6nz4o1e");
+      function spanCell_4aab5gzyebjtw99xk50b(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_4aab5gzyebjtw99xk50b");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2225,20 +2392,20 @@ Report
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 },  ], css_id: 'tinytable_css_oce0n0satcddo9y4hdoc',}, 
-          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_nw3lj64r9xbk05l1vtlt',}, 
-          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_j2fipliwhe99vnmwtvzi',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_i9hdu2pc2gn84f5cktt5',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_hlxp7whxolhzgzsfktes',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 9, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 13, j: 2 }, { i: 10, j: 2 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_fvwwvpjpdf9f8m5uhf52',}, 
-          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_7pvhj35l4ur91vd48uy7',}, 
-          { positions: [ { i: 12, j: 2 }, { i: 12, j: 1 },  ], css_id: 'tinytable_css_7lhyrygiyoxtkyyh8he7',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 },  ], css_id: 'tinytable_css_wc4te0jor5lxbeioau4u',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_tl4i0kn148f043u59eyz',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_p406jzcxt00xlvqb0yde',}, 
+          { positions: [ { i: 12, j: 2 }, { i: 12, j: 1 },  ], css_id: 'tinytable_css_nqomut4mgt5e044tr0rz',}, 
+          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_mvj7lmsx5gyqgl02xoqd',}, 
+          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_ixbt3od9mu44ok2nxmyw',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 9, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 13, j: 2 }, { i: 10, j: 2 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_8o5f5to3nde7fsf0p1vu',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_3i9ks75bjm7765hm4hih',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_i7h21ytlq7oak6nz4o1e(cell.i, cell.j, group.css_id);
+                  styleCell_4aab5gzyebjtw99xk50b(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2246,17 +2413,17 @@ Report
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_oce0n0satcddo9y4hdoc, .table th.tinytable_css_oce0n0satcddo9y4hdoc { text-align: left; }
-      .table td.tinytable_css_nw3lj64r9xbk05l1vtlt, .table th.tinytable_css_nw3lj64r9xbk05l1vtlt { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_j2fipliwhe99vnmwtvzi, .table th.tinytable_css_j2fipliwhe99vnmwtvzi { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_i9hdu2pc2gn84f5cktt5, .table th.tinytable_css_i9hdu2pc2gn84f5cktt5 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_hlxp7whxolhzgzsfktes, .table th.tinytable_css_hlxp7whxolhzgzsfktes { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_fvwwvpjpdf9f8m5uhf52, .table th.tinytable_css_fvwwvpjpdf9f8m5uhf52 { text-align: center; }
-      .table td.tinytable_css_7pvhj35l4ur91vd48uy7, .table th.tinytable_css_7pvhj35l4ur91vd48uy7 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_7lhyrygiyoxtkyyh8he7, .table th.tinytable_css_7lhyrygiyoxtkyyh8he7 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_wc4te0jor5lxbeioau4u, .table th.tinytable_css_wc4te0jor5lxbeioau4u { text-align: left; }
+      .table td.tinytable_css_tl4i0kn148f043u59eyz, .table th.tinytable_css_tl4i0kn148f043u59eyz { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_p406jzcxt00xlvqb0yde, .table th.tinytable_css_p406jzcxt00xlvqb0yde { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_nqomut4mgt5e044tr0rz, .table th.tinytable_css_nqomut4mgt5e044tr0rz { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_mvj7lmsx5gyqgl02xoqd, .table th.tinytable_css_mvj7lmsx5gyqgl02xoqd { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ixbt3od9mu44ok2nxmyw, .table th.tinytable_css_ixbt3od9mu44ok2nxmyw { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_8o5f5to3nde7fsf0p1vu, .table th.tinytable_css_8o5f5to3nde7fsf0p1vu { text-align: center; }
+      .table td.tinytable_css_3i9ks75bjm7765hm4hih, .table th.tinytable_css_3i9ks75bjm7765hm4hih { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_i7h21ytlq7oak6nz4o1e" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_4aab5gzyebjtw99xk50b" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Predicting Electoral Democracy with Corruption, Political Violence, and Region</caption>
               <tbody><tr>
@@ -2594,17 +2761,16 @@ Gelman, Andrew, and Hal Stern. 2006. <span>“The Difference Between <span>“</
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>cpi_preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- cpi Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 % v2caviol TYPEDEMO1984
-  20    0.318     0.0278 11.4   &lt;0.001  98.4 0.264  0.373   -0.394  Autocracies
-  30    0.382     0.0217 17.6   &lt;0.001 227.5 0.339  0.424   -0.394  Autocracies
-  40    0.445     0.0199 22.4   &lt;0.001 367.4 0.406  0.484   -0.394  Autocracies
-  50    0.509     0.0233 21.9   &lt;0.001 349.5 0.463  0.555   -0.394  Autocracies
-  60    0.573     0.0302 18.9   &lt;0.001 263.5 0.513  0.632   -0.394  Autocracies
-  70    0.636     0.0389 16.4   &lt;0.001 197.8 0.560  0.713   -0.394  Autocracies
-  80    0.700     0.0483 14.5   &lt;0.001 155.9 0.605  0.795   -0.394  Autocracies
+ cpi Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+  20    0.318     0.0278 11.4   &lt;0.001  98.4 0.264  0.373
+  30    0.382     0.0217 17.6   &lt;0.001 227.5 0.339  0.424
+  40    0.445     0.0199 22.4   &lt;0.001 367.4 0.406  0.484
+  50    0.509     0.0233 21.9   &lt;0.001 349.5 0.463  0.555
+  60    0.573     0.0302 18.9   &lt;0.001 263.5 0.513  0.632
+  70    0.636     0.0389 16.4   &lt;0.001 197.8 0.560  0.713
+  80    0.700     0.0483 14.5   &lt;0.001 155.9 0.605  0.795
 
-Type:  response 
-Columns: rowid, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, v2caviol, TYPEDEMO1984, cpi, v2x_polyarchy </code></pre>
+Type: response</code></pre>
 </div>
 </div>
 <p>We can pass the data in this data object to a <code>ggplot()</code> command to produce a nice looking figure conveying these results.</p>
@@ -2698,15 +2864,11 @@ Columns: rowid, estimate, std.error, statistic, p.value, s.value, conf.low, conf
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- TYPEDEMO1984 Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %  cpi
-  Autocracies    0.467     0.0205 22.8   &lt;0.001 379.7 0.427  0.507 43.4
-  Democracies    0.620     0.0260 23.8   &lt;0.001 413.9 0.569  0.671 43.4
- v2caviol
-   -0.394
-   -0.394
+ TYPEDEMO1984 Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+  Autocracies    0.465     0.0204 22.8   &lt;0.001 379.5 0.425  0.504
+  Democracies    0.617     0.0261 23.6   &lt;0.001 406.9 0.566  0.668
 
-Type:  response 
-Columns: rowid, TYPEDEMO1984, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, cpi, v2caviol, v2x_polyarchy </code></pre>
+Type: response</code></pre>
 </div>
 </div>
 <p>We would then pass this object, and the data inside it, to a <code>ggplot()</code> command. Here we use <code>geom_pointrange()</code> instead of <code>geom_line()</code> as we are trying to convey the difference between two categories rather than levels of a scale:</p>
@@ -2783,380 +2945,255 @@ Columns: rowid, TYPEDEMO1984, estimate, std.error, statistic, p.value, s.value, 
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
       });
     }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
         }
-        return container.innerHTML
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -3164,224 +3201,200 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
-      for (let i=0; i<annoteTargets.length; i++) {
-        const annoteTarget = annoteTargets[i];
-        const targetCell = annoteTarget.getAttribute("data-target-cell");
-        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
-        const contentFn = () => {
-          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          if (content) {
-            const tipContent = content.cloneNode(true);
-            tipContent.classList.add("code-annotation-tip-content");
-            return tipContent.outerHTML;
-          }
-        }
-        const config = {
-          allowHTML: true,
-          content: contentFn,
-          onShow: (instance) => {
-            selectCodeLines(instance.reference);
-            instance.reference.classList.add('code-annotation-active');
-            window.tippy.hideAll();
-          },
-          onHide: (instance) => {
-            unselectCodeLines();
-            instance.reference.classList.remove('code-annotation-active');
-          },
-          maxWidth: 300,
-          delay: [50, 0],
-          duration: [200, 0],
-          offset: [5, 10],
-          arrow: true,
-          appendTo: function(el) {
-            return el.parentElement.parentElement.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'quarto',
-          placement: 'right',
-          popperOptions: {
-            modifiers: [
-            {
-              name: 'flip',
-              options: {
-                flipVariations: false, // true by default
-                allowedAutoPlacements: ['right'],
-                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
-              },
-            },
-            {
-              name: 'preventOverflow',
-              options: {
-                mainAxis: false,
-                altAxis: false
-              }
-            }
-            ]        
-          }      
-        };
-        window.tippy(annoteTarget, config); 
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./linear_07.html" class="pagination-link" aria-label="OLS Assumptions">

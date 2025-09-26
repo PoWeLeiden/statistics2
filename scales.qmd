@@ -437,6 +437,7 @@ hdi_data |>
   select(expected_schooling, expected_yrs_rescale1, 
          mean_schooling, mean_yrs_rescale1,
          education_index_1) |> 
+  slice_head(n = 5) |> 
   kable(digits = 2)
 
 ```

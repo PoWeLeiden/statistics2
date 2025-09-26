@@ -182,6 +182,12 @@ The key difference here is in how the output is displayed in R: the default outp
 
 We can naturally use these commands to obtain the residuals and predicted values from a model with multiple predictors. The process for finding the residuals of a multiple linear regression model is the same as above so we do not show it again. The process for calculating average predicted values is also highly similar, but with one important difference when the predictor is a factor variable.
 
+::: callout-important
+#### Warning!
+
+Newer versions of the `marginaleffects` package can generate an error when calculating predicted values based on a model that includes a factor variable created using the `factorize()` command from the `rio` package. The specific issue arises when the variable has a label for a category but where there is no actual observations in the dataset falling under that category (e.g, -9 = "Missing", but there 0 observations with a score of -9/"Missing" in the datafile). In this situation, `predictions()` will try to calculated a predicted value for that category but generate an error because it does not have data to work with. This issue, and how to deal with it, is described in more detail in @sec-slopes-error .
+:::
+
 ### Predictions for a Continuous Predictor Variable {#sec-predictions-for-a-continuous-predictor-variable}
 
 Here are the results from our multiple linear regression model:
@@ -268,13 +274,6 @@ Here are the predictions:
 
 ```{r}
 preds2
-```
-
-We can again see that `predictions()` is holding the other predictor variables "constant" when making these predictions:
-
-```{r}
-preds2 |> 
-  select(estimate, TYPEDEMO1984_factor, cpi, v2caviol)
 ```
 
 ### Predictions for specific combinations of the predictor variables

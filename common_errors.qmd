@@ -295,7 +295,7 @@ glm(close_party ~ agea, data = ess, family = 'binomial')
 ## "Unable to compute predicted values with this model" {#sec-slopes-error}
 
 ::: {.callout-warning title="The Problem"}
-We're using `avg_slopes()` to try and find the slope for a variable but are running into an error: "Unable to compute predicted values with this model"
+We're using `avg_slopes()` to try and find the slope for a variable, or `predictions()` to find predicted values, but are running into an error: "Unable to compute predicted values with this model"
 :::
 
 Suppose we have a binary dependent variable that we wish to predict with a binary or category independent variable. For instance, we might want to know if the chances of voting are higher/lower among men versus women. We would convert both variables to factor variables and perform a logistic model. The syntax below walks through this process by first investigating the variables (e.g., what labels are associated with each category); converting both variables to factors; and then running the model and reporting the results.

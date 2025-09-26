@@ -37,7 +37,7 @@ library(marginaleffects) #calculating marginal effects & predictions
 ESS9NL <- import("ESS9e03, Netherlands.sav")
 ```
 
-## Data Preparation, Example Model, and an Issue with `factorize()`
+## Data Preparation, Example Model, and an Issue with `factorize()` {#sec-factorize-problem}
 
 We will examine the same model that we ended last chapter on - one where we predicted whether a survey respondent said that they had voted in the most recent election based on their gender, age, trust in politicians, and ideology. Here are the data management steps we took last chapter to prepare our data for analysis as well as our model:
 
