@@ -211,10 +211,10 @@ You can use the direction (positive, negative) and statistical significance of a
 
 In this example:
 
--   Voter turnout is more likely among men than women, but the difference is not statistically significant (p = 0.28) so we cannot rule out the possibility of no difference in voter turnout between the two groups.
+-   Voter turnout is more likely among men than women, but the difference is not statistically significant (p = 0.78) so we cannot rule out the possibility of no difference in voter turnout between the two groups.
 -   Voter turnout becomes more likely with age (i.e., older respondents are more likely to vote than younger ones) and this association is statistically significant (p \< 0.001).
 -   Voter turnout becomes more likely as trust in politicians increases and this relationship is statistically significant (p \< 0.001).
--   Voter turnout grows more likely as we move from left to right on the ideology scale, but the effect is not statistically significant (p = 0.74) so we cannot rule out the possibility that a one unit change in ideology actually does not lead to any change in the chances of turning out to vote.
+-   Voter turnout grows more likely as we move from left to right on the ideology scale, but the effect is not statistically significant (p = 0.46) so we cannot rule out the possibility that a one unit change in ideology actually does not lead to any change in the chances of turning out to vote.
 :::
 
 ## Odds Ratios
