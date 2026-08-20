@@ -9,6 +9,7 @@ code-annotations: hover
 #| echo: false
 #| message: false
 #| warning: false
+
 #Load some of the packages used below
 library(rio)
 library(marginaleffects)
@@ -103,7 +104,7 @@ Performing operations outside of the .rmd file that are required for your analys
 
 This is a more general version of the previous issue. For instance, perhaps you have loaded the `rio` library and correctly imported your data via syntax ... just not in the .rmd file (e.g., you may have entered these commands directly in the Console portion of R Studio or perhaps have run them from within an R Script that is separate from your .rmd file). The same problem would emerge: *you* would have access to the libraries and functions in question to work with while completing your assignment, but *R* *wouldn't* when it started to knit your document because it's not in the set of commands you're directly sending it.
 
-One tip off here may be in the error message that R provides you. Consider the following error message taken from a student's error-prone .rmd file last year:
+One tip off here may be in the error message that R provides you. Consider the following error message taken from a student's error-prone .rmd file:
 
 ![](figures/error.png)
 
@@ -160,6 +161,84 @@ We recommend loading these libraries *before* loading the `tidyverse` library to
 library(rio)
 ```
 
+## "contrasts can be applied only to factors with 2 or more levels" {#sec-contrasts-can-be-applied-only-to-factors-with-2-or-more-levels}
+
+::: {.callout-warning title="The Problem"}
+You are trying to perform a regression model with a binary and/or categorical predictor variable and receive an error: "Error in `contrasts<-`(`*tmp*`, value = contr.funs\[1 + isOF\[nn\]\]) : contrasts can be applied only to factors with 2 or more levels"
+:::
+
+We include binary/categorical variables in a regression model by first converting that variable into a factor variable. R will then include the appropriate number of indicators in the model for us. Here is an example where we are trying to predict the level of voter turnout in a country (`vt_parl`) based on whether the country was a democracy or autocracy in the year 2007 (`demo2007`). Notably, we get an error that prevents the model from being performed.
+
+```{r}
+#| echo: false
+
+#creating a factor variable for the example: 
+dta <- dta |> 
+  mutate(
+    demo2007 = factor(TYPEDEMO2007, 
+                      levels = c(0, 2), 
+                      labels = c("Autocracy", "Democracy"))
+  )
+  
+  
+```
+
+```{r}
+#| error: true
+
+
+# Run the model
+demo_model <- lm(vt_parl ~ demo2007, data = dta)
+
+demo_model
+```
+
+::: {.callout-tip title="The Cause"}
+There was an error in the factor creation process that resulted in the variable only having non-NA values for one of the two factor levels.
+:::
+
+In this example, `demo2007` was a factor version of a variable named `TYPEDEMO2007`. Here are the properties of that variable:
+
+```{r}
+attributes(dta$TYPEDEMO2007)
+table(dta$TYPEDEMO2007, useNA = "always")
+
+```
+
+The original variable is a numeric variable with two values: 0 (referring to autocracies) and 1 (referring to democracies). There are then 26 observations with missing (\<NA\>) data on the variable.
+
+Here is the syntax that was used to create the factor variable used in the model above:
+
+```{r}
+#| eval: false
+
+#creating a factor variable for the example: 
+dta <- dta |> 
+  mutate(
+    demo2007 = factor(TYPEDEMO2007, 
+                      levels = c(0, 2), 
+                      labels = c("Autocracy", "Democracy"))
+  )
+  
+```
+
+The issue is in the `levels = c()` portion of the syntax. Instead of using the numeric values of 0 and 1, we instead used 0 and 2. However, if the `levels = c()` portion does not match the original values of the variable that we are converting to a factor, then observations with the non-matched values will be given an NA value on the new variable (see @sec-factor-command). We can see this here:
+
+```{r}
+levels(dta$demo2007)
+table(dta$demo2007, useNA = "always")
+table(dta$demo2007, dta$TYPEDEMO2007, useNA = "always")
+
+```
+
+The 104 observations on `TYPEDEMO2007` with a value of 1 all have an <NA> value on the new variable. Our regression model thus runs into a problem it cannot solve: we have asked it to compare the average value of the DV in situations where the IV equals "Democracy" and where in situations where it equals "Autocracy"...but there are no observations in the former case to use in the comparison!
+
+::: {.callout-note title="Solution"}
+Do not overwrite variables when creating new ones and double check your work!
+:::
+
+Nobody is perfect, so sometimes errors will creep into our efforts to recode variables or convert them to factor variables. There are two, interrelated, things we can do to minimize these problems. First, we can create new variables rather than overwriting the initial data when we are recoding a variable or converting it to a factor variable. Second, we can investigate the variables that we have created to double check that things look the way that we expect them to. The first thing here facilitates the second thing: if we overwrite the initial variable, then we do not have a "ground truth" to which we can compare the new variable. We also cannot fix our mistake without fully re-loading our data and then working through all our data cleaning syntax again. On the other hand, if we do not overwrite our initial data, then we can easily check our work and, if we do see a mistake, fix and re-run simply that portion of the syntax.
+
 ## Not seeing the right number of categories for factor variables in regression models {#sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models}
 
 ::: {.callout-warning title="The Problem"}
@@ -199,7 +278,7 @@ We only have one indicator in our model for the factor variable. Why?[^common_er
 [^common_errors-1]: There could an additional culprit: missing data. Suppose that you have 1 DV and two IVs, one of which is a categorical variable with three levels (low, middle, and high) and the other a continuous variable. R will automatically drop observations from the model that have missing data on at least one of the variables in the model (DV and IV). Suppose that all of the observations with a classification of "high" on the categorical variable have missing (NA) values on the continuous variable - in that instance, R would not have the necessary data to estimate a coefficient for the "high" category and, as a result, you would likely only get indicators for one category of the categorical variable (comparing it to the reference group) and one for the continuous variable.
 
 ::: {.callout-tip title="The Cause"}
-You used `factorize()` with non-labelled data.
+You used `factorize()` with non-labelled data. Or, you used `factor()` but left something out or mis-spelled something in `levels=c()`.
 :::
 
 We can convert a variable into a factor variable in either of two ways in R:
@@ -209,16 +288,16 @@ We can convert a variable into a factor variable in either of two ways in R:
 
 `factorize()` is a handy tool but it only works with variables that have value labels stored within the dataset. In these instances, `factorize()` will automatically attach each numeric value with its corresponding value. While labelled data is common (but not universal) when the dataset in question is either a `.dta` or `.sav` file format, it is not common with `.csv` for `.xlsx` file formats. Note that by labelled data we mean situations where the labels are included within the datset itself rather than only being found in a separate codebook.
 
-We can use the following function to obtain information as to whether a variable has value labels associated with it in the dataset that we are using: `attr(dataset$varname, "labels")`.[^common_errors-2] Here is an example with two variables: one labelled and one unlabelled:
+We can use the following function to obtain information as to whether a variable has value labels associated with it in the dataset that we are using: `attributes()`.[^common_errors-2] Here is an example with two variables: one labelled and one unlabelled:
 
 [^common_errors-2]: We could also use `attributes(dta$gdp_3cat)` to the same end. The main difference is that this command will also provide other information about the variable.
 
 ```{r}
 #Unlabelled
-attr(dta$gdp_3cat, "labels")
+attributes(dta$gdp_3cat)
 
 #Labelled
-attr(dta$Fragile2006, "labels")
+attributes(dta$Fragile2006)
 ```
 
 In the former case, we observe the value of "NULL" meaning that no value labels are stored in the metadata for this variable. `factorize()` works by applying stored labels to numeric values, but there is nothing here to apply.
@@ -240,7 +319,7 @@ summary(model2)
 Using `factor()` instead of `factorize()`
 :::
 
-The built in `factor()` command will be more useful in this type of situation. Here we specify the levels of the factor variable (with the reference group being the first category provided in `levels=c()`) and its associated labels.
+The built in `factor()` command is more generally useful than `factorize()`. Here we specify the levels of the factor variable (with the reference group being the first category provided in `levels=c()`) and its associated labels.
 
 ```{r}
 dta <- dta |> 
@@ -252,6 +331,27 @@ model3 <- lm(v2x_polyarchy ~ gdp_3cat_correct, data=dta)
 summary(model3)
 
 ```
+
+There is a way for this to go wrong, however, as we discuss in @sec-factor-command : there is an error in the `levels = c()` area. For instance:
+
+```{r}
+# factor with mistakes: 
+dta <- dta |> mutate(
+  gdp_error1 = factor(gdp_3cat, 
+                      levels = c(1, 2), 
+                      labels = c("Low", "Medium")), 
+  gdp_error2 = factor(gdp_3cat, 
+                      levels = c(1, 2, 4), 
+                      labels = c("Low", "Medium", "High")))
+
+# Models
+summary(lm(v2x_polyarchy ~ gdp_error1, data = dta)) 
+summary(lm(v2x_polyarchy ~ gdp_error2, data = dta))
+
+
+```
+
+We also do not get the correct output here. The problem in the first instance is that we forgot to include one of the categories in the `levels = ()` portion (although, if our intention was to remove these observations in the new variable then this would be fine). The problem in the second instance is incorrectly specifying one of the value levels (4 rather than 3).
 
 ## "Error in glm.fit...NA/NAN/Inf in 'y'" and "not meaningful for factors" {#sec-glm-factor}
 
@@ -290,96 +390,6 @@ Specify the correct family, here: "family ="binomial"
 ```{r}
 #| error: true
 glm(close_party ~ agea, data = ess, family = 'binomial')
-```
-
-## "Unable to compute predicted values with this model" {#sec-slopes-error}
-
-::: {.callout-warning title="The Problem"}
-We're using `avg_slopes()` to try and find the slope for a variable, or `predictions()` to find predicted values, but are running into an error: "Unable to compute predicted values with this model"
-:::
-
-Suppose we have a binary dependent variable that we wish to predict with a binary or category independent variable. For instance, we might want to know if the chances of voting are higher/lower among men versus women. We would convert both variables to factor variables and perform a logistic model. The syntax below walks through this process by first investigating the variables (e.g., what labels are associated with each category); converting both variables to factors; and then running the model and reporting the results.
-
-```{r}
-#Value Values
-attr(ess$vote,"labels") 
-attr(ess$gndr, "labels")
-
-#Distribution
-table(ess$vote)
-table(ess$gndr)
-
-#Convert into factor
-  #Vote: 0 = did not vote, 1 = voted
-  #Gender: 0 = male, 1 = female
-
-ess <- ess |> 
-  mutate(voted = factor(vote, levels=c(2,1), 
-                        labels=c("Did Not Vote", "Voted")), 
-         gender = factorize(gndr))
-
-#Model and Summary
-ame_example <- glm(voted ~ gender, data=ess, family="binomial")
-summary(ame_example)
-```
-
-The coefficient for our IV is negative, which indicates that female respondents have a lower chance of reporting that they turned out to vote than men (although this difference is not statistically significant). This coefficient is on the log of the odds (logit) scale, which is hard to interpret. We may want to look at the average difference in the probability of turning out between women and men to more clearly communicate the difference between the two groups. We can do this by using the `avg_slopes()` function from the `marginaleffects` package. However, in this instance we receive an error message:
-
-```{r}
-#| error: true
-
-avg_slopes(ame_example)
-```
-
-::: {.callout-tip title="The Cause"}
-There is a category/label with no observations.
-:::
-
-Let's take a look at the `gender` variable we created earlier compared with its original form:
-
-```{r}
-#Original Variable
-attr(ess$gndr, "labels")
-table(ess$gndr)
-
-#Recoded
-levels(ess$gender)
-table(ess$gender)
-
-```
-
-The `gndr` variable has three labels associated with it: Male (=1), Female (=2), and No Answer (=9). However, no observations have a value of 9 on this original variable. Regardless, `factorize()` will still port over the label for "No Answer". The issue is that `avg_slopes()` is expecting there to be observations with a label of "No Answer" - when it finds none, it crashes.
-
-::: {.callout-note title="Solution"}
-Use `droplevels()` to removing categories with no observations or use `factor()` to create the variable to begin with
-:::
-
-We can avoid this issue in either of two ways. First, we could use `droplevels()` to drop levels (and their associated labels) that have no observations. Second, we can preempt the problem by simply using `factor()` and only including the categories we care about.
-
-```{r}
-#Recoding Using the Two Options
-ess <- ess |> 
-  mutate(
-    #Option 1: droplevels()
-    gender_opt1 = factorize(gndr), 
-    gender_opt1 = droplevels(gender_opt1), 
-    #Option 2: factor() from the beginning
-    gender_opt2 = factor(gndr,
-                         levels=c(1,2), 
-                         labels=c("Male", "Female")))
-
-#Levels
-levels(ess$gender_opt1)
-levels(ess$gender_opt2)
-
-#Option 1: 
-ame_example_opt1 <- glm(voted ~ gender_opt1, data=ess, family="binomial")
-avg_slopes(ame_example_opt1)
-
-#Option 2
-ame_example_opt2 <- glm(voted ~ gender_opt2, data=ess, family="binomial")
-avg_slopes(ame_example_opt2)
-
 ```
 
 ## "A continuous variable cannot be mapped to the linetype aesthetic" {#sec-linetype-error}

@@ -122,7 +122,7 @@ The D-W statistic for this model is `r round(durbinWatsonTest(time_model)$dw, 2)
 
 ## No excessive multicollinearity {#sec-linear-no-excessive-multicollinearity}
 
-We will use a different dataset, one without the problem of autocorrelation, for our other assumption tests. We use the democracy dataset (`demadata.rds`) and run a multiple regression model predicting V-Dem polyarchy scores based on inequality (`gini_2019`), history of democracy (`TYPEDEMO1984`, factorized), and past gross domestic product per capita (`GDP2006`).
+We will use a different dataset, one without the problem of autocorrelation, for our other assumption tests. We use the democracy dataset (`demadata.rds`) and run a multiple regression model predicting V-Dem polyarchy scores based on inequality (`gini_2019`), history of democracy (`TYPEDEMO1984`, converted into a factor variable), and past gross domestic product per capita (`GDP2006`).
 
 ```{r}
 #| eval: false
@@ -130,9 +130,12 @@ We will use a different dataset, one without the problem of autocorrelation, for
 demdata <- import("demdata.rds") |> 
   as_tibble()
 
-#Factorize our binary variable
-demdata <- demdata |> 
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))
+#Convert to factor
+demdata <- demdata |>  
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")))
 
 #Run and store a model and then look at the output
 model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + 
@@ -147,9 +150,12 @@ summary(model_multiple)
 demdata <- import("data/demdata.rds") |> 
   as_tibble()
 
-#Factorize our binary variable
-demdata <- demdata |> 
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984))
+#Convert to factor
+demdata <- demdata |>  
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")))
 
 #Run and store a model and then look at the output
 model_multiple <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + 
@@ -176,8 +182,13 @@ The output provides the VIF statistics underneath each variable name. No statist
 The output of this command will look different if you have a categorical variable in the model, as in this example:
 
 ```{r}
-demdata <- demdata |> 
-  mutate(Typeregime2006_factor = factorize(Typeregime2006))
+demdata <- demdata |>  
+  mutate(
+    Typeregime2006_factor = factor(Typeregime2006, 
+                            levels = c(1, 2, 3), 
+                            labels = c("Liberal democracy", 
+                                       "Electoral democracy", 
+                                       "Autocracy")))
 
 vif_example <- lm(v2x_polyarchy ~ gini_2019 + GDP2006 + 
                     Typeregime2006_factor, data = demdata) 
@@ -265,7 +276,7 @@ demdata_sub <- demdata |>
 summary(demdata_sub$LNGDP2006)
 ```
 
-We would then make predictions across the range of the logged X variable. Here, you should make predictions for many values of X so that a nice curved line can be plotted. 
+We would then make predictions across the range of the logged X variable. Here, you should make predictions for many values of X so that a nice curved line can be plotted.
 
 ```{r}
 # Then, make predictions based on the values you obtained
@@ -275,6 +286,7 @@ bbp_preds <- predictions(multiple_ln,
                                                             by = 0.5))) # <1>
 
 ```
+
 1.  `seq()` stands for sequence. We are asking the command to calculate predictions for the sequence of values starting from 5.5, and ending at 11, in 0.5 increments.
 
 We then create a new variable in the dataset with the predicted values to serve as the X-variable in our plot. Specifically, we exponentiate the logged X variable using the `exp()` command. This *reverses* the logarithim thereby enabling us to plot the predicted values against X on its original scale.
@@ -284,6 +296,7 @@ We then create a new variable in the dataset with the predicted values to serve 
 bbp_preds <- bbp_preds |> 
   mutate(GDP2006 = exp(LNGDP2006)) # <1>
 ```
+
 1.  `exp()` basically reverses the log, i.e., `(x)` = `exp(log(x))`
 
 We finally make our graph:

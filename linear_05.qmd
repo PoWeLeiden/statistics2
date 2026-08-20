@@ -20,8 +20,15 @@ demdata <- import("data/demdata.rds") |>
   as_tibble()
 
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-         Typeregime2006_factor = factorize(Typeregime2006))
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")), 
+    Typeregime2006_factor = factor(Typeregime2006, 
+                            levels = c(1, 2, 3), 
+                            labels = c("Liberal democracy", 
+                                       "Electoral democracy", 
+                                       "Autocracy")))
 
 # Models for examples
 model_continuous <- lm(v2x_polyarchy ~ gini_2019, data = demdata)
@@ -46,9 +53,16 @@ library(marginaleffects) #calculating predicted values
 demdata <- import("demdata.rds") |> 
   as_tibble()
 
-demdata <- demdata |> 
-    mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-           Typeregime2006_factor = factorize(Typeregime2006))
+demdata <- demdata |>  
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")), 
+    Typeregime2006_factor = factor(Typeregime2006, 
+                            levels = c(1, 2, 3), 
+                            labels = c("Liberal democracy", 
+                                       "Electoral democracy", 
+                                       "Autocracy")))
 
 # Models for examples
 model_continuous <- lm(v2x_polyarchy ~ gini_2019, data = demdata)
@@ -181,12 +195,6 @@ The key difference here is in how the output is displayed in R: the default outp
 ## Predicted Values (Multiple Linear Models)
 
 We can naturally use these commands to obtain the residuals and predicted values from a model with multiple predictors. The process for finding the residuals of a multiple linear regression model is the same as above so we do not show it again. The process for calculating average predicted values is also highly similar, but with one important difference when the predictor is a factor variable.
-
-::: callout-important
-#### Warning!
-
-Newer versions of the `marginaleffects` package can generate an error when calculating predicted values based on a model that includes a factor variable created using the `factorize()` command from the `rio` package. The specific issue arises when the variable has a label for a category but where there is no actual observations in the dataset falling under that category (e.g, -9 = "Missing", but there 0 observations with a score of -9/"Missing" in the datafile). In this situation, `predictions()` will try to calculated a predicted value for that category but generate an error because it does not have data to work with. This issue, and how to deal with it, is described in more detail in @sec-slopes-error .
-:::
 
 ### Predictions for a Continuous Predictor Variable {#sec-predictions-for-a-continuous-predictor-variable}
 

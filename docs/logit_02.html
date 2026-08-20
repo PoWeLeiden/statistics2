@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Marginal Effects – Statistical analysis and presentation using R</title>
+<title>12&nbsp; Marginal Effects – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -59,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -93,14 +98,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -130,7 +135,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -143,7 +148,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -332,7 +337,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_02.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_02.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,8 +373,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -377,50 +382,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -429,45 +457,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -476,40 +504,40 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -552,9 +580,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-factorize-problem" id="toc-sec-factorize-problem" class="nav-link active" data-scroll-target="#sec-factorize-problem"><span class="header-section-number">10.1</span> Data Preparation, Example Model, and an Issue with <code>factorize()</code></a></li>
-  <li><a href="#average-marginal-effects-ame" id="toc-average-marginal-effects-ame" class="nav-link" data-scroll-target="#average-marginal-effects-ame"><span class="header-section-number">10.2</span> Average Marginal Effects (AME)</a></li>
-  <li><a href="#marginal-effects-at-the-mean-mem" id="toc-marginal-effects-at-the-mean-mem" class="nav-link" data-scroll-target="#marginal-effects-at-the-mean-mem"><span class="header-section-number">10.3</span> Marginal Effects at the Mean (MEM)</a></li>
+  <li><a href="#sec-factorize-problem" id="toc-sec-factorize-problem" class="nav-link active" data-scroll-target="#sec-factorize-problem"><span class="header-section-number">12.1</span> Data Preparation and Example Model</a></li>
+  <li><a href="#average-marginal-effects-ame" id="toc-average-marginal-effects-ame" class="nav-link" data-scroll-target="#average-marginal-effects-ame"><span class="header-section-number">12.2</span> Average Marginal Effects (AME)</a></li>
+  <li><a href="#marginal-effects-at-the-mean-mem" id="toc-marginal-effects-at-the-mean-mem" class="nav-link" data-scroll-target="#marginal-effects-at-the-mean-mem"><span class="header-section-number">12.3</span> Marginal Effects at the Mean (MEM)</a></li>
   </ul>
 </nav>
     </div>
@@ -562,9 +590,9 @@ window.Quarto = {
 <main class="content page-columns page-full" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_02.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_02.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-marginal-effects" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></h1>
+<h1 class="title"><span id="sec-marginal-effects" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></h1>
 </div>
 
 
@@ -584,43 +612,37 @@ window.Quarto = {
 <p>In the last chapter we examined how to fit a logistic regression model. The coefficients of that model tell us how the log of the odds that Y = 1 change when the predictor variable changes by one unit. This is not a very intuitive way of understanding how much Y is expected to change when X changes. We introduce an alternative statistic in this chapter that is better suited for this purpose: estimates of the “marginal effects” of our predictor variables that tell how the average change in the <em>probability</em> that Y = 1 given a one unit change in X (<span class="math inline">\(\frac{dy}{dx}\)</span>). We will use commands from the <code>marginaleffects</code> package for this purpose.</p>
 <p>Here are the packages that we will use along with our data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)             <span class="co">#loading data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)       <span class="co">#data manipulation and plotting</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects) <span class="co">#calculating marginal effects &amp; predictions</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"ESS9e03, Netherlands.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"ESS9e03, Netherlands.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="sec-factorize-problem" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="sec-factorize-problem"><span class="header-section-number">10.1</span> Data Preparation, Example Model, and an Issue with <code>factorize()</code></h2>
+<section id="sec-factorize-problem" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-factorize-problem"><span class="header-section-number">12.1</span> Data Preparation and Example Model</h2>
 <p>We will examine the same model that we ended last chapter on - one where we predicted whether a survey respondent said that they had voted in the most recent election based on their gender, age, trust in politicians, and ideology. Here are the data management steps we took last chapter to prepare our data for analysis as well as our model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Preparation</span></span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Factorize our IVs</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">factorize</span>(gndr),</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote_F =</span> <span class="fu">factorize</span>(vote))  <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Remove Not Eligible to Vote Category from vote</span></span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">na_if</span>(vote_F, <span class="st">"Not eligible to vote"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Relevel our variables like we did last time</span></span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">relevel</span>(vote_F, <span class="st">"No"</span>), </span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gndr_F =</span> <span class="fu">relevel</span>(gndr_F, <span class="st">"Female"</span>))</span>
-<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
-<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
-<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model_mp)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="1">We could combine these three <code>mutate()</code> commands into one single <code>mutate()</code> command if we wanted, but we keep them separate here to more clearly lay out the steps that we are taking.</span>
-</dd>
-</dl>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Preparation</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#convert binary/categorical variables to a factor</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gndr_F =</span> <span class="fu">factor</span>(gndr, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>)), </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">vote_F =</span> <span class="fu">factor</span>(vote, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Did not vote"</span>, </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Voted"</span>))) </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ESS9NL, </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model_mp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -647,44 +669,12 @@ AIC: 1145.3
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
-<p>We need to take one additional step before calculating the marginal effects in this particular example due to a quirk in the <code>factorize()</code> command. Let us take a look at our <code>gndr</code> variable again:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Female"    "Male"      "No answer"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   Female      Male No answer 
-      840       833         0 </code></pre>
-</div>
-</div>
-<p>There are three labels/levels on the <code>gndr_F</code> variable: “Female”, “Male”, and “No Answer”. However, 0 respondents fall under the “No Answer” category. In situations like these, the command we will use below to obtain our marginal effects estimate will return an error because it thinks there is a third category (“No Answer”) in the model but finds zero observations in it.</p>
-<p>One way we can preempt this error is by using the <code>droplevels()</code> command to remove the empty category from our <code>gndr_F</code> variable as shown below. Another way is to use <code>factor()</code> to create the factorized version of <code>gndr</code>. <a href="common_errors.html#sec-slopes-error" class="quarto-xref"><span>Section A.4</span></a> in the Common Errors Appendix for a more thorough discussion of this issue.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Drop levels: will drop any category with 0 observations associated with it</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">droplevels</span>(gndr_F))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Let's take a look at our work</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Female" "Male"  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Female   Male 
-   840    833 </code></pre>
-</div>
-</div>
 </section>
-<section id="average-marginal-effects-ame" class="level2 page-columns page-full" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="average-marginal-effects-ame"><span class="header-section-number">10.2</span> Average Marginal Effects (AME)</h2>
-<p>The first type of marginal effect we’ll calculate is the Average Marginal Effect (AME) using the <code>avg_slopes()</code> command from the <code>marginaleffects</code> library. The AME shows us the average change in the probability that Y = 1 when a predictor increases by one unit. <code>avg_slopes()</code> does this by first calculating a predicted probability for each observation in the model based on the model’s coefficients and the observation’s unique combination of values on the predictor variables before averaging those predictions together and finding the difference. Here is an image that summarize this process (image from <span class="citation" data-cites="heiss2022">Heiss (<a href="#ref-heiss2022" role="doc-biblioref">2022</a>)</span>):</p>
+<section id="average-marginal-effects-ame" class="level2 page-columns page-full" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="average-marginal-effects-ame"><span class="header-section-number">12.2</span> Average Marginal Effects (AME)</h2>
+<p>The first type of marginal effect we’ll calculate is the Average Marginal Effect (AME) using the <code>avg_slopes()</code> command from the <code>marginaleffects</code> library. The AME shows us the average change in the probability that Y = 1 when a predictor increases by one unit. <code>avg_slopes()</code> does this by first calculating a predicted probability for each observation in the model based on the model’s coefficients and the observation’s unique combination of values on the predictor variables before averaging those predictions together and finding the difference. Here is an image that summarizes this process (image from <span class="citation" data-cites="heiss2022">Heiss (<a href="#ref-heiss2022" role="doc-biblioref">2022</a>)</span>):</p>
 <div class="no-row-height column-margin column-container"><div id="ref-heiss2022" class="csl-entry" role="listitem">
-Heiss, Andrew. 2022. <span>“Marginalia: <span>A</span> Guide to Figuring Out What the Heck Marginal Effects, Marginal Slopes, Average Marginal Effects, Marginal Effects at the Mean, and All These Other Marginal Things Are.”</span> May 20, 2022. <a href="https://doi.org/10.59350/40xaj-4e562">https://doi.org/10.59350/40xaj-4e562</a>.
+Heiss, Andrew. 2022. <span>“Marginalia: <span>A</span> Guide to Figuring Out What the Heck Marginal Effects, Marginal Slopes, Average Marginal Effects, Marginal Effects at the Mean, and All These Other Marginal Things Are.”</span> May 20. <a href="https://doi.org/10.59350/40xaj-4e562">https://doi.org/10.59350/40xaj-4e562</a>.
 </div></div><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/flow-ame.png" class="img-fluid figure-img"></p>
@@ -693,9 +683,15 @@ Heiss, Andrew. 2022. <span>“Marginalia: <span>A</span> Guide to Figuring Out W
 </div>
 <p>Let us take a look at the AMEs from our model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store the results</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>AME <span class="ot">&lt;-</span> <span class="fu">avg_slopes</span>(Vote_model_mp,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">conf_level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store the results</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>AME <span class="ot">&lt;-</span> <span class="fu">avg_slopes</span>(Vote_model_mp,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">conf_level =</span> <span class="fl">0.95</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `newdata` data frame has 575 columns. This can slow down
+computation and increase memory costs. Please supply a data frame with fewer
+columns to the `newdata` argument, or set
+`options('marginaleffects_safe'=FALSE)` to silence this warning.</code></pre>
+</div>
 </div>
 <p>Here is how you can read this syntax:</p>
 <dl>
@@ -708,14 +704,28 @@ Heiss, Andrew. 2022. <span>“Marginalia: <span>A</span> Guide to Figuring Out W
 <p>The default confidence level used is 95%, so this code could be left out if this is the desired confidence level. To use a different confidence level, the indicated value can be changed.</p>
 </dd>
 </dl>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Output Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may receive a warning when using this command such as: “Warning :The <code>newdata</code> data frame has 575 columns. This can slow down computation and increase memory costs. Please supply a data frame with fewer columns to the <code>newdata</code> argument, or set <code>options('marginaleffects_safe'=FALSE)</code> to silence this warning.”</p>
+<p>In general, warnings in R are often non-critical issues that occur when R encounters something unusual but not severe enough to stop execution. In this case, the Warning concerns details regarding how this package handles the other columns in our dataset when calculating the marginal effects. You can ignore this warning if it comes up.</p>
+</div>
+</div>
 <p>Here are the results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(AME)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(AME)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">We could just type <code>AME</code> rather than <code>tibble(AME)</code> here. The default output would look a little different (e.g,. it’d show “Estimate” rather than “estimate” and “2.5%” rather than “conf.low”). We use <code>tibble()</code> so you see the underlying dataset. See the Warning in Chapter 5.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">We could just type <code>AME</code> rather than <code>tibble(AME)</code> here. The default output would look a little different (e.g,. it’d show “Estimate” rather than “estimate” and “2.5%” rather than “conf.low”). We use <code>tibble()</code> so you see the underlying dataset. See the Warning in Chapter 5.</span>
 </dd>
 </dl>
 </div>
@@ -735,7 +745,7 @@ Heiss, Andrew. 2022. <span>“Marginalia: <span>A</span> Guide to Figuring Out W
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -753,7 +763,7 @@ Output Explanation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -765,8 +775,8 @@ Interpretation
 </div>
 </div>
 </section>
-<section id="marginal-effects-at-the-mean-mem" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="marginal-effects-at-the-mean-mem"><span class="header-section-number">10.3</span> Marginal Effects at the Mean (MEM)</h2>
+<section id="marginal-effects-at-the-mean-mem" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="marginal-effects-at-the-mean-mem"><span class="header-section-number">12.3</span> Marginal Effects at the Mean (MEM)</h2>
 <p>We recommend using the AME when discussing the marginal effects of variables in a logistic regression. However, it is also quite common to see researchers report what we might call the “marginal effect at the mean” or MEM. The main difference is that the MEM for a variable (<code>lrscale</code>, for instance) is calculated while holding the other variables in the model constant at their mean or mode. Here is an image summarizing how <code>avg_slopes()</code> calculates the MEM:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -776,10 +786,18 @@ Interpretation
 </div>
 <p>We can calculate the MEM with a small change to our syntax;</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>MEM <span class="ot">&lt;-</span> <span class="fu">slopes</span>(Vote_model_mp, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">conf_level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">datagrid</span>()</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>MEM <span class="ot">&lt;-</span> <span class="fu">slopes</span>(Vote_model_mp, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">conf_level =</span> <span class="fl">0.95</span>,</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">datagrid</span>()</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>              )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="2" data-code-annotation="1">The inclusion of <code>conf_level = 0.95</code> is not strictly necessarily - the command will, by default, calculate the 95% confidence interval. If you wanted a different confidence level, such as the 99% CI, then you would put <code>conf_level = 0.99</code>.</span>
+</dd>
+</dl>
+</div>
 </div>
 <dl>
 <dt><code>newdata = datagrid()</code></dt>
@@ -789,7 +807,7 @@ Interpretation
 </dl>
 <p>Let’s take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(MEM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(MEM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 18
   rowid term    contrast   estimate std.error statistic p.value s.value conf.low
@@ -805,9 +823,9 @@ Interpretation
 </div>
 <p>The output is very similar to what we saw above (e.g., <code>term</code> provides the variable name, <code>estimate</code> provides the marginal effect, etc.) although the <code>MEM</code> dataset also stores the mean and modal values of the predictors that were used when calculating the different MEM estimates.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>MEM <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gndr_F, agea, trstplt, lrscale) <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>MEM <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gndr_F, agea, trstplt, lrscale) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   gndr_F  agea trstplt lrscale
@@ -824,11 +842,11 @@ Interpretation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The interpretation of MEMs is very similar to the interpretation of the AME: they tell us how the probability that Y = 1 is expected to change given a one unit change in X. We can express this on a percentage point scale by multiplying by 100. However, we should make note that we held the control variables constant in our discussions. For instance: Male respondents were .2 percentage points more likely to vote, on average, than female respondents holding age, ideology, and trust in politicians constant at their means.</p>
+<p>The interpretation of MEMs is very similar to the interpretation of the AME: they tell us how the probability that Y = 1 is expected to change, on average, given a one unit change in X. We can express this on a percentage point scale by multiplying by 100. However, we should make note that we held the control variables constant in our discussions. For instance: Male respondents were .2 percentage points more likely to vote, on average, than female respondents holding age, ideology, and trust in politicians constant at their means.</p>
 </div>
 </div>
 
@@ -901,13 +919,14 @@ Interpretation
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1291,12 +1310,12 @@ Interpretation
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./logit_01.html" class="pagination-link" aria-label="Logistic Regression &amp; Odds Ratios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./logit_03.html" class="pagination-link" aria-label="Predicted Probabilities">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

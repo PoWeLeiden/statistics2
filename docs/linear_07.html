@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; OLS Assumptions – Statistical analysis and presentation using R</title>
+<title>9&nbsp; OLS Assumptions – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,14 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -283,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_07.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_07.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -319,8 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -328,50 +334,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,45 +409,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -427,40 +456,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -503,20 +532,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#independent-errors-and-the-durbin-watson-test" id="toc-independent-errors-and-the-durbin-watson-test" class="nav-link active" data-scroll-target="#independent-errors-and-the-durbin-watson-test"><span class="header-section-number">7.1</span> Independent errors and the Durbin-Watson test</a></li>
-  <li><a href="#sec-linear-no-excessive-multicollinearity" id="toc-sec-linear-no-excessive-multicollinearity" class="nav-link" data-scroll-target="#sec-linear-no-excessive-multicollinearity"><span class="header-section-number">7.2</span> No excessive multicollinearity</a></li>
-  <li><a href="#linearity-and-additivity" id="toc-linearity-and-additivity" class="nav-link" data-scroll-target="#linearity-and-additivity"><span class="header-section-number">7.3</span> Linearity and additivity</a>
+  <li><a href="#independent-errors-and-the-durbin-watson-test" id="toc-independent-errors-and-the-durbin-watson-test" class="nav-link active" data-scroll-target="#independent-errors-and-the-durbin-watson-test"><span class="header-section-number">9.1</span> Independent errors and the Durbin-Watson test</a></li>
+  <li><a href="#sec-linear-no-excessive-multicollinearity" id="toc-sec-linear-no-excessive-multicollinearity" class="nav-link" data-scroll-target="#sec-linear-no-excessive-multicollinearity"><span class="header-section-number">9.2</span> No excessive multicollinearity</a></li>
+  <li><a href="#linearity-and-additivity" id="toc-linearity-and-additivity" class="nav-link" data-scroll-target="#linearity-and-additivity"><span class="header-section-number">9.3</span> Linearity and additivity</a>
   <ul class="collapse">
-  <li><a href="#logged-relationships" id="toc-logged-relationships" class="nav-link" data-scroll-target="#logged-relationships"><span class="header-section-number">7.3.1</span> Logged relationships</a></li>
-  <li><a href="#sec-quadratic-relationships" id="toc-sec-quadratic-relationships" class="nav-link" data-scroll-target="#sec-quadratic-relationships"><span class="header-section-number">7.3.2</span> Quadratic relationships</a></li>
+  <li><a href="#logged-relationships" id="toc-logged-relationships" class="nav-link" data-scroll-target="#logged-relationships"><span class="header-section-number">9.3.1</span> Logged relationships</a></li>
+  <li><a href="#sec-quadratic-relationships" id="toc-sec-quadratic-relationships" class="nav-link" data-scroll-target="#sec-quadratic-relationships"><span class="header-section-number">9.3.2</span> Quadratic relationships</a></li>
   </ul></li>
-  <li><a href="#homoskedasticity" id="toc-homoskedasticity" class="nav-link" data-scroll-target="#homoskedasticity"><span class="header-section-number">7.4</span> Homoskedasticity</a></li>
-  <li><a href="#normally-distributed-errors" id="toc-normally-distributed-errors" class="nav-link" data-scroll-target="#normally-distributed-errors"><span class="header-section-number">7.5</span> Normally distributed errors</a></li>
-  <li><a href="#limited-impact-of-outliers-and-influential-cases" id="toc-limited-impact-of-outliers-and-influential-cases" class="nav-link" data-scroll-target="#limited-impact-of-outliers-and-influential-cases"><span class="header-section-number">7.6</span> Limited impact of outliers and influential cases</a>
+  <li><a href="#homoskedasticity" id="toc-homoskedasticity" class="nav-link" data-scroll-target="#homoskedasticity"><span class="header-section-number">9.4</span> Homoskedasticity</a></li>
+  <li><a href="#normally-distributed-errors" id="toc-normally-distributed-errors" class="nav-link" data-scroll-target="#normally-distributed-errors"><span class="header-section-number">9.5</span> Normally distributed errors</a></li>
+  <li><a href="#limited-impact-of-outliers-and-influential-cases" id="toc-limited-impact-of-outliers-and-influential-cases" class="nav-link" data-scroll-target="#limited-impact-of-outliers-and-influential-cases"><span class="header-section-number">9.6</span> Limited impact of outliers and influential cases</a>
   <ul class="collapse">
-  <li><a href="#sec-linear-investigating-outliers" id="toc-sec-linear-investigating-outliers" class="nav-link" data-scroll-target="#sec-linear-investigating-outliers"><span class="header-section-number">7.6.1</span> Investigating outliers</a></li>
-  <li><a href="#sec-linear-investigating-influential-cases" id="toc-sec-linear-investigating-influential-cases" class="nav-link" data-scroll-target="#sec-linear-investigating-influential-cases"><span class="header-section-number">7.6.2</span> Investigating influential cases</a></li>
-  <li><a href="#finding-specific-cases" id="toc-finding-specific-cases" class="nav-link" data-scroll-target="#finding-specific-cases"><span class="header-section-number">7.6.3</span> Finding specific cases</a></li>
+  <li><a href="#sec-linear-investigating-outliers" id="toc-sec-linear-investigating-outliers" class="nav-link" data-scroll-target="#sec-linear-investigating-outliers"><span class="header-section-number">9.6.1</span> Investigating outliers</a></li>
+  <li><a href="#sec-linear-investigating-influential-cases" id="toc-sec-linear-investigating-influential-cases" class="nav-link" data-scroll-target="#sec-linear-investigating-influential-cases"><span class="header-section-number">9.6.2</span> Investigating influential cases</a></li>
+  <li><a href="#finding-specific-cases" id="toc-finding-specific-cases" class="nav-link" data-scroll-target="#finding-specific-cases"><span class="header-section-number">9.6.3</span> Finding specific cases</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -525,9 +554,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_07.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_07.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ols-assumptions" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></h1>
+<h1 class="title"><span id="sec-ols-assumptions" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></h1>
 </div>
 
 
@@ -555,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>We begin our R script by loading relevant libraries. Note that these libraries are already installed on university computers but must first be loaded before use.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#specific packages for assumptions testing</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#specific packages for assumptions testing</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)             <span class="co">#used for several assumption checks</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggResidpanel)    <span class="co">#used for assumptions checks through plots</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(expss)           <span class="co">#used for frequency tables</span></span>
@@ -564,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)             <span class="co">#loading data</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)       <span class="co">#data manipulation and plotting</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)           <span class="co">#for obtaining residuals and influence measures</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects) <span class="co">#predicted values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects) <span class="co">#predicted values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -572,7 +601,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -583,19 +612,19 @@ Warning!
 <li>detach <code>car</code> and <code>expss</code> after you used them for assumptions check with the <code>detach</code> code. The code is shown below, to run it the hashtag needs to be deleted (adding it prevents the code from actually running as we will still use the packages in this overview).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># detach("package:car")</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># detach("package:expss")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># detach("package:car")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># detach("package:expss")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<section id="independent-errors-and-the-durbin-watson-test" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="independent-errors-and-the-durbin-watson-test"><span class="header-section-number">7.1</span> Independent errors and the Durbin-Watson test</h2>
+<section id="independent-errors-and-the-durbin-watson-test" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="independent-errors-and-the-durbin-watson-test"><span class="header-section-number">9.1</span> Independent errors and the Durbin-Watson test</h2>
 <p>The assumption of independent errors relates to the condition that observations are independently selected from each other. This condition is not met when there is a time relation between observations or when there is geographical clustering (e.g.&nbsp;when multistage sampling is used for a survey).</p>
 <p>The Durbin-Watson test can be used to check whether a time relation leads to too much correlation between the errors. It cannot be used when there is no time relation (e.g.&nbsp;a cross-sectional survey). In addition, the dataset needs to be ordered on the time dimension (old-to-new or new-to-old).</p>
 <p>The example dataset “gdp-dem, time order.csv” adheres to these conditions. It records the gdp and democracy scores for a single country over time. The dataset is fictitious. There is no missing data, but the below code can also be used for datasets with missing values (‘NA’).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dta <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"gdp-dem, time order.csv"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dta, <span class="at">n =</span> <span class="dv">10</span>L) <span class="co">#So we just see the first ten rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dta <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"gdp-dem, time order.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dta, <span class="at">n =</span> <span class="dv">10</span>L) <span class="co">#So we just see the first ten rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -614,13 +643,13 @@ Warning!
 </div>
 <p>This data is properly sorted by time. We can use the <code>arrange</code> function from the <code>dplyr</code> package (part of <code>tidyverse</code>) in situations where the dataset is not properly sorted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sort ascending</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sort ascending</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dta <span class="ot">&lt;-</span> dta <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#sort descending</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>dta <span class="ot">&lt;-</span> dta <span class="sc">|&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>dta &lt;- dta</code></dt>
@@ -638,11 +667,11 @@ Warning!
 </dl>
 <p>We run a simple bivariate regression with <code>gdp</code> as the independent variable and <code>democracy</code> as the dependent variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run model</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>time_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(democracy <span class="sc">~</span> gdp, <span class="at">data =</span> dta)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Examine coefficients</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(time_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(time_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic      p.value
@@ -653,7 +682,7 @@ Warning!
 </div>
 <p>We use the Durbin-Watson test through the <a href="https://CRAN.R-project.org/package=car" target="_blank">car</a> package to assess whether we have an issue with serial autocorrelation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(time_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(time_model) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> lag Autocorrelation D-W Statistic p-value
    1       0.5124721     0.8369625       0
@@ -672,7 +701,7 @@ Warning!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -685,23 +714,26 @@ Output Explanation
 </div>
 <p>The D-W statistic for this model is 0.84 , which indicates that we have a problem with autocorrelation.</p>
 </section>
-<section id="sec-linear-no-excessive-multicollinearity" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="sec-linear-no-excessive-multicollinearity"><span class="header-section-number">7.2</span> No excessive multicollinearity</h2>
-<p>We will use a different dataset, one without the problem of autocorrelation, for our other assumption tests. We use the democracy dataset (<code>demadata.rds</code>) and run a multiple regression model predicting V-Dem polyarchy scores based on inequality (<code>gini_2019</code>), history of democracy (<code>TYPEDEMO1984</code>, factorized), and past gross domestic product per capita (<code>GDP2006</code>).</p>
+<section id="sec-linear-no-excessive-multicollinearity" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-linear-no-excessive-multicollinearity"><span class="header-section-number">9.2</span> No excessive multicollinearity</h2>
+<p>We will use a different dataset, one without the problem of autocorrelation, for our other assumption tests. We use the democracy dataset (<code>demadata.rds</code>) and run a multiple regression model predicting V-Dem polyarchy scores based on inequality (<code>gini_2019</code>), history of democracy (<code>TYPEDEMO1984</code>, converted into a factor variable), and past gross domestic product per capita (<code>GDP2006</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load Data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load Data</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"demdata.rds"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Factorize our binary variable</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TYPEDEMO1984_factor =</span> <span class="fu">factorize</span>(TYPEDEMO1984))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Run and store a model and then look at the output</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                       GDP2006, <span class="at">data =</span> demdata)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to factor</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span>  </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">TYPEDEMO1984_factor =</span> <span class="fu">factor</span>(TYPEDEMO1984, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Autocracies"</span>, <span class="st">"Democracies"</span>)))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Run and store a model and then look at the output</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>model_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                       GDP2006, <span class="at">data =</span> demdata)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_multiple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
@@ -719,7 +751,7 @@ Output Explanation
 </div>
 <p>The coefficients for <code>gini_2019</code> (p = 0.322) and <code>TYPEDEMO1984_factor</code> (p = 0.246) are statistically insignificant. Is that because of too much multicollinearity? We can again rely on the <code>car</code> package to answer this question via its <code>vif()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model_multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model_multiple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          gini_2019 TYPEDEMO1984_factor             GDP2006 
            1.811074            1.171946            2.039059 </code></pre>
@@ -738,19 +770,24 @@ Output Explanation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>The output of this command will look different if you have a categorical variable in the model, as in this example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Typeregime2006_factor =</span> <span class="fu">factorize</span>(Typeregime2006))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>vif_example <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> GDP2006 <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                    Typeregime2006_factor, <span class="at">data =</span> demdata) </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(vif_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span>  </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Typeregime2006_factor =</span> <span class="fu">factor</span>(Typeregime2006, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Liberal democracy"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"Electoral democracy"</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"Autocracy"</span>)))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>vif_example <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> GDP2006 <span class="sc">+</span> </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                    Typeregime2006_factor, <span class="at">data =</span> demdata) </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(vif_example)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                          GVIF Df GVIF^(1/(2*Df))
 gini_2019             1.385354  1        1.177011
@@ -762,14 +799,21 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 </div>
 </div>
 </section>
-<section id="linearity-and-additivity" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="linearity-and-additivity"><span class="header-section-number">7.3</span> Linearity and additivity</h2>
+<section id="linearity-and-additivity" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="linearity-and-additivity"><span class="header-section-number">9.3</span> Linearity and additivity</h2>
 <p>A linear regression model relies on the assumption that the relationship between the predictors and the dependent variable can be captured in a linear equation. To check this we can investigate a plot of the model’s residuals against the model’s fitted (predicted) values via the <code>resid_panel()</code> command from the <code>ggResidpanel</code> package.</p>
 <p>We first check whether a simplified polyarchy model with only economic inequality (<code>gini_2019</code>) as a predictor violates the linearity and additivity assumption.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bivar_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data=</span>demdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bivar_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data=</span>demdata)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(bivar_model, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(bivar_model, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the ggResidpanel package.
+  Please report the issue to the authors.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -779,11 +823,11 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 </div>
 </div>
 <p>Ideally, the dots will look randomly distributed rather than showing some type of non-linear pattern. The results above do not suggest a violation of this assumption.</p>
-<section id="logged-relationships" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="logged-relationships"><span class="header-section-number">7.3.1</span> Logged relationships</h3>
+<section id="logged-relationships" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="logged-relationships"><span class="header-section-number">9.3.1</span> Logged relationships</h3>
 <p>We do not always get a residual plot with just random dots. Let us take a look at the plot for the more extended model of polyarchy (<code>model_multiple</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(model_multiple, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(model_multiple, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -794,7 +838,7 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 </div>
 <p>The residuals plot suggests a non-linear relationship. However, it cannot tell us which independent variable in the model might be at fault. We can investigate this question via the <code>avPlots()</code> function from the <code>car</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(model_multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(model_multiple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -808,17 +852,17 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 <p>Turning to the <code>GDP2006</code> predictor, we find a steep regression line (the coefficient was significant), but the dots are not evenly distributed around the line. In contrast, it looks like the relationship could be better described as a degressive curve rather than as a linear relationship.</p>
 <p>We can account for this by transforming <code>GDP2006</code> using the natural logarithm, including that variable in our model rather than the original <code>GDP2006</code> variable, and then re-checking our diagnostic plots. We can use the <code>log()</code> function to take the natural logarithm of <code>GDP2006</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LNGDP2006 =</span> <span class="fu">log</span>(GDP2006))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LNGDP2006 =</span> <span class="fu">log</span>(GDP2006))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here, we re-run the model and re-check our diagnostic plots. The plots look better than before.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Re-running the model </span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>multiple_ln <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                    LNGDP2006, <span class="at">data=</span>demdata)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Residual Plot</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Re-running the model </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>multiple_ln <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                    LNGDP2006, <span class="at">data=</span>demdata)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Residual Plot</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -826,8 +870,8 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Partial Regression Plot</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(multiple_ln)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Partial Regression Plot</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(multiple_ln)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -842,7 +886,7 @@ Typeregime2006_factor 1.346530  2        1.077219</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -854,13 +898,13 @@ Warning!
 <p>We advise making a figure with predicted values to investigate the relationship between a logged predictor variable and a dependent variable to help clarify the nature of the relationship.</p>
 <p>We would first examine the distribution of our logged variable for the observations in our model (i.e., after removing observations with an NA value on one or more variables in the model):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First check the values of GDP2006 for the observations used in the model</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>demdata_sub <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, gini_2019, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        TYPEDEMO1984_factor, LNGDP2006)) </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the variable's distribution</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_sub<span class="sc">$</span>LNGDP2006)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First check the values of GDP2006 for the observations used in the model</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>demdata_sub <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, gini_2019, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                        TYPEDEMO1984_factor, LNGDP2006)) </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the variable's distribution</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_sub<span class="sc">$</span>LNGDP2006)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   5.521   7.721   8.720   8.765  10.140  10.911 </code></pre>
@@ -868,44 +912,44 @@ Warning!
 </div>
 <p>We would then make predictions across the range of the logged X variable. Here, you should make predictions for many values of X so that a nice curved line can be plotted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-47"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-47-1"><a href="#annotated-cell-47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then, make predictions based on the values you obtained</span></span>
-<span id="annotated-cell-47-2"><a href="#annotated-cell-47-2" aria-hidden="true" tabindex="-1"></a>bbp_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(multiple_ln, </span>
-<span id="annotated-cell-47-3"><a href="#annotated-cell-47-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">LNGDP2006 =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">5.5</span>, </span>
-<span id="annotated-cell-47-4"><a href="#annotated-cell-47-4" aria-hidden="true" tabindex="-1"></a>                                                            <span class="at">to =</span> <span class="dv">11</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-47" data-target-annotation="1">1</button><span id="annotated-cell-47-5" class="code-annotation-target"><a href="#annotated-cell-47-5" aria-hidden="true" tabindex="-1"></a>                                                            <span class="at">by =</span> <span class="fl">0.5</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-48"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-48-1"><a href="#annotated-cell-48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then, make predictions based on the values you obtained</span></span>
+<span id="annotated-cell-48-2"><a href="#annotated-cell-48-2" aria-hidden="true" tabindex="-1"></a>bbp_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(multiple_ln, </span>
+<span id="annotated-cell-48-3"><a href="#annotated-cell-48-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">LNGDP2006 =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">5.5</span>, </span>
+<span id="annotated-cell-48-4"><a href="#annotated-cell-48-4" aria-hidden="true" tabindex="-1"></a>                                                            <span class="at">to =</span> <span class="dv">11</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-48" data-target-annotation="1">1</button><span id="annotated-cell-48-5" class="code-annotation-target"><a href="#annotated-cell-48-5" aria-hidden="true" tabindex="-1"></a>                                                            <span class="at">by =</span> <span class="fl">0.5</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-47" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-48" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-47" data-code-lines="5" data-code-annotation="1"><code>seq()</code> stands for sequence. We are asking the command to calculate predictions for the sequence of values starting from 5.5, and ending at 11, in 0.5 increments.</span>
+<span data-code-cell="annotated-cell-48" data-code-lines="5" data-code-annotation="1"><code>seq()</code> stands for sequence. We are asking the command to calculate predictions for the sequence of values starting from 5.5, and ending at 11, in 0.5 increments.</span>
 </dd>
 </dl>
 </div>
 </div>
 <p>We then create a new variable in the dataset with the predicted values to serve as the X-variable in our plot. Specifically, we exponentiate the logged X variable using the <code>exp()</code> command. This <em>reverses</em> the logarithim thereby enabling us to plot the predicted values against X on its original scale.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-48"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-48-1"><a href="#annotated-cell-48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponentiation of the logged predictor:</span></span>
-<span id="annotated-cell-48-2"><a href="#annotated-cell-48-2" aria-hidden="true" tabindex="-1"></a>bbp_preds <span class="ot">&lt;-</span> bbp_preds <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-48" data-target-annotation="1">1</button><span id="annotated-cell-48-3" class="code-annotation-target"><a href="#annotated-cell-48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GDP2006 =</span> <span class="fu">exp</span>(LNGDP2006))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-49"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-49-1"><a href="#annotated-cell-49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponentiation of the logged predictor:</span></span>
+<span id="annotated-cell-49-2"><a href="#annotated-cell-49-2" aria-hidden="true" tabindex="-1"></a>bbp_preds <span class="ot">&lt;-</span> bbp_preds <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-49" data-target-annotation="1">1</button><span id="annotated-cell-49-3" class="code-annotation-target"><a href="#annotated-cell-49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GDP2006 =</span> <span class="fu">exp</span>(LNGDP2006))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-48" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-49" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-48" data-code-lines="3" data-code-annotation="1"><code>exp()</code> basically reverses the log, i.e., <code>(x)</code> = <code>exp(log(x))</code></span>
+<span data-code-cell="annotated-cell-49" data-code-lines="3" data-code-annotation="1"><code>exp()</code> basically reverses the log, i.e., <code>(x)</code> = <code>exp(log(x))</code></span>
 </dd>
 </dl>
 </div>
 </div>
 <p>We finally make our graph:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make your figure</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bbp_preds, <span class="fu">aes</span>(<span class="at">x =</span> GDP2006, <span class="at">y =</span> estimate)) <span class="sc">+</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Electoral Democracy Score Based on GDP in 2006"</span>, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP in 2006"</span>, </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make your figure</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bbp_preds, <span class="fu">aes</span>(<span class="at">x =</span> GDP2006, <span class="at">y =</span> estimate)) <span class="sc">+</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Electoral Democracy Score Based on GDP in 2006"</span>, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP in 2006"</span>, </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -918,18 +962,18 @@ Warning!
 </div>
 </div>
 </section>
-<section id="sec-quadratic-relationships" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="sec-quadratic-relationships"><span class="header-section-number">7.3.2</span> Quadratic relationships</h3>
+<section id="sec-quadratic-relationships" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="sec-quadratic-relationships"><span class="header-section-number">9.3.2</span> Quadratic relationships</h3>
 <p>Another non-linear relationship we may encounter is the quadratic or curvilinear one. Our example draws on the ‘more violence in the middle’ theory which holds that there is a quadratic relationship between political violence and democracy scores such that violence will be more prevalent at intermediate levels of democracy.</p>
 <p>Our measure for political violence and instability is <code>pve</code>, which is drawn from the 2021 World Governance Indicators. Higher values on this variable mean <em>less</em> violence. Our predictor variable is the now familiar electoral democracy measure from the Varieties of Democracy Project, <code>v2x_polyarchy</code>.</p>
 <p>It is generally a wise idea to visually examine the relationship between two variables before progressing to a statistical model. We do so here via a scatterplot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> v2x_polyarchy, <span class="at">y =</span> pve)) <span class="sc">+</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Political violence and regime type"</span>, </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Electoral democracy (2020)"</span>, </span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Absence of political violence and instability (2021)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> v2x_polyarchy, <span class="at">y =</span> pve)) <span class="sc">+</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Political violence and regime type"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Electoral democracy (2020)"</span>, </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Absence of political violence and instability (2021)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -938,7 +982,7 @@ Warning!
 </div>
 </div>
 </div>
-<p>The syntax for this plot is similar to what we have seen before for producing a scatterplot (<a href="linear_01.html#sec-visualizing-bivariate-relationships-with-a-scatterplot" class="quarto-xref"><span>Section 1.2</span></a>), but with one important difference:</p>
+<p>The syntax for this plot is similar to what we have seen before for producing a scatterplot (<a href="linear_01.html#sec-visualizing-bivariate-relationships-with-a-scatterplot" class="quarto-xref"><span>Section 3.1</span></a>), but with one important difference:</p>
 <dl>
 <dt><code>geom_smooth(method = "loess")</code></dt>
 <dd>
@@ -947,11 +991,11 @@ Warning!
 </dl>
 <p>There appears to be some support for a curvillinear, rather than linear, relationship between the two variables. We’ll begin with a linear model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>Violence_linmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy, <span class="at">data =</span> demdata)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Summarize it</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_linmodel, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Violence_linmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy, <span class="at">data =</span> demdata)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Summarize it</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_linmodel, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 7
   term          estimate std.error statistic  p.value conf.low conf.high
@@ -962,7 +1006,7 @@ Warning!
 </div>
 <p>The non-linear nature of the relationship may show up in the residual plot, though this is not obviously the case here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(Violence_linmodel, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(Violence_linmodel, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -973,20 +1017,20 @@ Warning!
 </div>
 <p>We can check whether a quadratic relationship is a better fit for the data by adding a quadratic term to our regression model. We can do this in either of two ways. First, we can manually create this variable first and add it to our dataset via <code>mutate()</code> before including it in our resulting model. Second, we can directly add the transformation to the model via the <code>I()</code> command. This is a little simpler since we do not need to create the varaible first and, perhaps more importantly, works better with the commands from <code>marginaleffects</code> that we use to interpret models (e.g., <code>predictions()</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the squared term</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">v2x_polyarchy_sq =</span> v2x_polyarchy<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Update the model</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>Violence_sqmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy <span class="sc">+</span> v2x_polyarchy_sq, </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>demdata)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternative method</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>Violence_sqmodel_alternative <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy <span class="sc">+</span> </span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">I</span>(v2x_polyarchy<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> demdata)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Model results</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_sqmodel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the squared term</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">v2x_polyarchy_sq =</span> v2x_polyarchy<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Update the model</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>Violence_sqmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy <span class="sc">+</span> v2x_polyarchy_sq, </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>demdata)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternative method</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>Violence_sqmodel_alternative <span class="ot">&lt;-</span> <span class="fu">lm</span>(pve <span class="sc">~</span> v2x_polyarchy <span class="sc">+</span> </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">I</span>(v2x_polyarchy<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> demdata)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Model results</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_sqmodel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term             estimate std.error statistic  p.value
@@ -995,7 +1039,7 @@ Warning!
 2 v2x_polyarchy      -1.73      1.10      -1.58 0.117   
 3 v2x_polyarchy_sq    3.83      1.05       3.64 0.000361</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_sqmodel_alternative)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Violence_sqmodel_alternative)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term               estimate std.error statistic  p.value
@@ -1013,7 +1057,7 @@ Warning!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1025,12 +1069,12 @@ Warning!
 </ul>
 <p>Much as with exponential relationships, it is often better to clarify the relationship visually. We do this by first identifying the range of X that we want to make predictions with a focus on just those observations that were used in fitting the model (i.e., no NA values on any of the included variables).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First, we check the values of X for the observations used </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#in fitting the model </span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>demdata_sub2 <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy , pve))</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_sub2<span class="sc">$</span>v2x_polyarchy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First, we check the values of X for the observations used </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#in fitting the model </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>demdata_sub2 <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy , pve))</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_sub2<span class="sc">$</span>v2x_polyarchy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.0150  0.2865  0.5425  0.5191  0.7625  0.9080 </code></pre>
@@ -1038,20 +1082,20 @@ Warning!
 </div>
 <p>We then obtain the predicted values via <code>predictions()</code> and plot them. It is a good idea to ask for many predicted values here so that a nice curved line can be drawn.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we make predictions based on these values</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>pve_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Violence_sqmodel_alternative, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">v2x_polyarchy=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">to=</span><span class="fl">0.9</span>, </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">by=</span><span class="fl">0.05</span>)))</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make your figure</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pve_preds, <span class="fu">aes</span>(<span class="at">x=</span>v2x_polyarchy, <span class="at">y=</span>estimate)) <span class="sc">+</span> </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), </span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Electoral Democracy and Political Violence"</span>,</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Electoral Democracy"</span>,   </span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we make predictions based on these values</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pve_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(Violence_sqmodel_alternative, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">v2x_polyarchy=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">to=</span><span class="fl">0.9</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">by=</span><span class="fl">0.05</span>)))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make your figure</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pve_preds, <span class="fu">aes</span>(<span class="at">x=</span>v2x_polyarchy, <span class="at">y=</span>estimate)) <span class="sc">+</span> </span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), </span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Electoral Democracy and Political Violence"</span>,</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Electoral Democracy"</span>,   </span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Value"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1062,13 +1106,13 @@ Warning!
 </div>
 <p><strong>Important</strong>: We calculated predicted values from the model where we included the squared term via the <code>I()</code> syntax rather than from the model where we first created the squared term in our dataset using <code>mutate()</code>. We needed to do this because <code>predictions()</code> will not produce accurate predictions in the latter scenario. If we use <code>predictions()</code> with that latter model, then <code>predictions()</code> would calculate predictions for each value of X while holding X<sup>2</sup> constant at its mean value; you can see an example of this behavior below. This is problematic: if X = 0.50, then X<sup>2</sup> <em>must</em> equal 0.25 rather than the mean of X<sup>2</sup> for the correct prediction to be calculated. The use of <code>I()</code> avoids this problem and generates the correct predicted values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions using the squared term we created: y = x + x^2</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(Violence_sqmodel, </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">v2x_polyarchy=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, </span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">to=</span><span class="fl">0.1</span>, </span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">by=</span><span class="fl">0.05</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowid, estimate, conf.low, conf.high, v2x_polyarchy_sq, v2x_polyarchy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions using the squared term we created: y = x + x^2</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(Violence_sqmodel, </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">v2x_polyarchy=</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">to=</span><span class="fl">0.1</span>, </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                                                               <span class="at">by=</span><span class="fl">0.05</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowid, estimate, conf.low, conf.high, v2x_polyarchy_sq, v2x_polyarchy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   rowid estimate conf.low conf.high v2x_polyarchy_sq v2x_polyarchy
@@ -1082,11 +1126,11 @@ Warning!
 </div>
 </section>
 </section>
-<section id="homoskedasticity" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="homoskedasticity"><span class="header-section-number">7.4</span> Homoskedasticity</h2>
+<section id="homoskedasticity" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="homoskedasticity"><span class="header-section-number">9.4</span> Homoskedasticity</h2>
 <p>We can inspect the residuals vs.&nbsp;fitted values plot again to investigate the assumption of homoskedasticity as well as the assumption of linearity. Here, for instance, is the residuals plot for the quadratic model of political violence that we just fit (<code>Violence_sqmodel</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(Violence_sqmodel, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(Violence_sqmodel, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1097,12 +1141,18 @@ Warning!
 </div>
 <p>We are again looking for a random pattern of dots (homoskedasticity) rather than some type of funnel shape (heteroskedasticity). A funnel shape appears in the plot above, indicating that this assumption is being violated.</p>
 </section>
-<section id="normally-distributed-errors" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="normally-distributed-errors"><span class="header-section-number">7.5</span> Normally distributed errors</h2>
+<section id="normally-distributed-errors" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="normally-distributed-errors"><span class="header-section-number">9.5</span> Normally distributed errors</h2>
 <p>We investigate whether the assumption of normally distributed errors holds by means of two plots from the <code>ggResidpanel</code> package: a histogram and a normal quantile (qq) plot of the model’s residuals.</p>
 <p>This example checks the assumption of normality for the multiple linear regression model predicting democracy scores with the logged version of GDP included as a predictor variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"hist"</span>, <span class="st">"qq"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"hist"</span>, <span class="st">"qq"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the ggResidpanel package.
+  Please report the issue to the authors.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1119,7 +1169,7 @@ Warning!
 </dl>
 <p>Note that we can also add our residuals vs fitted (“resid”) plot in the same code if we want to inspect multiple assumptions quickly. For instance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>, <span class="st">"hist"</span>, <span class="st">"qq"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>, <span class="st">"hist"</span>, <span class="st">"qq"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1129,13 +1179,13 @@ Warning!
 </div>
 </div>
 </section>
-<section id="limited-impact-of-outliers-and-influential-cases" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="limited-impact-of-outliers-and-influential-cases"><span class="header-section-number">7.6</span> Limited impact of outliers and influential cases</h2>
+<section id="limited-impact-of-outliers-and-influential-cases" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="limited-impact-of-outliers-and-influential-cases"><span class="header-section-number">9.6</span> Limited impact of outliers and influential cases</h2>
 <p>We will use the <code>augment()</code> function from the <code>broom</code> package to investigate whether outliers and influential cases are impacting our results.</p>
 <p>Our example will use the <code>multiple_ln</code> model from earlier wherein we predicted a country’s democracy score based on its level of inequality, prior regime status, and a logged version of GDP.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the command and store results</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>demdata_multln <span class="ot">&lt;-</span> <span class="fu">augment</span>(multiple_ln)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the command and store results</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>demdata_multln <span class="ot">&lt;-</span> <span class="fu">augment</span>(multiple_ln)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>demdata_multln &lt;-augment(multiple_ln)</code></dt>
@@ -1145,7 +1195,7 @@ Warning!
 </dl>
 <p>Here is what the contents of the data object look like:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>demdata_multln</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>demdata_multln</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53 × 11
    .rownames v2x_polyarchy gini_2019 TYPEDEMO1984_factor LNGDP2006 .fitted
@@ -1171,7 +1221,7 @@ Warning!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1189,11 +1239,11 @@ Output Explanation
 </div>
 </div>
 <p>We use the standardized residuals (<code>.std.resid</code>) data to look for the presence of “too many outliers” and the Cook’s D values (<code>.cooksd</code>) to examine whether there are any “influential cases”.</p>
-<section id="sec-linear-investigating-outliers" class="level3" data-number="7.6.1">
-<h3 data-number="7.6.1" class="anchored" data-anchor-id="sec-linear-investigating-outliers"><span class="header-section-number">7.6.1</span> Investigating outliers</h3>
+<section id="sec-linear-investigating-outliers" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="sec-linear-investigating-outliers"><span class="header-section-number">9.6.1</span> Investigating outliers</h3>
 <p>We first investigate the summary statistics of the standardized residuals (saved in the <code>demdata_multln</code> dataset) . Specifically, we look at the minimum and maximum values to see any observations cross the different outlier thresholds that we are interested in (|1.96|, |2.58|, and especially |3.29|).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_multln<span class="sc">$</span>.std.resid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_multln<span class="sc">$</span>.std.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 -3.1281471 -0.2252984  0.2109869 -0.0007828  0.5831831  1.7394397 </code></pre>
@@ -1203,17 +1253,17 @@ Output Explanation
 <p>We can do this by creating 3 new dummy variables in the dataset we created using <code>augment()</code>: SRE1.96, SRE2.58, SRE3.29. The dummy variables take on the value of ‘1’ if the standardized residual for an observation is higher than the specified threshold value. Otherwise, the variable takes on the value of ‘0’. We use the <code>case_when()</code> function (from <code>dplyr</code>) to do this coding; see <a href="https://poweleiden.github.io/statistics1/data_05_advanced_recoding.html#recoding-variables-using-case_when" target="_blank">Statistics I, 5.1</a> for a refresher on how this command works.</p>
 <p>The code below can remain largely unaltered in your own syntax with only the name of the dataset (here: <code>demdata_multln</code>) needing to be altered.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>demdata_multln <span class="ot">&lt;-</span> demdata_multln <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SRE1.96 =</span> <span class="fu">case_when</span>(</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">1.96</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">1.96</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">SRE2.58 =</span> <span class="fu">case_when</span>(</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">2.58</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">2.58</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">2.58</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">2.58</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">SRE3.29 =</span> <span class="fu">case_when</span>(</span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">3.29</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">3.29</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">3.29</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">3.29</span> <span class="sc">~</span> <span class="dv">0</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>demdata_multln <span class="ot">&lt;-</span> demdata_multln <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SRE1.96 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">1.96</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">1.96</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">SRE2.58 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">2.58</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">2.58</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">2.58</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">2.58</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">SRE3.29 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="fl">3.29</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">3.29</span>  <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>    .std.resid <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">3.29</span> <span class="sc">&amp;</span> .std.resid <span class="sc">&lt;</span> <span class="fl">3.29</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here is how to read the syntax:</p>
 <dl>
@@ -1237,9 +1287,9 @@ Output Explanation
 <p>Now that we have created our threshold variables, we can inspect their frequency statistics. We use the <code>fre()</code> command from the <code>expss</code> package for the frequency tables.</p>
 <p>Again, this code can remain largely unchanged, only the dataset name (here: <code>demdata_multln</code>) needs to be altered for own applications.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE1<span class="fl">.96</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE1<span class="fl">.96</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gmisc_table caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: center; border-bottom: 1px solid grey; font-weight: 900; border-top: 2px solid grey;">demdata_multln$SRE1.96</th>
@@ -1286,9 +1336,9 @@ Output Explanation
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE2<span class="fl">.58</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE2<span class="fl">.58</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gmisc_table caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: center; border-bottom: 1px solid grey; font-weight: 900; border-top: 2px solid grey;">demdata_multln$SRE2.58</th>
@@ -1335,9 +1385,9 @@ Output Explanation
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE3<span class="fl">.29</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fre</span>(demdata_multln<span class="sc">$</span>SRE3<span class="fl">.29</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gmisc_table caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: center; border-bottom: 1px solid grey; font-weight: 900; border-top: 2px solid grey;">demdata_multln$SRE3.29</th>
@@ -1380,8 +1430,8 @@ Output Explanation
 <p>We have more than 5% of cases with a standardized residual higher than 1.96 in absolute value, more than 1% higher than 2.58, and zero cases higher than 3.29 (we could already see this from the summary statistics above).</p>
 <p>To investigate whether these outliers influence our results we conduct our linear regression again after filtering out cases with a standardized residual higher than 1.96 in absolute value. We can replace the SRE1.96 variable with the SRE2.58 and SRE3.29 variables to investigate the impact of alternative ways of excluding outliers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>multiple_ln1<span class="fl">.96</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln, SRE1<span class="fl">.96</span> <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>multiple_ln1<span class="fl">.96</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln, SRE1<span class="fl">.96</span> <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>data = subset(demdata_multln, SRE1.96 == 0))</code></dt>
@@ -1391,8 +1441,8 @@ Output Explanation
 </dl>
 <p>We could then compare the results from these models with those from the original model to check if the model’s coefficeints and standard errors have changed substantially. However, outliers should not be simply excluded in order to improve model fit. Outliers should only be removed from a model if there is a well-motivated theoretical reason for doing so.</p>
 </section>
-<section id="sec-linear-investigating-influential-cases" class="level3" data-number="7.6.2">
-<h3 data-number="7.6.2" class="anchored" data-anchor-id="sec-linear-investigating-influential-cases"><span class="header-section-number">7.6.2</span> Investigating influential cases</h3>
+<section id="sec-linear-investigating-influential-cases" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="sec-linear-investigating-influential-cases"><span class="header-section-number">9.6.2</span> Investigating influential cases</h3>
 <p>We check whether there are any observations with high Cook’s D values in our dataset in order to see if there are any influential cases in our model. Our rules of thumb are:</p>
 <ul>
 <li>values above 1 are generally cause of concern;</li>
@@ -1401,7 +1451,7 @@ Output Explanation
 </ul>
 <p>We can investigate the summary statistics for Cook’s D values first.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_multln<span class="sc">$</span>.cooksd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata_multln<span class="sc">$</span>.cooksd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 0.0000036 0.0007700 0.0035030 0.0292621 0.0162039 0.6608136 </code></pre>
@@ -1410,7 +1460,7 @@ Output Explanation
 <p>The summary overviews shows that we do not have any observations with a value above 1, but that at least one observation in the model has a Cook’s D value much higher than the rest of the observations. The maximum value is 0.66 and this value is substantially higher than others in the data. The 3rd Quantile value is only 0.016, indicating that 75% of the values are lower than 0.016.</p>
 <p>We can also investigate this graphically by creating a plot of Cook’s D values through the <code>ggResidpanel</code> package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"cookd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(multiple_ln, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"cookd"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1428,8 +1478,8 @@ Output Explanation
 <p>The plot shows there really is only one case that deviates strongly all the rest. Per the summary output, the Cook’s D value for this observation is 0.66.</p>
 <p>We can check the results of a linear model without this case included. We run a new model filtering out the high Cook’s D value with the code below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>multiple_lncook <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln, .cooksd <span class="sc">&lt;</span> <span class="fl">0.65</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>multiple_lncook <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln, .cooksd <span class="sc">&lt;</span> <span class="fl">0.65</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>data = subset(demdata_multln, .cooksd &lt; 0.65))</code></dt>
@@ -1439,32 +1489,32 @@ Output Explanation
 </dl>
 <p>We could exclude both outliers and influential cases at the same time by using the ‘&amp;’ sign in our subsetting statement:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>multiple_ln_excl <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln,</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                                     SRE1<span class="fl">.96</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> .cooksd <span class="sc">&lt;</span> <span class="fl">0.65</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>multiple_ln_excl <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006,</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> <span class="fu">subset</span>(demdata_multln,</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                                     SRE1<span class="fl">.96</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> .cooksd <span class="sc">&lt;</span> <span class="fl">0.65</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="finding-specific-cases" class="level3" data-number="7.6.3">
-<h3 data-number="7.6.3" class="anchored" data-anchor-id="finding-specific-cases"><span class="header-section-number">7.6.3</span> Finding specific cases</h3>
+<section id="finding-specific-cases" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="finding-specific-cases"><span class="header-section-number">9.6.3</span> Finding specific cases</h3>
 <p>What we don’t know from the previous analyses is which cases were excluded exactly and what could explain why they stood out. To investigate this, we need to add the standardized residuals and Cook’s D values to the original dataset, where we also have the country name variable.</p>
 <p>When missing values are present augment cannot fit the standardized residuals and Cook’s distances to the original dataset. A solution for this is to subset our dataset to only include complete cases, run the regression model again, and then use augment to add the standardized residuals and Cook’s D values to the subsetted dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create subset of data without NA values</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, gini_2019, TYPEDEMO1984_factor, LNGDP2006))</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co"># run model with new complete cases dataset</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>multiple_ln <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006, </span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>demdata_complete)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co"># use augment and add to dataset</span></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span><span class="fu">augment</span>(multiple_ln, <span class="at">data=</span>demdata_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create subset of data without NA values</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(v2x_polyarchy, gini_2019, TYPEDEMO1984_factor, LNGDP2006))</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># run model with new complete cases dataset</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>multiple_ln <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019 <span class="sc">+</span> TYPEDEMO1984_factor <span class="sc">+</span> LNGDP2006, </span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>demdata_complete)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="co"># use augment and add to dataset</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span><span class="fu">augment</span>(multiple_ln, <span class="at">data=</span>demdata_complete)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can inspect specific outliers with the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="sc">|&gt;</span> </span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.std.resid <span class="sc">&gt;</span> <span class="fl">1.96</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, .std.resid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="sc">|&gt;</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.std.resid <span class="sc">&gt;</span> <span class="fl">1.96</span> <span class="sc">|</span> .std.resid <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, .std.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   country_name .std.resid
@@ -1486,9 +1536,9 @@ Output Explanation
 </dd>
 </dl>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="sc">|&gt;</span> </span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.cooksd <span class="sc">&gt;</span> <span class="fl">0.65</span>) <span class="sc">|&gt;</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, .cooksd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="sc">|&gt;</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.cooksd <span class="sc">&gt;</span> <span class="fl">0.65</span>) <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, .cooksd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   country_name .cooksd
@@ -1566,13 +1616,14 @@ Output Explanation
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1956,12 +2007,12 @@ Output Explanation
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./linear_06.html" class="pagination-link" aria-label="Model Fit">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./linear_08.html" class="pagination-link" aria-label="Reporting and Presenting Results">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

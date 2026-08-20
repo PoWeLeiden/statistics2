@@ -20,9 +20,6 @@ library(parameters)      #for calculating standardized coefficients
 demdata <- import("data/demdata.rds") |> 
   as_tibble()
 
-demdata <- demdata |>  
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-         Typeregime2006_factor = factorize(Typeregime2006))
 ```
 
 This chapter focuses on how to perform a multiple linear regression: regression with more than 1 independent variable. In addition, it will discuss how to obtain *standardized* coefficients.
@@ -58,11 +55,13 @@ Recall that we include binary/categorical variables in regression models by firs
 
 ```{r}
 #Convert binary variable into a factor
-demdata <- demdata |> 
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984)) #<1>
-```
+demdata <- demdata |>  
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")))
 
-1.  `factorize()` can be used here because this variable has value labels. Otherwise, we would need to use `factor()` and supply the labels ourselves. See @sec-not-seeing-the-right-number-of-categories-for-factor-variables-in-regression-models .
+```
 
 We fit a multiple linear regression using the same command that we used to perform a bivariate regression: `lm()`. We add multiple predictor variables to the model via the use of a `+` sign as in this example:
 

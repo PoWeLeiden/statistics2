@@ -36,10 +36,11 @@ library(marginaleffects)   #Marginal effects and predictions
 library(tidyverse)         #Data management & plotting
 
 #Data
-anes <- import("data/anes_interactions.rda")
+anes <- import("anes_interactions.rda")
 
 #Example Models
 biden_int <- lm(biden ~ pid * right_track + rural_urban, data = anes)
+
 righttrack_int <- glm(right_track ~ vote2016 * age + rural_urban, 
                       family = "binomial", data = anes)
 ```
@@ -146,7 +147,7 @@ biden_int2_preds
 
 Our dataset has 21 observations: 7 values for `age` x 3 values for `socialists`.
 
-If we want to plot the results using the `linetype` argument, then we need to first convert the `socialists` variable in the predictions dataset that we just created into a factor variable. We use the `factor()` command as the `socialists` variable in our new dataset is numeric and not labelled.
+If we want to plot the results using the `linetype` argument, then we need to first convert the `socialists` variable in the predictions dataset that we just created into a factor variable.
 
 ```{r}
 #Class of variable

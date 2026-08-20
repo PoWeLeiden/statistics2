@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>17&nbsp; Predicted Values from Interaction Models – Statistical analysis and presentation using R</title>
+<title>19&nbsp; Predicted Values from Interaction Models – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,14 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -283,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_03.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_03.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -319,8 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -328,50 +334,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,45 +409,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -427,40 +456,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -503,10 +532,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#binary-x-continuous-interaction" id="toc-binary-x-continuous-interaction" class="nav-link active" data-scroll-target="#binary-x-continuous-interaction"><span class="header-section-number">17.1</span> Binary x Continuous Interaction</a></li>
-  <li><a href="#continuous-x-continuous-interaction" id="toc-continuous-x-continuous-interaction" class="nav-link" data-scroll-target="#continuous-x-continuous-interaction"><span class="header-section-number">17.2</span> Continuous x Continuous Interaction</a></li>
-  <li><a href="#binary-x-binary-interaction" id="toc-binary-x-binary-interaction" class="nav-link" data-scroll-target="#binary-x-binary-interaction"><span class="header-section-number">17.3</span> Binary x Binary Interaction</a></li>
-  <li><a href="#logistic-regression-example" id="toc-logistic-regression-example" class="nav-link" data-scroll-target="#logistic-regression-example"><span class="header-section-number">17.4</span> Logistic Regression Example</a></li>
+  <li><a href="#binary-x-continuous-interaction" id="toc-binary-x-continuous-interaction" class="nav-link active" data-scroll-target="#binary-x-continuous-interaction"><span class="header-section-number">19.1</span> Binary x Continuous Interaction</a></li>
+  <li><a href="#continuous-x-continuous-interaction" id="toc-continuous-x-continuous-interaction" class="nav-link" data-scroll-target="#continuous-x-continuous-interaction"><span class="header-section-number">19.2</span> Continuous x Continuous Interaction</a></li>
+  <li><a href="#binary-x-binary-interaction" id="toc-binary-x-binary-interaction" class="nav-link" data-scroll-target="#binary-x-binary-interaction"><span class="header-section-number">19.3</span> Binary x Binary Interaction</a></li>
+  <li><a href="#logistic-regression-example" id="toc-logistic-regression-example" class="nav-link" data-scroll-target="#logistic-regression-example"><span class="header-section-number">19.4</span> Logistic Regression Example</a></li>
   </ul>
 </nav>
     </div>
@@ -514,9 +543,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_03.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_03.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-predicted-values-from-interaction-models" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></h1>
+<h1 class="title"><span id="sec-predicted-values-from-interaction-models" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></h1>
 </div>
 
 
@@ -534,30 +563,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)               <span class="co">#Importing data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)             <span class="co">#Model summaries</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)   <span class="co">#Marginal effects and predictions</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)         <span class="co">#Data management &amp; plotting</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>anes <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/anes_interactions.rda"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>anes <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"anes_interactions.rda"</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Example Models</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>biden_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> pid <span class="sc">*</span> right_track <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>righttrack_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(right_track <span class="sc">~</span> vote2016 <span class="sc">*</span> age <span class="sc">+</span> rural_urban, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> anes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>righttrack_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(right_track <span class="sc">~</span> vote2016 <span class="sc">*</span> age <span class="sc">+</span> rural_urban, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> anes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>One way we can extract meaningful information about an interaction is via the calculation of marginal effects as we saw in the last chapter. A second way we can better understand interactions is by looking at predicted values where we investigate the predicted score (or predicted probabilities for logistic regression) for Y at specific value combinations of X and Z. We can obtain these via the <code>predictions()</code> function, also from the <code>marginaleffects</code> package. The information in this chapter will build on previous discussions of how to obtain predicted values (linear regression: <a href="linear_05.html" class="quarto-xref"><span>Chapter 5</span></a>; logistic regression: <a href="logit_03.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
-<section id="binary-x-continuous-interaction" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="binary-x-continuous-interaction"><span class="header-section-number">17.1</span> Binary x Continuous Interaction</h2>
+<p>One way we can extract meaningful information about an interaction is via the calculation of marginal effects as we saw in the last chapter. A second way we can better understand interactions is by looking at predicted values where we investigate the predicted score (or predicted probabilities for logistic regression) for Y at specific value combinations of X and Z. We can obtain these via the <code>predictions()</code> function, also from the <code>marginaleffects</code> package. The information in this chapter will build on previous discussions of how to obtain predicted values (linear regression: <a href="linear_05.html" class="quarto-xref"><span>Chapter 7</span></a>; logistic regression: <a href="logit_03.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
+<section id="binary-x-continuous-interaction" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="binary-x-continuous-interaction"><span class="header-section-number">19.1</span> Binary x Continuous Interaction</h2>
 <p>Previously, we predicted Biden evaluations based on an interaction between a continuous variable (partisan identity, <code>pid</code>) and a binary variable (an evaluation of whether the country is on the right track or not, <code>right_track</code>).</p>
 <p>We will now use <code>predictions()</code> to produce predicted values for each combination of the two variables in the interaction (e.g., <code>pid</code> = 1 &amp; <code>right_track</code> = “Right Direction”, <code>pid</code> = 1 &amp; <code>right_track</code> = “Wrong Track”, <code>pid</code> = 2 &amp; <code>right_track</code> = “Right Direction”…). If one, or both, of the variables in the interaction can take on many values, then we would specify some subset of values from across the range of the variable (e.g., minimum, mean, and maximum). Other predictors in the model will be held at their mean (continuous variables) or modal (factor variables) values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculates the predictions and saves them to a new object</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculates the predictions and saves them to a new object</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>biden_int_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(biden_int, </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>), </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">right_track =</span> <span class="fu">c</span>(<span class="st">"Right Direction"</span>, <span class="st">"Wrong Track"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">right_track =</span> <span class="fu">c</span>(<span class="st">"Right Direction"</span>, <span class="st">"Wrong Track"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>biden_int_preds &lt;- predictions(biden_int,</code></dt>
@@ -571,8 +601,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dl>
 <p>We obtain a dataset with 14 rows of predictions : 7 (values for pid) x 2 (values for right_track):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the results</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>biden_int_preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the results</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>biden_int_preds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  pid     right_track Estimate Std. Error     z Pr(&gt;|z|)      S 2.5 % 97.5 %
@@ -594,16 +624,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Type: response</code></pre>
 </div>
 </div>
-<p>The predictions can be visually presented in a plot. The process is similar to creating a predicted values plot from a model without an interaction (see <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 8.7</span></a>). However, there is one important addition: the <code>linetype</code> statement. See the information below for an important note about this option.</p>
+<p>The predictions can be visually presented in a plot. The process is similar to creating a predicted values plot from a model without an interaction (see <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 10.7</span></a>). However, there is one important addition: the <code>linetype</code> statement. See the information below for an important note about this option.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(biden_int_preds, <span class="fu">aes</span>(<span class="at">x =</span> pid, <span class="at">y =</span> estimate, <span class="at">linetype =</span> right_track)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(biden_int_preds, <span class="fu">aes</span>(<span class="at">x =</span> pid, <span class="at">y =</span> estimate, <span class="at">linetype =</span> right_track)) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Biden Evaluation by Partisanship and Country Status Beliefs"</span>, </span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Party Identification"</span>, </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Values"</span>, </span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">linetype =</span> <span class="st">"Right Track?"</span>) <span class="sc">+</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -627,16 +657,16 @@ Type: response</code></pre>
 </dd>
 </dl>
 </section>
-<section id="continuous-x-continuous-interaction" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="continuous-x-continuous-interaction"><span class="header-section-number">17.2</span> Continuous x Continuous Interaction</h2>
+<section id="continuous-x-continuous-interaction" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="continuous-x-continuous-interaction"><span class="header-section-number">19.2</span> Continuous x Continuous Interaction</h2>
 <p>The process to get, and plot, predicted values is similar for interactions with continuous variables. Yet, things can be more complicated for predictions and plotting when we have two continuous variables, especially when they can take on many different values.</p>
 <p>Last chapter, we fit a model that predicted evaluations of Joe Biden and which contained an interaction between <code>age</code> and <code>socialists</code> . Here is that model again:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>biden_int2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> socialists <span class="sc">*</span> age <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Coefficients</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                   estimate std.error statistic  p.value
@@ -652,13 +682,13 @@ Type: response</code></pre>
 </div>
 <p>Both of the variables in the interaction can take on many values. We could calculate predictions for specific subsets of values, e.g.&nbsp;from 0 to 100 with increments of 10 for socialists, and 20 to 80 with increments of 10 for age. However, this would give use too many values to reasonably plot (or understand).</p>
 <p>A common approach is to choose one of the two predictors, and for this one make predictions for 3 values: the variables’s mean, 1 standard deviation (SD) below the mean, and 1 standard deviation (SD) above the mean. In principle, the continuous variable is transformed into a factor variable with 3 categories: low value, medium value, and high value. This enables us to produce a plot with three lines, one for each of these values. We generally transform the moderator variable (Z).</p>
-<p>We will take the <code>socialists</code> variable as the moderator for this example. We first need to calculate the three relevant values (mean, 1 SD below, and 1 SD above). We have to make sure we only calculate these statistics for the observations used in the model. We can accomplish by using the <code>predictions()</code> function from the <code>marginaleffects</code> package as this function enables us to create a dataset with only the observations used in fitting the model (see <a href="linear_05.html" class="quarto-xref"><span>Chapter 5</span></a>).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>We will take the <code>socialists</code> variable as the moderator for this example. We first need to calculate the three relevant values (mean, 1 SD below, and 1 SD above). We have to make sure we only calculate these statistics for the observations used in the model. We can accomplish by using the <code>predictions()</code> function from the <code>marginaleffects</code> package as this function enables us to create a dataset with only the observations used in fitting the model (see <a href="linear_05.html" class="quarto-xref"><span>Chapter 7</span></a>).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(biden_int2) <span class="sc">|&gt;</span>   <span class="co">#creates new object with data just obs in model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(biden_int2) <span class="sc">|&gt;</span>   <span class="co">#creates new object with data just obs in model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_below =</span> <span class="fu">mean</span>(socialists) <span class="sc">-</span> <span class="fu">sd</span>(socialists), <span class="co">#1 SD below the mean </span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(socialists),                        <span class="co">#Mean of variable</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_above =</span> <span class="fu">mean</span>(socialists) <span class="sc">+</span> <span class="fu">sd</span>(socialists)) <span class="co">#1 SD above the mean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_above =</span> <span class="fu">mean</span>(socialists) <span class="sc">+</span> <span class="fu">sd</span>(socialists)) <span class="co">#1 SD above the mean</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  mean_below     mean mean_above
 1   9.716161 38.33639   66.95661</code></pre>
@@ -666,14 +696,14 @@ Type: response</code></pre>
 </div>
 <p>We next calculate the predicted values using the values we just calculated. We will ask for predictions in ten year increments across the age spectrum.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#predicted values</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#predicted values</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>biden_int2_preds <span class="ot">&lt;-</span> <span class="fu">predictions</span>(biden_int2, </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">socialists =</span> <span class="fu">c</span>(<span class="fl">9.72</span>, <span class="fl">38.34</span>, <span class="fl">66.96</span>), </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">80</span>))) </span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Print the results</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>biden_int2_preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>biden_int2_preds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  socialists age Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
@@ -703,33 +733,33 @@ Type: response</code></pre>
 </div>
 </div>
 <p>Our dataset has 21 observations: 7 values for <code>age</code> x 3 values for <code>socialists</code>.</p>
-<p>If we want to plot the results using the <code>linetype</code> argument, then we need to first convert the <code>socialists</code> variable in the predictions dataset that we just created into a factor variable. We use the <code>factor()</code> command as the <code>socialists</code> variable in our new dataset is numeric and not labelled.</p>
+<p>If we want to plot the results using the <code>linetype</code> argument, then we need to first convert the <code>socialists</code> variable in the predictions dataset that we just created into a factor variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Class of variable</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(biden_int2_preds<span class="sc">$</span>socialists)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Class of variable</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(biden_int2_preds<span class="sc">$</span>socialists)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#No value labels</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(biden_int2_preds<span class="sc">$</span>socialists)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#No value labels</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(biden_int2_preds<span class="sc">$</span>socialists)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Conert into a factor variable</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Conert into a factor variable</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>biden_int2_preds <span class="ot">&lt;-</span> biden_int2_preds <span class="sc">|&gt;</span> </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">socialists =</span> <span class="fu">factor</span>(socialists, </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="fl">9.72</span>, <span class="fl">38.34</span>, <span class="fl">66.96</span>), </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1SD &lt; Mean"</span>, <span class="st">"Mean"</span>, <span class="st">"1SD &gt; Mean"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1SD &lt; Mean"</span>, <span class="st">"Mean"</span>, <span class="st">"1SD &gt; Mean"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can then plot as we did before:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(biden_int2_preds, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> estimate, <span class="at">linetype =</span> socialists)) <span class="sc">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(biden_int2_preds, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> estimate, <span class="at">linetype =</span> socialists)) <span class="sc">+</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Biden Evaluation by Socialist Thermometer and Age"</span>, </span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Value"</span>, </span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">linetype=</span> <span class="st">"Socialist Thermometer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">linetype=</span> <span class="st">"Socialist Thermometer"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -739,16 +769,16 @@ Type: response</code></pre>
 </div>
 </div>
 </section>
-<section id="binary-x-binary-interaction" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="binary-x-binary-interaction"><span class="header-section-number">17.3</span> Binary x Binary Interaction</h2>
+<section id="binary-x-binary-interaction" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="binary-x-binary-interaction"><span class="header-section-number">19.3</span> Binary x Binary Interaction</h2>
 <p>The process for obtaining predicted values, and creating a predicted values plot, from an interaction between two binary variables follows similar principles as above.</p>
 <p>Here is the model we will use for this example. It includes an interaction between two binary factor variables: one concerning whether the respondent thinks the country is heading in the right or wrong direction (<code>right_track</code>) and one concerning whether the respondent reported voting for Hillary Clinton or Donald Trump in 2016 (<code>vote2016</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>biden_int3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> right_track <span class="sc">*</span> vote2016 <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Summary of results</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                                     estimate std.error statistic  p.value
@@ -764,10 +794,10 @@ Type: response</code></pre>
 </div>
 <p>We will use <code>predictions()</code> function to calculate predicted values for all combinations of the two variables, yielding four predictions in total: Clinton voter &amp; “right direction”, Clinton voter &amp; “wrong track”, Trump voter &amp; “right direction”, and Trump voter and “wrong track”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  biden_int3, </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"right_track"</span>, <span class="st">"vote2016"</span>), </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"mean"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      right_track     vote2016 Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 %
@@ -794,9 +824,9 @@ Type: response</code></pre>
 <p>We need this option in the present case to tell <code>predictions()</code> to hold the other control variable(s) in the equation constant at their mean or mode. In the present case, this ensures that <code>rural_urban</code> will be held constant at its modal category (“suburb”) when the predictions are being calculated.</p>
 </dd>
 </dl>
-<p>We can communicate these results via a predicted values plot. The basic syntax for this plot is similar to the syntax used to create a plot of predicted values for a single binary/factor variable from earlier sections (see, for instance, <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 8.7</span></a>). As in earlier examples, we will need to tell <code>ggplot()</code> to separate the graphed values by value of the moderator. We do this here via the <code>shape =</code> option, which tells <code>ggplot()</code> to use different shapes for the plotted predictions.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>We can communicate these results via a predicted values plot. The basic syntax for this plot is similar to the syntax used to create a plot of predicted values for a single binary/factor variable from earlier sections (see, for instance, <a href="linear_08.html#sec-presenting-linear-regression-predicted-values-plots" class="quarto-xref"><span>Section 10.7</span></a>). As in earlier examples, we will need to tell <code>ggplot()</code> to separate the graphed values by value of the moderator. We do this here via the <code>shape =</code> option, which tells <code>ggplot()</code> to use different shapes for the plotted predictions.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(biden_int3, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(biden_int3, </span>
 <span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"right_track"</span>, <span class="st">"vote2016"</span>), </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="st">"mean"</span>) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> right_track, <span class="at">y=</span>estimate, <span class="at">shape =</span> vote2016)) <span class="sc">+</span> </span>
@@ -806,7 +836,7 @@ Type: response</code></pre>
 <span id="annotated-cell-14-8"><a href="#annotated-cell-14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Right Track?"</span>, </span>
 <span id="annotated-cell-14-9"><a href="#annotated-cell-14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Biden Evaluation"</span>, </span>
 <span id="annotated-cell-14-10"><a href="#annotated-cell-14-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">shape =</span> <span class="st">"2016 vote choice"</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="3">3</button><span id="annotated-cell-14-11" class="code-annotation-target"><a href="#annotated-cell-14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span> , <span class="dv">100</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="3">3</button><span id="annotated-cell-14-11" class="code-annotation-target"><a href="#annotated-cell-14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span> , <span class="dv">100</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
@@ -832,11 +862,11 @@ Type: response</code></pre>
 </div>
 </div>
 </section>
-<section id="logistic-regression-example" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="logistic-regression-example"><span class="header-section-number">17.4</span> Logistic Regression Example</h2>
+<section id="logistic-regression-example" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="logistic-regression-example"><span class="header-section-number">19.4</span> Logistic Regression Example</h2>
 <p>The foregoing all applies to interactions in logistic regression models as well with the specifics depending on the type of interaction being investigated. For instance, the model <code>rightrack_int</code> featured an interaction between the binary variable <code>vote2016</code> and the continuous variable <code>age</code> in a model predicting whether a respondent thinks the country is heading in the right direction or not.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(righttrack_int)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(righttrack_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                   estimate std.error statistic  p.value
@@ -852,7 +882,7 @@ Type: response</code></pre>
 </div>
 <p>We can follow the same steps as seen earlier when we had a binary x continuous interaction with a linear model. Here, for instance, we obtain the predicted probability of a respondent saying the country is heading in the right direction for a combination of age values (from 20 to 80 years old in 10 year increments) for each category for the <code>vote2016</code> variable. We also plot these values using the same basic syntax as above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(righttrack_int, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(righttrack_int, </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>,<span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>), </span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">vote2016 =</span> <span class="fu">c</span>(<span class="st">"Trump Vote"</span>, <span class="st">"Clinton Vote"</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>estimate, <span class="at">linetype=</span>vote2016)) <span class="sc">+</span> </span>
@@ -862,7 +892,7 @@ Type: response</code></pre>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Probability: Country Heading in Right Direction"</span>, </span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Resondent Age"</span>, </span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">linetype =</span> <span class="st">"2016 Vote"</span>) <span class="sc">+</span> </span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -948,13 +978,14 @@ Type: response</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1338,7 +1369,7 @@ Type: response</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./interaction_02.html" class="pagination-link" aria-label="Marginal Effects in Interaction Models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

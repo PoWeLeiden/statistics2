@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Logistic Regression &amp; Odds Ratios – Statistical analysis and presentation using R</title>
+<title>11&nbsp; Logistic Regression &amp; Odds Ratios – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,14 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -110,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -123,7 +129,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -312,7 +318,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_01.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_01.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -348,8 +354,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -357,50 +363,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -409,45 +438,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -456,40 +485,40 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -532,12 +561,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#performing-a-logistic-regression" id="toc-performing-a-logistic-regression" class="nav-link active" data-scroll-target="#performing-a-logistic-regression"><span class="header-section-number">9.1</span> Performing a Logistic Regression</a>
+  <li><a href="#performing-a-logistic-regression" id="toc-performing-a-logistic-regression" class="nav-link active" data-scroll-target="#performing-a-logistic-regression"><span class="header-section-number">11.1</span> Performing a Logistic Regression</a>
   <ul class="collapse">
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">9.1.1</span> Data Preparation</a></li>
-  <li><a href="#performing-a-logistic-regression-1" id="toc-performing-a-logistic-regression-1" class="nav-link" data-scroll-target="#performing-a-logistic-regression-1"><span class="header-section-number">9.1.2</span> Performing a Logistic Regression</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">11.1.1</span> Data Preparation</a></li>
+  <li><a href="#performing-a-logistic-regression-1" id="toc-performing-a-logistic-regression-1" class="nav-link" data-scroll-target="#performing-a-logistic-regression-1"><span class="header-section-number">11.1.2</span> Performing a Logistic Regression</a></li>
   </ul></li>
-  <li><a href="#odds-ratios" id="toc-odds-ratios" class="nav-link" data-scroll-target="#odds-ratios"><span class="header-section-number">9.2</span> Odds Ratios</a></li>
+  <li><a href="#odds-ratios" id="toc-odds-ratios" class="nav-link" data-scroll-target="#odds-ratios"><span class="header-section-number">11.2</span> Odds Ratios</a></li>
   </ul>
 </nav>
     </div>
@@ -545,9 +574,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_01.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_logistic.html">Logistic Regression</a></li><li class="breadcrumb-item"><a href="./logit_01.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-logistic-regression-odds-ratios" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></h1>
+<h1 class="title"><span id="sec-logistic-regression-odds-ratios" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></h1>
 </div>
 
 
@@ -565,133 +594,30 @@ window.Quarto = {
 
 
 <p>Logistic regression models are used to model binary outcome variables. We will use survey data from the Netherlands which was collected as part of Round 9 of the <a href="https://www.europeansocialsurvey.org" target="_blank">European Social Survey</a> for our examples. The dataset is available in SPSS format (<code>.sav</code>) from the ESS website.</p>
-<p>We begin, as always, by loading the libraries that we will use in our analyses as well as our data. Missing values are already indicated as ‘NA’ in this dataset. Per <a href="linear_01.html#sec-recall-peeking-inside-data-objects" class="quarto-xref"><span>Section 1.1</span></a>, we can use the <code>view_df()</code> from from the <code>sjPlot</code> library to inspect the variables included in the dataset.</p>
+<p>We begin, as always, by loading the libraries that we will use in our analyses as well as our data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)          <span class="co">#checking variable names, values, and labels</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)           <span class="co">#for obtaining summaries of regression models</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)             <span class="co">#loading data</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)       <span class="co">#data manipulation and plotting</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"ESS9e03, Netherlands.sav"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#view_df example on subset of dataset</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="sc">|&gt;</span> </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(polintr, ppltrst) <span class="sc">|&gt;</span> </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  sjPlot<span class="sc">::</span><span class="fu">view_df</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"ESS9e03, Netherlands.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Data frame: select(ESS9NL, polintr, ppltrst)</caption>
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">ID</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Name</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Label</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Values</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Value Labels</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">polintr</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">How interested in politics</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1<br>
-2<br>
-3<br>
-4<br>
-7<br>
-8<br>
-9</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Very interested<br>
-Quite interested<br>
-Hardly interested<br>
-Not at all interested<br>
-Refusal<br>
-Don't know<br>
-No answer</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">2</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">ppltrst</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Most people can be trusted or you can't be too<br>
-careful</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">0<br>
-1<br>
-2<br>
-3<br>
-4<br>
-5<br>
-6<br>
-7<br>
-8<br>
-9<br>
-10<br>
-77<br>
-88<br>
-99</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">You can't be too careful<br>
-1<br>
-2<br>
-3<br>
-4<br>
-5<br>
-6<br>
-7<br>
-8<br>
-9<br>
-Most people can be trusted<br>
-Refusal<br>
-Don't know<br>
-No answer</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>The <code>view_df()</code> output indicates that there are numeric codes associated with missing value categories (e.g., respondents who said “Don’t Know” would be given a score of 8 on <code>polintr</code>). However, those values are already converted to missing (NA) in our dataset as the tabulation below shows. If they were not, then we would need to take some additional data management steps and convert those values to missing values; see <a href="https://poweleiden.github.io/statistics1/data_04_missing_data.html#recoding-missing-data" target="_blank">Section 4.2</a> of the Statistics I manual for a refresher on how to do this.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>polintr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  1   2   3   4 
-213 832 478 149 </code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning!
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Always double check assignment instructions and other sources of information about a dataset (e.g., its codebook or the dataset itself via something like <code>view_df()</code> or <code>attributes()</code>) to make sure you understand the data management steps you need to accomplish before an analysis.</p>
-</div>
-</div>
-<section id="performing-a-logistic-regression" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="performing-a-logistic-regression"><span class="header-section-number">9.1</span> Performing a Logistic Regression</h2>
-<section id="data-preparation" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">9.1.1</span> Data Preparation</h3>
+<section id="performing-a-logistic-regression" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="performing-a-logistic-regression"><span class="header-section-number">11.1</span> Performing a Logistic Regression</h2>
+<section id="data-preparation" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">11.1.1</span> Data Preparation</h3>
 <p>Our example will investigate the relationship between self-reported gender (<code>gndr</code>) and voter turnout (i.e., did the person report voting in an election or not; <code>vote</code>). Our goal here is to predict whether a person reported voting in the most recent election.</p>
-<p>First, let us take a look at the variables so we can figure out if we need to take any preliminary data management steps:</p>
+<p>The dependent variable in a logistic regression model needs to be either a 0/1 numeric variable or a factor variable where the non-baseline (or upper) level represents the outcome that we are trying to predict with our model. Independent variables, meanwhile, need to be properly handled as well (e.g., handling missing data and converting binary/categorical predictors to factor variables). Per <a href="data_manage_investigate.html#sec-investigating-datasets" class="quarto-xref"><span>Section 1.1.1</span></a>, we can use the <code>view_df()</code> from from the <code>sjPlot</code> library to inspect the two variables of interest to us (<code>gndr</code> and <code>vote</code>). We can also use the <code>table()</code> function to get a further sense of the characteristics of these two variables given that neither is continuous in nature.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Variable attributes</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gndr, vote) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">view_df</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Variable attributes</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gndr, vote) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">view_df</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <caption>Data frame: select(ESS9NL, gndr, vote)</caption>
 <colgroup>
 <col style="width: 20%">
@@ -702,11 +628,11 @@ Warning!
 </colgroup>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">ID</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Name</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Label</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Values</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Value Labels</td>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">ID</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Label</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Values</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Value Labels</th>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: top;">1</td>
@@ -739,124 +665,99 @@ No answer</td>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tabulation</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tabulation</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-  1   2 
-833 840 </code></pre>
+   1    2 &lt;NA&gt; 
+ 833  840    0 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>vote, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-   1    2    3 
-1291  247  130 </code></pre>
+   1    2    3 &lt;NA&gt; 
+1291  247  130    5 </code></pre>
 </div>
 </div>
-<p>Our predictor variable only has two categories, so we will need to factorize it before using it in the model. Our DV has three categories with observations in them (Yes, No, Not Eligible). We need to make this into a binary factor variable prior to analysis. We can do this by converting the “Not Eligible” category to NA. Here is one way that we can accomplish these ends:</p>
+<p>There exist value labels in our dataset associated with missing data codes (e.g., 7 = Refusal, 8 = Don’t Know, etc.). However, the outputs of <code>table()</code> show that missing data is either already set to NA, or there are no observations in these categories, so we do not need to take any explicit step to handle missing data in this instance.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Our predictor variable only has two categories, so we will convert it into a factor variable. Our DV, meanwhile, has there categories with observations in them: Yes, No, and Not Eligible. Per above, we need to convert this into a binary variable prior to analysis.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We are not interested in the “Not Eligible” category here (i.e., we want to examine whether a person <em>chose to vote</em> vs.&nbsp;<em>chose not to vote</em>) so we will convert observations in this category to NA. We can automatically do this by converting <code>vote</code> into a factor variable and simply including only the two categories we care about in the <code>levels = c()</code> portion of the syntax (see <a href="data_manage_factorvars.html" class="quarto-xref"><span>Chapter 2</span></a>). We set “No” (did not vote) as the reference group/baseline level of the factor variable, which will mean that our logistic model will tell us about the probability of saying “Yes” (did vote) rather than “No” (did not vote).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Factorize variables</span></span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">factorize</span>(gndr),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">vote_F =</span> <span class="fu">factorize</span>(vote))</span>
-<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Drop the not eligible category</span></span>
-<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">na_if</span>(vote_F,<span class="st">"Not eligible to vote"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Factorize variables</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">gndr_F =</span> <span class="fu">factor</span>(gndr, </span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-6" class="code-annotation-target"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>)),</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">vote_F =</span> <span class="fu">factor</span>(vote, </span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), </span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Did not vote"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2">2</button><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Voted"</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="1">This will use the lowest numbered category as the “reference” or “baseline” category. In these examples, male respondents (<code>gndr</code> = 1) and those that say they voted in the last election (<code>vote</code> = 1).</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="6" data-code-annotation="1">This will use observations with a value of 2 as the ‘reference’ or ‘baseline’ category in subsequent contrasts (i.e., Male - Female). We could very well flip this around here (Female - Male).</span>
 </dd>
-<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="2">We are not creating a new variable when recoding things here (e.g., we overwrite the original <code>gndr</code> and <code>vote</code> variables). This is not usually a good idea - a mistake here would mean that we need to reload our data and walk our data cleaning steps in order to fix our mistake. It is generally a much better idea to create <strong>new</strong> variables when recoding/factorizing. We are not doing so out of pure hubris and tempting fate that we are not making a mistake here due to our surely flawless understanding of the data.</span>
-</dd>
-</dl>
-</div>
-</div>
-<p>Let’s check our work in regards to the vote variable:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>vote_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Yes"                  "No"                   "Not eligible to vote"
-[4] "Refusal"              "Don't know"           "No answer"           </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>vote_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-                 Yes                   No Not eligible to vote 
-                1291                  247                    0 
-             Refusal           Don't know            No answer 
-                   0                    0                    0 </code></pre>
-</div>
-</div>
-<p>The <code>vote</code> variable is now a factor variable where the the first (or base) level of the factor is “Yes” because <code>factorize()</code> will use the first numerical category as the reference group. This is a problem for us because we want to predict whether a person is in the “Yes, voted” category and the regression command we will use below predicts whether a person is in the higher level of a factor. In other words, if we leave this variable alone our model would predict whether a person <em>did not</em> vote. We thus need to relevel the variable to flip the order of the categories (see <a href="linear_02.html#sec-relevelling" class="quarto-xref"><span>Section 2.1.1</span></a>).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Relevel the variable</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_F =</span> <span class="fu">relevel</span>(vote_F, <span class="st">"No"</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Let's check our work</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>vote_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "No"                   "Yes"                  "Not eligible to vote"
-[4] "Refusal"              "Don't know"           "No answer"           </code></pre>
-</div>
-</div>
-<dl>
-<dt><code>mutate(vote_F = relevel(vote_F, "No"))</code></dt>
-<dd>
-<p>We use the <code>relevel()</code> command on the vote variable. We do not create a new variable here but overwrite the original one. You could also chose to make a new variable, which is usually a better idea when you are recoding/factorizing a variable. The category provided in quotation marks will become the reference category. It is important to note this variable was factorized first so we use the label “No” and not the numeric value for “No” originally stored in the dataset, which was 2.</p>
+<span data-code-cell="annotated-cell-5" data-code-lines="10" data-code-annotation="2">We did not include the value of “3” in the <code>levels = c()</code> portion of the syntax. This automatically turns those observations to NA as discussed in <a href="data_manage_factorvars.html#sec-converting-to-a-factor-variable-using-factor" class="quarto-xref"><span>Section 2.1</span></a> .</span>
 </dd>
 </dl>
-<p>Let’s check our work for the <code>gndr</code> variable:</p>
+</div>
+</div>
+<p>Let’s check our work:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gender</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-     Male    Female No answer 
-      833       840         0 </code></pre>
+<pre><code>[1] "Female" "Male"  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>gndr_F, ESS9NL<span class="sc">$</span>gndr, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Male"      "Female"    "No answer"</code></pre>
+<pre><code>        
+           1   2 &lt;NA&gt;
+  Female   0 840    0
+  Male   833   0    0
+  &lt;NA&gt;     0   0    0</code></pre>
 </div>
-</div>
-<p>“Male” has been used as the reference category. The two categories have a roughly equal number of observations, so the automatic behavior of <code>factorize()</code> is not an issue here. There is a third label here “No Answer” with 0 observations on it. This is fine for now - R will exclude this category from the analysis below.</p>
-<p>We will change the reference group to “Female” as a further example of the <code>relevel()</code> syntax:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ESS9NL <span class="ot">&lt;-</span> ESS9NL <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gndr_F =</span> <span class="fu">relevel</span>(gndr_F, <span class="st">"Female"</span>))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check your work!</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>gndr_F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vote</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ESS9NL<span class="sc">$</span>vote_F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Female"    "Male"      "No answer"</code></pre>
+<pre><code>[1] "Did not vote" "Voted"       </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ESS9NL<span class="sc">$</span>vote, ESS9NL<span class="sc">$</span>vote_F, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       Did not vote Voted &lt;NA&gt;
+  1               0  1291    0
+  2             247     0    0
+  3               0     0  130
+  &lt;NA&gt;            0     0    5</code></pre>
 </div>
 </div>
+<p>Success!</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The DV in a logistic regression should be a (factorized) binary variable. Make sure you are creating the factor variable such that the higher level of the variable is the category you are trying to predict. Otherwise, your interpretations might end up being wrong by accident.</p>
+<p>The DV in a logistic regression must be a binary variable. Make sure you are creating the factor variable such that the higher level of the variable is the category you are trying to predict membership within. Otherwise, your interpretations might end up being wrong by accident.</p>
 </div>
 </div>
 </section>
-<section id="performing-a-logistic-regression-1" class="level3" data-number="9.1.2">
-<h3 data-number="9.1.2" class="anchored" data-anchor-id="performing-a-logistic-regression-1"><span class="header-section-number">9.1.2</span> Performing a Logistic Regression</h3>
+<section id="performing-a-logistic-regression-1" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="performing-a-logistic-regression-1"><span class="header-section-number">11.1.2</span> Performing a Logistic Regression</h3>
 <p>Performing logistic regression in R is very similar to linear regression. However, instead of the <code>lm()</code> function, we rely on the <code>glm()</code> function, which stands for generalized linear model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Vote_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F, </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Vote_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> ESS9NL, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>Vote_model &lt;-</code></dt>
@@ -873,12 +774,12 @@ Warning!
 </dd>
 <dt><code>family = "binomial")</code></dt>
 <dd>
-<p>We specify the family for the generalized linear model. For logistic regression this is “binomial”. This part of the code remains unchanged. See the Common Errors appendix ( <a href="common_errors.html#sec-glm-factor" class="quarto-xref"><span>Section A.3</span></a>) for an error that could arise if you did not specify the model’s family.</p>
+<p>We specify the family for the generalized linear model. For logistic regression this is “binomial”. This part of the code remains unchanged. See the Common Errors appendix ( <a href="common_errors.html#sec-glm-factor" class="quarto-xref"><span>Section A.4</span></a>) for an error that could arise if you did not specify the model’s family.</p>
 </dd>
 </dl>
 <p>Let’s take a look at the output using the built in <code>summary()</code> command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -907,7 +808,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -922,14 +823,14 @@ Output Explanation
 </ul>
 </div>
 </div>
-<p>We can add multiple predictors to the model in a way similar to the linear regression syntax, by adding them with a <code>+</code> symbol. Here add age (<code>agea</code>), trust in politicians (<code>trstplt</code>), and left-right ideology (<code>lrscale</code>). We did not need to take any data management steps with these variables because they are continuous variables and missing data is already coded as NA.</p>
+<p>We can add multiple predictors to the model in a way similar to the linear regression syntax, by adding them with a <code>+</code> symbol. Here add age (<code>agea</code>), trust in politicians (<code>trstplt</code>), and left-right ideology (<code>lrscale</code>). We did not need to take any data management steps with these variables because they are continuous variables and missing data is already coded as NA in our dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model_mp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Vote_model_mp <span class="ot">&lt;-</span> <span class="fu">glm</span>(vote_F <span class="sc">~</span> gndr_F <span class="sc">+</span> agea <span class="sc">+</span> trstplt <span class="sc">+</span> lrscale, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ESS9NL, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the output</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Vote_model_mp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -962,12 +863,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Logistic regression coefficients are on the log of the odds scale. The coefficient for <code>gndr_FMale</code> in the <code>vote_model_mp</code> model tells us the difference in the log of the odds of voting between male and female respondents, while the <code>agea</code> coefficient tell us how the log of the odds of voting change with each one unit increase in respondent age.</p>
-<p>You can use the direction (positive, negative) and statistical significance of a logistic regression coefficient to talk about the general relationship between the predictor variable and the DV. However, it is not really possible to directly and clearly communicate what a logistic coefficient tells us about the magnitude of the relationship between an IV and the DV because of this log of the odds scaling. You should instead focus on odds ratios (see below), average marginal effects (<a href="logit_02.html" class="quarto-xref"><span>Chapter 10</span></a>), or predicted probabilities (<a href="logit_03.html" class="quarto-xref"><span>Chapter 11</span></a>) to give more specific meaning to your discussion.</p>
+<p>You can use the direction (positive, negative) and statistical significance of a logistic regression coefficient to talk about the general relationship between the predictor variable and the DV. However, it is not really possible to directly and clearly communicate what a logistic coefficient tells us about the magnitude of the relationship between an IV and the DV because of this log of the odds scaling. You should instead focus on odds ratios (see below), average marginal effects (<a href="logit_02.html" class="quarto-xref"><span>Chapter 12</span></a>), or predicted probabilities (<a href="logit_03.html" class="quarto-xref"><span>Chapter 13</span></a>) to give more specific meaning to your discussion.</p>
 <p>In this example:</p>
 <ul>
 <li>Voter turnout is more likely among men than women, but the difference is not statistically significant (p = 0.78) so we cannot rule out the possibility of no difference in voter turnout between the two groups.</li>
@@ -979,13 +880,13 @@ Interpretation
 </div>
 </section>
 </section>
-<section id="odds-ratios" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="odds-ratios"><span class="header-section-number">9.2</span> Odds Ratios</h2>
+<section id="odds-ratios" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="odds-ratios"><span class="header-section-number">11.2</span> Odds Ratios</h2>
 <p>Odds ratios are one way that we can translate logistic regression coefficients into something easier to interpret and communicate.</p>
 <p>We can use the <code>tidy()</code> command from the <code>broom</code> package to toggle between output expressed in the log of the odds scale (our logistic coefficients from above) and odds ratios.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy with logistic regression and confidence intervals</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Vote_model_mp, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy with logistic regression and confidence intervals</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Vote_model_mp, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   term        estimate std.error statistic     p.value conf.low conf.high
@@ -996,8 +897,8 @@ Interpretation
 4 trstplt       0.195    0.0387      5.04  0.000000469  0.119      0.271 
 5 lrscale       0.0293   0.0393      0.744 0.457       -0.0480     0.106 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy with odds ratios and confidence intervals</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Vote_model_mp, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy with odds ratios and confidence intervals</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(Vote_model_mp, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   term        estimate std.error statistic     p.value conf.low conf.high
@@ -1030,7 +931,7 @@ Interpretation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1046,7 +947,8 @@ Interpretation
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>We could alternatively use <code>factor()</code> and specify the order of the levels from the start. For instance, we could have done this: <code>mutate(vote_binary = factor(vote, levels = c(2, 1), labels = c("Did not vote", "Voted"))</code> . This would also avoid an issue we discuss in the next chapter and in the Common Errors appendix.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In this case, there are no observations with NA values on the <code>gndr</code> variable and 5 with NA values on the <code>vote</code> variable.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The logit models that we will use require a binary outcome variable. However, there are logistic models that can be used to analyze categorical (i.e,. 3 or more category) DVs. These are called multinomial logistic model.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1115,13 +1017,14 @@ Interpretation
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1510,7 +1413,7 @@ Interpretation
   </div>
   <div class="nav-page nav-page-next">
       <a href="./logit_02.html" class="pagination-link" aria-label="Marginal Effects">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -9,6 +9,10 @@ book:
   date: today
   chapters:
     - index.qmd
+    - part: part_cleaning.qmd
+      chapters: 
+      - data_manage_investigate.qmd
+      - data_manage_factorvars.qmd
     - part: part_linear.qmd
       chapters: 
       - linear_01.qmd
@@ -38,6 +42,7 @@ book:
     - Formulas.qmd
     - errors.qmd
     - scales.qmd
+
     
 bibliography: references.bib
 

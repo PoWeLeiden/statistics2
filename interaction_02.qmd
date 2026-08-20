@@ -35,10 +35,11 @@ library(marginaleffects)   #Marginal effects and predictions
 library(tidyverse)         #Data management & plotting
 
 #Data
-anes <- import("data/anes_interactions.rda")
+anes <- import("anes_interactions.rda")
 
 #Example Models
 biden_int <- lm(biden ~ pid * right_track + rural_urban, data = anes)
+
 righttrack_int <- glm(right_track ~ vote2016 * age + rural_urban, 
                       family = "binomial", data = anes)
 

@@ -19,8 +19,11 @@ demdata <- import("data/demdata.rds") |>
 
 #Some data cleaning
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-         Typeregime2006_factor = factorize(Typeregime2006))
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")))
+
 
 ```
 
@@ -39,8 +42,10 @@ demdata <- import("demdata.rds") |>
   as_tibble()
 
 demdata <- demdata |>  
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-         Typeregime2006_factor = factorize(Typeregime2006))
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")))
 
 
 ```

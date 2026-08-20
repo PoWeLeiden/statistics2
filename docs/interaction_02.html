@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Marginal Effects in Interaction Models – Statistical analysis and presentation using R</title>
+<title>18&nbsp; Marginal Effects in Interaction Models – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,14 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -283,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_02.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_02.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -319,8 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -328,50 +334,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,45 +409,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -427,40 +456,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -503,14 +532,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#binary-x-continuous" id="toc-binary-x-continuous" class="nav-link active" data-scroll-target="#binary-x-continuous"><span class="header-section-number">16.1</span> Binary x Continuous</a>
+  <li><a href="#binary-x-continuous" id="toc-binary-x-continuous" class="nav-link active" data-scroll-target="#binary-x-continuous"><span class="header-section-number">18.1</span> Binary x Continuous</a>
   <ul class="collapse">
-  <li><a href="#calculation-and-interpretation" id="toc-calculation-and-interpretation" class="nav-link" data-scroll-target="#calculation-and-interpretation"><span class="header-section-number">16.1.1</span> Calculation and Interpretation</a></li>
-  <li><a href="#sec-ame-plotting" id="toc-sec-ame-plotting" class="nav-link" data-scroll-target="#sec-ame-plotting"><span class="header-section-number">16.1.2</span> Plotting</a></li>
+  <li><a href="#calculation-and-interpretation" id="toc-calculation-and-interpretation" class="nav-link" data-scroll-target="#calculation-and-interpretation"><span class="header-section-number">18.1.1</span> Calculation and Interpretation</a></li>
+  <li><a href="#sec-ame-plotting" id="toc-sec-ame-plotting" class="nav-link" data-scroll-target="#sec-ame-plotting"><span class="header-section-number">18.1.2</span> Plotting</a></li>
   </ul></li>
-  <li><a href="#continuous-by-continuous-interaction" id="toc-continuous-by-continuous-interaction" class="nav-link" data-scroll-target="#continuous-by-continuous-interaction"><span class="header-section-number">16.2</span> Continuous by Continuous Interaction</a></li>
-  <li><a href="#binary-x-binary-interaction" id="toc-binary-x-binary-interaction" class="nav-link" data-scroll-target="#binary-x-binary-interaction"><span class="header-section-number">16.3</span> Binary x Binary Interaction</a></li>
-  <li><a href="#logistic-regression-example" id="toc-logistic-regression-example" class="nav-link" data-scroll-target="#logistic-regression-example"><span class="header-section-number">16.4</span> Logistic regression example</a></li>
+  <li><a href="#continuous-by-continuous-interaction" id="toc-continuous-by-continuous-interaction" class="nav-link" data-scroll-target="#continuous-by-continuous-interaction"><span class="header-section-number">18.2</span> Continuous by Continuous Interaction</a></li>
+  <li><a href="#binary-x-binary-interaction" id="toc-binary-x-binary-interaction" class="nav-link" data-scroll-target="#binary-x-binary-interaction"><span class="header-section-number">18.3</span> Binary x Binary Interaction</a></li>
+  <li><a href="#logistic-regression-example" id="toc-logistic-regression-example" class="nav-link" data-scroll-target="#logistic-regression-example"><span class="header-section-number">18.4</span> Logistic regression example</a></li>
   </ul>
 </nav>
     </div>
@@ -518,9 +547,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_02.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_interactions.html">Interactions within Linear and Logistic Models</a></li><li class="breadcrumb-item"><a href="./interaction_02.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-inter-marginal" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></h1>
+<h1 class="title"><span id="sec-inter-marginal" class="quarto-section-identifier"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></h1>
 </div>
 
 
@@ -538,19 +567,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)               <span class="co">#Importing data</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)             <span class="co">#Model summaries</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)   <span class="co">#Marginal effects and predictions</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)         <span class="co">#Data management &amp; plotting</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>anes <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data/anes_interactions.rda"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>anes <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"anes_interactions.rda"</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Example Models</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>biden_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> pid <span class="sc">*</span> right_track <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>righttrack_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(right_track <span class="sc">~</span> vote2016 <span class="sc">*</span> age <span class="sc">+</span> rural_urban, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> anes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>righttrack_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(right_track <span class="sc">~</span> vote2016 <span class="sc">*</span> age <span class="sc">+</span> rural_urban, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> anes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In our last chapter we learned how to include an interaction term in our regression models to enable us to test whether the effect of one predictor variable in our model differs based on the values of a different predictor variable:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -560,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>For instance, we might predict evaluations of Joe Biden based on a person’s partisanship, beliefs about the state of the US, and their interaction as in this model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 7
   term                  estimate std.error statistic  p.value conf.low conf.high
@@ -581,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -596,17 +626,17 @@ Interpretation
 <p>The foregoing may seem somewhat confusing at first glance (and perhaps second, and maybe even third!). It is for that reason that most researchers will not try to directly discuss the coefficients for the variables in the interaction when conveying the model’s results to readers. Instead, these researchers will use the model’s results to calculate other statistics that are easier to follow.</p>
 <p>Here, we will focus on the calculation of <em>marginal effects</em>. By marginal effect, we mean this: how much should we expect Y to change, on average, when X changes by 1 unit? We have seen marginal effects in a few places already. In linear regression models, for instance, unstandardized regression coefficients are marginal effects even though we did not use that language. In logistic regression models, meanwhile, we saw how to translate our logistic coefficients (log of the odds scale) into average marginal effects that tell us how the probability that Y = 1 changes, on average, given a one unit change in X. In the context of a model with an interaction, we will calculate (and then plot) the marginal effect for “X” at varying levels of “Z” (e.g., the marginal effect of <code>pid</code> when <code>right_track</code> = “Wrong Track” and the marginal effect of <code>pid</code> when <code>right_track</code> = “Right Direction”) to unpack what the coefficients are telling us. We will do this using the <code>slopes()</code> function from the <code>marginaleffects</code> package.</p>
 <p>We will show several different examples that vary according to the nature of the variables in the interaction (e.g., binary variable interacted with continuous, continuous interacted with continuous, etc.). We do not show an example with a categorical variable that has more than two levels but the same principles apply here as with any of the examples involving a binary variable.</p>
-<section id="binary-x-continuous" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="binary-x-continuous"><span class="header-section-number">16.1</span> Binary x Continuous</h2>
-<section id="calculation-and-interpretation" class="level3" data-number="16.1.1">
-<h3 data-number="16.1.1" class="anchored" data-anchor-id="calculation-and-interpretation"><span class="header-section-number">16.1.1</span> Calculation and Interpretation</h3>
+<section id="binary-x-continuous" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="binary-x-continuous"><span class="header-section-number">18.1</span> Binary x Continuous</h2>
+<section id="calculation-and-interpretation" class="level3" data-number="18.1.1">
+<h3 data-number="18.1.1" class="anchored" data-anchor-id="calculation-and-interpretation"><span class="header-section-number">18.1.1</span> Calculation and Interpretation</h3>
 <p>We will use the <code>biden_int</code> model in our first example. Here, we interacted a binary variable (<code>right_track</code>) with a continuous variable (<code>pid</code>).</p>
 <p>One question we can ask is this: is the relationship between <code>pid</code> (X) and Biden evaluations (Y) the same regardless of what value <code>right_track</code> (Z) takes on? Stated slightly differently: if we calculate the regression slope for <code>pid</code> for respondents who say the country is heading in the right direction and, separately, the slope for pid for respondents who say the country is heading down the wrong track, will those slopes be the same? We will use the <code>slopes()</code> function to calculate the effect of <code>pid</code> for each category of <code>right_track</code> to help us answer this question.</p>
 <p>In situations where the moderator (Z) is a factor variable, such as this one, we use the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"pid"</span>, </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      right_track Estimate Std. Error     z Pr(&gt;|z|)     S  2.5 % 97.5 %
@@ -635,8 +665,8 @@ Comparison: dY/dX</code></pre>
 <p>The slope of the regression line for <code>pid</code> when <code>right_track</code> = ‘Right Direction’” is -7.11. The slope when <code>right_track</code> = ‘Wrong Track’ is -10.82. We can thus say that the relationship between partisan identity and Biden evaluations is stronger (more negative) among respondents who think the country is on the wrong track than among those that thought things were heading in the right direction. We can turn to the coefficient for the interaction term to say whether the difference between these two marginal effects is statistically significant. The interaction term is statistically significant (p &lt; 0.001), which means we can reject the null hypothesis that the difference between the two marginal effects/slopes is actually 0.</p>
 <p>A couple of further points here. First, notice that the marginal effect estimate when <code>right_track</code> = “Wrong Track’ is the same value as the coefficient for <code>pid</code> in our model. Second, notice that the difference between the two marginal effects estimates = the value of the interaction term coefficient.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our Results Again</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int) <span class="sc">|&gt;</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our Results Again</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int) <span class="sc">|&gt;</span> <span class="fu">select</span>(term, estimate, p.value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 3
   term                           estimate  p.value
@@ -649,17 +679,17 @@ Comparison: dY/dX</code></pre>
 6 rural_urbanCity                  -0.320 6.31e- 1
 7 pid:right_trackRight Direction    3.71  3.20e-23</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (Right Direction) - Marginal Effect (Wrong Track) = Interaction Term Coefficient</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">7.11</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">10.82</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (Right Direction) - Marginal Effect (Wrong Track) = Interaction Term Coefficient</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">7.11</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">10.82</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.71</code></pre>
 </div>
 </div>
 <p>We can also investigate the effect of the factor variable <code>right_track</code> on the dependent variable when partisan identity takes on different values. In this case, we are using the continuous variable as the moderator variable (Z). We chose to calculate the marginal effects for all possible values of <code>pid</code> given that there are only 7.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"right_track"</span>, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  pid Estimate Std. Error      z Pr(&gt;|z|)     S  2.5 % 97.5 %
@@ -684,8 +714,8 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </dl>
 <p>The output above shows that the difference in Biden approval scores between those saying the country is heading in the “right direction” vs.&nbsp;those who say it is on the “wrong track” is approximately -29.47 points among Strong Democrats (<code>pid</code>=1), -25.76 points among Not Strong Democrats (<code>pid</code> = 2), and -7.19 points among Strong Republicans (<code>pid</code>=7). The effect of the <code>right_track</code> variable decreases by 3.71 scale points with each increase of PID. This value of 3.71 is the same as our interaction term coefficient!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our Results Again; only showing term and estimate to keep things simple</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int) <span class="sc">|&gt;</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our Results Again; only showing term and estimate to keep things simple</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int) <span class="sc">|&gt;</span> <span class="fu">select</span>(term, estimate, p.value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 3
   term                           estimate  p.value
@@ -698,25 +728,25 @@ Comparison: Right Direction - Wrong Track</code></pre>
 6 rural_urbanCity                  -0.320 6.31e- 1
 7 pid:right_trackRight Direction    3.71  3.20e-23</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (PID = 2) - Marginal Effect (PID = 1) = Interaction Term Coefficient</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">25.76</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">29.47</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (PID = 2) - Marginal Effect (PID = 1) = Interaction Term Coefficient</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">25.76</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">29.47</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.71</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (PID = 7) - Marginal Effect (PID = 6) = Interaction Term Coefficient</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">7.19</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">10.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal Effect (PID = 7) - Marginal Effect (PID = 6) = Interaction Term Coefficient</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">7.19</span> <span class="sc">-</span> (<span class="sc">-</span><span class="fl">10.90</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.71</code></pre>
 </div>
 </div>
 <p>The statistically significant interaction term indicates that we can reject the null hypothesis that the change in the effect of <code>right_track</code> given a one unit change in <code>pid</code> is actually 0.</p>
 </section>
-<section id="sec-ame-plotting" class="level3" data-number="16.1.2">
-<h3 data-number="16.1.2" class="anchored" data-anchor-id="sec-ame-plotting"><span class="header-section-number">16.1.2</span> Plotting</h3>
+<section id="sec-ame-plotting" class="level3" data-number="18.1.2">
+<h3 data-number="18.1.2" class="anchored" data-anchor-id="sec-ame-plotting"><span class="header-section-number">18.1.2</span> Plotting</h3>
 <p>Marginal effects are often communicated via plots. The y-axis in these plots is the estimated marginal effect while the x-axis is the value of the moderator.</p>
 <p>Below is the example when the factor variable is the moderator. The <code>ggplot</code> code has been seen in previous classes. We use the <code>geom_pointrange</code> statement when our moderator is a factor (here: <code>right_track</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
 <span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"pid"</span>,  </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> right_track, <span class="at">y =</span> estimate)) <span class="sc">+</span> </span>
@@ -725,7 +755,7 @@ Comparison: Right Direction - Wrong Track</code></pre>
 <span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Effect of PID"</span>, </span>
 <span id="annotated-cell-10-8"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Country on Right or Wrong Track?"</span>)  <span class="sc">+</span> </span>
 <span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
-<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(estimate, <span class="dv">2</span>)), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(estimate, <span class="dv">2</span>)), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
@@ -744,7 +774,7 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </div>
 <p>And here is the example when the continuous variable is the moderator. Now we use <code>geom_line()</code> in combination with <code>geom_ribbon</code> because our moderator is a continuous variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Effect of right_track by pid</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Effect of right_track by pid</span></span>
 <span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int, </span>
 <span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"right_track"</span>, </span>
 <span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">pid =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))) <span class="sc">|&gt;</span> </span>
@@ -755,7 +785,7 @@ Comparison: Right Direction - Wrong Track</code></pre>
 <span id="annotated-cell-11-9"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Wrong Track - Right Direction"</span>, </span>
 <span id="annotated-cell-11-10"><a href="#annotated-cell-11-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Partisanship"</span>) <span class="sc">+</span> </span>
 <span id="annotated-cell-11-11"><a href="#annotated-cell-11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-12" class="code-annotation-target"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-12" class="code-annotation-target"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
@@ -774,15 +804,15 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </div>
 </section>
 </section>
-<section id="continuous-by-continuous-interaction" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="continuous-by-continuous-interaction"><span class="header-section-number">16.2</span> Continuous by Continuous Interaction</h2>
+<section id="continuous-by-continuous-interaction" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="continuous-by-continuous-interaction"><span class="header-section-number">18.2</span> Continuous by Continuous Interaction</h2>
 <p>The code for marginal effects calculation follows the same principles in case of an interaction between 2 continuous variables. For example, here we predict Biden evaluations based on the following variables: <code>age</code>, <code>socialists</code> (a respondent’s evaluation of socialists on a 0 (“very cold or unfavorable”) to 100 (“very warm or favorable” scale), the interaction between <code>age</code> and <code>socialists</code>, and <code>rural_urban</code> as a control variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>biden_int2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> socialists <span class="sc">*</span> age <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Summary of results</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                   estimate std.error statistic  p.value
@@ -798,7 +828,7 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </div>
 <p>The interaction term is statistically significant. We can investigate this significant interaction in two ways. We could calculate the effect (regression slope) of age at different values of the socialists predictor. Or, we can calculate the effect of evaluations of socialists on Biden evaluations at different age values. In both cases, we must specify the values for our moderator variable. We choose logical values in line with the nature of our data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal effect of age at socialists = 0, 10, 20...100</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal effect of age at socialists = 0, 10, 20...100</span></span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int2, </span>
 <span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"age"</span>, </span>
 <span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">socialists =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>))) </span>
@@ -806,7 +836,7 @@ Comparison: Right Direction - Wrong Track</code></pre>
 <span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Marginal effect of socialists at age = 20,30,40...80</span></span>
 <span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int2, </span>
 <span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"socialists"</span>, </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-9" class="code-annotation-target"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-9" class="code-annotation-target"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
@@ -850,17 +880,17 @@ Comparison: dY/dX</code></pre>
 </div>
 </div>
 <p>Here, we can see that the effect of age is estimated as negative and statistically significant when the <code>socialists</code> variable = 0 (-0.0752 [95% CI: -0.143, -0.008]). Note how this estimate is identical to the coefficient for <code>age</code> in the model summary. As the <code>socialists</code> variable increases, however, the effect of <code>age</code> flips signs and becomes increasingly positive in value. This is consistent with the positively signed coefficient on the interaction term. Meanwhile, the effect of the <code>socialists</code> variable is positive among young people (e.g., among those aged 20 it is 0.39 [0.34, 0.44]) with this effect growing even more positive as age increases.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>For plotting, we use the code for when the moderator variable is continuous (see above, <a href="#sec-ame-plotting" class="quarto-xref"><span>Section 16.1.2</span></a>).</p>
+<p>For plotting, we use the code for when the moderator variable is continuous (see above, <a href="#sec-ame-plotting" class="quarto-xref"><span>Section 18.1.2</span></a>).</p>
 </section>
-<section id="binary-x-binary-interaction" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="binary-x-binary-interaction"><span class="header-section-number">16.3</span> Binary x Binary Interaction</h2>
+<section id="binary-x-binary-interaction" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="binary-x-binary-interaction"><span class="header-section-number">18.3</span> Binary x Binary Interaction</h2>
 <p>When our interaction is made up of 2 binary factor variables, the same principles for the R code continue to apply. Here we predict the score for Biden based on the interaction between <code>right_track</code> and <code>vote2016</code> (with <code>rural_urban</code> as a control variable).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the model and store results</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>biden_int3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(biden <span class="sc">~</span> right_track <span class="sc">*</span> vote2016 <span class="sc">+</span> rural_urban, <span class="at">data =</span> anes)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Summary of results</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(biden_int3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                                     estimate std.error statistic  p.value
@@ -876,10 +906,10 @@ Comparison: dY/dX</code></pre>
 </div>
 <p>The marginal effects can be found as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#right_track as moderator</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#right_track as moderator</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int3, </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"vote2016"</span>, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"right_track"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      right_track Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
@@ -890,10 +920,10 @@ Term: vote2016
 Type: response
 Comparison: Trump Vote - Clinton Vote</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vote2016 as moderator</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vote2016 as moderator</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(biden_int3, </span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"right_track"</span>, </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      vote2016 Estimate Std. Error     z Pr(&gt;|z|)     S 2.5 % 97.5 %
@@ -906,15 +936,15 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </div>
 </div>
 <p>The top results show that 2016 Trump voters evaluated Biden worse than 2016 Clinton voters regardless of their beliefs about the (actually sorry) state of the country in 2020. However, the difference is much larger among those that thought things in the country were heading in the wrong direction (difference = -51.6) than those that thought otherwise (-37.80). You might notice, again, that the interaction term coefficient equals the difference between these two estimates (e.g., -37.8 - (-51.6) = 13.8). The statistically significant interaction term indicates we can reject the null hypothesis that the difference between the two marginal effects estimates = 0.</p>
-<p>For plotting, we use the code for when the moderator variable is a factor variable (see <a href="#sec-ame-plotting" class="quarto-xref"><span>Section 16.1.2</span></a>).</p>
+<p>For plotting, we use the code for when the moderator variable is a factor variable (see <a href="#sec-ame-plotting" class="quarto-xref"><span>Section 18.1.2</span></a>).</p>
 </section>
-<section id="logistic-regression-example" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="logistic-regression-example"><span class="header-section-number">16.4</span> Logistic regression example</h2>
-<p>Our R code remains similar when we have an interaction in a logistic regression as well. The marginal effects obtained now with the <code>slopes()</code> command are the changes in predicted probability that Y = 1 (see <a href="logit_02.html" class="quarto-xref"><span>Chapter 10</span></a>).</p>
+<section id="logistic-regression-example" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="logistic-regression-example"><span class="header-section-number">18.4</span> Logistic regression example</h2>
+<p>Our R code remains similar when we have an interaction in a logistic regression as well. The marginal effects obtained now with the <code>slopes()</code> command are the changes in predicted probability that Y = 1 (see <a href="logit_02.html" class="quarto-xref"><span>Chapter 12</span></a>).</p>
 <p>Here are the results of the interaction model again:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(righttrack_int)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Our model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(righttrack_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
   term                   estimate std.error statistic  p.value
@@ -930,10 +960,10 @@ Comparison: Right Direction - Wrong Track</code></pre>
 </div>
 <p>The interaction in this model is between <code>age</code> (a continuous variable) and <code>vote2016</code> (a factorized binary variable). We can calculate the marginal effects as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age as moderator at = 20, 30...80</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age as moderator at = 20, 30...80</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(righttrack_int, </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"vote2016"</span>, </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">10</span>))) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  age Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
@@ -949,10 +979,10 @@ Term: vote2016
 Type: response
 Comparison: Trump Vote - Clinton Vote</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vote2016 as moderator</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vote2016 as moderator</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slopes</span>(righttrack_int, </span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variables =</span> <span class="st">"age"</span>, </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"vote2016"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      vote2016  Estimate Std. Error     z Pr(&gt;|z|)   S     2.5 %   97.5 %
@@ -1043,13 +1073,14 @@ Comparison: dY/dX</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1433,12 +1464,12 @@ Comparison: dY/dX</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./interaction_01.html" class="pagination-link" aria-label="Including an Interaction Term in a Regression Model">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./interaction_03.html" class="pagination-link" aria-label="Predicted Values from Interaction Models">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

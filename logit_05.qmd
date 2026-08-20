@@ -55,14 +55,15 @@ Of course, we need a model to examine. We will examine `vote_model4` from last c
 ```{r}
 #Data Preparation
 ESS9NL <- ESS9NL |>
-  #Factorize our IVs
-  mutate(gndr_F = factorize(gndr), 
-         vote_F = factorize(vote))  |> 
-  #Remove Not Eligible to Vote Category from vote
-  mutate(vote_F = na_if(vote_F,"Not eligible to vote")) |> 
-  #Relevel our variables like we did last time
-  mutate(vote_F = relevel(vote_F, "No"), 
-         gndr_F = relevel(gndr_F, "Female"))
+  mutate(
+    #convert binary/categorical variables to a factor
+    gndr_F = factor(gndr, 
+                    levels = c(2, 1), 
+                    labels = c("Female", "Male")), 
+    vote_F = factor(vote, 
+                    levels = c(2, 1), 
+                    labels = c("Did not vote", 
+                               "Voted"))) 
 
 #Subset of our data
 ESS9NL_glm <- ESS9NL |>

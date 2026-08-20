@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Appendix E — Creating Indices / Scales – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -59,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -92,14 +97,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -129,7 +134,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -142,7 +147,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -367,8 +372,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -376,50 +381,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -428,45 +456,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -475,40 +503,40 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -593,7 +621,7 @@ window.Quarto = {
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)    <span class="co"># For combining plots together</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)   <span class="co"># For html table making</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)          <span class="co"># Importing data    </span></span>
@@ -604,7 +632,7 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Datasets used in examples below</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"scale_data.rda"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"hdi_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"hdi_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Who is this for?">
 <div class="callout-header d-flex align-content-center">
@@ -612,7 +640,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Who is this for?
+<span class="screen-reader-only">Note</span>Who is this for?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -648,10 +676,10 @@ Who is this for?
 <p>Respondents could say “yes” or “no” to these questions. The former response is given a code of 1 and the latter a code of 0.</p>
 <p>It is always a good idea to get to know your data before doing any sort of complicated analysis. We will thus use the <code>psych::describe()</code> function to get a quick overview of the descriptive data for these variables with the “mean” column telling us the proportion of respondents completing each action.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(persuade<span class="sc">:</span>contribute_money_group) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>()  <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vars<span class="sc">:</span>mean, min, max)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vars<span class="sc">:</span>mean, min, max)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
@@ -690,10 +718,10 @@ contribute_money_group    7 4760 0.03   0   1</code></pre>
 </ul>
 <p>Respondents could choose from one of five response options: not at all (=1), a little (=2), somewhat (=3), very (=4), and extremely (=5). Let’s take a quick look at the descriptive statistics for these variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hopeful<span class="sc">:</span>nervous) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vars, n, mean, sd, median, min, max, skew, kurtosis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vars, n, mean, sd, median, min, max, skew, kurtosis)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          vars    n mean   sd median min max  skew kurtosis
 hopeful      1 4756 2.49 1.11      3   1   5  0.24    -0.69
@@ -713,10 +741,10 @@ nervous      9 4758 3.47 1.18      4   1   5 -0.36    -0.73</code></pre>
 <p>One the one hand, we might not be interested in predicting the individual behaviors but instead in understanding the <em>breadth</em> of campaign activity. Instead of examining whether feeling “proud” leads a person to be more likely to take some <em>particular</em> action, the goal of our paper may be in examining whether this emotion is associated with taking <em>more</em> actions rather than fewer. We will need to combine the items into a single index to accomplish this goal. We will show how to do this below.</p>
 <p>On the other hand, we may have theoretical and empirical reasons for combining the emotions items into an index or, perhaps, more than one. Suppose that we regress either an individual campaign behavior item or a campaign engagement index on all of the emotion items at once. This would enable us to see whether there exists a relationship between, say, how “proud” one says they are and campaign engagement after adjusting for the effects of feeling “happy” and “hopeful” on campaign engagement. However, these words capture fairly similar (if not identical) emotional states that may very well go together (e.g,. someone experiencing pride may also experience happiness). Stated somewhat differently, someone feeling positively about the state of things in the US at the time of the election may be likely to report higher values on all three items to communicate their underlying positivity. Let’s take a look at the correlations between the emotion items to see if that intuition has merit:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hopeful<span class="sc">:</span>nervous) <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(str_to_title) <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datasummary_correlation</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datasummary_correlation</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
@@ -729,7 +757,7 @@ nervous      9 4758 3.47 1.18      4   1   5 -0.36    -0.73</code></pre>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="3">Creates a correlation table. This function comes from the <code>modelsummary</code> package. See <a href="linear_08.html" class="quarto-xref"><span>Chapter 8</span></a> for more on this command.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="3">Creates a correlation table. This function comes from the <code>modelsummary</code> package. See <a href="linear_08.html" class="quarto-xref"><span>Chapter 10</span></a> for more on this command.</span>
 </dd>
 </dl>
 </div>
@@ -742,210 +770,168 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <div class="cell-output-display">
 <!-- preamble start -->
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
-      function styleCell_ck0boy35vp24d5me7v15(i, j, css_id) {
-          var table = document.getElementById("tinytable_ck0boy35vp24d5me7v15");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_ck0boy35vp24d5me7v15');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_ck0boy35vp24d5me7v15(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ck0boy35vp24d5me7v15");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_3tnmuaag58oosakpn1ys = TinyTable.createTableFunctions("tinytable_3tnmuaag58oosakpn1ys");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 },  ], css_id: 'tinytable_css_xp1tpvqq5u6u1d6bxw9u',}, 
-          { positions: [ { i: 2, j: 3 }, { i: 6, j: 1 }, { i: 3, j: 1 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 6, j: 2 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 4 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 4 }, { i: 3, j: 3 }, { i: 1, j: 2 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 2, j: 5 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 5, j: 5 }, { i: 3, j: 4 }, { i: 1, j: 3 }, { i: 8, j: 5 }, { i: 6, j: 4 }, { i: 4, j: 3 }, { i: 8, j: 4 }, { i: 2, j: 6 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 5, j: 6 }, { i: 3, j: 5 }, { i: 1, j: 4 }, { i: 8, j: 6 }, { i: 6, j: 5 }, { i: 4, j: 4 }, { i: 1, j: 7 }, { i: 2, j: 7 }, { i: 7, j: 4 }, { i: 1, j: 6 }, { i: 5, j: 7 }, { i: 3, j: 6 }, { i: 1, j: 5 }, { i: 8, j: 7 }, { i: 6, j: 6 }, { i: 4, j: 5 }, { i: 1, j: 8 }, { i: 2, j: 8 }, { i: 7, j: 5 }, { i: 4, j: 8 }, { i: 5, j: 8 }, { i: 3, j: 7 }, { i: 4, j: 7 }, { i: 8, j: 8 }, { i: 6, j: 7 }, { i: 4, j: 6 }, { i: 1, j: 9 }, { i: 2, j: 9 }, { i: 7, j: 6 }, { i: 4, j: 9 }, { i: 5, j: 9 }, { i: 3, j: 8 }, { i: 7, j: 9 }, { i: 8, j: 9 }, { i: 6, j: 8 }, { i: 7, j: 8 }, { i: 6, j: 9 }, { i: 3, j: 9 }, { i: 7, j: 7 },  ], css_id: 'tinytable_css_xbctmlex82708i81bzz4',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_evuhrbgx49ei4gw8a4ag',}, 
-          { positions: [ { i: 9, j: 3 }, { i: 9, j: 4 }, { i: 9, j: 8 }, { i: 9, j: 2 }, { i: 9, j: 6 }, { i: 9, j: 7 }, { i: 9, j: 1 }, { i: 9, j: 5 }, { i: 9, j: 9 },  ], css_id: 'tinytable_css_815826qfn4e2esgxq0os',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 5 }, { i: 0, j: 9 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 8 }, { i: 0, j: 2 }, { i: 0, j: 6 }, { i: 0, j: 7 },  ], css_id: 'tinytable_css_3hi7pb1ajzo276oe5u7r',}, 
-          { positions: [ { i: 9, j: 0 },  ], css_id: 'tinytable_css_0f4vuiv20weyomo0p407',}, 
+          { positions: [ { i: '9', j: 2 }, { i: '9', j: 3 }, { i: '9', j: 4 }, { i: '9', j: 5 }, { i: '9', j: 6 }, { i: '9', j: 7 }, { i: '9', j: 8 }, { i: '9', j: 9 }, { i: '9', j: 10 } ], css_id: 'tinytable_css_mzmhdyllcehk467nbyeh',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '6', j: 8 }, { i: '7', j: 8 }, { i: '8', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 }, { i: '6', j: 9 }, { i: '7', j: 9 }, { i: '8', j: 9 }, { i: '1', j: 10 }, { i: '2', j: 10 }, { i: '3', j: 10 }, { i: '4', j: 10 }, { i: '5', j: 10 }, { i: '6', j: 10 }, { i: '7', j: 10 }, { i: '8', j: 10 } ], css_id: 'tinytable_css_eqt38hn7qiloo571pm4o',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 }, { i: '0', j: 10 } ], css_id: 'tinytable_css_u86jhqvheaa38r9z7x2n',}, 
+          { positions: [ { i: '9', j: 1 } ], css_id: 'tinytable_css_033flii4uyl6ujgm2nsd',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 } ], css_id: 'tinytable_css_ji9fycrpxjko7kf1khfk',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_3r8mco274fnkbxt3d86m',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_ck0boy35vp24d5me7v15(cell.i, cell.j, group.css_id);
+                  tableFns_3tnmuaag58oosakpn1ys.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_xp1tpvqq5u6u1d6bxw9u, .table th.tinytable_css_xp1tpvqq5u6u1d6bxw9u { text-align: left; }
-      .table td.tinytable_css_xbctmlex82708i81bzz4, .table th.tinytable_css_xbctmlex82708i81bzz4 { text-align: right; }
-      .table td.tinytable_css_evuhrbgx49ei4gw8a4ag, .table th.tinytable_css_evuhrbgx49ei4gw8a4ag { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_815826qfn4e2esgxq0os, .table th.tinytable_css_815826qfn4e2esgxq0os { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_3hi7pb1ajzo276oe5u7r, .table th.tinytable_css_3hi7pb1ajzo276oe5u7r { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_0f4vuiv20weyomo0p407, .table th.tinytable_css_0f4vuiv20weyomo0p407 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+    /* tinytable css entries after */
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_mzmhdyllcehk467nbyeh, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_mzmhdyllcehk467nbyeh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_eqt38hn7qiloo571pm4o, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_eqt38hn7qiloo571pm4o { text-align: right }
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_u86jhqvheaa38r9z7x2n, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_u86jhqvheaa38r9z7x2n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_033flii4uyl6ujgm2nsd, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_033flii4uyl6ujgm2nsd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_ji9fycrpxjko7kf1khfk, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_ji9fycrpxjko7kf1khfk { text-align: left }
+    #tinytable_3tnmuaag58oosakpn1ys td.tinytable_css_3r8mco274fnkbxt3d86m, #tinytable_3tnmuaag58oosakpn1ys th.tinytable_css_3r8mco274fnkbxt3d86m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_ck0boy35vp24d5me7v15" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
+      <table class="tinytable" id="tinytable_3tnmuaag58oosakpn1ys" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
+        <thead>
               <tr>
-                <th scope="col"> </th>
-                <th scope="col">Hopeful</th>
-                <th scope="col">Afraid</th>
-                <th scope="col">Outraged</th>
-                <th scope="col">Angry</th>
-                <th scope="col">Happy</th>
-                <th scope="col">Worried</th>
-                <th scope="col">Proud</th>
-                <th scope="col">Irritated</th>
-                <th scope="col">Nervous</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Hopeful</th>
+                <th scope="col" data-row="0" data-col="3">Afraid</th>
+                <th scope="col" data-row="0" data-col="4">Outraged</th>
+                <th scope="col" data-row="0" data-col="5">Angry</th>
+                <th scope="col" data-row="0" data-col="6">Happy</th>
+                <th scope="col" data-row="0" data-col="7">Worried</th>
+                <th scope="col" data-row="0" data-col="8">Proud</th>
+                <th scope="col" data-row="0" data-col="9">Irritated</th>
+                <th scope="col" data-row="0" data-col="10">Nervous</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td>Hopeful  </td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="1" data-col="1">Hopeful</td>
+                  <td data-row="1" data-col="2">1</td>
+                  <td data-row="1" data-col="3">.</td>
+                  <td data-row="1" data-col="4">.</td>
+                  <td data-row="1" data-col="5">.</td>
+                  <td data-row="1" data-col="6">.</td>
+                  <td data-row="1" data-col="7">.</td>
+                  <td data-row="1" data-col="8">.</td>
+                  <td data-row="1" data-col="9">.</td>
+                  <td data-row="1" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Afraid   </td>
-                  <td>-.33</td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="2" data-col="1">Afraid</td>
+                  <td data-row="2" data-col="2">-.33</td>
+                  <td data-row="2" data-col="3">1</td>
+                  <td data-row="2" data-col="4">.</td>
+                  <td data-row="2" data-col="5">.</td>
+                  <td data-row="2" data-col="6">.</td>
+                  <td data-row="2" data-col="7">.</td>
+                  <td data-row="2" data-col="8">.</td>
+                  <td data-row="2" data-col="9">.</td>
+                  <td data-row="2" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Outraged </td>
-                  <td>-.33</td>
-                  <td>.64 </td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="3" data-col="1">Outraged</td>
+                  <td data-row="3" data-col="2">-.33</td>
+                  <td data-row="3" data-col="3">.64</td>
+                  <td data-row="3" data-col="4">1</td>
+                  <td data-row="3" data-col="5">.</td>
+                  <td data-row="3" data-col="6">.</td>
+                  <td data-row="3" data-col="7">.</td>
+                  <td data-row="3" data-col="8">.</td>
+                  <td data-row="3" data-col="9">.</td>
+                  <td data-row="3" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Angry    </td>
-                  <td>-.34</td>
-                  <td>.66 </td>
-                  <td>.77 </td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="4" data-col="1">Angry</td>
+                  <td data-row="4" data-col="2">-.34</td>
+                  <td data-row="4" data-col="3">.66</td>
+                  <td data-row="4" data-col="4">.77</td>
+                  <td data-row="4" data-col="5">1</td>
+                  <td data-row="4" data-col="6">.</td>
+                  <td data-row="4" data-col="7">.</td>
+                  <td data-row="4" data-col="8">.</td>
+                  <td data-row="4" data-col="9">.</td>
+                  <td data-row="4" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Happy    </td>
-                  <td>.61 </td>
-                  <td>-.39</td>
-                  <td>-.41</td>
-                  <td>-.40</td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="5" data-col="1">Happy</td>
+                  <td data-row="5" data-col="2">.61</td>
+                  <td data-row="5" data-col="3">-.39</td>
+                  <td data-row="5" data-col="4">-.41</td>
+                  <td data-row="5" data-col="5">-.40</td>
+                  <td data-row="5" data-col="6">1</td>
+                  <td data-row="5" data-col="7">.</td>
+                  <td data-row="5" data-col="8">.</td>
+                  <td data-row="5" data-col="9">.</td>
+                  <td data-row="5" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Worried  </td>
-                  <td>-.35</td>
-                  <td>.75 </td>
-                  <td>.66 </td>
-                  <td>.66 </td>
-                  <td>-.42</td>
-                  <td>1   </td>
-                  <td>.   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="6" data-col="1">Worried</td>
+                  <td data-row="6" data-col="2">-.35</td>
+                  <td data-row="6" data-col="3">.75</td>
+                  <td data-row="6" data-col="4">.66</td>
+                  <td data-row="6" data-col="5">.66</td>
+                  <td data-row="6" data-col="6">-.42</td>
+                  <td data-row="6" data-col="7">1</td>
+                  <td data-row="6" data-col="8">.</td>
+                  <td data-row="6" data-col="9">.</td>
+                  <td data-row="6" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Proud    </td>
-                  <td>.60 </td>
-                  <td>-.36</td>
-                  <td>-.39</td>
-                  <td>-.39</td>
-                  <td>.72 </td>
-                  <td>-.41</td>
-                  <td>1   </td>
-                  <td>.  </td>
-                  <td>.</td>
+                  <td data-row="7" data-col="1">Proud</td>
+                  <td data-row="7" data-col="2">.60</td>
+                  <td data-row="7" data-col="3">-.36</td>
+                  <td data-row="7" data-col="4">-.39</td>
+                  <td data-row="7" data-col="5">-.39</td>
+                  <td data-row="7" data-col="6">.72</td>
+                  <td data-row="7" data-col="7">-.41</td>
+                  <td data-row="7" data-col="8">1</td>
+                  <td data-row="7" data-col="9">.</td>
+                  <td data-row="7" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Irritated</td>
-                  <td>-.36</td>
-                  <td>.64 </td>
-                  <td>.72 </td>
-                  <td>.73 </td>
-                  <td>-.44</td>
-                  <td>.68 </td>
-                  <td>-.42</td>
-                  <td>1  </td>
-                  <td>.</td>
+                  <td data-row="8" data-col="1">Irritated</td>
+                  <td data-row="8" data-col="2">-.36</td>
+                  <td data-row="8" data-col="3">.64</td>
+                  <td data-row="8" data-col="4">.72</td>
+                  <td data-row="8" data-col="5">.73</td>
+                  <td data-row="8" data-col="6">-.44</td>
+                  <td data-row="8" data-col="7">.68</td>
+                  <td data-row="8" data-col="8">-.42</td>
+                  <td data-row="8" data-col="9">1</td>
+                  <td data-row="8" data-col="10">.</td>
                 </tr>
                 <tr>
-                  <td>Nervous  </td>
-                  <td>-.31</td>
-                  <td>.75 </td>
-                  <td>.62 </td>
-                  <td>.64 </td>
-                  <td>-.36</td>
-                  <td>.75 </td>
-                  <td>-.35</td>
-                  <td>.64</td>
-                  <td>1</td>
+                  <td data-row="9" data-col="1">Nervous</td>
+                  <td data-row="9" data-col="2">-.31</td>
+                  <td data-row="9" data-col="3">.75</td>
+                  <td data-row="9" data-col="4">.62</td>
+                  <td data-row="9" data-col="5">.64</td>
+                  <td data-row="9" data-col="6">-.36</td>
+                  <td data-row="9" data-col="7">.75</td>
+                  <td data-row="9" data-col="8">-.35</td>
+                  <td data-row="9" data-col="9">.64</td>
+                  <td data-row="9" data-col="10">1</td>
                 </tr>
         </tbody>
       </table>
@@ -975,7 +961,7 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <p>A proposed index with a <span class="math inline">\(\alpha\)</span> below 0.6 is generally considered a poor candidate for creation. However, we note an important caveat here. While one can calculate an <span class="math inline">\(\alpha\)</span> score for an index comprised of binary indicators, this will generally lead to under-estimates of reliability because <span class="math inline">\(\alpha\)</span> assumes interval/continuous data. There are more advanced methods for investigating the reliability of indices based on binary data, but they go belond the scope of this book.</p>
 <p>We can obtain the <span class="math inline">\(\alpha\)</span> score for a proposed index via the <code>cronbachs_alpha()</code> function from the <code>performance</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Behavior index</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Behavior index</span></span>
 <span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(persuade<span class="sc">:</span>contribute_money_group) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cronbachs_alpha</span>()</span>
@@ -988,7 +974,7 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Negative Emotions</span></span>
 <span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(afraid, outraged, angry, worried, irritated, nervous) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cronbachs_alpha</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cronbachs_alpha</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
@@ -1011,15 +997,15 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <p>There is not necessarily a “right” answer to the foregoing question as the decision to sum vs.&nbsp;average will depend on the specifics of the items and your goals. Summing indicators makes more intuitive sense when the goal is to examine the total or count of something. Averaging, on the other hand, makes more sense when we want to maintain the original scaling of the items for our index. We could add up all of the emotion items above but this would lead to scales with different ranges (e.g., the negative emotions scale is based on six items and hence an additive scale would range from 6 to 30 while an additive positive emotions scale would range from 3 to 15). Averaging the items, meanwhile, would produce scores on a 1-5 scale for both indices and one that is easier to interpret. What would a score of 20 really represent on a summed scale of the negative emotion items? On the other hand, a 4 on a scale created by averaging the different emotion items together is a bit easier to interpret in this case (e.g., the person tends to say “very” to each of the questions).</p>
 <p>Another consideration to think about concerns missing data and is particularly important when thinking about summative indices. When we tell R to take a mean or a sum of something we need to tell it how to handle missing data via <code>na.rm = TRUE</code> or <code>na.rm = FALSE</code>. The former command tells R to remove missing observations before performing the calculation while the latter tells R not to do that. We need to use <code>na.rm = TRUE</code> to calculate a mean or take a sum as otherwise the command will return “NA” as this example shows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some data for the example</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some data for the example</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">5</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking a mean</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.25</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
@@ -1027,14 +1013,14 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <p>If we form an index by averaging together multiple items, then the resulting average will be based only on those items for which you have data. If your index is created by taking the average of five items but an observation is missing data on one of the observations, then the index score for that observation will be based on the four items for which there is data. This is generally okay.</p>
 <p>What if we are taking a sum? We again need to set <code>na.rm = TRUE</code> in order to obtain a non-NA outcome. However, we have to be careful here. When we use <code>na.rm = TRUE</code> with <code>sum()</code>, the command will work by giving a score of 0 to any observation with an NA value in order to calculate the final scale item for the observation. This can lead to some unintended effects if we have observations without <em>any</em> data on the variables used to calculate the scale. Consider this example where we create a dataset with two variables, x and y. The x column is entirely comprised of NA responses, while the y column has a single NA. We then take the sum of both columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Toy data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Toy data</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="cn">NA</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 2
   x         y
@@ -1045,10 +1031,10 @@ Table&nbsp;E.1: Correlations between Emotion Items
 4 NA        0
 5 NA       NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum up the columns</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum up the columns</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sum_x =</span> <span class="fu">sum</span>(x, <span class="at">na.rm =</span> T), </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">sum_y =</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">sum_y =</span> <span class="fu">sum</span>(y, <span class="at">na.rm =</span> T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
   x         y sum_x sum_y
@@ -1069,13 +1055,13 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <h4 data-number="E.2.4.1" class="anchored" data-anchor-id="an-index-via-averaging"><span class="header-section-number">E.2.4.1</span> An Index via averaging</h4>
 <p>We’ll begin by creating two indices: one where we average together the three positive emotions items and one where we average together the six negative ones.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">positive_emotions =</span> <span class="fu">mean</span>(<span class="fu">c</span>(hopeful, happy, proud), <span class="at">na.rm =</span> T), </span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">negative_emotions =</span> <span class="fu">mean</span>(<span class="fu">c</span>(afraid, outraged, angry, worried, </span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                               irritated, nervous), <span class="at">na.rm =</span> T)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here is how to read the syntax:</p>
 <dl>
@@ -1094,10 +1080,10 @@ Table&nbsp;E.1: Correlations between Emotion Items
 </dl>
 <p>Here is a glimpse at our data including the new columns:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hopeful<span class="sc">:</span>negative_emotions) <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2">2</button><span id="annotated-cell-11-4" class="code-annotation-target"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2">2</button><span id="annotated-cell-11-4" class="code-annotation-target"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
@@ -1226,9 +1212,9 @@ Table&nbsp;E.1: Correlations between Emotion Items
 <p>The first respondent was very unhappy about the state of affairs in America: they gave a score of 1 on each positive emotion item (and hence have an average of 1 on the index) and a score of 5 on all negative ones (and hence an average of 5 on the index). Respondent 6 was nearly the exact opposite on this front while the other respondents shown in this output are somewhere in the middle.</p>
 <p>We can get a sense of the inter-relationship between the scales by looking at their bivariate correlation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(scale_data<span class="sc">$</span>positive_emotions, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(scale_data<span class="sc">$</span>positive_emotions, </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         scale_data<span class="sc">$</span>negative_emotions, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -1249,13 +1235,13 @@ sample estimates:
 <h4 data-number="E.2.4.2" class="anchored" data-anchor-id="an-index-via-summing"><span class="header-section-number">E.2.4.2</span> An Index via summing</h4>
 <p>A very similar process can be used to create summative indices in R. However, one thing we should first do is check to see if there are any observations with entirely missing data on the variables comprising the index that we want to create. We can do this as so (although, as we show you below, there is a simpler way to specify the variables in this command that would be useful here):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">engage_missing =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(<span class="fu">c</span>(persuade, online_meetings, rallies, </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                                      campaign_button, other_work, </span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                                      contribute_money_party,</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                                      contribute_money_group)))) <span class="sc">|&gt;</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>sum(is.na(c(persuade, ..., contribute_money_group))))</code></dt>
@@ -1265,7 +1251,7 @@ sample estimates:
 </dl>
 <p>We can next look to see if there are any observations with missing data on all 7 columns via a simple <code>table()</code> command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scale_data<span class="sc">$</span>engage_missing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scale_data<span class="sc">$</span>engage_missing)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1    3    4    6    7 
@@ -1274,15 +1260,15 @@ sample estimates:
 </div>
 <p>The vast majority of observations has full data (i.e., 0 missings). Only one observation has complete missing data on these items. We can filter this observation out of our data to make sure that we do not give it an inaccurate scale estimate later on:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(engage_missing <span class="sc">&lt;</span> <span class="dv">7</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(engage_missing <span class="sc">&lt;</span> <span class="dv">7</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can finally turn to creating our index. Here we will introduce a handy shortcut that we can use here: <code>c_across()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>scale_data <span class="ot">&lt;-</span> scale_data <span class="sc">|&gt;</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">campaign_engagement =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(persuade<span class="sc">:</span>contribute_money_group))) <span class="sc">|&gt;</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl>
 <dt><code>campaign_engagement = sum(c_across(persuade:contribute_money_group)))</code></dt>
@@ -1292,7 +1278,7 @@ sample estimates:
 </dl>
 <p>Let’s take a look at distribution of the final index:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scale_data<span class="sc">$</span>campaign_engagement)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(scale_data<span class="sc">$</span>campaign_engagement)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1    2    3    4    5    6    7 
@@ -1306,12 +1292,12 @@ sample estimates:
 <h3 data-number="E.2.5" class="anchored" data-anchor-id="lets-run-a-model"><span class="header-section-number">E.2.5</span> Let’s Run a Model!</h3>
 <p>Now that we have created our indices, we can of course analyse them with a regression model. Here we’ll perform a linear regression predicting the campaign engagement measures based on the two emotion indices:<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model </span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>engagement_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(campaign_engagement <span class="sc">~</span> positive_emotions <span class="sc">+</span> negative_emotions, </span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> scale_data)</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(engagement_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(engagement_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term              estimate std.error statistic  p.value
@@ -1333,135 +1319,93 @@ sample estimates:
 <p><img src="figures/hdi_measurement.png" class="img-fluid" alt="An image showing the main components of HDI: life expectancy, educational attainment, and gross national income."></p>
 <p>Our goal in the following sections is to create an HDI scale ourselves using the underlying data used by the UN for the year 2023, which we obtained from their <a href="https://hdr.undp.org/data-center/documentation-and-downloads" target="_blank">website</a>. Here is an overview of the four variables that are used to construct the HDI index: life expectancy at birth in years (<code>life_expectancy</code>), the expected years of schooling in the country in years (<code>expected_schooling</code>), the mean years of schooling in years (<code>mean_schooling</code>), and gross national income (which has been logged; <code>gni_percap_logged</code>):<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary</span>(life_expectancy <span class="sc">+</span> expected_schooling <span class="sc">+</span> mean_schooling <span class="sc">+</span> gni_percap_logged <span class="sc">~</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>              Mean <span class="sc">+</span> SD <span class="sc">+</span> Min <span class="sc">+</span> Max <span class="sc">+</span> N, <span class="at">data =</span> hdi_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary</span>(life_expectancy <span class="sc">+</span> expected_schooling <span class="sc">+</span> mean_schooling <span class="sc">+</span> gni_percap_logged <span class="sc">~</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>              Mean <span class="sc">+</span> SD <span class="sc">+</span> Min <span class="sc">+</span> Max <span class="sc">+</span> N, <span class="at">data =</span> hdi_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <!-- preamble start -->
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
-      function styleCell_dqxtpc4k5ut9m1xcdwkw(i, j, css_id) {
-          var table = document.getElementById("tinytable_dqxtpc4k5ut9m1xcdwkw");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_dqxtpc4k5ut9m1xcdwkw');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_dqxtpc4k5ut9m1xcdwkw(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_dqxtpc4k5ut9m1xcdwkw");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_qa9z5h9fqbtmf289ripw = TinyTable.createTableFunctions("tinytable_qa9z5h9fqbtmf289ripw");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_txfbpi4q53way8r2sp6g',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 3 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 2, j: 3 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 1, j: 3 }, { i: 1, j: 4 }, { i: 1, j: 5 }, { i: 2, j: 5 }, { i: 3, j: 5 },  ], css_id: 'tinytable_css_pqcqdd63rsqb9dk6rbob',}, 
-          { positions: [ { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 4 }, { i: 4, j: 5 },  ], css_id: 'tinytable_css_poy2lkf8od3p1obc5bi5',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_jlm2t6eufxuyyqhw1tcx',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_4l9z803gai4dih17zk6d',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 },  ], css_id: 'tinytable_css_2vav545lsa09tlr3669u',}, 
+          { positions: [ { i: '4', j: 2 }, { i: '4', j: 3 }, { i: '4', j: 4 }, { i: '4', j: 5 }, { i: '4', j: 6 } ], css_id: 'tinytable_css_9jmjooduto0n0xaj66a2',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 } ], css_id: 'tinytable_css_l13owzuydcfgdvy3comw',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_28t9009hg7ws7m08gk7c',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_hdo0mnjvx40p5fwqfvvk',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_i30x5u9gw4a9puwf144v',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_6mzdpfqx5o7ktfr94z2e',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_dqxtpc4k5ut9m1xcdwkw(cell.i, cell.j, group.css_id);
+                  tableFns_qa9z5h9fqbtmf289ripw.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_txfbpi4q53way8r2sp6g, .table th.tinytable_css_txfbpi4q53way8r2sp6g { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_pqcqdd63rsqb9dk6rbob, .table th.tinytable_css_pqcqdd63rsqb9dk6rbob { text-align: right; }
-      .table td.tinytable_css_poy2lkf8od3p1obc5bi5, .table th.tinytable_css_poy2lkf8od3p1obc5bi5 { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_jlm2t6eufxuyyqhw1tcx, .table th.tinytable_css_jlm2t6eufxuyyqhw1tcx { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_4l9z803gai4dih17zk6d, .table th.tinytable_css_4l9z803gai4dih17zk6d { text-align: right; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_2vav545lsa09tlr3669u, .table th.tinytable_css_2vav545lsa09tlr3669u { text-align: left; }
+    /* tinytable css entries after */
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_9jmjooduto0n0xaj66a2, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_9jmjooduto0n0xaj66a2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_l13owzuydcfgdvy3comw, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_l13owzuydcfgdvy3comw { text-align: right }
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_28t9009hg7ws7m08gk7c, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_28t9009hg7ws7m08gk7c {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_hdo0mnjvx40p5fwqfvvk, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_hdo0mnjvx40p5fwqfvvk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_i30x5u9gw4a9puwf144v, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_i30x5u9gw4a9puwf144v { text-align: left }
+    #tinytable_qa9z5h9fqbtmf289ripw td.tinytable_css_6mzdpfqx5o7ktfr94z2e, #tinytable_qa9z5h9fqbtmf289ripw th.tinytable_css_6mzdpfqx5o7ktfr94z2e {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_dqxtpc4k5ut9m1xcdwkw" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
+      <table class="tinytable" id="tinytable_qa9z5h9fqbtmf289ripw" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
+        <thead>
               <tr>
-                <th scope="col"> </th>
-                <th scope="col">Mean</th>
-                <th scope="col">SD</th>
-                <th scope="col">Min</th>
-                <th scope="col">Max</th>
-                <th scope="col">N</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Mean</th>
+                <th scope="col" data-row="0" data-col="3">SD</th>
+                <th scope="col" data-row="0" data-col="4">Min</th>
+                <th scope="col" data-row="0" data-col="5">Max</th>
+                <th scope="col" data-row="0" data-col="6">N</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td>life_expectancy   </td>
-                  <td>73.11</td>
-                  <td>7.16</td>
-                  <td>54.46</td>
-                  <td>85.00</td>
-                  <td>193</td>
+                  <td data-row="1" data-col="1">life_expectancy</td>
+                  <td data-row="1" data-col="2">73.11</td>
+                  <td data-row="1" data-col="3">7.16</td>
+                  <td data-row="1" data-col="4">54.46</td>
+                  <td data-row="1" data-col="5">85.00</td>
+                  <td data-row="1" data-col="6">193</td>
                 </tr>
                 <tr>
-                  <td>expected_schooling</td>
-                  <td>13.49</td>
-                  <td>2.91</td>
-                  <td>5.63 </td>
-                  <td>18.00</td>
-                  <td>193</td>
+                  <td data-row="2" data-col="1">expected_schooling</td>
+                  <td data-row="2" data-col="2">13.49</td>
+                  <td data-row="2" data-col="3">2.91</td>
+                  <td data-row="2" data-col="4">5.63</td>
+                  <td data-row="2" data-col="5">18.00</td>
+                  <td data-row="2" data-col="6">193</td>
                 </tr>
                 <tr>
-                  <td>mean_schooling    </td>
-                  <td>9.17 </td>
-                  <td>3.19</td>
-                  <td>1.41 </td>
-                  <td>14.30</td>
-                  <td>193</td>
+                  <td data-row="3" data-col="1">mean_schooling</td>
+                  <td data-row="3" data-col="2">9.17</td>
+                  <td data-row="3" data-col="3">3.19</td>
+                  <td data-row="3" data-col="4">1.41</td>
+                  <td data-row="3" data-col="5">14.30</td>
+                  <td data-row="3" data-col="6">193</td>
                 </tr>
                 <tr>
-                  <td>gni_percap_logged </td>
-                  <td>9.51 </td>
-                  <td>1.17</td>
-                  <td>6.53 </td>
-                  <td>11.23</td>
-                  <td>193</td>
+                  <td data-row="4" data-col="1">gni_percap_logged</td>
+                  <td data-row="4" data-col="2">9.51</td>
+                  <td data-row="4" data-col="3">1.17</td>
+                  <td data-row="4" data-col="4">6.53</td>
+                  <td data-row="4" data-col="5">11.23</td>
+                  <td data-row="4" data-col="6">193</td>
                 </tr>
         </tbody>
       </table>
@@ -1486,7 +1430,7 @@ sample estimates:
 <p>HDI is calculated by averaging together three normalized variables: life-expectancy, the average of the two education measures discussed above, and the log of GNI per capita. We will show you how to normalize variables manually, using the formula shown earlier, and using the <code>rescale()</code> command from the <code>scales</code> packake. This latter approach is what we would generally recommend taking, but we also want to show the manual approach to show the underlying process and to be as faithful as possible to the specific methods used by the UN in creating this scale.</p>
 <p>The first step we will take is finding the average of the two education measures used in calculating HDI. The UN first divides the measures by 18 and 15 respectively to create a 0-1 scaling and then takes the average of the two items. We accomplish this via the syntax shown below which uses the same <code>rowwise()</code> technique from above to find the average of the two variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the education index for use later on</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the education index for use later on</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected_yrs_rescale1 =</span> expected_schooling <span class="sc">/</span> <span class="dv">18</span>, </span>
@@ -1498,18 +1442,18 @@ sample estimates:
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>education_index_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>education_index_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.2491  0.5567  0.7130  0.6806  0.8280  0.9636 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(expected_schooling, expected_yrs_rescale1, </span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>         mean_schooling, mean_yrs_rescale1,</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>         education_index_1) <span class="sc">|&gt;</span> </span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1571,19 +1515,19 @@ sample estimates:
 <p>The final index variable ranges from 0-1 with a minimum of 0.25 and a maximum of 0.96. We can follow the calculation of the index by looking at the relevant variables in the dataset. The first observation shows the maximum of 18 years of expected education. If we divide this by 18, then we get the maximum value of 1 on <code>expected_yrs_rescale1</code>. However, this observation does not have the maximum value on <code>mean_schooling</code>, but instead 13.9. If we divide this number by 15, then we get a value close to the maximum of 1: 0.93. The average of 1 and 0.93 can be found under <code>education_index_1</code>.</p>
 <p>Our next step will be to normalize the life-expectancy and (log of) GNI per capita measures. The UN uses custom minimum and maximum values in doing so: 20 and 85 for life expectancy and log(100) and log(75000) for GNI per capita.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize these variables</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize these variables</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">life_rescale1 =</span> (life_expectancy <span class="sc">-</span> <span class="dv">20</span>) <span class="sc">/</span> (<span class="dv">85</span> <span class="sc">-</span> <span class="dv">20</span>), </span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gni_rescale1 =</span> (gni_percap_logged <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">100</span>)) <span class="sc">/</span> (<span class="fu">log</span>(<span class="dv">75000</span>) <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">100</span>)))</span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distributions</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>life_rescale1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>life_rescale1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.5302  0.7290  0.8229  0.8170  0.8976  1.0000 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>gni_rescale1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>gni_rescale1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.2914  0.6120  0.7654  0.7407  0.8924  1.0000 </code></pre>
@@ -1592,7 +1536,7 @@ sample estimates:
 <p>When normalizing the variables we subtracted the UN supplied minimum value from each obervation’s value on the variable and then divided this value by the difference between the UN supplied maximum and minimum values. We can see from the output of the <code>summary()</code> command that we have now put these variables on a scale ending in 1, although here the minimum values are not 0 exactly.</p>
 <p>Finally, we can create our index by averaging these together using the same tools (<code>rowwise()</code> and <code>mean(c(), na.rm =T)</code>) as earlier.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scale</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scale</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hdi_normalize_un =</span> <span class="fu">mean</span>(<span class="fu">c</span>(life_rescale1, gni_rescale1, </span>
@@ -1600,7 +1544,7 @@ sample estimates:
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Its distribution</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_un)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_un)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.4059  0.6298  0.7646  0.7461  0.8620  0.9719 </code></pre>
@@ -1609,12 +1553,12 @@ sample estimates:
 <p>Our final scale ranges from 0.41 to 0.97 with higher values indicating higher levels of educational attainment, country wealth, and life expectancy.</p>
 <p>The process above used custom minimum and maximum values from the UN. The UN justifies these values based on theoretical considerations. In your own examples, though, it will be simpler to use (and justify) the actual observed minimum and maximum values for the variables in your dataset rather than specifying (potentially arbitrary) values of your own. Here, we can use the <code>scales::rescale()</code> command to accomplish our goals. We will first normalize all four variables using this method before creating the final scale.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-25-2"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-3" class="code-annotation-target"><a href="#annotated-cell-25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected_yrs_rescale2 =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(expected_schooling, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
 <span id="annotated-cell-25-4"><a href="#annotated-cell-25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_yrs_rescale2 =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(mean_schooling, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)), </span>
 <span id="annotated-cell-25-5"><a href="#annotated-cell-25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">life_rescale2 =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(life_expectancy, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)), </span>
-<span id="annotated-cell-25-6"><a href="#annotated-cell-25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">gni_rescale2 =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(gni_percap_logged, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-25-6"><a href="#annotated-cell-25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">gni_rescale2 =</span> scales<span class="sc">::</span><span class="fu">rescale</span>(gni_percap_logged, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
@@ -1637,7 +1581,7 @@ sample estimates:
 </dl>
 <p>Let’s take a quick look at the original life expectancy measure and how the two rescaled versions relate to it and to each other:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Original and UN measure</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Original and UN measure</span></span>
 <span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hdi_data, <span class="fu">aes</span>(<span class="at">x =</span> life_expectancy, <span class="at">y =</span> life_rescale1)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="annotated-cell-26-3"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-4" class="code-annotation-target"><a href="#annotated-cell-26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Normalization using UN</span><span class="sc">\n</span><span class="st">provided min(x) and max(x)"</span>)</span>
@@ -1647,7 +1591,7 @@ sample estimates:
 <span id="annotated-cell-26-8"><a href="#annotated-cell-26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Normalization via</span><span class="sc">\n</span><span class="st">scales::rescale()"</span>)</span>
 <span id="annotated-cell-26-9"><a href="#annotated-cell-26-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-26-10"><a href="#annotated-cell-26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined plot using the patchwork library</span></span>
-<span id="annotated-cell-26-11"><a href="#annotated-cell-26-11" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-26-11"><a href="#annotated-cell-26-11" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
@@ -1667,32 +1611,32 @@ sample estimates:
 <p>Both normalized variables range between 0 and 1. However, we can see that the minimum value of the variable we created using <code>scales::rescale()</code> is exactly 0 while the minimum for the version created using the UN’s rules is higher at just north of 0.5 (0.53). Why did this happen? <code>scales::rescale()</code> will use the observed minimum and maximum values of the variable in the dataset when normalizing. An observation with the minimum observed value on the variable being rescaled will have a value of 0 on the new variable while one with the maximum observed value will have a score of 1 as we can see from the plot on the right. The UN approach set the minimum values for life expectancy and GNI per capita at specific values that do not match the actual observed minimums in the dataset. The actual observed minimum for life expectancy, for instance, is 54.26 rather than the UN supplied 20. This leads to higher values at the lower end of the scale.</p>
 <p>Returning to our <code>scales::rescale()</code> normalized variables, we can finally create the index much as above:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the index using the scales::rescale() normalized variables</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the index using the scales::rescale() normalized variables</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">education_index_2 =</span> <span class="fu">mean</span>(<span class="fu">c</span>(expected_yrs_rescale2, mean_yrs_rescale2), <span class="at">na.rm =</span> T),</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">hdi_normalize_scales =</span> <span class="fu">mean</span>(<span class="fu">c</span>(education_index_2, life_rescale2, gni_rescale2), <span class="at">na.rm =</span> T)</span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>How does this scale compare to the version using the UN supplied values?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparing the two versions</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_scales) <span class="co"># scales::rescale() normalization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparing the two versions</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_scales) <span class="co"># scales::rescale() normalization</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 0.09029 0.44718 0.65276 0.62116 0.80117 0.96629 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_un) <span class="co"># normalization using UN provided values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_normalize_un) <span class="co"># normalization using UN provided values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.4059  0.6298  0.7646  0.7461  0.8620  0.9719 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">x =</span> hdi_data<span class="sc">$</span>hdi_normalize_un, </span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> hdi_data<span class="sc">$</span>hdi_normalize_scales, </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">'pearson'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">'pearson'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -1713,14 +1657,14 @@ sample estimates:
 <h4 data-number="E.3.2.2" class="anchored" data-anchor-id="standardization"><span class="header-section-number">E.3.2.2</span> Standardization</h4>
 <p>We standardize a variable by subtracting the mean of the variable from an observation and then dividing that value by the variable’s standard deviation. We can use the <code>scale()</code> command to accomplish this goal. This command is built into R, so you do not need to load a library to use it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardizing</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardizing</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">life_std =</span> <span class="fu">scale</span>(life_expectancy, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected_yrs_std =</span> <span class="fu">scale</span>(expected_schooling, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_yrs_std =</span> <span class="fu">scale</span>(mean_schooling, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">gni_std =</span> <span class="fu">scale</span>(gni_percap_logged, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here is how to read the syntax:</p>
 <dl>
@@ -1735,10 +1679,10 @@ sample estimates:
 </dl>
 <p>Let’s take a look at the properties of the resulting variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="sc">|&gt;</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(life_std, expected_yrs_std, mean_yrs_std, gni_std) <span class="sc">|&gt;</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 vars   n mean sd median trimmed  mad   min  max range  skew
 life_std            1 193    0  1   0.05    0.04 1.17 -2.61 1.66  4.27 -0.29
@@ -1755,7 +1699,7 @@ gni_std             -0.80 0.07</code></pre>
 <p>We can see that all variables now have a mean of 0 and a standard deviation of 1. Their min and max values are not identical, but the values on these standardized variables have the same meaning (i.e., how much does the observation differ from the average).</p>
 <p>Finally, we will create our index by simply averaging the four values together:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scale</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scale</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>hdi_data <span class="ot">&lt;-</span> hdi_data <span class="sc">|&gt;</span> </span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -1764,7 +1708,7 @@ gni_std             -0.80 0.07</code></pre>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na.rm =</span> T))</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at its values</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_standardized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hdi_data<span class="sc">$</span>hdi_standardized)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 -2.12111 -0.73406  0.09892  0.00000  0.75342  1.44253 </code></pre>
@@ -1778,7 +1722,7 @@ gni_std             -0.80 0.07</code></pre>
 <h2 data-number="E.4" class="anchored" data-anchor-id="references"><span class="header-section-number">E.4</span> References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-adcock2001" class="csl-entry" role="listitem">
 Adcock, Robert, and David Collier. 2001. <span>“Measurement Validity: <span>A</span> Shared Standard for Qualitative and Quantitative Research.”</span> <em>American Political Science Review</em> 95 (3): 529–46.
 </div>
@@ -1807,12 +1751,12 @@ Young, Lauren E. 2019. <span>“The <span>Psychology</span> of <span>State Repre
 <ol>
 <li id="fn1"><p>See <span class="citation" data-cites="castanhosilva2020">Castanho Silva et al. (<a href="#ref-castanhosilva2020" role="doc-biblioref">2020</a>)</span> for a discussion of different populism scales.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See, for instance, <span class="citation" data-cites="adcock2001">Adcock and Collier (<a href="#ref-adcock2001" role="doc-biblioref">2001</a>)</span> for a deeper treatment of the concepts discussed here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>See <span class="citation" data-cites="Brady1995">Brady, Verba, and Schlozman (<a href="#ref-Brady1995" role="doc-biblioref">1995</a>)</span> for a classic account of the role of skills and resources in understanding political participation. Our focus on emotions is inspired by <span class="citation" data-cites="Valentino2011">Valentino et al. (<a href="#ref-Valentino2011" role="doc-biblioref">2011</a>)</span> who examine motivation and campaign engagement in the US using data from an earlier ANES survey. Of course, emotions may also <em>demobilize</em> people as <span class="citation" data-cites="Young2019">Young (<a href="#ref-Young2019" role="doc-biblioref">2019</a>)</span> shows in her study of emotions and state repression in Zimbabwe.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>See <span class="citation" data-cites="Brady1995">Brady et al. (<a href="#ref-Brady1995" role="doc-biblioref">1995</a>)</span> for a classic account of the role of skills and resources in understanding political participation. Our focus on emotions is inspired by <span class="citation" data-cites="Valentino2011">Valentino et al. (<a href="#ref-Valentino2011" role="doc-biblioref">2011</a>)</span> who examine motivation and campaign engagement in the US using data from an earlier ANES survey. Of course, emotions may also <em>demobilize</em> people as <span class="citation" data-cites="Young2019">Young (<a href="#ref-Young2019" role="doc-biblioref">2019</a>)</span> shows in her study of emotions and state repression in Zimbabwe.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>See <span class="citation" data-cites="Marcus1993">Marcus and Mackuen (<a href="#ref-Marcus1993" role="doc-biblioref">1993</a>)</span> for the early landmark study on this front. Subsequent work, including <span class="citation" data-cites="Valentino2011">Valentino et al. (<a href="#ref-Valentino2011" role="doc-biblioref">2011</a>)</span>, further divides the negative emotion dimension into two: one pertaining to “anxiety” (e.g., feeling “afraid”) and the other to “aversion” (e.g., feeling “angry”). Measurements of these two emotional states are often highly correlated although sometimes they are more clearly differentiated (e.g., some people might feel much more angry than afraid after a political event while others might feel much more afraid than angry). In such cases it can be important to clearly differentiate between anger and anxiety as they can have distinct political effects; see <span class="citation" data-cites="Vasiopoulos2019">Vasiopoulos et al. (<a href="#ref-Vasiopoulos2019" role="doc-biblioref">2019</a>)</span> for an example.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>A more specific formula is: <span class="math inline">\(\alpha = \frac{k\bar{c}}{\bar{v} + (k - 1)\bar{c}}\)</span>. <span class="math inline">\(k\)</span> = the number of items. <span class="math inline">\(\bar{v}\)</span> = the average variance of the items. <span class="math inline">\(\bar{c}\)</span> = the average covariance between the items.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Respondents could refuse to answer the engagement questions or say they “don’t know” as well. These respondents are coded as missing. If a respondent refused to answer all items, for instance, then they would be missing on all measures.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>You shouldn’t try and create an index by manually adding together or averaging together columns (e.g., <code>newvar = var1 + var2 + var3</code>). This can work if there is no missing data at all in the dataset, but soon breaks down in more realistic situations where observations have missing values on one or more of the variables that are being combined together.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>An alternative here might be to use the <code>complete.cases()</code> command much as one does when using the <code>anova()</code> command to compare models (as seen in <a href="linear_06.html#sec-linear-comparing-models" class="quarto-xref"><span>Section 6.2</span></a>). This would get rid of all observations with complete missing data. It would also remove the obervations with some (but not complete) missing data as well (e.g., those observations where data is missing on one or two items). We opted for this approach to keep as much data in our model as possible. In doing so we are, in essence, assuming that someone with missing data on a single item has not done this action. Note that the approach here could also be useful for restricting the construction of the scale to only those observations with a certain number of non-missing values. For instance, we could filter out observations with missing data on 4 or more of these variables before creating our scale.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>An alternative here might be to use the <code>complete.cases()</code> command much as one does when using the <code>anova()</code> command to compare models (as seen in <a href="linear_06.html#sec-linear-comparing-models" class="quarto-xref"><span>Section 8.2</span></a>). This would get rid of all observations with complete missing data. It would also remove the obervations with some (but not complete) missing data as well (e.g., those observations where data is missing on one or two items). We opted for this approach to keep as much data in our model as possible. In doing so we are, in essence, assuming that someone with missing data on a single item has not done this action. Note that the approach here could also be useful for restricting the construction of the scale to only those observations with a certain number of non-missing values. For instance, we could filter out observations with missing data on 4 or more of these variables before creating our scale.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>OLS models are not necessarily the most appropriate statistical model for analyzing count data such as this. However, the more appropriate models (poisson regression and negative binomial models) are beyond the scope of this book and an OLS regression will work just fine in a pinch.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>The UN first takes some data cleaning steps before calculating the HDI index that we also performed when creating this datafile. For instance, the life expectancy variable was recoded such that countries with a life expectancy greater than 85 years were given a score of 85 and those with a GNI below 100 were given a value of 100 before taking the natural logarithm. If you would like to know more about the reasoning behind these recoding decisions, then we recommend the Technical Notes document that you can find on the <a href="https://hdr.undp.org/data-center/documentation-and-downloads" target="_blank">documentation</a> page for this measure as well as their “Calculating the Indices” tool (also provided on this webpage).<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>We are using the simple average of these items here, but the UN uses the geometric mean of the values so our final results do not exactly match the UN’s HDI calculation. The <code>psych</code> package has a function for calculating the geometric mean.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1884,13 +1828,14 @@ Young, Lauren E. 2019. <span>“The <span>Psychology</span> of <span>State Repre
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

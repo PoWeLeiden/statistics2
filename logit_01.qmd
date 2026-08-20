@@ -6,7 +6,7 @@ code-annotations: hover
 
 Logistic regression models are used to model binary outcome variables. We will use survey data from the Netherlands which was collected as part of Round 9 of the [European Social Survey](https://www.europeansocialsurvey.org){target="_blank"} for our examples. The dataset is available in SPSS format (`.sav`) from the ESS website.
 
-We begin, as always, by loading the libraries that we will use in our analyses as well as our data. Missing values are already indicated as 'NA' in this dataset. Per @sec-recall-peeking-inside-data-objects, we can use the `view_df()` from from the `sjPlot` library to inspect the variables included in the dataset.
+We begin, as always, by loading the libraries that we will use in our analyses as well as our data.
 
 ```{r}
 #| eval: false
@@ -20,10 +20,6 @@ library(tidyverse)       #data manipulation and plotting
 #Data
 ESS9NL <- import("ESS9e03, Netherlands.sav")
 
-#view_df example on subset of dataset
-ESS9NL |> 
-  select(polintr, ppltrst) |> 
-  sjPlot::view_df()
 ```
 
 ```{r}
@@ -40,22 +36,7 @@ library(tidyverse)         #Data management & plotting
 #Data
 ESS9NL <- import("data/ESS9e03, Netherlands.sav")
 
-ESS9NL |> 
-  select(polintr, ppltrst) |> 
-  sjPlot::view_df()
 ```
-
-The `view_df()` output indicates that there are numeric codes associated with missing value categories (e.g., respondents who said "Don't Know" would be given a score of 8 on `polintr`). However, those values are already converted to missing (NA) in our dataset as the tabulation below shows. If they were not, then we would need to take some additional data management steps and convert those values to missing values; see [Section 4.2](https://poweleiden.github.io/statistics1/data_04_missing_data.html#recoding-missing-data){target="_blank"} of the Statistics I manual for a refresher on how to do this.
-
-```{r}
-table(ESS9NL$polintr)
-```
-
-::: callout-important
-#### Warning!
-
-Always double check assignment instructions and other sources of information about a dataset (e.g., its codebook or the dataset itself via something like `view_df()` or `attributes()`) to make sure you understand the data management steps you need to accomplish before an analysis.
-:::
 
 ## Performing a Logistic Regression
 
@@ -63,7 +44,7 @@ Always double check assignment instructions and other sources of information abo
 
 Our example will investigate the relationship between self-reported gender (`gndr`) and voter turnout (i.e., did the person report voting in an election or not; `vote`). Our goal here is to predict whether a person reported voting in the most recent election.
 
-First, let us take a look at the variables so we can figure out if we need to take any preliminary data management steps:
+The dependent variable in a logistic regression model needs to be either a 0/1 numeric variable or a factor variable where the non-baseline (or upper) level represents the outcome that we are trying to predict with our model. Independent variables, meanwhile, need to be properly handled as well (e.g., handling missing data and converting binary/categorical predictors to factor variables). Per @sec-investigating-datasets, we can use the `view_df()` from from the `sjPlot` library to inspect the two variables of interest to us (`gndr` and `vote`). We can also use the `table()` function to get a further sense of the characteristics of these two variables given that neither is continuous in nature.
 
 ```{r}
 #Variable attributes
@@ -72,76 +53,55 @@ ESS9NL |>
   view_df()
 
 #Tabulation
-table(ESS9NL$gndr)
-table(ESS9NL$vote)
+table(ESS9NL$gndr, useNA = "always")
+table(ESS9NL$vote, useNA = "always")
 ```
 
-Our predictor variable only has two categories, so we will need to factorize it before using it in the model. Our DV has three categories with observations in them (Yes, No, Not Eligible). We need to make this into a binary factor variable prior to analysis. We can do this by converting the "Not Eligible" category to NA. Here is one way that we can accomplish these ends:
+There exist value labels in our dataset associated with missing data codes (e.g., 7 = Refusal, 8 = Don't Know, etc.). However, the outputs of `table()` show that missing data is either already set to NA, or there are no observations in these categories, so we do not need to take any explicit step to handle missing data in this instance.[^logit_01-1]
+
+[^logit_01-1]: In this case, there are no observations with NA values on the `gndr` variable and 5 with NA values on the `vote` variable.
+
+Our predictor variable only has two categories, so we will convert it into a factor variable. Our DV, meanwhile, has there categories with observations in them: Yes, No, and Not Eligible. Per above, we need to convert this into a binary variable prior to analysis.[^logit_01-2] We are not interested in the "Not Eligible" category here (i.e., we want to examine whether a person *chose to vote* vs. *chose not to vote*) so we will convert observations in this category to NA. We can automatically do this by converting `vote` into a factor variable and simply including only the two categories we care about in the `levels = c()` portion of the syntax (see @sec-factor-command). We set "No" (did not vote) as the reference group/baseline level of the factor variable, which will mean that our logistic model will tell us about the probability of saying "Yes" (did vote) rather than "No" (did not vote).
+
+[^logit_01-2]: The logit models that we will use require a binary outcome variable. However, there are logistic models that can be used to analyze categorical (i.e,. 3 or more category) DVs. These are called multinomial logistic model.
 
 ```{r}
 #Factorize variables
 ESS9NL <- ESS9NL |>
-  mutate(gndr_F = factorize(gndr), #<1> 
-         vote_F = factorize(vote)) #<2>
-
-#Drop the not eligible category
-ESS9NL <- ESS9NL |>
-  mutate(vote_F = na_if(vote_F,"Not eligible to vote"))
-
-```
-
-1.  This will use the lowest numbered category as the "reference" or "baseline" category. In these examples, male respondents (`gndr` = 1) and those that say they voted in the last election (`vote` = 1).
-2.  We are not creating a new variable when recoding things here (e.g., we overwrite the original `gndr` and `vote` variables). This is not usually a good idea - a mistake here would mean that we need to reload our data and walk our data cleaning steps in order to fix our mistake. It is generally a much better idea to create **new** variables when recoding/factorizing. We are not doing so out of pure hubris and tempting fate that we are not making a mistake here due to our surely flawless understanding of the data.
-
-Let's check our work in regards to the vote variable:
-
-```{r}
-levels(ESS9NL$vote_F)
-table(ESS9NL$vote_F)
+  mutate(
+    gndr_F = factor(gndr, 
+                    levels = c(2, 1), 
+                    labels = c("Female", "Male")), # <1>
+    vote_F = factor(vote, 
+                    levels = c(2, 1), 
+                    labels = c("Did not vote", 
+                               "Voted"))) # <2>
+  
 
 ```
 
-The `vote` variable is now a factor variable where the the first (or base) level of the factor is "Yes" because `factorize()` will use the first numerical category as the reference group. This is a problem for us because we want to predict whether a person is in the "Yes, voted" category and the regression command we will use below predicts whether a person is in the higher level of a factor. In other words, if we leave this variable alone our model would predict whether a person *did not* vote. We thus need to relevel the variable to flip the order of the categories (see @sec-relevelling).[^logit_01-1]
+1.  This will use observations with a value of 2 as the 'reference' or 'baseline' category in subsequent contrasts (i.e., Male - Female). We could very well flip this around here (Female - Male).
+2.  We did not include the value of "3" in the `levels = c()` portion of the syntax. This automatically turns those observations to NA as discussed in @sec-converting-to-a-factor-variable-using-factor .
 
-[^logit_01-1]: We could alternatively use `factor()` and specify the order of the levels from the start. For instance, we could have done this: `mutate(vote_binary = factor(vote, levels = c(2, 1), labels = c("Did not vote", "Voted"))` . This would also avoid an issue we discuss in the next chapter and in the Common Errors appendix.
-
-```{r}
-#Relevel the variable
-ESS9NL <- ESS9NL |> 
-  mutate(vote_F = relevel(vote_F, "No"))
-
-#Let's check our work
-levels(ESS9NL$vote_F)
-
-```
-
-`mutate(vote_F = relevel(vote_F, "No"))`
-
-:   We use the `relevel()` command on the vote variable. We do not create a new variable here but overwrite the original one. You could also chose to make a new variable, which is usually a better idea when you are recoding/factorizing a variable. The category provided in quotation marks will become the reference category. It is important to note this variable was factorized first so we use the label "No" and not the numeric value for "No" originally stored in the dataset, which was 2.
-
-Let's check our work for the `gndr` variable:
+Let's check our work:
 
 ```{r}
-table(ESS9NL$gndr_F)
+# Gender
 levels(ESS9NL$gndr_F)
+table(ESS9NL$gndr_F, ESS9NL$gndr, useNA = "always")
+
+# Vote
+levels(ESS9NL$vote_F)
+table(ESS9NL$vote, ESS9NL$vote_F, useNA = "always")
+
 ```
 
-"Male" has been used as the reference category. The two categories have a roughly equal number of observations, so the automatic behavior of `factorize()` is not an issue here. There is a third label here "No Answer" with 0 observations on it. This is fine for now - R will exclude this category from the analysis below.
-
-We will change the reference group to "Female" as a further example of the `relevel()` syntax:
-
-```{r}
-ESS9NL <- ESS9NL |> 
-  mutate(gndr_F = relevel(gndr_F, "Female"))
-
-#check your work!
-levels(ESS9NL$gndr_F)
-```
+Success!
 
 ::: callout-important
 #### Warning!
 
-The DV in a logistic regression should be a (factorized) binary variable. Make sure you are creating the factor variable such that the higher level of the variable is the category you are trying to predict. Otherwise, your interpretations might end up being wrong by accident.
+The DV in a logistic regression must be a binary variable. Make sure you are creating the factor variable such that the higher level of the variable is the category you are trying to predict membership within. Otherwise, your interpretations might end up being wrong by accident.
 :::
 
 ### Performing a Logistic Regression
@@ -151,7 +111,8 @@ Performing logistic regression in R is very similar to linear regression. Howeve
 ```{r}
 #Run the model
 Vote_model <- glm(vote_F ~ gndr_F, 
-                  data = ESS9NL, family = "binomial")
+                  data = ESS9NL, 
+                  family = "binomial")
 
 ```
 
@@ -190,7 +151,7 @@ The structure of this output is highly similar to what we saw with the output of
 -   Number of Fisher Scoring Iterations: This can be ignored.
 :::
 
-We can add multiple predictors to the model in a way similar to the linear regression syntax, by adding them with a `+` symbol. Here add age (`agea`), trust in politicians (`trstplt`), and left-right ideology (`lrscale`). We did not need to take any data management steps with these variables because they are continuous variables and missing data is already coded as NA.
+We can add multiple predictors to the model in a way similar to the linear regression syntax, by adding them with a `+` symbol. Here add age (`agea`), trust in politicians (`trstplt`), and left-right ideology (`lrscale`). We did not need to take any data management steps with these variables because they are continuous variables and missing data is already coded as NA in our dataset.
 
 ```{r}
 #Run the model

@@ -37,57 +37,35 @@ library(marginaleffects) #calculating marginal effects & predictions
 ESS9NL <- import("ESS9e03, Netherlands.sav")
 ```
 
-## Data Preparation, Example Model, and an Issue with `factorize()` {#sec-factorize-problem}
+## Data Preparation and Example Model {#sec-factorize-problem}
 
 We will examine the same model that we ended last chapter on - one where we predicted whether a survey respondent said that they had voted in the most recent election based on their gender, age, trust in politicians, and ideology. Here are the data management steps we took last chapter to prepare our data for analysis as well as our model:
 
 ```{r}
 #Data Preparation
 ESS9NL <- ESS9NL |>
-  #Factorize our IVs
-  mutate(gndr_F = factorize(gndr), # <1> 
-         vote_F = factorize(vote))  |> 
-  #Remove Not Eligible to Vote Category from vote
-  mutate(vote_F = na_if(vote_F, "Not eligible to vote")) |> 
-  #Relevel our variables like we did last time
-  mutate(vote_F = relevel(vote_F, "No"), 
-         gndr_F = relevel(gndr_F, "Female"))
+  mutate(
+    #convert binary/categorical variables to a factor
+    gndr_F = factor(gndr, 
+                    levels = c(2, 1), 
+                    labels = c("Female", "Male")), 
+    vote_F = factor(vote, 
+                    levels = c(2, 1), 
+                    labels = c("Did not vote", 
+                               "Voted"))) 
 
 #Our model
 Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
-                data = ESS9NL, family = "binomial")
+                     data = ESS9NL, 
+                     family = "binomial")
 
 #Check the output
 summary(Vote_model_mp)
 ```
 
-1.  We could combine these three `mutate()` commands into one single `mutate()` command if we wanted, but we keep them separate here to more clearly lay out the steps that we are taking.
-
-We need to take one additional step before calculating the marginal effects in this particular example due to a quirk in the `factorize()` command. Let us take a look at our `gndr` variable again:
-
-```{r}
-levels(ESS9NL$gndr_F)
-table(ESS9NL$gndr_F)
-
-```
-
-There are three labels/levels on the `gndr_F` variable: "Female", "Male", and "No Answer". However, 0 respondents fall under the "No Answer" category. In situations like these, the command we will use below to obtain our marginal effects estimate will return an error because it thinks there is a third category ("No Answer") in the model but finds zero observations in it.
-
-One way we can preempt this error is by using the `droplevels()` command to remove the empty category from our `gndr_F` variable as shown below. Another way is to use `factor()` to create the factorized version of `gndr`. @sec-slopes-error in the Common Errors Appendix for a more thorough discussion of this issue.
-
-```{r}
-#Drop levels: will drop any category with 0 observations associated with it
-ESS9NL <- ESS9NL |>
-  mutate(gndr_F = droplevels(gndr_F))
-
-#Let's take a look at our work
-levels(ESS9NL$gndr_F)
-table(ESS9NL$gndr_F)
-```
-
 ## Average Marginal Effects (AME)
 
-The first type of marginal effect we'll calculate is the Average Marginal Effect (AME) using the `avg_slopes()` command from the `marginaleffects` library. The AME shows us the average change in the probability that Y = 1 when a predictor increases by one unit. `avg_slopes()` does this by first calculating a predicted probability for each observation in the model based on the model's coefficients and the observation's unique combination of values on the predictor variables before averaging those predictions together and finding the difference. Here is an image that summarize this process (image from @heiss2022):
+The first type of marginal effect we'll calculate is the Average Marginal Effect (AME) using the `avg_slopes()` command from the `marginaleffects` library. The AME shows us the average change in the probability that Y = 1 when a predictor increases by one unit. `avg_slopes()` does this by first calculating a predicted probability for each observation in the model based on the model's coefficients and the observation's unique combination of values on the predictor variables before averaging those predictions together and finding the difference. Here is an image that summarizes this process (image from @heiss2022):
 
 ![How avg_slopes calculates the AME](figures/flow-ame.png)
 
@@ -96,7 +74,7 @@ Let us take a look at the AMEs from our model:
 ```{r}
 #Run the model and store the results
 AME <- avg_slopes(Vote_model_mp,
-                  conf_level = 0.95)
+                  conf_level = 0.95) 
 
 ```
 
@@ -109,6 +87,14 @@ Here is how you can read this syntax:
 `conf_level = 0.95)`
 
 :   The default confidence level used is 95%, so this code could be left out if this is the desired confidence level. To use a different confidence level, the indicated value can be changed.
+
+::: callout-note
+#### Output Explanation
+
+You may receive a warning when using this command such as: "Warning :The `newdata` data frame has 575 columns. This can slow down computation and increase memory costs. Please supply a data frame with fewer columns to the `newdata` argument, or set `options('marginaleffects_safe'=FALSE)` to silence this warning."
+
+In general, warnings in R are often non-critical issues that occur when R encounters something unusual but not severe enough to stop execution. In this case, the Warning concerns details regarding how this package handles the other columns in our dataset when calculating the marginal effects. You can ignore this warning if it comes up.
+:::
 
 Here are the results:
 
@@ -146,10 +132,12 @@ We can calculate the MEM with a small change to our syntax;
 
 ```{r}
 MEM <- slopes(Vote_model_mp, 
-              conf_level = 0.95,
+              conf_level = 0.95, # <1>
               newdata = datagrid()
               )
 ```
+
+1.  The inclusion of `conf_level = 0.95` is not strictly necessarily - the command will, by default, calculate the 95% confidence interval. If you wanted a different confidence level, such as the 99% CI, then you would put `conf_level = 0.99`.
 
 `newdata = datagrid()`
 
@@ -172,5 +160,5 @@ MEM |>
 ::: callout-warning
 #### Interpretation
 
-The interpretation of MEMs is very similar to the interpretation of the AME: they tell us how the probability that Y = 1 is expected to change given a one unit change in X. We can express this on a percentage point scale by multiplying by 100. However, we should make note that we held the control variables constant in our discussions. For instance: Male respondents were .2 percentage points more likely to vote, on average, than female respondents holding age, ideology, and trust in politicians constant at their means.
+The interpretation of MEMs is very similar to the interpretation of the AME: they tell us how the probability that Y = 1 is expected to change, on average, given a one unit change in X. We can express this on a percentage point scale by multiplying by 100. However, we should make note that we held the control variables constant in our discussions. For instance: Male respondents were .2 percentage points more likely to vote, on average, than female respondents holding age, ideology, and trust in politicians constant at their means.
 :::

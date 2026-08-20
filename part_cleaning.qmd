@@ -1,0 +1,6 @@
+# Data Cleaning
+
+This section of the materials focuses on the process known as "data cleaning". You will learn how to...
+
+-   Investigate datasets, and variables within datasets, so that you know what pre-analysis steps you need to take in order to properly analyse your data
+-   Create factor variables

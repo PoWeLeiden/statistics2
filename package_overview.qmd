@@ -29,7 +29,7 @@ You can use the code below to install all of the relevant R packages for this co
 
 package_list <- c("tidyverse", "rio", "summarytools", "DescTools", "skimr",
                   "correlation", "parameters", "performance", "effectsize",
-                  "see", "marginaleffects", " bromo", "ggResidpanel", "rms",
+                  "see", "marginaleffects", " broom", "ggResidpanel", "rms",
                   "car", "modelsummary", "gt", "gtsummary", "kableExtra",
                   "knitr", "rmarkdown","huxtable", "flextable", "lmtest" ,
                   "openintro", "statsr", "tidymodels", "tinytex",
@@ -53,3 +53,47 @@ install.packages("marginaleffects", type = "binary")
 
 
 ```
+
+:::: {.content-visible when-format="html"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+detach("package:DT")
+
+# For version history below
+
+library(car)
+library(ggResidpanel)
+library(broom)
+library(modelsummary)
+library(marginaleffects)
+library(tidyverse)
+
+#sessioninfo::session_info(info = "packages", include_base = F)
+
+si <- sessioninfo::session_info(info = "packages", include_base = FALSE)
+
+si$packages <- si$packages[si$packages$attached == TRUE, ] 
+
+si$packages$path <- ""
+si$packages$loadedpath <- ""
+si$packages$library <- ""
+
+
+```
+
+While there are a lot of packages listed in the command above, many of them are dependencies of a set of core libraries that we'll use: `tidyverse` (`dplyr` and `ggplot`), `rio`, `modelsummary`, `marginaleffects`, `broom`, `ggResidpanel`, and `car`. The collapsible box below lists the version information for these packages when creating the chapters in this book.
+
+::: {.callout-note collapse="true"}
+## Session Info
+
+```{r}
+#| echo: false
+
+si
+
+```
+:::
+::::

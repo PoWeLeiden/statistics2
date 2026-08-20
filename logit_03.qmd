@@ -48,17 +48,15 @@ We will examine the same model that investigated in the last chapter - one where
 ```{r}
 #Data Preparation
 ESS9NL <- ESS9NL |>
-  #Factorize our IVs
-  mutate(gndr_F = factorize(gndr),  
-         vote_F = factorize(vote))  |> 
-  #Remove Not Eligible to Vote Category from vote
-  mutate(vote_F = na_if(vote_F, "Not eligible to vote")) |>  
-  #Relevel our variables like we did last time
-  mutate(vote_F = relevel(vote_F, "No"), 
-         gndr_F = relevel(gndr_F, "Female")) |> 
-  #Drop unused categories of the factor variables
-  mutate(vote_F = droplevels(vote_F), 
-         gndr_F = droplevels(gndr_F))
+  mutate(
+    #convert binary/categorical variables to a factor
+    gndr_F = factor(gndr, 
+                    levels = c(2, 1), 
+                    labels = c("Female", "Male")), 
+    vote_F = factor(vote, 
+                    levels = c(2, 1), 
+                    labels = c("Did not vote", 
+                               "Voted"))) 
 
 #Our model
 Vote_model_mp <- glm(vote_F ~ gndr_F + agea + trstplt + lrscale, 
@@ -103,12 +101,6 @@ Here is how to read this syntax:
 ## Average Predicted Values for Specific IVs
 
 We can also use the `predictions()` function to obtain the average probability that the dependent variable = 1 at specific values of an independent variable based on our model. For instance, we might want to see the expected probability of a person voting if they are 20 years old vs. if they are 60 years old to help communicate the meaning of our results. These types of predictions may then be presented in a figure of predicted probabilities as shown in @sec-presentation-predicted-probability-plots .
-
-::: callout-important
-## Warning!
-
-We discuss in @sec-factorize-problem a problem that can arise when using commands from the `marginaleffects` package with a factor variable created via `factorize()`. The specific problem is created when `factorize()` is used to create a factor variable but there happens to be a category (or categories) of the resulting factor variable with zero observations. The same issue can arise when using `predictions()` (and especially in the most up to date version of the package). This problem is likely qutie rare in practice, but is nevertheless an annoying one. The solution is the same as discussed there: either use `factor()` to create the factor variable or `droplevels()` to remove the problem-creating categories (as we did when cleaning our data at the beginning of this chapter). See @sec-factorize-problem and @sec-slopes-error for further background on the problem and its solutions.
-:::
 
 ### Continuous Predictor Variable
 

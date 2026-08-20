@@ -22,16 +22,14 @@ demdata <- import("data/demdata.rds") |>
 
 This chapter focuses on how to examine bivariate relationships between continuous variables in R. It will discuss how to use covariance, correlation, and linear regression models to summarize bivariate relationships.
 
-We begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers but must first be loaded before use; you can use the command in @sec-packages to install these libraries on your personal computer. We will use a dataset that contains information about the political and economic characteristics of countries from across the world. The dataset (`demdata.rds`) is available on Brightspace alongside a codebook.
+We begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers but must first be loaded before use; you can use the command in @sec-packages to install these libraries on your personal computer. We will use a dataset that contains information about the political and economic characteristics of countries from across the world.
 
 ```{r}
 #| eval: false
 
 #Packages
 library(rio)          #loading data
-library(sjPlot)       #for obtaining overviews of data objects
-library(tidyverse)    #data manipulation and plotting
-library(modelsummary) #For creating correlation tables
+library(tidyverse)    #data manipulation (dplyr) and plotting (ggplot)
 
 #Data
 demdata <- import("demdata.rds") |> 
@@ -43,53 +41,6 @@ demdata <- import("demdata.rds") |>
 
 ::: callout-warning
 Make sure to create a project folder for the course in which you save all of your data files, assignments, etc. as this will make working with R easier. The process for doing so is covered in [Statistics I, 1.5](https://poweleiden.github.io/statistics1/data_01_basics.html#setting-up-an-r-project){target="_blank"}. Also, remember to use syntax to import data using the `import()` function from the `rio` package. See @sec-error-import.
-:::
-
-## Recall: Peeking Inside Data Objects {#sec-recall-peeking-inside-data-objects}
-
-We have loaded a data file...but what's inside it? Datasets often come with codebooks that provide information about the variables in the dataset. We can also look into our data object in R to learn more about its contents as well. We can do this in a few ways.
-
-For instance, we can enter the name of the object in the Console:
-
-```{r}
-demdata
-```
-
-If our dataset is a tibble (like here), then we will see a nice overview of the first few variables (columns) and observations (rows) in the dataset.
-
-We may want to see a list of the variables in our dataset and some of their attributes. You learned how to do this using the `str()` function in Statistics I (see [here](https://poweleiden.github.io/statistics1/data_01_basics.html#data-frames){target="_blank"}). A simpler overview of a data object is provided by `glimpse()` and is particularly useful when one wants to quickly see the names of columns in an object. We do so here for a shorter version of the dataset so that we do not make the output unnecessarily long for what we want to show you.
-
-```{r}
-#Smaller version of the dataset for display purposes
-demdata_sub <- demdata |> 
-  select(v2x_egaldem, TypeSoc2005, HDI2005, TYPEDEMO1984, gini_2019)
-
-glimpse(demdata_sub)
-```
-
-Finally, one can use the `view_df()` function from the `sjPlot` library to see the names of the columns in the object alongside labels for the variables (if any) and information about the values that the variable can take on. This information will be provided in the Viewer pane. You can then use the click on the "Show in new window" button to view the full list in an open browser tab.
-
-```{r}
-view_df(demdata_sub) #<1>
-```
-
-1.  The `sjPlot` library was loaded at the beginning of the document. You need to load it first before using this command.
-
-::: callout-note
-#### Output Explanation
-
-`view_df()` creates output with the following columns:
-
--   Name: This provides the variable name
--   Label: This provides the label of the variable if there is one. This is a short description of what the variable is supposed to measure.
--   Values: If the variable is a continuous variable, then this will likely show "range: X-X". For instance, the `v2x_egaldem` variable ranges from 0 to 0.9. If the variable only contains a few discrete values, then those will be shown instead (as with the variable `TypeSoc2005`).
--   Value Labels: It is sometimes the case that variables will have labels that tell you what each specific value on the variable means. For instance, observations will have a 1 on the `TYPEDEMO1984` variable if they were "Autocracies" in 1984, but a 2 if they were "Democracies".
-:::
-
-::: callout-important
-#### Warning!
-
-`view_df()` is a very nice way of getting an overview of a data file for yourself. However, we ask that you do not include it in the final version of your R assignments. The data files that we will use often have many columns (variables), so leaving `view_df(data)` in your .rmd file when knitting the final project is likely to produce a huge table that increases the difficulty of reading through your assignments. It is seldom a good idea to make it harder to evaluate your work! Use it when you load the data and are working on your assignment, but remove that bit of syntax before producing the final knitted output.
 :::
 
 ## Visualizing Bivariate Relationships with a Scatterplot {#sec-visualizing-bivariate-relationships-with-a-scatterplot}
@@ -308,7 +259,7 @@ The syntax above performs the desired linear regression. Here is how to read the
 ::: callout-important
 #### Warning!
 
-There is an important difference between `cor.test()`/`cov()` and `lm()`. The order of variables in the former two commands does not matter. `cov(x = demdata$gini_2019, y = demdata$v2x_polyarchy,…)` and `cov(x = demdata$v2x_polyarchy, y = demdata$gini_2019,…)` will produce the same output. But, `lm(v2x_polyarchy ~ gini_2019,…)` and `lm(gini_2019 ~ v2x_polyarchy,…)` will not!. The dependent variable in a linear regression (the variable that we are trying to predict or explain) must always be on the left side of the tilde. A first thing to figure out when fitting a regression model is which variable is supposed to be the dependent variable.
+There is an important difference between `cor.test()`/`cov()` and `lm()`. The order of variables in the former two commands does not matter. `cov(x = demdata$gini_2019, y = demdata$v2x_polyarchy,…)` and `cov(x = demdata$v2x_polyarchy, y = demdata$gini_2019,…)` will produce the same output. But, `lm(v2x_polyarchy ~ gini_2019,…)` and `lm(gini_2019 ~ v2x_polyarchy,…)` will not! The dependent variable in a linear regression (the variable that we are trying to predict or explain) must always be on the left side of the tilde. A first thing to figure out when fitting a regression model is which variable is supposed to be the dependent variable.
 :::
 
 How can we see the results from our regression when we store it to an object like in the syntax above? One way is to call the object that we just created by typing its name in the Console and hitting enter.

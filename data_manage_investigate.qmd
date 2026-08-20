@@ -1,0 +1,302 @@
+---
+code-annotations: hover
+citation-location: margin
+format: 
+  html: 
+    toc: true
+    toc-expand: true
+    toc-depth: 3
+    toc-title: On this page
+---
+
+# Investigating Your Data and Data Cleaning {#sec-investigate-data}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(sjlabelled)
+library(rio)
+library(sjPlot)
+library(tidyverse)
+library(modelsummary)
+
+# Creating different types of variables with and without labels
+# So we can show the difference later on
+
+demdata <- import("data/demdata.rds") |> 
+  as_tibble() |> 
+  mutate(
+    Fragile2006_char = case_when(
+      Fragile2006 == 1 ~ "Fragile", 
+      Fragile2006 == 2 ~ "Intermediate", 
+      Fragile2006 == 3 ~ "Stable"), 
+    TYPEDEMO1984 = factor(TYPEDEMO1984, 
+                          levels = c(1, 2), 
+                          labels =c("Autocracies", "Democracies")), 
+    TypeEcon2006 = ifelse(is.na(TypeEcon2006), 4, TypeEcon2006)) |> 
+  var_labels(
+    TypeEcon2006 = "Type of economy (World Bank 2007)") |> 
+  val_labels(
+    TypeEcon2006 = c("High GDP", "Medium GDP", "Low GDP", "Data Not Available")
+  )|> 
+  select(country_name, 
+         year, 
+         v2x_libdem, 
+         HDI2005, 
+         Fragile2006_char, 
+         TYPEDEMO1984, 
+         Typeregime2006, 
+         TypeEcon2006, 
+         TYPEGOV2007)
+
+```
+
+You will learn how to analyze data using linear and logistic regression models in the chapters to come. However, it is a rare day where a researcher can simply download a dataset and jump directly into the analyses that they wish to perform. Instead, we often need to take some first steps to prepare our data for analysis, a process referred to as "data cleaning", "cleaning our data", or "data management". Data cleaning requires us to know something both about the types of analysis that we want to perform as well as the nature of the variables present in our dataset. This information is often provided in a separate codebook for the dataset (or in Exercise/Assignment instructions!). However, we can also learn some important facts from the dataset itself.
+
+In @sec-learning-about-your-data, we will go over some commands you can use to familiarize yourself with your data so that you can accurately identify the steps you need to take in order to clean your data and hence analyze it. In @sec-factor-command, meanwhile, we will go into greater depth regarding a specific data management task of particular importance in Statistics II: creating and manipulating factor variables.
+
+## Learning about your data {#sec-learning-about-your-data}
+
+The first thing we do when analyzing data in R is load the libraries needed for our analyses before importing our data. these libraries are already installed on university computers but must first be loaded before use. You can use the command in @sec-packages to install these packages on your personal computer.[^data_manage_investigate-1] We will use a dataset that contains information about the political and economic characteristics of countries from across the world.
+
+[^data_manage_investigate-1]: We will use the terms "library" and "packages" interchangeably although they technically refer to different things. "Package" technically refers to "collections of R functions, data, and compiled code" while "the directory where packages are stored is called the library" ([souce](https://www.r-bloggers.com/2013/01/packages-v-libraries-in-r/){target="_blank"}).
+
+```{r}
+#| eval: false
+
+#Packages
+library(rio)          #loading data
+library(sjPlot)       #for obtaining overviews of data objects
+library(tidyverse)    #data manipulation and plotting
+
+#Data
+demdata <- import("demdata.rds") |> 
+  as_tibble()  # <1>
+
+```
+
+1.  You do not technically need `as_tibble()` as shown here. We do this here because it is easier to show larger datasets with them; see [Statistics I, 2.1](https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles){target="_blank"}.
+
+::: callout-warning
+Make sure to create a project folder for the course in which you save all of your data files, exercises, and the final R assignment, as this will make working with R easier. The process for doing so is covered in [Statistics I, 1.5](https://poweleiden.github.io/statistics1/data_01_basics.html#setting-up-an-r-project){target="_blank"}. Also, remember to use syntax to import data using the `import()` function from the `rio` package. See @sec-error-import.
+:::
+
+We have loaded a data file...but what's inside it? We can get to know our data better both by using commands that enable us to obtain an overview of the dataset as a whole as well as via commands that let us investigate the characteristics of specific variables.
+
+### Investigating datasets {#sec-investigating-datasets}
+
+We can use a few commands to take a look at the dataset as a whole.
+
+For instance, we can enter the name of the object in the Console:
+
+```{r}
+demdata
+```
+
+If our dataset is a tibble (like here), then we will see a nice overview of the first few variables (columns) and observations (rows) in the dataset.[^data_manage_investigate-2] We can also see each variables type under its name (e.g., `<chr>` = a character variable while `<dbl>` is a non-integer numeric variable; variable types are discussed in @sec-investigating-variables).
+
+[^data_manage_investigate-2]: If we wanted to see the underlying data as a spreadsheet, then we could use the command `View()` , e.g., `View(demdata)` . This would open a new tab in R Studio that would the underlying data.
+
+We may want to see a list of the variables in our dataset and some of their attributes. You learned how to do this using the `str()` function in Statistics I (see [here](https://poweleiden.github.io/statistics1/data_01_basics.html#data-frames){target="_blank"}). A simpler overview of a data object is provided by the `glimpse()` function that is part of the `dplyr` (or `tidyverse`) library. This tool is particularly useful when you want to quickly see the names of columns in a data object and it does not contain a very large number of columns.
+
+```{r}
+glimpse(demdata) # <1>
+```
+
+1.  `dplyr` was loaded at the beginning of the document via `library(tidyverse)`.
+
+::: callout-note
+#### Output Explanation
+
+The output begins by giving you the following information:
+
+-   `Rows:` this tells you how many rows (observations) are in the dataset
+-   `Columns`: this tells you how many columns (variables) are in the dataset
+
+We then get output organized in three columns:
+
+-   The first column provides the names of the variables in the dataset
+-   The second column tells you the class of the variable where `<chr>` means the variable is a character variable, \<`dbl>` means that it is a numeric variable, and \<`fct>` means it is a factor variable. If we had an integer variable in the data, then this would read `<int>`, while a date variable would be `<date>` (see @sec-investigating-variables for more on variable types)
+-   The third column provides the values for the first few observations of each variable
+:::
+
+A third tool we can use is the `view_df()` function from the `sjPlot` library. This tool shows us the names of the columns in the object alongside labels for the variables (if any) and information about the values that the variable can take on. This information will be provided in the Viewer pane. You can then use the click on the "Show in new window" button that is just above the image in the Viewer pane to view the full list in an open browser tab. This is particularly useful for larger datasets because you can then use the search function of your web browser to find what you're looking for.
+
+```{r}
+view_df(demdata) #<1>
+```
+
+1.  The `sjPlot` library was loaded at the beginning of the document. You need to load it first before using this command.
+
+::: callout-note
+#### Output Explanation
+
+`view_df()` creates output with the following columns:
+
+-   ID: The column number of the variable
+-   Name: The variable name
+-   Label: The variable label (`$label`) if there is one stored in metadata. This is a short description of what the variable is supposed to measure.
+-   Values: If the variable is a continuous variable, then this will likely show "range: X-X". For instance, the `v2x_libdem` variable ranges from 0 to 0.9. If the variable only contains a few discrete values, then those will be shown instead (as with the variable `Typeregime2006`). `<output omitted>` is used for character variables.
+-   Value Labels: This provides the value labels stored in metadata (`$labels`) if there are any. For instance, we see that a 1 on `TypeEcon2006` refers to a country with "High GDP", while a 2 refers to "Medium GDP". If a variable is a factor variable (e.g., `TYPEDEMO1984`), then the labels associated with each level of the factor are provided here and there will be no entries in the Values column.
+:::
+
+### Investigating variables {#sec-investigating-variables}
+
+R datasets may contain variables that vary in their *class* (or type). Common variable classes include:
+
+-   Numeric variables where the data are numbers including ones that include decimals
+-   Integer variables where the numeric data is limited to whole numbers
+-   Character variables where the data is a string of letters (e.g., "Australia")
+-   Factor variables representing categorical (nominal or ordered) variables
+-   Logical variables where the only values are TRUE or FALSE
+-   Date variables (e.g., "2026-05-03")
+
+Learning a variable's class can be an important first step in the data cleaning process as it can help us understand the types of actions (if any!) that we need to perform to prepare the variable for inclusion in our analyses.
+
+We can use two tools to learn about a variable's class. First, we can use the `class()` function that you learned about in Statistics I ([link](https://poweleiden.github.io/statistics1/data_01_basics.html#storing-data-in-an-object){target="_blank\")"}) to directly obtain this information. Second, we can use the `attributes()` function to investigate whether there is any metadata associated with the variable in our dataset. Not all datasets, or variables within datasets, will contain metadata but some do and they can tell us important information about the data before us. This metadata may include:
+
+-   `$label`: A short description of what the variable is supposed to measure
+-   `$labels` : If the variable is numeric and only takes on a few values, then there may be labels for each value telling you what each value represents
+-   `$levels` : If the variable is a factor variable, then this would tell you about the levels of the factor. We discuss this in greater depth in @sec-factor-command
+-   `$class` : This indicates the class of the variable. However, this option is not always shown in the output of `attributes()` as it needs to be explicitly stored in the variable's metadata. This will be the case for factor variables, but not necessarily for other types of variable.
+
+Let's take a look at some examples from the dataset that we loaded earlier. Both functions have a similar structure: `functionname(dataname$variablename)`:
+
+```{r}
+
+# v2x_libdem
+class(demdata$v2x_libdem)
+attributes(demdata$v2x_libdem)
+
+# HDI2005
+class(demdata$HDI2005)
+attributes(demdata$HDI2005)
+
+#TYPEDEMO1984
+class(demdata$TYPEDEMO1984)
+attributes(demdata$TYPEDEMO1984)
+
+#TypeEcon2006
+class(demdata$TypeEcon2006)
+attributes(demdata$TypeEcon2006)
+
+```
+
+Conveniently, our dataset has a variety of different variable types that vary in whether they possess metadata or not.
+
+-   `v2x_libdem` is a numeric variable but one without any metadata associated with it as seen by the NULL output after the `attributes()` command. If we wanted to know more about this variable then we would need to turn to a codebook (or, closely read exercise/assignment instructions).
+-   `HDI2005` is also a numeric variable but here we have a handy `$label` entry that tells us what this variable measures: a country's Human Development Index, or [HDI](https://hdr.undp.org/data-center/human-development-index#/indicies/HDI){target="_blank"}. The label also implies that the data is from the year 2005, on a 0-100 pt scale, and is sourced from the UNCDP in 2007.[^data_manage_investigate-3]
+-   `TYPEDEMO1984` is a factor variable. Observations can have either of two potential (non-NA) values: "Autocracies" and "Democracies". We do not have a variable label here to tell us what the variable is about, but we can perhaps deduce from its name and these levels that this data records the type of regime a country had in the year 1984.
+-   `TypeEcon2006` is a numeric variable that indicates something about the country's economy. This measurement appears to come from the World Bank and refers to the country's economic status in the year 2006 (per the variable name). This variable has a `$labels` area that tells us that non-NA observations can take on one of four numeric values: 1, 2, 3, or 4. Importantly, one of those values (4) represents a "Missing" category, i.e., observations with a 4 on this variable could not be classified as having High/Medium/Low GDP due to missing economic data.
+
+[^data_manage_investigate-3]: There is another entry here: `$format.stata` . This particular variable originally came from a dataset created by the Stata statistical program. The `%10.0g` indicates that that the data is stored in a "double" format, which governs how the data is encoded. This is not particularly relevant for us.
+
+In practice, we would follow up these steps by investigating the variables using tools such as `summary()` , `mean()`, `table()`, and so on, to get a further sense of the variables before us. For instance:
+
+```{r}
+# summary() to get an overview of continuous variables
+summary(demdata$HDI2005)
+
+# table() to get an overview of categorical/discrete variables
+table(demdata$TypeEcon2006, useNA = "always") 
+```
+
+In this case, `summary()` tells us both about the distribution of the distribution of the `HDI2005` variable and also that there exist 21 observations with NA (or missing) values.[^data_manage_investigate-4] Meanwhile, we can also see that 14 observations have a value of 4 (representing a "Data Not Available" category") on the `TypeEcon2006` variable.
+
+[^data_manage_investigate-4]: We could also learn about how many observations have NA values by including `is.na()` in a `table()` call, e.g., `table(is.na(demdata$HDI2005))` . This would return a tabulation of the number of observations where `is.na()` returns FALSE (i.e., there is data for the observation) or TRUE (i.e., there is no data, it is missing or NA in our dataset). See [here](https://poweleiden.github.io/statistics1/data_03_variables.html#missing-data){target="_blank"} in the Statistics I book for more.
+
+We can use what we just learned to understand the steps we need to take, or not take, in cleaning these variables for analysis. The `v2x_libdem` and `HDI2005` variables are both numeric variables where "missing" is simply represented by NA in our dataset. These variables are likely ready for analysis as is.[^data_manage_investigate-5] On the other hand, missing data is encoded as a value of 4 for the `TypeEcon2006` variable. In these types of situations we will want to convert these values into an NA value to make the variable ready for use. Finally, we include binary variables like `TYPEDEMO1984` in our regression analyses by converting them to a factor variable...but this is already done, so again we can likely proceed with the variable as is (unless we want to relevel it to make our analyses clearer as discussed in @sec-relevelling).
+
+[^data_manage_investigate-5]: As we'll discuss in @sec-ols-assumptions, there may be situations where we would want to "transform" these variables by, for instance, taking their log.
+
+## Managing your data and variables {#sec-managing-variables}
+
+Learning more about your data may reveal the need to perform a variety of different data management tasks prior to conducting your final analysis. This may involve some or all of the following steps, many of which were introduced in Statistics I (see links to the Statistics I R book in parentheses):
+
+-   Filtering out unnecessary data using `filter()` ([link](https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html){target="_blank"})
+-   Correctly marking missing data as `NA` in our dataset with tools such as `na_if()`, `ifelse()`, or `case_when()` ([link](https://poweleiden.github.io/statistics1/data_04_missing_data.html){target="_blank"})
+-   Recoding variables with `recode()` ([link 1](https://poweleiden.github.io/statistics1/data_03_variables.html#recoding-variables){target="_blank"}; [link 2](https://poweleiden.github.io/statistics1/data_05_advanced_recoding.html){target="_blank"})
+-   Creating new variables via `mutate()` ([link](https://poweleiden.github.io/statistics1/data_03_variables.html){target="_blank"})
+-   Converting binary/categorical variables into factor variables (covered in @sec-factor-command)
+-   Creating new datasets by joining two or more together with `left_join()` ([link](https://poweleiden.github.io/statistics1/data_06_merging_data.html){target="_blank"})
+
+Below, we give just a few examples to refresh the most important syntax.
+
+### Filtering data
+
+```{r}
+# ex1: Filter to keep only democracies in the dataset
+demdata_democracies <- demdata |> 
+  filter(TYPEDEMO1984 == "Democracies")
+
+# ex2: Filter to keep only observations with non-missing data on these 2 variables
+demdata_complete <- demdata |> 
+  filter(complete.cases(TypeEcon2006, HDI2005))
+```
+
+### Converting numeric missing value codes to `NA`
+
+```{r}
+# ex1: na_if
+demdata <- demdata |> 
+  mutate(TypeEcon2006_na = na_if(TypeEcon2006, 4))
+
+# Check your work!
+table(demdata$TypeEcon2006, demdata$TypeEcon2006_na, useNA = "always")
+
+# ex2: ifelse (sets 4 to NA, keeps all other values)
+demdata <- demdata |> 
+  mutate(TypeEcon2006_na = ifelse(TypeEcon2006 == 4, NA, TypeEcon2006))
+
+# Check your work!
+table(demdata$TypeEcon2006, demdata$TypeEcon2006_na, useNA = "always")
+
+# ex3: case_when (most useful for recoding and setting NA in 1 step: 
+# any value not explicitly included in the syntax becomes NA)
+
+demdata <- demdata |> 
+  mutate(GDP = case_when(
+    TypeEcon2006 == 1 ~ "High output",
+    TypeEcon2006 == 2 ~ "Medium output",
+    TypeEcon2006 == 3 ~ "Low output"))
+
+# Check your work!
+table(demdata$TypeEcon2006, demdata$GDP, useNA = "always")
+
+```
+
+### Recoding
+
+```{r}
+# ex4: recode (turns numeric values into character values)
+demdata <- demdata |> 
+  mutate(regime_recode = recode(Typeregime2006, 
+                                 "1" = "Liberal democracy", 
+                                 "2" = "Electoral democracy", 
+                                 "3" = "Autocracy"))
+
+# Check your work!
+table(demdata$Typeregime2006, demdata$regime_recode, useNA = "always")
+
+# ex5: case_when with a continuous (decimal) variable (splits v2x_libdem into categories based on value ranges)
+demdata <- demdata |> 
+  mutate(libdem_cat = case_when(
+    v2x_libdem < 0.3 ~ "Low",
+    v2x_libdem >= 0.3 & v2x_libdem < 0.6 ~ "Medium",
+    v2x_libdem >= 0.6 ~ "High"))
+
+# Check your work!
+table(demdata$v2x_libdem, demdata$libdem_cat, useNA = "always")
+
+# ex6: %in% (groups multiple values together into one category)
+demdata <- demdata |> 
+  mutate(regime_group = case_when(
+    Typeregime2006 %in% c(1, 2) ~ "Democracy", # Only works with whole numbers/character strings
+    Typeregime2006 == 3 ~ "Autocracy"))
+
+# Check your work!
+table(demdata$Typeregime2006, demdata$regime_group, useNA = "always")
+```

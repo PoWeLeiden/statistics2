@@ -82,9 +82,16 @@ We can also add binary and categorical variables to a table using `datasummary()
 
 ```{r}
 # Create the factor variables
-demdata <- demdata |> 
-  mutate(TYPEDEMO1984_factor = factorize(TYPEDEMO1984), 
-         Typeregime2006_factor = factorize(Typeregime2006))
+demdata <- demdata |>  
+  mutate(
+    TYPEDEMO1984_factor = factor(TYPEDEMO1984, 
+                        levels = c(1, 2), 
+                        labels = c("Autocracies", "Democracies")), 
+    Typeregime2006_factor = factor(Typeregime2006, 
+                            levels = c(1, 2, 3), 
+                            labels = c("Liberal democracy", 
+                                       "Electoral democracy", 
+                                       "Autocracy")))
 
 # Table with % and N
 datasummary(TYPEDEMO1984_factor + Typeregime2006_factor 
@@ -356,15 +363,16 @@ demdata <- demdata |>
 ```
 
 ```{r}
-#Factorize categorical variables
+#Convert region into a factor
+
+
 demdata <- demdata |> 
-  mutate(TYPEDEMO1984 = factorize(TYPEDEMO1984), 
-         region = factor(region, 
-                    levels=c(2,3,1,4), #Ref group is listed first
-                    labels=c("Africa", "Asia", "Europe", "Americas")))
+  mutate(region = factor(region, 
+                         levels=c(2,3,1,4), #Ref group is listed first
+                         labels=c("Africa", "Asia", "Europe", "Americas")))
 
 #Run and store the model
-example_model <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984 + region, 
+example_model <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor + region, 
                     data=demdata)
 
 #Results
@@ -396,7 +404,7 @@ Here are examples for `gini_2019` (a continuous variable) and `TYPEDEMO1984` (a 
 ::: {.callout-tip title="Report"}
 **gini_2019**: We expect the level of electoral democracy to decrease as economic inequality increases holding constant the effects of prior regime status and world region. Based on our model, we expect the level of electoral democracy to decrease by -0.01 scale points on average with each one unit increase in inequality. This association is statistically significant (p \< 0.05).
 
-**TYPEDEMO1984**: The results of the regression model show that countries recorded as democratic in 1984 are, on average, 0.07 scale points more democratic in 2020 than countries with equivalent levels of inequality and world region but recorded as an autocracy in 1984. This difference is not statistically significant at conventional levels (p = 0.28).
+**TYPEDEMO1984_factor**: The results of the regression model show that countries recorded as democratic in 1984 are, on average, 0.07 scale points more democratic in 2020 than countries with equivalent levels of inequality and world region but recorded as an autocracy in 1984. This difference is not statistically significant at conventional levels (p = 0.28).
 :::
 
 Additional notes for writing up results for formal papers:
@@ -568,7 +576,7 @@ As an example, let us plot the results from a model predicting electoral democra
 
 ```{r}
 #Model
-plot_model <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984, data = demdata)
+plot_model <- lm(v2x_polyarchy ~ cpi + v2caviol + TYPEDEMO1984_factor, data = demdata)
 
 #Store the model results as a tidied data object
 #NEED to ask for the confidence interval
@@ -588,7 +596,7 @@ plot_model_tidied <- plot_model_tidied |>
   mutate(term = recode(term, 
                        "cpi" = "Corruption Perception Index", 
                        "v2caviol" = "Political Violence",  
-                       "TYPEDEMO1984Democracies" = "Democracy in 1984?"))
+                       "TYPEDEMO1984_factorDemocracies" = "Democracy in 1984?"))
 
 plot_model_tidied
 ```
@@ -767,7 +775,7 @@ Here is an example focused on the prior regime status variable (`TYPEDEMO1984`) 
 ```{r}
 #Obtain predicted values
 demo_preds <- predictions(plot_model, 
-                          by = "TYPEDEMO1984", 
+                          by = "TYPEDEMO1984_factor", 
                           newdata = "mean")  # <1> 
 
 #Let's take a look: 
@@ -779,7 +787,7 @@ demo_preds
 We would then pass this object, and the data inside it, to a `ggplot()` command. Here we use `geom_pointrange()` instead of `geom_line()` as we are trying to convey the difference between two categories rather than levels of a scale:
 
 ```{r}
-ggplot(demo_preds, aes(x = TYPEDEMO1984, y = estimate)) + 
+ggplot(demo_preds, aes(x = TYPEDEMO1984_factor, y = estimate)) + 
   geom_pointrange(aes(ymin = conf.low, ymax = conf.high)) + 
   labs(title = "Predicted Level of Democracy by 1984 Regime Type",
        y = "Predicted Value", 
@@ -793,7 +801,7 @@ One further bit of information we might want to add on figures like this is the 
 Here is how we would add the values of the predicted values to the plot:
 
 ```{r}
-ggplot(demo_preds, aes(x = TYPEDEMO1984, y = estimate)) + 
+ggplot(demo_preds, aes(x = TYPEDEMO1984_factor, y = estimate)) + 
   geom_pointrange(aes(ymin = conf.low, ymax = conf.high)) + 
   labs(title = "Predicted Level of Democracy by 1984 Regime Type",
        y = "Predicted Value", 

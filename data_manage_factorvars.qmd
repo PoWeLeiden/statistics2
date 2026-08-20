@@ -1,0 +1,320 @@
+---
+code-annotations: hover
+citation-location: margin
+format: 
+  html: 
+    toc: true
+    toc-expand: true
+    toc-depth: 3
+    toc-title: On this page
+---
+
+# Factor variables {#sec-factor-command}
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(sjlabelled)
+library(rio)
+library(sjPlot)
+library(tidyverse)
+library(modelsummary)
+
+# Creating different types of variables with and without labels
+# So we can show the difference later on
+
+demdata <- import("data/demdata.rds") |> 
+  as_tibble() |> 
+  mutate(
+    Fragile2006_char = case_when(
+      Fragile2006 == 1 ~ "Fragile", 
+      Fragile2006 == 2 ~ "Intermediate", 
+      Fragile2006 == 3 ~ "Stable"), 
+    TYPEDEMO1984 = factor(TYPEDEMO1984, 
+                          levels = c(1, 2), 
+                          labels =c("Autocracies", "Democracies")), 
+    TypeEcon2006 = ifelse(is.na(TypeEcon2006), 4, TypeEcon2006)) |> 
+  var_labels(
+    TypeEcon2006 = "Type of economy (World Bank 2007)") |> 
+  val_labels(
+    TypeEcon2006 = c("High GDP", "Medium GDP", "Low GDP", "Data Not Available")
+  )|> 
+  select(country_name, 
+         year, 
+         v2x_libdem, 
+         HDI2005, 
+         Fragile2006_char, 
+         TYPEDEMO1984, 
+         Typeregime2006, 
+         TypeEcon2006, 
+         TYPEGOV2007)
+
+```
+
+```{r}
+#| eval: false
+
+#Packages
+library(rio)          #loading data
+library(sjPlot)       #for obtaining overviews of data objects
+library(tidyverse)    #data manipulation and plotting
+
+#Data
+demdata <- import("demdata.rds") |> 
+  as_tibble()  # <1>
+
+```
+
+Datasets typically contain different variable types. Some variables will be continuous: observations can take on different values on some type of numeric scale that has a meaningful underlying order (e.g., a country's gross domestic product or GDP). Other variables, however, will be categorical in nature. Here, observations are grouped into a smaller set of mutually exclusive categories. These are typically "nominal" variables wherein there is no natural order to the categories (e.g., rural vs. urban).[^data_manage_factorvars-1] We will typically refer to categorical variables with only two levels as binary or dichotomous variables, while variables with more than two levels will simply be referred to as categorical.
+
+[^data_manage_factorvars-1]: We can also have ordinal categorical variables wherein there is a meaningful order but the gap between levels is not consistent (e.g., "low", "medium", and "high"). It is common to treat these variables as continuous in nature if there are five or more levels to them. If there are fewer than five categories, then we will typically convert the variable into a factor much as shown here.
+
+Binary and categorical variables may be represented in our data as numeric data (e.g., 1 2, 3) or as character data (e.g., "Liberal Democracy", "Electoral Democracy", and "Autocracy"). We typically utilize these types of variables as predictors in regression analyses by first converting them into a factor variable.[^data_manage_factorvars-2] A factor variable associates each level of the variable with an integer and each integer with an associated label. Converting a variable to a factor format is often quite critical in the types of analyses that we will perform in Statistics II. When we include binary and categorical variables in a regression model, we aim to contrast or compare the average value of our outcome variable across categories (see @sec-binary-predictors). Converting a variable into a factor will make sure that our regression functions do this properly. In addition, creating a factor variable can allow us to properly and clearly plot our data as in examples shown in @sec-predicted-values-from-interaction-models . The following sub-sections go over how to convert variables into a factor variable using the `factor()` command.
+
+[^data_manage_factorvars-2]: There are some situations where converting a variable to a factor is not needed or problematic such as when the variable is a character variable and we wish to work with the string or character content of the variable itself. For instance, we might want to extract part of the text for some operation, or replace it with something else, or perform some type of text analysis (e.g., counting how many words in a speech refer to moral content). However, these are use cases outside the scope of Statistics II and we expect you to convert binary/categorical variables into a factor for the analyses you perform in our exercises and assignments.
+
+::: callout-important
+#### Warning!
+
+You may recall learning a command known as `factorize()` in Statistics I. This command can also convert variables into factors. However, we are not going to use this command in Statistics II. First, this variable can only be used when the variable in question has value labels stored in the metadata of the variable (see @sec-investigating-variables). Many datasets, however, do not include stored metadata such that `factorize()` won't work. In addition, there exist some edge cases where `factorize()` can produce errors in conjunction with some of the functions that you'll learn about in Statistics II (see @sec-common-errors). We thus expect you to use `factor()` to create factor variables in Statistics II.
+:::
+
+## Converting to a factor variable using `factor()` {#sec-converting-to-a-factor-variable-using-factor}
+
+We'll go over three examples where we convert a variable into a factor: one involving a binary variable that is numeric in nature, one involving a categorical variable that is numeric in nature, and a character variable example.
+
+Our first example is a variable named `TYPEGOV2007`. Let's take a look at its characteristics:
+
+```{r}
+class(demdata$TYPEGOV2007)
+attributes(demdata$TYPEGOV2007)
+table(demdata$TYPEGOV2007, useNA = "always")
+```
+
+Observations can take on two non-missing values: 0 or 1. A value of 0 indicates that the country had a system of patronage in the year 2007 while a value of 1 indicates that it had a bureaucratic system. We can convert this variable to a factor as so:
+
+```{r}
+demdata <- demdata |> 
+  mutate(
+    TYPEGOV2007_F = factor(TYPEGOV2007, 
+                         levels = c(0, 1), 
+                         labels = c("Patronage", "Bureaucratic")))
+```
+
+Here is how to read the syntax above:
+
+`factor(`
+
+:   This tells R that we wish to use the `factor()` function
+
+`TYPEGOV2007`
+
+:   We then provide the name of the variable that we want to convert into a factor.
+
+`levels = c(0, 1)`
+
+:   We then specify the levels of the variable and their intended order. `TYPEGOV2007` is a numeric variable. We thus provide the numeric values of the variable in the `c()` area. We could put these values in either order (0,1 or 1,0). However, *the order matters*: the number provided first will be treated as the 'reference' or 'baseline' level for the resulting factor, i.e., the category against which the other one will be compared. This has important implications for what happens when we include the variable in a regression model as we discuss in @sec-binary-predictors .
+
+`labels = c("Patronage", "Bureaucratic"))`
+
+:   We then specify the labels that should be associated with each level of the factor. In this instance we use the label values that are indicated in the metadata of the variable, but we could specify anything we wish here. Observations with the first level (0) will be given the label "Patronage" and observations in the second level of the factor (1) will be given the label "Bureaucratic". We put these values in parentheses because the labels are stored as character data. One thing to note: the number of labels provided in `labels = c()` needs to much the number of levels in the `levels = c()` portion of the command.
+
+::: callout-warning
+#### Warning!
+
+You should create new variables when recoding a variable or converting an existing variable to a factor as shown above where we created a new variable named `TYPEGOV2007_F`. Creating a new variable when recoding/factorizing makes it easier to find and correct any mistakes we may inadvertently make when performing data management operations.
+:::
+
+An important step we should take anytime we recode or (re)create a variable is to check our output to see if things look as they should. For a factor variable, we should: (1) check to make sure the levels are in the intended order using either the `levels()` or `attributes()` command and (2) take a look at the distribution of the variable we created both overall and compared to the variable that we converted into a factor. Taking these steps is highly advised because they enable us to ascertain whether there was some error in the variable creation process early in the data cleaning process rather than later on when we are rushing to submit an assignment and are confronted with an error.
+
+```{r}
+
+# Look at the levels of the new variable
+levels(demdata$TYPEGOV2007_F)
+attributes(demdata$TYPEGOV2007_F)
+
+# Table to get a sense of the distribution
+table(demdata$TYPEGOV2007_F, useNA = "always")
+
+# Crosstab with initial variable
+table(demdata$TYPEGOV2007_F, demdata$TYPEGOV2007, useNA = "always")
+```
+
+First, we can see that the levels are in the intended order: "Patronage" and then "Bureaucratic". Second, we can see from the `table()` outputs that the conversion process has worked as intended: all observations with a value of 0 on `TYPEGOV2007` have a "Patronage" level on `TYPEGOV2007_F` and likewise for 1 and "Bureaucratic".
+
+The foregoing process can also be used when the variable has multiple category values or levels. Here we convert a variable named `Typeregime2006` into a factor. We opt to put value 2 as our first level to show you this possibility.
+
+```{r}
+
+# Multiple categories
+class(demdata$Typeregime2006)
+attributes(demdata$Typeregime2006)
+table(demdata$Typeregime2006, useNA = "always")
+
+# Create the factor
+demdata <- demdata |> 
+  mutate(
+    Typeregime2006_F = factor(Typeregime2006, 
+                        levels = c(2, 1, 3), 
+                        labels = c("Electoral Dem.", 
+                                   "Liberal Dem.", 
+                                   "Autocracy")))
+
+## check your work!
+levels(demdata$Typeregime2006_F)
+table(demdata$Typeregime2006, demdata$Typeregime2006_F, useNA = "always")
+
+
+```
+
+The process of converting a character variable into a factor is basically the same although two things are worth noting. First, we need to put the values of the original pre-factor variable in parentheses in the `levels = c()` portion of the syntax. Second, we can omit the `labels = c()` portion of the syntax if we want since the data is already character in nature. If we wanted to use different labels then we would add a `labels = c()` portion.
+
+```{r}
+# Character variable
+class(demdata$Fragile2006_char)
+table(demdata$Fragile2006_char)
+
+demdata <- demdata |> 
+  mutate(
+    fragile_fct = factor(Fragile2006_char, 
+                         levels = c("Fragile", 
+                                    "Intermediate", 
+                                    "Stable")))
+
+## check your work!
+levels(demdata$fragile_fct)
+table(demdata$Fragile2006_char, demdata$fragile_fct, useNA = "always")
+```
+
+::: {#factor-quirks .callout-warning}
+#### Warning!
+
+There are a couple of quirks with `factor()` that you should know about.
+
+First, we might ask what happens if we do not include a `levels=c()` portion to our command.
+
+```{r}
+# Creating the factors
+demdata <- demdata |> 
+  mutate(
+    govtype_fct = factor(TYPEGOV2007), 
+    fragile_fct = factor(Fragile2006_char))
+
+# Checking the levels
+levels(demdata$govtype_fct)
+table(demdata$govtype_fct, useNA = "always")
+
+
+levels(demdata$fragile_fct)
+table(demdata$fragile_fct, useNA = "always")
+```
+
+The command will still creates a factor. If the variable is a numeric variable, then it will automatically use the lowest numeric value as the first level and will use those numeric values as the 'labels' for each category. This is not a good idea for us because what "0" and "1" mean is left unclear. If we come back to this data later on, or share it with someone else, then it is likely that confusion will arise. We thus expect you to provide formal value labels when converting numeric variables into a factor.
+
+If the variable is a character variable, then it will use the value that comes first alphabetically as the first level, e.g., "Fragile" was automatically used as the first level here. This is not as problematic as the numeric example given that the character labels are already informative in this instance. This can be an issue in situations where we want some alternative ordering however (e.g., if we wanted "Stable" to be the first level and hence the reference category for subsequent comparisons). In those situations we could either add a `labels = c()` portion to the syntax or re-level the factor as shown below in @sec-relevelling.
+
+Second, we might ask what happens if we fail to include all values of the original variable in the `levels = c()` portion of the syntax or, perhaps, mis-specify the values somehow (e.g., misspell them). Let's take a look at a couple of examples:
+
+```{r}
+
+# Example 1
+attributes(demdata$TypeEcon2006)
+table(demdata$TypeEcon2006, useNA = "always")
+
+demdata <- demdata |> 
+  mutate(econ_fct = factor(TypeEcon2006, 
+                           levels = c(1, 2, 3), 
+                           labels = c("High GDP", 
+                                      "Medium GDP", 
+                                      "Low GDP")))
+
+table(demdata$econ_fct, useNA = "always")
+
+# Example 2
+attributes(demdata$Fragile2006_char)
+
+demdata <- demdata |> 
+  mutate(
+    fragile_fct1 = factor(Fragile2006_char, 
+                          levels = c("Fragile", 
+                                     "Intermediate", 
+                                     "STABLE")))
+
+table(demdata$Fragile2006_char, useNA = "always")
+table(demdata$fragile_fct1, useNA = "always")
+
+```
+
+The variable we were converting in Example 1 had four values: 1, 2, 3, and 4. A value of 4 represented a situation where the country could not be classified into High/Medium/Low GDP in the first place and thus given a score of 4 to indicate this fact. When we created the factor, however, we only included values of 1, 2, and 3 in `levels = c()` (and correspondingly provided only three category labels). The end result was that observations that had a value of 4 on the original variable have an NA value on the newly created factor. This is not necessarily problematic for us because we often remove observations with missing data from our analyses. If we wanted, we could include these observations in our factor (e.g., `levels = c(1,2,3,4), labels = c(..., "Missing")`) and keep these observations in our resulting analyses.
+
+The variable we converted in Example 2 had three character values: "Fragile", "Intermediate", and "Stable". However, we wrote "STABLE" in our syntax. The issue is that the information in `levels = c()` needs to match the corresponding values from the original variable (unless we want to omit them from the factor as seen in Example 1). Observations with with a "Stable" value on `Fragile2006_char` are thus given an NA value on the new factor and would thus be left out of analyses that use this variable. That could be very problematic if we wanted these observation in our analyses!
+
+The foregoing 'quirks' can also sometimes make our lives easier. For instance, observations on the `TypeEcon2006` variable in our dataset can take on one of four values: 1 (High GDP), 2 (Medium GDP), 3 (Low GDP), and 4 (Data Not Available). Suppose that we wanted to simplify this variable into a binary factor variable (Low or Medium GDP; High GDP) with "Data Not Available" observations converted to NA. One way to efficiently accomplish this end is to first use `case_when()` to create a binary variable of a character type and then convert that to a factor.[^data_manage_factorvars-3] For instance:
+
+```{r}
+# Recode and convert
+demdata <- demdata |> 
+  mutate(
+    # Create a string variable
+    type_econ2006_char = case_when(
+      TypeEcon2006 == 1 ~ "High GDP", # <1>
+      TypeEcon2006 %in% c(2,3) ~ "Low/Med GDP"), # <2>
+    # Convert to a factor
+    type_econ2006_char = factor(type_econ2006_char)
+  )
+```
+
+```{r}
+# Check work
+levels(demdata$type_econ2006_char)
+table(demdata$TypeEcon2006, demdata$type_econ2006_char, useNA = "always")
+
+```
+
+1.  Read this as follows: if an observation has a value equaling 1 on `TypeEcon2006`, then give it a value of "High GDP" on this new variable. See [Chapter 5](https://poweleiden.github.io/statistics1/data_05_advanced_recoding.html){target="_blank"} of the Statistics I book for more on `case_when()`
+2.  Read this as follows: if an observation has a value of *either* 2 or 3 on `TypeEcon2006`, then give it a value of "Low/Med GDP" on the new variable. The `%in% c()` syntax is thus a time saver here. We could also type `c(2:3)` - this would tell R to perform this operation on all values from 2 to 3. Note though that this would only apply to whole numbers (i.e., if we had a 2.5 in our dataset then it would get converted to NA).
+
+This helps in two ways. First, the case_when() command also works in such a way that values not included in the command are converted to NA (i.e., we did not need to formally tell the command to convert values of 4 on TypeEcon2006 to NA). Second, by converting to a string or character variable we could skip the labels = c() portion of the factor syntax (and perhaps even the levels = c() portion as well depending on whether we want "High GDP" to be the reference category or not).
+
+The takeaway here is to think through what values are being ported over in the conversion process, double check your syntax, and investigate its output so that you can avoid making costly mistakes.
+:::
+
+[^data_manage_factorvars-3]: See [Chapter 5](https://poweleiden.github.io/statistics1/data_05_advanced_recoding.html){target="_blank"} of the Statistics I book for more on this command.
+
+## Relevelling {#sec-relevelling}
+
+We can change which category is the first level of a factor variable, and hence the 'reference group' in our analyses of the variable, by using the `relevel()` function.
+
+```{r}
+# Our original variable
+levels(demdata$Typeregime2006_F)
+
+# Let's relevel it!
+demdata <- demdata |> 
+  mutate(
+    regime2006_relevel = relevel(Typeregime2006_F, 
+                                 "Autocracy"))
+```
+
+`relevel(`
+
+:   The name of the function
+
+`regime2006,`
+
+:   This tells R that we want to work with the variable named `regime2006`.
+
+`"Autocracy"))`
+
+:   We then provide the name of the category we want as the reference group. We put "Autocracy" in quotation marks because the variable we are relevelling here is already a factor variable so we must use the label for the category rather than its underlying numeric value.
+
+Let's check our work:
+
+```{r}
+levels(demdata$regime2006_relevel)
+```
+
+"Autocracy" is now listed first and will be used as the "reference group" when including this variable as a predictor in regression models.

@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Investigating Your Data and Data Cleaning – Statistical analysis and presentation using R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./data_manage_factorvars.html" rel="next">
+<link href="./part_cleaning.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_cleaning.html">Data Cleaning</a></li><li class="breadcrumb-item"><a href="./data_manage_investigate.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical analysis and presentation using R</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Common Errors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./package_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Overview of R Packages</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Addressing Failed Error Assumptions in OLS Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Creating Indices / Scales</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-learning-about-your-data" id="toc-sec-learning-about-your-data" class="nav-link active" data-scroll-target="#sec-learning-about-your-data"><span class="header-section-number">1.1</span> Learning about your data</a>
+  <ul class="collapse">
+  <li><a href="#sec-investigating-datasets" id="toc-sec-investigating-datasets" class="nav-link" data-scroll-target="#sec-investigating-datasets"><span class="header-section-number">1.1.1</span> Investigating datasets</a></li>
+  <li><a href="#sec-investigating-variables" id="toc-sec-investigating-variables" class="nav-link" data-scroll-target="#sec-investigating-variables"><span class="header-section-number">1.1.2</span> Investigating variables</a></li>
+  </ul></li>
+  <li><a href="#sec-managing-variables" id="toc-sec-managing-variables" class="nav-link" data-scroll-target="#sec-managing-variables"><span class="header-section-number">1.2</span> Managing your data and variables</a>
+  <ul class="collapse">
+  <li><a href="#filtering-data" id="toc-filtering-data" class="nav-link" data-scroll-target="#filtering-data"><span class="header-section-number">1.2.1</span> Filtering data</a></li>
+  <li><a href="#converting-numeric-missing-value-codes-to-na" id="toc-converting-numeric-missing-value-codes-to-na" class="nav-link" data-scroll-target="#converting-numeric-missing-value-codes-to-na"><span class="header-section-number">1.2.2</span> Converting numeric missing value codes to <code>NA</code></a></li>
+  <li><a href="#recoding" id="toc-recoding" class="nav-link" data-scroll-target="#recoding"><span class="header-section-number">1.2.3</span> Recoding</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_cleaning.html">Data Cleaning</a></li><li class="breadcrumb-item"><a href="./data_manage_investigate.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-investigate-data" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>You will learn how to analyze data using linear and logistic regression models in the chapters to come. However, it is a rare day where a researcher can simply download a dataset and jump directly into the analyses that they wish to perform. Instead, we often need to take some first steps to prepare our data for analysis, a process referred to as “data cleaning”, “cleaning our data”, or “data management”. Data cleaning requires us to know something both about the types of analysis that we want to perform as well as the nature of the variables present in our dataset. This information is often provided in a separate codebook for the dataset (or in Exercise/Assignment instructions!). However, we can also learn some important facts from the dataset itself.</p>
+<p>In <a href="#sec-learning-about-your-data" class="quarto-xref"><span>Section 1.1</span></a>, we will go over some commands you can use to familiarize yourself with your data so that you can accurately identify the steps you need to take in order to clean your data and hence analyze it. In <a href="data_manage_factorvars.html" class="quarto-xref"><span>Chapter 2</span></a>, meanwhile, we will go into greater depth regarding a specific data management task of particular importance in Statistics II: creating and manipulating factor variables.</p>
+<section id="sec-learning-about-your-data" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-learning-about-your-data"><span class="header-section-number">1.1</span> Learning about your data</h2>
+<p>The first thing we do when analyzing data in R is load the libraries needed for our analyses before importing our data. these libraries are already installed on university computers but must first be loaded before use. You can use the command in <a href="package_overview.html" class="quarto-xref"><span>Appendix B</span></a> to install these packages on your personal computer.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We will use a dataset that contains information about the political and economic characteristics of countries from across the world.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)          <span class="co">#loading data</span></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)       <span class="co">#for obtaining overviews of data objects</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)    <span class="co">#data manipulation and plotting</span></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"demdata.rds"</span>) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="8" data-code-annotation="1">You do not technically need <code>as_tibble()</code> as shown here. We do this here because it is easier to show larger datasets with them; see <a href="https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles" target="_blank">Statistics I, 2.1</a>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure to create a project folder for the course in which you save all of your data files, exercises, and the final R assignment, as this will make working with R easier. The process for doing so is covered in <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#setting-up-an-r-project" target="_blank">Statistics I, 1.5</a>. Also, remember to use syntax to import data using the <code>import()</code> function from the <code>rio</code> package. See <a href="common_errors.html#sec-error-import" class="quarto-xref"><span>Section A.1.2</span></a>.</p>
+</div>
+</div>
+<p>We have loaded a data file…but what’s inside it? We can get to know our data better both by using commands that enable us to obtain an overview of the dataset as a whole as well as via commands that let us investigate the characteristics of specific variables.</p>
+<section id="sec-investigating-datasets" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="sec-investigating-datasets"><span class="header-section-number">1.1.1</span> Investigating datasets</h3>
+<p>We can use a few commands to take a look at the dataset as a whole.</p>
+<p>For instance, we can enter the name of the object in the Console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>demdata</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 179 × 9
+   country_name  year v2x_libdem HDI2005 Fragile2006_char TYPEDEMO1984
+   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;            &lt;fct&gt;       
+ 1 Mexico        2020      0.412   0.829 Intermediate     Democracies 
+ 2 Suriname      2020      0.627   0.774 Intermediate     Autocracies 
+ 3 Sweden        2020      0.879   0.956 Stable           Democracies 
+ 4 Switzerland   2020      0.851   0.955 Stable           Democracies 
+ 5 Ghana         2020      0.614   0.553 Intermediate     Autocracies 
+ 6 South Africa  2020      0.578   0.674 Intermediate     Autocracies 
+ 7 Japan         2020      0.743   0.953 Stable           Democracies 
+ 8 Myanmar       2020      0.271   0.583 Fragile          Autocracies 
+ 9 Russia        2020      0.103   0.802 Fragile          &lt;NA&gt;        
+10 Albania       2020      0.409   0.801 Intermediate     Autocracies 
+# ℹ 169 more rows
+# ℹ 3 more variables: Typeregime2006 &lt;dbl&gt;, TypeEcon2006 &lt;dbl&gt;,
+#   TYPEGOV2007 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>If our dataset is a tibble (like here), then we will see a nice overview of the first few variables (columns) and observations (rows) in the dataset.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We can also see each variables type under its name (e.g., <code>&lt;chr&gt;</code> = a character variable while <code>&lt;dbl&gt;</code> is a non-integer numeric variable; variable types are discussed in <a href="#sec-investigating-variables" class="quarto-xref"><span>Section 1.1.2</span></a>).</p>
+<p>We may want to see a list of the variables in our dataset and some of their attributes. You learned how to do this using the <code>str()</code> function in Statistics I (see <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#data-frames" target="_blank">here</a>). A simpler overview of a data object is provided by the <code>glimpse()</code> function that is part of the <code>dplyr</code> (or <code>tidyverse</code>) library. This tool is particularly useful when you want to quickly see the names of columns in a data object and it does not contain a very large number of columns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(demdata)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1"><code>dplyr</code> was loaded at the beginning of the document via <code>library(tidyverse)</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 179
+Columns: 9
+$ country_name     &lt;chr&gt; "Mexico", "Suriname", "Sweden", "Switzerland", "Ghana…
+$ year             &lt;dbl&gt; 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020,…
+$ v2x_libdem       &lt;dbl&gt; 0.412, 0.627, 0.879, 0.851, 0.614, 0.578, 0.743, 0.27…
+$ HDI2005          &lt;dbl&gt; 0.829, 0.774, 0.956, 0.955, 0.553, 0.674, 0.953, 0.58…
+$ Fragile2006_char &lt;chr&gt; "Intermediate", "Intermediate", "Stable", "Stable", "…
+$ TYPEDEMO1984     &lt;fct&gt; Democracies, Autocracies, Democracies, Democracies, A…
+$ Typeregime2006   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 3, 3, 2, 3, 2, 2, 1, 1, 1, 1, 1,…
+$ TypeEcon2006     &lt;dbl&gt; 2, 2, 1, 1, 3, 2, 1, 3, 2, 3, 3, 3, 2, 2, 2, 1, 2, 2,…
+$ TYPEGOV2007      &lt;dbl&gt; 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, NA, 0, 0, 1, 0, 1, 1, 0…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Output Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The output begins by giving you the following information:</p>
+<ul>
+<li><code>Rows:</code> this tells you how many rows (observations) are in the dataset</li>
+<li><code>Columns</code>: this tells you how many columns (variables) are in the dataset</li>
+</ul>
+<p>We then get output organized in three columns:</p>
+<ul>
+<li>The first column provides the names of the variables in the dataset</li>
+<li>The second column tells you the class of the variable where <code>&lt;chr&gt;</code> means the variable is a character variable, &lt;<code>dbl&gt;</code> means that it is a numeric variable, and &lt;<code>fct&gt;</code> means it is a factor variable. If we had an integer variable in the data, then this would read <code>&lt;int&gt;</code>, while a date variable would be <code>&lt;date&gt;</code> (see <a href="#sec-investigating-variables" class="quarto-xref"><span>Section 1.1.2</span></a> for more on variable types)</li>
+<li>The third column provides the values for the first few observations of each variable</li>
+</ul>
+</div>
+</div>
+<p>A third tool we can use is the <code>view_df()</code> function from the <code>sjPlot</code> library. This tool shows us the names of the columns in the object alongside labels for the variables (if any) and information about the values that the variable can take on. This information will be provided in the Viewer pane. You can then use the click on the “Show in new window” button that is just above the image in the Viewer pane to view the full list in an open browser tab. This is particularly useful for larger datasets because you can then use the search function of your web browser to find what you’re looking for.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view_df</span>(demdata)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">The <code>sjPlot</code> library was loaded at the beginning of the document. You need to load it first before using this command.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Data frame: demdata</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">ID</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Label</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Values</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Value Labels</th>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">country_name</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">&lt;output omitted&gt;</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">2</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">year</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;"></td>
+<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;"><em>range: 2020-2020</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">3</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">v2x_libdem</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
+<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top;"><em>range: 0.0-0.9</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">4</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">HDI2005</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Human Development Index (HDI), 2005 100-pt scale<br>
+(UNDP 2007)</td>
+<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;"><em>range: 0.3-1.0</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">5</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Fragile2006_char</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">&lt;output omitted&gt;</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">6</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">TYPEDEMO1984</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;"></td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Autocracies<br>
+Democracies</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">7</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Typeregime2006</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Type of regime 2006 (3 cat)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1<br>
+2<br>
+3</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Liberal democracy<br>
+Electoral democracy<br>
+Autocracy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">8</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">TypeEcon2006</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Type of economy (World Bank 2007)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">1<br>
+2<br>
+3<br>
+4</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">High GDP<br>
+Medium GDP<br>
+Low GDP<br>
+Data Not Available</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">9</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">TYPEGOV2007</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Type of government 2007</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0<br>
+1</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Patronage<br>
+Bureaucratic</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Output Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>view_df()</code> creates output with the following columns:</p>
+<ul>
+<li>ID: The column number of the variable</li>
+<li>Name: The variable name</li>
+<li>Label: The variable label (<code>$label</code>) if there is one stored in metadata. This is a short description of what the variable is supposed to measure.</li>
+<li>Values: If the variable is a continuous variable, then this will likely show “range: X-X”. For instance, the <code>v2x_libdem</code> variable ranges from 0 to 0.9. If the variable only contains a few discrete values, then those will be shown instead (as with the variable <code>Typeregime2006</code>). <code>&lt;output omitted&gt;</code> is used for character variables.</li>
+<li>Value Labels: This provides the value labels stored in metadata (<code>$labels</code>) if there are any. For instance, we see that a 1 on <code>TypeEcon2006</code> refers to a country with “High GDP”, while a 2 refers to “Medium GDP”. If a variable is a factor variable (e.g., <code>TYPEDEMO1984</code>), then the labels associated with each level of the factor are provided here and there will be no entries in the Values column.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="sec-investigating-variables" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="sec-investigating-variables"><span class="header-section-number">1.1.2</span> Investigating variables</h3>
+<p>R datasets may contain variables that vary in their <em>class</em> (or type). Common variable classes include:</p>
+<ul>
+<li>Numeric variables where the data are numbers including ones that include decimals</li>
+<li>Integer variables where the numeric data is limited to whole numbers</li>
+<li>Character variables where the data is a string of letters (e.g., “Australia”)</li>
+<li>Factor variables representing categorical (nominal or ordered) variables</li>
+<li>Logical variables where the only values are TRUE or FALSE</li>
+<li>Date variables (e.g., “2026-05-03”)</li>
+</ul>
+<p>Learning a variable’s class can be an important first step in the data cleaning process as it can help us understand the types of actions (if any!) that we need to perform to prepare the variable for inclusion in our analyses.</p>
+<p>We can use two tools to learn about a variable’s class. First, we can use the <code>class()</code> function that you learned about in Statistics I (<a href="https://poweleiden.github.io/statistics1/data_01_basics.html#storing-data-in-an-object" target="_blank&quot;)">link</a>) to directly obtain this information. Second, we can use the <code>attributes()</code> function to investigate whether there is any metadata associated with the variable in our dataset. Not all datasets, or variables within datasets, will contain metadata but some do and they can tell us important information about the data before us. This metadata may include:</p>
+<ul>
+<li><code>$label</code>: A short description of what the variable is supposed to measure</li>
+<li><code>$labels</code> : If the variable is numeric and only takes on a few values, then there may be labels for each value telling you what each value represents</li>
+<li><code>$levels</code> : If the variable is a factor variable, then this would tell you about the levels of the factor. We discuss this in greater depth in <a href="data_manage_factorvars.html" class="quarto-xref"><span>Chapter 2</span></a></li>
+<li><code>$class</code> : This indicates the class of the variable. However, this option is not always shown in the output of <code>attributes()</code> as it needs to be explicitly stored in the variable’s metadata. This will be the case for factor variables, but not necessarily for other types of variable.</li>
+</ul>
+<p>Let’s take a look at some examples from the dataset that we loaded earlier. Both functions have a similar structure: <code>functionname(dataname$variablename)</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># v2x_libdem</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demdata<span class="sc">$</span>v2x_libdem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(demdata<span class="sc">$</span>v2x_libdem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HDI2005</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demdata<span class="sc">$</span>HDI2005)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(demdata<span class="sc">$</span>HDI2005)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$label
+[1] "Human Development Index (HDI), 2005 100-pt scale (UNDP 2007)"
+
+$format.stata
+[1] "%10.0g"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TYPEDEMO1984</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demdata<span class="sc">$</span>TYPEDEMO1984)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(demdata<span class="sc">$</span>TYPEDEMO1984)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$levels
+[1] "Autocracies" "Democracies"
+
+$class
+[1] "factor"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TypeEcon2006</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(demdata<span class="sc">$</span>TypeEcon2006)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(demdata<span class="sc">$</span>TypeEcon2006)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$label
+[1] "Type of economy (World Bank 2007)"
+
+$labels
+          High GDP         Medium GDP            Low GDP Data Not Available 
+                 1                  2                  3                  4 </code></pre>
+</div>
+</div>
+<p>Conveniently, our dataset has a variety of different variable types that vary in whether they possess metadata or not.</p>
+<ul>
+<li><code>v2x_libdem</code> is a numeric variable but one without any metadata associated with it as seen by the NULL output after the <code>attributes()</code> command. If we wanted to know more about this variable then we would need to turn to a codebook (or, closely read exercise/assignment instructions).</li>
+<li><code>HDI2005</code> is also a numeric variable but here we have a handy <code>$label</code> entry that tells us what this variable measures: a country’s Human Development Index, or <a href="https://hdr.undp.org/data-center/human-development-index#/indicies/HDI" target="_blank">HDI</a>. The label also implies that the data is from the year 2005, on a 0-100 pt scale, and is sourced from the UNCDP in 2007.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li><code>TYPEDEMO1984</code> is a factor variable. Observations can have either of two potential (non-NA) values: “Autocracies” and “Democracies”. We do not have a variable label here to tell us what the variable is about, but we can perhaps deduce from its name and these levels that this data records the type of regime a country had in the year 1984.</li>
+<li><code>TypeEcon2006</code> is a numeric variable that indicates something about the country’s economy. This measurement appears to come from the World Bank and refers to the country’s economic status in the year 2006 (per the variable name). This variable has a <code>$labels</code> area that tells us that non-NA observations can take on one of four numeric values: 1, 2, 3, or 4. Importantly, one of those values (4) represents a “Missing” category, i.e., observations with a 4 on this variable could not be classified as having High/Medium/Low GDP due to missing economic data.</li>
+</ul>
+<p>In practice, we would follow up these steps by investigating the variables using tools such as <code>summary()</code> , <code>mean()</code>, <code>table()</code>, and so on, to get a further sense of the variables before us. For instance:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary() to get an overview of continuous variables</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(demdata<span class="sc">$</span>HDI2005)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+ 0.3360  0.5800  0.7640  0.7240  0.8628  0.9680      21 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table() to get an overview of categorical/discrete variables</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TypeEcon2006, <span class="at">useNA =</span> <span class="st">"always"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4 &lt;NA&gt; 
+  30   57   78   14    0 </code></pre>
+</div>
+</div>
+<p>In this case, <code>summary()</code> tells us both about the distribution of the distribution of the <code>HDI2005</code> variable and also that there exist 21 observations with NA (or missing) values.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Meanwhile, we can also see that 14 observations have a value of 4 (representing a “Data Not Available” category”) on the <code>TypeEcon2006</code> variable.</p>
+<p>We can use what we just learned to understand the steps we need to take, or not take, in cleaning these variables for analysis. The <code>v2x_libdem</code> and <code>HDI2005</code> variables are both numeric variables where “missing” is simply represented by NA in our dataset. These variables are likely ready for analysis as is.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> On the other hand, missing data is encoded as a value of 4 for the <code>TypeEcon2006</code> variable. In these types of situations we will want to convert these values into an NA value to make the variable ready for use. Finally, we include binary variables like <code>TYPEDEMO1984</code> in our regression analyses by converting them to a factor variable…but this is already done, so again we can likely proceed with the variable as is (unless we want to relevel it to make our analyses clearer as discussed in <a href="data_manage_factorvars.html#sec-relevelling" class="quarto-xref"><span>Section 2.2</span></a>).</p>
+</section>
+</section>
+<section id="sec-managing-variables" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-managing-variables"><span class="header-section-number">1.2</span> Managing your data and variables</h2>
+<p>Learning more about your data may reveal the need to perform a variety of different data management tasks prior to conducting your final analysis. This may involve some or all of the following steps, many of which were introduced in Statistics I (see links to the Statistics I R book in parentheses):</p>
+<ul>
+<li>Filtering out unnecessary data using <code>filter()</code> (<a href="https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html" target="_blank">link</a>)</li>
+<li>Correctly marking missing data as <code>NA</code> in our dataset with tools such as <code>na_if()</code>, <code>ifelse()</code>, or <code>case_when()</code> (<a href="https://poweleiden.github.io/statistics1/data_04_missing_data.html" target="_blank">link</a>)</li>
+<li>Recoding variables with <code>recode()</code> (<a href="https://poweleiden.github.io/statistics1/data_03_variables.html#recoding-variables" target="_blank">link 1</a>; <a href="https://poweleiden.github.io/statistics1/data_05_advanced_recoding.html" target="_blank">link 2</a>)</li>
+<li>Creating new variables via <code>mutate()</code> (<a href="https://poweleiden.github.io/statistics1/data_03_variables.html" target="_blank">link</a>)</li>
+<li>Converting binary/categorical variables into factor variables (covered in <a href="data_manage_factorvars.html" class="quarto-xref"><span>Chapter 2</span></a>)</li>
+<li>Creating new datasets by joining two or more together with <code>left_join()</code> (<a href="https://poweleiden.github.io/statistics1/data_06_merging_data.html" target="_blank">link</a>)</li>
+</ul>
+<p>Below, we give just a few examples to refresh the most important syntax.</p>
+<section id="filtering-data" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="filtering-data"><span class="header-section-number">1.2.1</span> Filtering data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex1: Filter to keep only democracies in the dataset</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>demdata_democracies <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TYPEDEMO1984 <span class="sc">==</span> <span class="st">"Democracies"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ex2: Filter to keep only observations with non-missing data on these 2 variables</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>demdata_complete <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(TypeEcon2006, HDI2005))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="converting-numeric-missing-value-codes-to-na" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="converting-numeric-missing-value-codes-to-na"><span class="header-section-number">1.2.2</span> Converting numeric missing value codes to <code>NA</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex1: na_if</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TypeEcon2006_na =</span> <span class="fu">na_if</span>(TypeEcon2006, <span class="dv">4</span>))</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TypeEcon2006, demdata<span class="sc">$</span>TypeEcon2006_na, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+        1  2  3 &lt;NA&gt;
+  1    30  0  0    0
+  2     0 57  0    0
+  3     0  0 78    0
+  4     0  0  0   14
+  &lt;NA&gt;  0  0  0    0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex2: ifelse (sets 4 to NA, keeps all other values)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TypeEcon2006_na =</span> <span class="fu">ifelse</span>(TypeEcon2006 <span class="sc">==</span> <span class="dv">4</span>, <span class="cn">NA</span>, TypeEcon2006))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TypeEcon2006, demdata<span class="sc">$</span>TypeEcon2006_na, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+        1  2  3 &lt;NA&gt;
+  1    30  0  0    0
+  2     0 57  0    0
+  3     0  0 78    0
+  4     0  0  0   14
+  &lt;NA&gt;  0  0  0    0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex3: case_when (most useful for recoding and setting NA in 1 step: </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># any value not explicitly included in the syntax becomes NA)</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GDP =</span> <span class="fu">case_when</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    TypeEcon2006 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"High output"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    TypeEcon2006 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Medium output"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    TypeEcon2006 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Low output"</span>))</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>TypeEcon2006, demdata<span class="sc">$</span>GDP, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       High output Low output Medium output &lt;NA&gt;
+  1             30          0             0    0
+  2              0          0            57    0
+  3              0         78             0    0
+  4              0          0             0   14
+  &lt;NA&gt;           0          0             0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="recoding" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="recoding"><span class="header-section-number">1.2.3</span> Recoding</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex4: recode (turns numeric values into character values)</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">regime_recode =</span> <span class="fu">recode</span>(Typeregime2006, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Liberal democracy"</span>, </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"Electoral democracy"</span>, </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"Autocracy"</span>))</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>Typeregime2006, demdata<span class="sc">$</span>regime_recode, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       Autocracy Electoral democracy Liberal democracy &lt;NA&gt;
+  1            0                   0                71    0
+  2            0                  53                 0    0
+  3           41                   0                 0    0
+  &lt;NA&gt;         0                   0                 0   14</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex5: case_when with a continuous (decimal) variable (splits v2x_libdem into categories based on value ranges)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">libdem_cat =</span> <span class="fu">case_when</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    v2x_libdem <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">~</span> <span class="st">"Low"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    v2x_libdem <span class="sc">&gt;=</span> <span class="fl">0.3</span> <span class="sc">&amp;</span> v2x_libdem <span class="sc">&lt;</span> <span class="fl">0.6</span> <span class="sc">~</span> <span class="st">"Medium"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    v2x_libdem <span class="sc">&gt;=</span> <span class="fl">0.6</span> <span class="sc">~</span> <span class="st">"High"</span>))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>v2x_libdem, demdata<span class="sc">$</span>libdem_cat, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       
+        High Low Medium &lt;NA&gt;
+  0.011    0   1      0    0
+  0.015    0   1      0    0
+  0.035    0   2      0    0
+  0.041    0   1      0    0
+  0.042    0   1      0    0
+  0.046    0   1      0    0
+  0.048    0   2      0    0
+  0.05     0   1      0    0
+  0.052    0   1      0    0
+  0.056    0   1      0    0
+  0.058    0   1      0    0
+  0.066    0   1      0    0
+  0.067    0   1      0    0
+  0.069    0   1      0    0
+  0.073    0   1      0    0
+  0.077    0   1      0    0
+  0.085    0   2      0    0
+  0.086    0   1      0    0
+  0.089    0   1      0    0
+  0.092    0   1      0    0
+  0.094    0   1      0    0
+  0.095    0   1      0    0
+  0.096    0   1      0    0
+  0.103    0   1      0    0
+  0.108    0   1      0    0
+  0.109    0   1      0    0
+  0.112    0   1      0    0
+  0.113    0   1      0    0
+  0.119    0   1      0    0
+  0.122    0   1      0    0
+  0.123    0   2      0    0
+  0.124    0   1      0    0
+  0.125    0   1      0    0
+  0.13     0   1      0    0
+  0.132    0   1      0    0
+  0.141    0   1      0    0
+  0.142    0   1      0    0
+  0.151    0   1      0    0
+  0.154    0   1      0    0
+  0.157    0   1      0    0
+  0.161    0   1      0    0
+  0.163    0   1      0    0
+  0.175    0   1      0    0
+  0.179    0   1      0    0
+  0.186    0   1      0    0
+  0.191    0   1      0    0
+  0.194    0   1      0    0
+  0.2      0   1      0    0
+  0.208    0   1      0    0
+  0.212    0   1      0    0
+  0.218    0   1      0    0
+  0.225    0   1      0    0
+  0.226    0   1      0    0
+  0.227    0   1      0    0
+  0.231    0   1      0    0
+  0.233    0   1      0    0
+  0.236    0   1      0    0
+  0.237    0   1      0    0
+  0.24     0   1      0    0
+  0.241    0   1      0    0
+  0.247    0   1      0    0
+  0.249    0   1      0    0
+  0.257    0   1      0    0
+  0.269    0   1      0    0
+  0.27     0   1      0    0
+  0.271    0   2      0    0
+  0.278    0   1      0    0
+  0.28     0   1      0    0
+  0.285    0   1      0    0
+  0.287    0   2      0    0
+  0.29     0   1      0    0
+  0.303    0   0      1    0
+  0.307    0   0      1    0
+  0.314    0   0      1    0
+  0.318    0   0      1    0
+  0.322    0   0      2    0
+  0.34     0   0      1    0
+  0.346    0   0      1    0
+  0.347    0   0      1    0
+  0.357    0   0      1    0
+  0.358    0   0      1    0
+  0.362    0   0      1    0
+  0.37     0   0      1    0
+  0.371    0   0      1    0
+  0.374    0   0      1    0
+  0.383    0   0      1    0
+  0.394    0   0      1    0
+  0.398    0   0      1    0
+  0.4      0   0      1    0
+  0.401    0   0      1    0
+  0.409    0   0      1    0
+  0.412    0   0      1    0
+  0.414    0   0      1    0
+  0.417    0   0      1    0
+  0.421    0   0      1    0
+  0.423    0   0      1    0
+  0.444    0   0      1    0
+  0.446    0   0      1    0
+  0.462    0   0      2    0
+  0.466    0   0      2    0
+  0.468    0   0      1    0
+  0.469    0   0      1    0
+  0.476    0   0      1    0
+  0.48     0   0      1    0
+  0.484    0   0      1    0
+  0.49     0   0      1    0
+  0.491    0   0      1    0
+  0.492    0   0      1    0
+  0.497    0   0      1    0
+  0.504    0   0      1    0
+  0.505    0   0      1    0
+  0.507    0   0      1    0
+  0.508    0   0      1    0
+  0.512    0   0      1    0
+  0.527    0   0      2    0
+  0.557    0   0      1    0
+  0.567    0   0      1    0
+  0.572    0   0      1    0
+  0.578    0   0      1    0
+  0.581    0   0      1    0
+  0.604    1   0      0    0
+  0.614    1   0      0    0
+  0.627    1   0      0    0
+  0.635    1   0      0    0
+  0.638    1   0      0    0
+  0.644    2   0      0    0
+  0.649    1   0      0    0
+  0.654    1   0      0    0
+  0.659    1   0      0    0
+  0.664    1   0      0    0
+  0.68     1   0      0    0
+  0.683    1   0      0    0
+  0.692    1   0      0    0
+  0.706    2   0      0    0
+  0.708    1   0      0    0
+  0.712    1   0      0    0
+  0.719    1   0      0    0
+  0.723    1   0      0    0
+  0.739    1   0      0    0
+  0.743    1   0      0    0
+  0.748    1   0      0    0
+  0.753    1   0      0    0
+  0.758    1   0      0    0
+  0.763    1   0      0    0
+  0.77     2   0      0    0
+  0.779    1   0      0    0
+  0.792    1   0      0    0
+  0.793    2   0      0    0
+  0.798    1   0      0    0
+  0.801    1   0      0    0
+  0.802    1   0      0    0
+  0.803    1   0      0    0
+  0.809    1   0      0    0
+  0.814    1   0      0    0
+  0.815    1   0      0    0
+  0.823    1   0      0    0
+  0.827    1   0      0    0
+  0.833    1   0      0    0
+  0.834    1   0      0    0
+  0.847    1   0      0    0
+  0.851    1   0      0    0
+  0.853    1   0      0    0
+  0.857    1   0      0    0
+  0.877    1   0      0    0
+  0.879    1   0      0    0
+  &lt;NA&gt;     0   0      0    0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex6: %in% (groups multiple values together into one category)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">regime_group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    Typeregime2006 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="sc">~</span> <span class="st">"Democracy"</span>, <span class="co"># Only works with whole numbers/character strings</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    Typeregime2006 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Autocracy"</span>))</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your work!</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(demdata<span class="sc">$</span>Typeregime2006, demdata<span class="sc">$</span>regime_group, <span class="at">useNA =</span> <span class="st">"always"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       Autocracy Democracy &lt;NA&gt;
+  1            0        71    0
+  2            0        53    0
+  3           41         0    0
+  &lt;NA&gt;         0         0   14</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>We will use the terms “library” and “packages” interchangeably although they technically refer to different things. “Package” technically refers to “collections of R functions, data, and compiled code” while “the directory where packages are stored is called the library” (<a href="https://www.r-bloggers.com/2013/01/packages-v-libraries-in-r/" target="_blank">souce</a>).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If we wanted to see the underlying data as a spreadsheet, then we could use the command <code>View()</code> , e.g., <code>View(demdata)</code> . This would open a new tab in R Studio that would the underlying data.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>There is another entry here: <code>$format.stata</code> . This particular variable originally came from a dataset created by the Stata statistical program. The <code>%10.0g</code> indicates that that the data is stored in a “double” format, which governs how the data is encoded. This is not particularly relevant for us.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>We could also learn about how many observations have NA values by including <code>is.na()</code> in a <code>table()</code> call, e.g., <code>table(is.na(demdata$HDI2005))</code> . This would return a tabulation of the number of observations where <code>is.na()</code> returns FALSE (i.e., there is data for the observation) or TRUE (i.e., there is no data, it is missing or NA in our dataset). See <a href="https://poweleiden.github.io/statistics1/data_03_variables.html#missing-data" target="_blank">here</a> in the Statistics I book for more.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>As we’ll discuss in <a href="linear_07.html" class="quarto-xref"><span>Chapter 9</span></a>, there may be situations where we would want to “transform” these variables by, for instance, taking their log.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part_cleaning.html" class="pagination-link" aria-label="Data Cleaning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Cleaning</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./data_manage_factorvars.html" class="pagination-link" aria-label="Factor variables">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

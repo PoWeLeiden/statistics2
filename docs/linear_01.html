@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Investigating Relationships between Continuous Variables – Statistical analysis and presentation using R</title>
+<title>3&nbsp; Investigating Relationships between Continuous Variables – Statistical analysis and presentation using R</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -59,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -93,14 +98,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -130,7 +135,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -143,7 +148,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -332,7 +337,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_01.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,8 +373,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Statistical Models</span></a>
+            <a href="./part_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -377,50 +382,73 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_manage_investigate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Your Data and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manage_factorvars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Factor variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Statistical Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Significance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Predicted &amp; Residual Values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Fit</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">OLS Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reporting and Presenting Results</span></span></a>
   </div>
 </li>
       </ul>
@@ -429,45 +457,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistic Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression &amp; Odds Ratios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predicted Probabilities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model Fit and Comparisons</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Logistic Regression Assumptions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logit_06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reporting &amp; Presenting Logistic Regressions</span></span></a>
   </div>
 </li>
       </ul>
@@ -476,40 +504,40 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part_interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Interactions within Linear and Logistic Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Including an Interaction Term in a Regression Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Marginal Effects in Interaction Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interaction_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predicted Values from Interaction Models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./common_errors.html" class="sidebar-item-text sidebar-link">
@@ -552,14 +580,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-recall-peeking-inside-data-objects" id="toc-sec-recall-peeking-inside-data-objects" class="nav-link active" data-scroll-target="#sec-recall-peeking-inside-data-objects"><span class="header-section-number">1.1</span> Recall: Peeking Inside Data Objects</a></li>
-  <li><a href="#sec-visualizing-bivariate-relationships-with-a-scatterplot" id="toc-sec-visualizing-bivariate-relationships-with-a-scatterplot" class="nav-link" data-scroll-target="#sec-visualizing-bivariate-relationships-with-a-scatterplot"><span class="header-section-number">1.2</span> Visualizing Bivariate Relationships with a Scatterplot</a></li>
-  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">1.3</span> Covariance</a></li>
-  <li><a href="#sec-correlation-coefficients" id="toc-sec-correlation-coefficients" class="nav-link" data-scroll-target="#sec-correlation-coefficients"><span class="header-section-number">1.4</span> Correlation Coefficients</a></li>
-  <li><a href="#bivariate-linear-regression" id="toc-bivariate-linear-regression" class="nav-link" data-scroll-target="#bivariate-linear-regression"><span class="header-section-number">1.5</span> Bivariate Linear Regression</a>
+  <li><a href="#sec-visualizing-bivariate-relationships-with-a-scatterplot" id="toc-sec-visualizing-bivariate-relationships-with-a-scatterplot" class="nav-link active" data-scroll-target="#sec-visualizing-bivariate-relationships-with-a-scatterplot"><span class="header-section-number">3.1</span> Visualizing Bivariate Relationships with a Scatterplot</a></li>
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">3.2</span> Covariance</a></li>
+  <li><a href="#sec-correlation-coefficients" id="toc-sec-correlation-coefficients" class="nav-link" data-scroll-target="#sec-correlation-coefficients"><span class="header-section-number">3.3</span> Correlation Coefficients</a></li>
+  <li><a href="#bivariate-linear-regression" id="toc-bivariate-linear-regression" class="nav-link" data-scroll-target="#bivariate-linear-regression"><span class="header-section-number">3.4</span> Bivariate Linear Regression</a>
   <ul class="collapse">
-  <li><a href="#performing-and-obtaining-results" id="toc-performing-and-obtaining-results" class="nav-link" data-scroll-target="#performing-and-obtaining-results"><span class="header-section-number">1.5.1</span> Performing and obtaining results</a></li>
-  <li><a href="#adding-a-regression-line-to-a-scatterplot" id="toc-adding-a-regression-line-to-a-scatterplot" class="nav-link" data-scroll-target="#adding-a-regression-line-to-a-scatterplot"><span class="header-section-number">1.5.2</span> Adding a regression line to a scatterplot</a></li>
+  <li><a href="#performing-and-obtaining-results" id="toc-performing-and-obtaining-results" class="nav-link" data-scroll-target="#performing-and-obtaining-results"><span class="header-section-number">3.4.1</span> Performing and obtaining results</a></li>
+  <li><a href="#adding-a-regression-line-to-a-scatterplot" id="toc-adding-a-regression-line-to-a-scatterplot" class="nav-link" data-scroll-target="#adding-a-regression-line-to-a-scatterplot"><span class="header-section-number">3.4.2</span> Adding a regression line to a scatterplot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -568,9 +595,9 @@ window.Quarto = {
 <main class="content page-columns page-full" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_linear.html">Linear Statistical Models</a></li><li class="breadcrumb-item"><a href="./linear_01.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-linear-covcor" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></h1>
+<h1 class="title"><span id="sec-linear-covcor" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Investigating Relationships between Continuous Variables</span></span></h1>
 </div>
 
 
@@ -588,22 +615,20 @@ window.Quarto = {
 
 
 <p>This chapter focuses on how to examine bivariate relationships between continuous variables in R. It will discuss how to use covariance, correlation, and linear regression models to summarize bivariate relationships.</p>
-<p>We begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers but must first be loaded before use; you can use the command in <a href="package_overview.html" class="quarto-xref"><span>Appendix B</span></a> to install these libraries on your personal computer. We will use a dataset that contains information about the political and economic characteristics of countries from across the world. The dataset (<code>demdata.rds</code>) is available on Brightspace alongside a codebook.</p>
+<p>We begin our R script by loading relevant libraries and by loading our data. These libraries are already installed on university computers but must first be loaded before use; you can use the command in <a href="package_overview.html" class="quarto-xref"><span>Appendix B</span></a> to install these libraries on your personal computer. We will use a dataset that contains information about the political and economic characteristics of countries from across the world.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Packages</span></span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)          <span class="co">#loading data</span></span>
-<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)       <span class="co">#for obtaining overviews of data objects</span></span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)    <span class="co">#data manipulation and plotting</span></span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary) <span class="co">#For creating correlation tables</span></span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"demdata.rds"</span>) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)    <span class="co">#data manipulation (dplyr) and plotting (ggplot)</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>demdata <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"demdata.rds"</span>) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="9" data-code-annotation="1">You do not always need <code>as_tibble()</code> as shown here. We do this here because it is easier to show larger datasets with them. See <a href="https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles" target="_blank">Statistics I, 2.1</a>.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="1">You do not always need <code>as_tibble()</code> as shown here. We do this here because it is easier to show larger datasets with them. See <a href="https://poweleiden.github.io/statistics1/data_02_filtering_selecting.html#tibbles" target="_blank">Statistics I, 2.1</a>.</span>
 </dd>
 </dl>
 </div>
@@ -621,171 +646,18 @@ Warning
 <p>Make sure to create a project folder for the course in which you save all of your data files, assignments, etc. as this will make working with R easier. The process for doing so is covered in <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#setting-up-an-r-project" target="_blank">Statistics I, 1.5</a>. Also, remember to use syntax to import data using the <code>import()</code> function from the <code>rio</code> package. See <a href="common_errors.html#sec-error-import" class="quarto-xref"><span>Section A.1.2</span></a>.</p>
 </div>
 </div>
-<section id="sec-recall-peeking-inside-data-objects" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="sec-recall-peeking-inside-data-objects"><span class="header-section-number">1.1</span> Recall: Peeking Inside Data Objects</h2>
-<p>We have loaded a data file…but what’s inside it? Datasets often come with codebooks that provide information about the variables in the dataset. We can also look into our data object in R to learn more about its contents as well. We can do this in a few ways.</p>
-<p>For instance, we can enter the name of the object in the Console:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>demdata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 179 × 41
-   country_name  year v2x_polyarchy v2x_libdem v2x_egaldem v2cacamps v2caviol
-   &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
- 1 Mexico        2020         0.647      0.412       0.369     1.53     0.023
- 2 Suriname      2020         0.761      0.627       0.56      0.12    -0.813
- 3 Sweden        2020         0.908      0.879       0.83     -2.08    -2.37 
- 4 Switzerland   2020         0.894      0.851       0.832    -1.70    -2.66 
- 5 Ghana         2020         0.72       0.614       0.534    -0.441   -0.008
- 6 South Africa  2020         0.703      0.578       0.477     0.092    0.395
- 7 Japan         2020         0.832      0.743       0.75     -1.54    -1.95 
- 8 Myanmar       2020         0.436      0.271       0.253     0.886    1.28 
- 9 Russia        2020         0.262      0.103       0.203     0.558    0.195
-10 Albania       2020         0.485      0.409       0.358    -0.501   -0.119
-# ℹ 169 more rows
-# ℹ 34 more variables: e_peaveduc &lt;dbl&gt;, cpi &lt;dbl&gt;, e_regiongeo &lt;dbl&gt;,
-#   e_regionpol_6C &lt;dbl&gt;, v2elcomvot &lt;dbl&gt;, compulsory_voting &lt;dbl&gt;,
-#   bicameral &lt;dbl&gt;, dem_diff &lt;dbl&gt;, dem_increase &lt;dbl&gt;, dem_decrease &lt;dbl&gt;,
-#   TypeSoc2005 &lt;dbl&gt;, TypeEcon2006 &lt;dbl&gt;, HDI2005 &lt;dbl&gt;, GDP2006 &lt;dbl&gt;,
-#   TYPEDEMO1984 &lt;dbl&gt;, TYPEDEMO2007 &lt;dbl&gt;, Fragile2006 &lt;dbl&gt;,
-#   Typeregime2006 &lt;dbl&gt;, TYPEGOV2007 &lt;dbl&gt;, CPI8085 &lt;dbl&gt;, …</code></pre>
-</div>
-</div>
-<p>If our dataset is a tibble (like here), then we will see a nice overview of the first few variables (columns) and observations (rows) in the dataset.</p>
-<p>We may want to see a list of the variables in our dataset and some of their attributes. You learned how to do this using the <code>str()</code> function in Statistics I (see <a href="https://poweleiden.github.io/statistics1/data_01_basics.html#data-frames" target="_blank">here</a>). A simpler overview of a data object is provided by <code>glimpse()</code> and is particularly useful when one wants to quickly see the names of columns in an object. We do so here for a shorter version of the dataset so that we do not make the output unnecessarily long for what we want to show you.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Smaller version of the dataset for display purposes</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>demdata_sub <span class="ot">&lt;-</span> demdata <span class="sc">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(v2x_egaldem, TypeSoc2005, HDI2005, TYPEDEMO1984, gini_2019)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(demdata_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 179
-Columns: 5
-$ v2x_egaldem  &lt;dbl&gt; 0.369, 0.560, 0.830, 0.832, 0.534, 0.477, 0.750, 0.253, 0…
-$ TypeSoc2005  &lt;dbl&gt; 3, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 2, 2, 3, 3, 3, 3, 2, 2, …
-$ HDI2005      &lt;dbl&gt; 0.829, 0.774, 0.956, 0.955, 0.553, 0.674, 0.953, 0.583, 0…
-$ TYPEDEMO1984 &lt;dbl&gt; 2, 1, 2, 2, 1, 1, 2, 1, NA, 1, 2, 1, 2, 1, 2, 2, 2, 2, 1,…
-$ gini_2019    &lt;dbl&gt; NA, NA, 26.5, 30.1, NA, NA, NA, NA, 32.5, 37.5, NA, NA, 4…</code></pre>
-</div>
-</div>
-<p>Finally, one can use the <code>view_df()</code> function from the <code>sjPlot</code> library to see the names of the columns in the object alongside labels for the variables (if any) and information about the values that the variable can take on. This information will be provided in the Viewer pane. You can then use the click on the “Show in new window” button to view the full list in an open browser tab.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view_df</span>(demdata_sub)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">The <code>sjPlot</code> library was loaded at the beginning of the document. You need to load it first before using this command.</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Data frame: demdata_sub</caption>
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">ID</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Name</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Label</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Values</td>
-<td data-quarto-table-cell-role="th" style="text-align: left; border-bottom: double; font-style: italic; font-weight: normal; padding: 0.2cm; vertical-align: top;">Value Labels</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">v2x_egaldem</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
-<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top;"><em>range: 0.0-0.9</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">2</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">TypeSoc2005</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Type of human development, (3-cat, classified from<br>
-HDI) (UNDP 2008)</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">1<br>
-2<br>
-3</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Low human development<br>
-Medium human development<br>
-High human development</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">3</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">HDI2005</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Human Development Index (HDI), 2005 100-pt scale<br>
-(UNDP 2007)</td>
-<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top;"><em>range: 0.3-1.0</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">4</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">TYPEDEMO1984</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Type of democracy, 1984</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">1<br>
-2</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top; background-color: #eeeeee;">Autocracies<br>
-Democracies</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">5</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;">gini_2019</td>
-<td style="text-align: left; padding: 0.2cm; vertical-align: top;"></td>
-<td colspan="2" style="text-align: left; padding: 0.2cm; vertical-align: top;"><em>range: 22.6-48.0</em></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Output Explanation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>view_df()</code> creates output with the following columns:</p>
-<ul>
-<li>Name: This provides the variable name</li>
-<li>Label: This provides the label of the variable if there is one. This is a short description of what the variable is supposed to measure.</li>
-<li>Values: If the variable is a continuous variable, then this will likely show “range: X-X”. For instance, the <code>v2x_egaldem</code> variable ranges from 0 to 0.9. If the variable only contains a few discrete values, then those will be shown instead (as with the variable <code>TypeSoc2005</code>).</li>
-<li>Value Labels: It is sometimes the case that variables will have labels that tell you what each specific value on the variable means. For instance, observations will have a 1 on the <code>TYPEDEMO1984</code> variable if they were “Autocracies” in 1984, but a 2 if they were “Democracies”.</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning!
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>view_df()</code> is a very nice way of getting an overview of a data file for yourself. However, we ask that you do not include it in the final version of your R assignments. The data files that we will use often have many columns (variables), so leaving <code>view_df(data)</code> in your .rmd file when knitting the final project is likely to produce a huge table that increases the difficulty of reading through your assignments. It is seldom a good idea to make it harder to evaluate your work! Use it when you load the data and are working on your assignment, but remove that bit of syntax before producing the final knitted output.</p>
-</div>
-</div>
-</section>
-<section id="sec-visualizing-bivariate-relationships-with-a-scatterplot" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="sec-visualizing-bivariate-relationships-with-a-scatterplot"><span class="header-section-number">1.2</span> Visualizing Bivariate Relationships with a Scatterplot</h2>
+<section id="sec-visualizing-bivariate-relationships-with-a-scatterplot" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-visualizing-bivariate-relationships-with-a-scatterplot"><span class="header-section-number">3.1</span> Visualizing Bivariate Relationships with a Scatterplot</h2>
 <p>Our initial example concerns the relationship between a country’s level of economic inequality and its level of electoral democracy.</p>
 <p>The variable <code>gini_2019</code> contains data on a country’s level of economic inequality and can take on values continuously between 0-100 (higher values = more inequality).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The variable <code>v2x_polyarchy</code>, meanwhile, contains data on the level of electoral democracy in a country as of the year 2020. This measure ranges continuously between 0 and 1 with higher values indicating a more democratic political system.</p>
 <p>We can obtain a sense of the relationship between two continuous variables with a scatterplot. See <a href="https://poweleiden.github.io/statistics1/analysis_02_graphs.html" target="_blank">Chapter 8</a> in the Statistics I book for more on the use of <code>ggplot()</code>, including additional options for creating nice looking scatterplots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> gini_2019, <span class="at">y =</span> v2x_polyarchy)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Economic Inequality and Electoral Democracy"</span>, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gini Coefficient (2019)"</span>, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electoral Democracy (2020)"</span>) <span class="sc">+</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">25</span>, <span class="at">to =</span> <span class="dv">45</span>, <span class="at">by =</span> <span class="dv">5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> gini_2019, <span class="at">y =</span> v2x_polyarchy)) <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Economic Inequality and Electoral Democracy"</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gini Coefficient (2019)"</span>, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electoral Democracy (2020)"</span>) <span class="sc">+</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">25</span>, <span class="at">to =</span> <span class="dv">45</span>, <span class="at">by =</span> <span class="dv">5</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 109 rows containing missing values or values outside the scale range
 (`geom_point()`).</code></pre>
@@ -793,7 +665,7 @@ Warning!
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="linear_01_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="linear_01_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -804,7 +676,7 @@ Warning!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -845,23 +717,23 @@ Output Explanation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>We changed the number of breaks on the x-axis in this example to make it easier to locate the different points along the x-axis in this particular figure. You may not need to do this in your own examples - the default output is oftentimes just fine. If you are using the syntax that we provide as a starting point for your own analyses, then stop and think about what needs to be updated to produce sensible output. For instance, if you simply used the syntax above and the x-variable you were trying to plot instead ranged from 0 to 10, then the plot may not include all of the data in your dataset or may omit the breaks entirely or produce some other error. Copy, paste, and <em>update</em>.</p>
 </div>
 </div>
-<p>See <a href="linear_08.html#sec-report-scatterplots" class="quarto-xref"><span>Section 8.2</span></a> for additional instructions on how to create effective scatterplots and guidelines for discussing their contents in reports.</p>
+<p>See <a href="linear_08.html#sec-report-scatterplots" class="quarto-xref"><span>Section 10.2</span></a> for additional instructions on how to create effective scatterplots and guidelines for discussing their contents in reports.</p>
 </section>
-<section id="covariance" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="covariance"><span class="header-section-number">1.3</span> Covariance</h2>
+<section id="covariance" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="covariance"><span class="header-section-number">3.2</span> Covariance</h2>
 <p>A scatterplot provides a graphical overview of the relationship between two variables. When we look at countries with a Gini coefficient value below 30, then we tend to see markers in the upper-left hand corner of the figure. However, the markers tend to drift downward on the y-axis when we move left to right on the x-axis. This implies that inequality is <em>negatively</em> related to democracy (inequality goes up, democracy goes down).</p>
 <p>We can use the covariance statistic to more formally describe the statistical relationship between the two variables and double-check our interpretation of the figure. We can obtain the covariance between two variables using the <code>cov()</code> function in R. We do not need to load any packages to use this command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(<span class="at">x =</span> demdata<span class="sc">$</span>gini_2019, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> demdata<span class="sc">$</span>v2x_polyarchy,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">use =</span> <span class="st">"complete.obs"</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(<span class="at">x =</span> demdata<span class="sc">$</span>gini_2019, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> demdata<span class="sc">$</span>v2x_polyarchy,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">use =</span> <span class="st">"complete.obs"</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.560385</code></pre>
 </div>
@@ -887,14 +759,14 @@ Warning!
 </dl>
 <p>The covariance statistic is -0.56. This is consistent with our earlier reaction to the scatterplot as a negative covariance statistic means that higher values of one variable (<code>gini_2019</code>) tend to go with <em>lower</em> values of the other variable (<code>v2x_polyarchy</code>).</p>
 </section>
-<section id="sec-correlation-coefficients" class="level2 page-columns page-full" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="sec-correlation-coefficients"><span class="header-section-number">1.4</span> Correlation Coefficients</h2>
+<section id="sec-correlation-coefficients" class="level2 page-columns page-full" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-correlation-coefficients"><span class="header-section-number">3.3</span> Correlation Coefficients</h2>
 <p>We can also use a correlation coefficient to describe the relationship between two continuous variables. Unlike the covariance statistic, correlations provide a <em>standardized</em> measure of association so that we can compare correlations with one another.</p>
 <p>There are a variety of correlation coefficients that one can use. The most appropriate one for interval/ratio (continuous) data is the Pearson correlation coefficient (often referenced with an italicized letter r: <span class="math inline">\(r\)</span>). We can obtain this statistic using the <code>cor.test()</code> command. This command is built-in to R and does not require you to load an additional package.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">x =</span> demdata<span class="sc">$</span>gini_2019, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> demdata<span class="sc">$</span>v2x_polyarchy, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">x =</span> demdata<span class="sc">$</span>gini_2019, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> demdata<span class="sc">$</span>v2x_polyarchy, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -934,7 +806,7 @@ sample estimates:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -955,7 +827,7 @@ Output Explanation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -978,15 +850,15 @@ Interpretation
 </div>
 </div>
 <div class="no-row-height column-margin column-container"><div id="ref-jacob1988statistical" class="csl-entry" role="listitem">
-Cohen, Jacob. 1988. <em>Statistical Power Analysis for the Behavioral Sciences</em>. 2nd ed. Hillsdale, NJ: Erlbaum Associates.
+Cohen, Jacob. 1988. <em>Statistical Power Analysis for the Behavioral Sciences</em>. 2nd ed. Erlbaum Associates.
 </div></div></section>
-<section id="bivariate-linear-regression" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="bivariate-linear-regression"><span class="header-section-number">1.5</span> Bivariate Linear Regression</h2>
+<section id="bivariate-linear-regression" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="bivariate-linear-regression"><span class="header-section-number">3.4</span> Bivariate Linear Regression</h2>
 <p>The final way of summarizing a bivariate relationship where both variables are continuous (interval/ratio) is via a bivariate regression model.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> In the example below we will fit a bivariate linear regression to summarize the relationship between inequality and electoral democracy.</p>
-<section id="performing-and-obtaining-results" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="performing-and-obtaining-results"><span class="header-section-number">1.5.1</span> Performing and obtaining results</h3>
+<section id="performing-and-obtaining-results" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="performing-and-obtaining-results"><span class="header-section-number">3.4.1</span> Performing and obtaining results</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data =</span> demdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2x_polyarchy <span class="sc">~</span> gini_2019, <span class="at">data =</span> demdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The syntax above performs the desired linear regression. Here is how to read the syntax:</p>
 <dl>
@@ -1013,16 +885,16 @@ Cohen, Jacob. 1988. <em>Statistical Power Analysis for the Behavioral Sciences</
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning!
+<span class="screen-reader-only">Important</span>Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is an important difference between <code>cor.test()</code>/<code>cov()</code> and <code>lm()</code>. The order of variables in the former two commands does not matter. <code>cov(x = demdata$gini_2019, y = demdata$v2x_polyarchy,…)</code> and <code>cov(x = demdata$v2x_polyarchy, y = demdata$gini_2019,…)</code> will produce the same output. But, <code>lm(v2x_polyarchy ~ gini_2019,…)</code> and <code>lm(gini_2019 ~ v2x_polyarchy,…)</code> will not!. The dependent variable in a linear regression (the variable that we are trying to predict or explain) must always be on the left side of the tilde. A first thing to figure out when fitting a regression model is which variable is supposed to be the dependent variable.</p>
+<p>There is an important difference between <code>cor.test()</code>/<code>cov()</code> and <code>lm()</code>. The order of variables in the former two commands does not matter. <code>cov(x = demdata$gini_2019, y = demdata$v2x_polyarchy,…)</code> and <code>cov(x = demdata$v2x_polyarchy, y = demdata$gini_2019,…)</code> will produce the same output. But, <code>lm(v2x_polyarchy ~ gini_2019,…)</code> and <code>lm(gini_2019 ~ v2x_polyarchy,…)</code> will not! The dependent variable in a linear regression (the variable that we are trying to predict or explain) must always be on the left side of the tilde. A first thing to figure out when fitting a regression model is which variable is supposed to be the dependent variable.</p>
 </div>
 </div>
 <p>How can we see the results from our regression when we store it to an object like in the syntax above? One way is to call the object that we just created by typing its name in the Console and hitting enter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1035,7 +907,7 @@ Coefficients:
 </div>
 <p>This default output only shows the coefficient values for the Intercept term and the slope for the independent variable(s) in the model, inequality in this instance.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> It is thus more customary to use the <code>summary()</code> command as this provides more information about the results of our model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1064,7 +936,7 @@ F-statistic: 9.262 on 1 and 68 DF,  p-value: 0.003325</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output Explanation
+<span class="screen-reader-only">Note</span>Output Explanation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1077,9 +949,9 @@ Output Explanation
 <li>Estimate: The coefficient values for each term in the model. We can see a coefficient value for our Intercept term (“(Intercept)” = 1.060311) and for the independent variable (“gini_2019” = -0.0118)</li>
 <li>Std. Error: The standard error of the coefficient</li>
 <li>t value: The t-statistic or t-value for the coefficient</li>
-<li>Pr(&gt;|t|): The p-value associated with the t-statistic. t- and p-values will be discussed in <a href="linear_03.html" class="quarto-xref"><span>Chapter 3</span></a></li>
+<li>Pr(&gt;|t|): The p-value associated with the t-statistic. t- and p-values will be discussed in <a href="linear_03.html" class="quarto-xref"><span>Chapter 5</span></a></li>
 </ul></li>
-<li>The bottom portion of the output displays statistics relating to the “fit” of the model, which will be discussed further in <a href="linear_06.html" class="quarto-xref"><span>Chapter 6</span></a> .</li>
+<li>The bottom portion of the output displays statistics relating to the “fit” of the model, which will be discussed further in <a href="linear_06.html" class="quarto-xref"><span>Chapter 8</span></a> .</li>
 </ul>
 </div>
 </div>
@@ -1090,30 +962,30 @@ Output Explanation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretation
+<span class="screen-reader-only">Warning</span>Interpretation
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>The <code>Estimate</code> column provides the coefficient values from our regression model.</p>
 <ul>
 <li>(Intercept): What is the average value of the DV we expect to observe based on this model if the independent variable = 0. Here: if we could observe countries with a score of 0 on the inequality variable, then we’d expect the average democracy score among them to be 1.06. This is seldom of direct interest and especially so when our IV(s) do not or cannot take on a value of 0.</li>
-<li>Coefficients for Continuous Independent Variables (e.g., <code>gini_2019</code>): The coefficient for a continuous independent variable is interpreted as the change in the expected mean of Y given a one unit increase in X (i.e., as the slope of a straight line). Here, our model tells us to expect the level of electoral democracy to decrease by approximately -0.01 scale points, on average, with each one unit increase on the inequality variable. See <a href="linear_08.html#sec-reporting-linear-regression" class="quarto-xref"><span>Section 8.4</span></a> on how to report this information in class assignments and in papers.</li>
+<li>Coefficients for Continuous Independent Variables (e.g., <code>gini_2019</code>): The coefficient for a continuous independent variable is interpreted as the change in the expected mean of Y given a one unit increase in X (i.e., as the slope of a straight line). Here, our model tells us to expect the level of electoral democracy to decrease by approximately -0.01 scale points, on average, with each one unit increase on the inequality variable. See <a href="linear_08.html#sec-reporting-linear-regression" class="quarto-xref"><span>Section 10.4</span></a> on how to report this information in class assignments and in papers.</li>
 </ul>
-<p>The coefficient for <code>gini_2019</code> is -0.01. How “big” of a relationship is this? Regression coefficients are not standardized so we generally cannot directly assess the magnitude of an effect implied by a regression coefficient simply from its size. We will discuss some tools that researchers use to help them communicate effect sizes in later sections (e.g., <em>standardized</em> coefficients in <a href="linear_04.html#sec-standardized-coefficients" class="quarto-xref"><span>Section 4.2</span></a> and predicted values in <a href="linear_05.html" class="quarto-xref"><span>Chapter 5</span></a>). Ultimately, discussions of the substantive significance of a regression coefficient requires thinking about what a meaningful effect would be in the particular context of the regression that you are performing.</p>
+<p>The coefficient for <code>gini_2019</code> is -0.01. How “big” of a relationship is this? Regression coefficients are not standardized so we generally cannot directly assess the magnitude of an effect implied by a regression coefficient simply from its size. We will discuss some tools that researchers use to help them communicate effect sizes in later sections (e.g., <em>standardized</em> coefficients in <a href="linear_04.html#sec-standardized-coefficients" class="quarto-xref"><span>Section 6.2</span></a> and predicted values in <a href="linear_05.html" class="quarto-xref"><span>Chapter 7</span></a>). Ultimately, discussions of the substantive significance of a regression coefficient requires thinking about what a meaningful effect would be in the particular context of the regression that you are performing.</p>
 </div>
 </div>
 </section>
-<section id="adding-a-regression-line-to-a-scatterplot" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="adding-a-regression-line-to-a-scatterplot"><span class="header-section-number">1.5.2</span> Adding a regression line to a scatterplot</h3>
+<section id="adding-a-regression-line-to-a-scatterplot" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="adding-a-regression-line-to-a-scatterplot"><span class="header-section-number">3.4.2</span> Adding a regression line to a scatterplot</h3>
 <p>We can incorporate information from our regression model into visual displays in a variety of ways. One common way of doing so is to add a regression line to a scatterplot of the two variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> gini_2019, <span class="at">y =</span> v2x_polyarchy)) <span class="sc">+</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Economic Inequality and Electoral Democracy"</span>, </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gini Coefficient (2019)"</span>, </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electoral Democracy (2020)"</span>) <span class="sc">+</span> </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">25</span>, <span class="at">to =</span> <span class="dv">45</span>, <span class="at">by =</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demdata, <span class="fu">aes</span>(<span class="at">x =</span> gini_2019, <span class="at">y =</span> v2x_polyarchy)) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Economic Inequality and Electoral Democracy"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gini Coefficient (2019)"</span>, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electoral Democracy (2020)"</span>) <span class="sc">+</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">25</span>, <span class="at">to =</span> <span class="dv">45</span>, <span class="at">by =</span> <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -1128,7 +1000,7 @@ Interpretation
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="linear_01_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="linear_01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1221,13 +1093,14 @@ Interpretation
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1616,7 +1489,7 @@ Interpretation
   </div>
   <div class="nav-page nav-page-next">
       <a href="./linear_02.html" class="pagination-link" aria-label="Bivariate Regression with Binary &amp; Categorical Predictors">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bivariate Regression with Binary &amp; Categorical Predictors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
