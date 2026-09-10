@@ -44,6 +44,7 @@ It is important to note that 2 packages used here for assumptions testing can cl
 # detach("package:car")
 # detach("package:expss")
 ```
+
 :::
 
 ## Independent errors and the Durbin-Watson test
@@ -208,8 +209,17 @@ We first check whether a simplified polyarchy model with only economic inequalit
 ```{r}
 bivar_model <- lm(v2x_polyarchy ~ gini_2019, data=demdata)
 
-resid_panel(bivar_model, plots = c("resid"))
+resid_panel(bivar_model, plots = c("resid"), smoother = FALSE)
 ```
+
+`resid_panel(bivar_model`
+: We use the `resid_panel()` function and provide to it the name of the model we're interested in examining. 
+
+`plots = c("resid")`
+: This function can be used to produce various types of plots (as you'll see below). Here, we clarify that we want a plot showing residuals against predicted values ("resid"). 
+
+`smoother = FAlSE)`
+: The most up-to-date version of this package will show a non-parametric regression line like the one seen in @sec-quadratic-relationships in this type of plot by default. We use this syntax to turn that option off because this type of line can oftentimes create more confusion than clarification when trying to interpret patterns in this type of plot. 
 
 Ideally, the dots will look randomly distributed rather than showing some type of non-linear pattern. The results above do not suggest a violation of this assumption.
 
@@ -218,7 +228,7 @@ Ideally, the dots will look randomly distributed rather than showing some type o
 We do not always get a residual plot with just random dots. Let us take a look at the plot for the more extended model of polyarchy (`model_multiple`).
 
 ```{r}
-resid_panel(model_multiple, plots = c("resid"))
+resid_panel(model_multiple, plots = c("resid"), smoother = FALSE)
 ```
 
 The residuals plot suggests a non-linear relationship. However, it cannot tell us which independent variable in the model might be at fault. We can investigate this question via the `avPlots()` function from the `car` package.
@@ -248,7 +258,7 @@ multiple_ln <- lm(v2x_polyarchy ~ gini_2019 + TYPEDEMO1984_factor +
                     LNGDP2006, data=demdata)
 
 #Residual Plot
-resid_panel(multiple_ln, plots = c("resid"))
+resid_panel(multiple_ln, plots = c("resid"), smoother = FALSE)
 
 #Partial Regression Plot
 avPlots(multiple_ln)
@@ -354,7 +364,7 @@ tidy(Violence_linmodel, conf.int = TRUE)
 The non-linear nature of the relationship may show up in the residual plot, though this is not obviously the case here:
 
 ```{r}
-resid_panel(Violence_linmodel, plots = c("resid"))
+resid_panel(Violence_linmodel, plots = c("resid"), smoother = FALSE)
 ```
 
 We can check whether a quadratic relationship is a better fit for the data by adding a quadratic term to our regression model. We can do this in either of two ways. First, we can manually create this variable first and add it to our dataset via `mutate()` before including it in our resulting model. Second, we can directly add the transformation to the model via the `I()` command. This is a little simpler since we do not need to create the varaible first and, perhaps more importantly, works better with the commands from `marginaleffects` that we use to interpret models (e.g., `predictions()`).
@@ -439,7 +449,7 @@ predictions(Violence_sqmodel,
 We can inspect the residuals vs. fitted values plot again to investigate the assumption of homoskedasticity as well as the assumption of linearity. Here, for instance, is the residuals plot for the quadratic model of political violence that we just fit (`Violence_sqmodel`):
 
 ```{r}
-resid_panel(Violence_sqmodel, plots = c("resid"))
+resid_panel(Violence_sqmodel, plots = c("resid"), smoother = FALSE)
 ```
 
 We are again looking for a random pattern of dots (homoskedasticity) rather than some type of funnel shape (heteroskedasticity). A funnel shape appears in the plot above, indicating that this assumption is being violated.
@@ -461,7 +471,7 @@ resid_panel(multiple_ln, plots = c("hist", "qq"))
 Note that we can also add our residuals vs fitted ("resid") plot in the same code if we want to inspect multiple assumptions quickly. For instance:
 
 ```{r}
-resid_panel(multiple_ln, plots = c("resid", "hist", "qq"))
+resid_panel(multiple_ln, plots = c("resid", "hist", "qq"), smoother = FALSE)
 ```
 
 ## Limited impact of outliers and influential cases
