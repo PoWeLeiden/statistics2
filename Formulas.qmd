@@ -76,11 +76,11 @@ $$F = \frac{MS_{Model}}{MS_{Residual}}$$
 
 ## Logistic Regression
 
-Logistic Regression Model with Single Explanatory Variable
+Logistic Regression Model
 
-$$\textrm{log(Odds)} = b_0 + b_1x_{1i} + b_2x_{2i}...$$
+$$\textrm{log(Odds)} = b_0 + (b_1 * x1_{i}) + (b_2 *x2_{i})...$$
 
-$$P(Y_{i} = 1) = \frac{1}{1 + e^{-(b_{0} + b_{1}x_{1i})}}$$
+$$P(Y_{i} = 1) = \frac{e^{(b_{0} + (b_1*x1_i) + (b_2*x2_i)...)}}{1 + e^{(b_{0} + (b_1*x1_i) + (b_2*x2_i)...)}}$$
 
 Odds and Probabiilty
 
